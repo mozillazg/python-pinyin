@@ -109,7 +109,7 @@ def single_pinyin(han, options):
     pinyins = []
     for i in pys:
        py = toFixed(i, options['style'])
-       if py not in py_cached: continue
+       if py in py_cached: continue
        py_cached[py] = py
        pinyins.append(py)
     return pinyins
