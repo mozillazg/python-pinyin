@@ -3,6 +3,7 @@
 
 import re
 from itertools import chain
+from copy import deepcopy
 
 import jieba
 
@@ -31,7 +32,7 @@ PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
 re_phonetic_symbol_source = ""
 for k in PHONETIC_SYMBOL:
     re_phonetic_symbol_source += k
-RE_PHONETIC_SYMBOL = r'([' + re.escape(re_phonetic_symbol_source) + r'])'
+RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 
 STYLE_NORMAL = PINYIN_STYLE['NORMAL']
@@ -61,7 +62,6 @@ def toFixed(pinyin, style):
     :param pinyin: 单个拼音
     :param style: 拼音风格
     """
-    tone = None   # 声调
     if style == PINYIN_STYLE['INITIALS']:
         return initials(pinyin)
     elif style == PINYIN_STYLE['FIRST_LETTER']:
@@ -69,30 +69,19 @@ def toFixed(pinyin, style):
     elif style == PINYIN_STYLE['NORMAL']:
         def _replace(matchobj):
             x = matchobj.group(0)
-            y = matchobj.group(1)
-            return re.sub(RE_TONE2, y, PHONETIC_SYMBOL[x])
+            return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[x])
     elif style == PINYIN_STYLE['TONE2']:
         def _replace(matchobj):
             x = matchobj.group(0)
-            y = matchobj.group(1)
-            global tone
-            tone = re.sub(RE_TONE2, y, PHONETIC_SYMBOL[x])
-            return re.sub(RE_TONE2, '', PHONETIC_SYMBOL[x])
+            return PHONETIC_SYMBOL[x]
     else:
         def _replace(matchobj):
-            y = matchobj.group(1)
-            return y
+            x = matchobj.group(0)
+            return x
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
-    if style == PINYIN_STYLE['TONE2']:
-        py += tone
     return py
 
 
-# /**
-#  * 单字拼音转换。
-#  * @param {String} han, 单个汉字
-#  * @return {Array} 返回拼音列表，多音字会有多个拼音项。
-#  */
 def single_pinyin(han, options):
     """单字拼音转换.
 
@@ -110,23 +99,17 @@ def single_pinyin(han, options):
         return [toFixed(pys[0], options['style'])]
 
     # 临时存储已存在的拼音，避免多音字拼音转换为非注音风格出现重复。
-    py_cached = {}
+    # py_cached = {}
     pinyins = []
     for i in pys:
         py = toFixed(i, options['style'])
-        if py in py_cached:
-            continue
-        py_cached[py] = py
+        # if py in py_cached:
+        #     continue
+        # py_cached[py] = py
         pinyins.append(py)
     return pinyins
 
 
-# /**
-#  * 词语注音
-#  * @param {String} phrases, 指定的词组。
-#  * @param {Object} options, 选项。
-#  * @return {Array}
-#  */
 def phrases_pinyin(phrases, options):
     """词语拼音转换.
 
@@ -135,7 +118,7 @@ def phrases_pinyin(phrases, options):
     """
     py = []
     if phrases in PHRASES_DICT:
-        py = PHRASES_DICT[phrases]
+        py = deepcopy(PHRASES_DICT[phrases])
         for idx, item in enumerate(py):
             py[idx] = [toFixed(item[0], options['style'])]
     else:
@@ -180,3 +163,11 @@ def slug(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False,
     :return: slug 字符串.
     """
     return separator.join(chain(*pinyin(hans, style, heteronym)))
+
+if __name__ == '__main__':
+    print pinyin(u'我是中国人',  0)
+    print pinyin(u'我是中国人',  1)
+    print pinyin(u'我是中国人',  2)
+    print pinyin(u'我是中国人',  3)
+    print pinyin(u'我是中国人',  4)
+    print slug(u'我是中国人')
