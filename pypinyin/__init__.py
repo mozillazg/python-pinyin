@@ -99,13 +99,13 @@ def single_pinyin(han, options):
         return [toFixed(pys[0], options['style'])]
 
     # 临时存储已存在的拼音，避免多音字拼音转换为非注音风格出现重复。
-    # py_cached = {}
+    py_cached = {}
     pinyins = []
     for i in pys:
         py = toFixed(i, options['style'])
-        # if py in py_cached:
-        #     continue
-        # py_cached[py] = py
+        if py in py_cached:
+            continue
+        py_cached[py] = py
         pinyins.append(py)
     return pinyins
 
@@ -127,7 +127,7 @@ def phrases_pinyin(phrases, options):
     return py
 
 
-def pinyin(hans, style=PINYIN_STYLE['TONE'], heteronym=False):
+def pinyin(hans, style=STYLE_TONE, heteronym=False):
     """将汉字转换为拼音.
 
     :param hans: 汉字
@@ -151,7 +151,7 @@ def pinyin(hans, style=PINYIN_STYLE['TONE'], heteronym=False):
     return pys
 
 
-def slug(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False,
+def slug(hans, style=STYLE_NORMAL, heteronym=False,
          separator='-'):
     """生成 slug 字符串.
 
@@ -163,11 +163,3 @@ def slug(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False,
     :return: slug 字符串.
     """
     return separator.join(chain(*pinyin(hans, style, heteronym)))
-
-if __name__ == '__main__':
-    print pinyin(u'我是中国人',  0)
-    print pinyin(u'我是中国人',  1)
-    print pinyin(u'我是中国人',  2)
-    print pinyin(u'我是中国人',  3)
-    print pinyin(u'我是中国人',  4)
-    print slug(u'我是中国人')
