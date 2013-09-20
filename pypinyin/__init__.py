@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+__title__ = 'pypinyin'
+__version__ = '0.1.0'
+__author__ = 'mozillazg'
+__license__ = 'MIT'
+__copyright__ = 'Copyright (c) 2013 mozillazg'
+
 import re
 from itertools import chain
 from copy import deepcopy
