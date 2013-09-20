@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+from itertools import chain
 
 import jieba
 
@@ -17,12 +18,12 @@ INITIALS = "zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w".split(",")
 FINALS = "ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,ve,a,o,e,i,u,v"
 FINALS = FINALS.split(",")
 
-PINYIN_STYLE =  {
-  'NORMAL': 0,        # 普通风格，不带音标
-  'TONE': 1,          # 标准风格，音标在韵母的第一个字母上
-  'TONE2': 2,         # 声调中拼音之后，使用数字 1~4 标识
-  'INITIALS': 3,      # 仅需要声母部分
-  'FIRST_LETTER': 4   # 仅保留首字母
+PINYIN_STYLE = {
+    'NORMAL': 0,        # 普通风格，不带音标
+    'TONE': 1,          # 标准风格，音标在韵母的第一个字母上
+    'TONE2': 2,         # 声调中拼音之后，使用数字 1~4 标识
+    'INITIALS': 3,      # 仅需要声母部分
+    'FIRST_LETTER': 4   # 仅保留首字母
 }
 
 # 带音标字符
@@ -33,10 +34,6 @@ for k in PHONETIC_SYMBOL:
 RE_PHONETIC_SYMBOL = r'([' + re.escape(re_phonetic_symbol_source) + r'])'
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 
-DEFAULT_OPTIONS = {
-  'style': PINYIN_STYLE['TONE'],     # 风格
-  'heteronym': False              # 多音字
-}
 STYLE_NORMAL = PINYIN_STYLE['NORMAL']
 STYLE_TONE = PINYIN_STYLE['TONE']
 STYLE_TONE2 = PINYIN_STYLE['TONE2']
@@ -65,7 +62,7 @@ def toFixed(pinyin, style):
     :param style: 拼音风格
     """
     tone = None   # 声调
-    if style ==  PINYIN_STYLE['INITIALS']:
+    if style == PINYIN_STYLE['INITIALS']:
         return initials(pinyin)
     elif style == PINYIN_STYLE['FIRST_LETTER']:
         return pinyin[0]
@@ -78,6 +75,7 @@ def toFixed(pinyin, style):
         def _replace(matchobj):
             x = matchobj.group(0)
             y = matchobj.group(1)
+            global tone
             tone = re.sub(RE_TONE2, y, PHONETIC_SYMBOL[x])
             return re.sub(RE_TONE2, '', PHONETIC_SYMBOL[x])
     else:
@@ -115,11 +113,11 @@ def single_pinyin(han, options):
     py_cached = {}
     pinyins = []
     for i in pys:
-       py = toFixed(i, options['style'])
-       if py in py_cached:
-           continue
-       py_cached[py] = py
-       pinyins.append(py)
+        py = toFixed(i, options['style'])
+        if py in py_cached:
+            continue
+        py_cached[py] = py
+        pinyins.append(py)
     return pinyins
 
 
@@ -142,11 +140,11 @@ def phrases_pinyin(phrases, options):
             py[idx] = [toFixed(item[0], options['style'])]
     else:
         for i in phrases:
-          py.append(single_pinyin(i, options))
+            py.append(single_pinyin(i, options))
     return py
 
 
-def pinyin(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False):
+def pinyin(hans, style=PINYIN_STYLE['TONE'], heteronym=False):
     """将汉字转换为拼音.
 
     :param hans: 汉字
@@ -162,9 +160,23 @@ def pinyin(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False):
     phrases = jieba.cut(hans)
     pys = []
     for i in phrases:
-        words = i;
+        words = i
         if len(words) == 1:
             pys.append(single_pinyin(words, options))
         else:
             pys = pys + phrases_pinyin(words, options)
     return pys
+
+
+def slug(hans, style=PINYIN_STYLE['NORMAL'], heteronym=False,
+         separator='-'):
+    """生成 slug 字符串.
+
+    :param hans: 汉字
+    :type hans: unicode
+    :param style: 指定拼音风格
+    :param heteronym: 是否启用多音字
+    :param separstor: 两个拼音间的分隔符/连接符
+    :return: slug 字符串.
+    """
+    return separator.join(chain(*pinyin(hans, style, heteronym)))
