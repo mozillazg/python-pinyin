@@ -9,8 +9,8 @@ install:
 
 script:
   - "python -m compileall -f ."
-  # - "python setup.py test"
-  # - "python setup.py develop"
+  - "python setup.py test"
+  - "python setup.py develop"
   - "py.test"
 
 notifications:
