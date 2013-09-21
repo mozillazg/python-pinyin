@@ -150,8 +150,10 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     options = {'style': style, 'heteronym': heteronym}
     phrases = jieba.cut(hans)
     pys = []
-    for i in phrases:
-        words = i
+    for words in phrases:
+        if not re.match(ur'^[\u4e00-\u9fff]+$', words):
+            pys.append([words])
+            continue
         if len(words) == 1:
             pys.append(single_pinyin(words, options))
         else:
