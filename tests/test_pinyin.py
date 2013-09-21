@@ -7,6 +7,7 @@ from pypinyin import pinyin, slug
 
 def test_pinyin():
     hans = u'中心'
+    assert pinyin(hans) == [[u'zh\u014dng'], [u'x\u012bn']]
     assert pinyin(hans, pypinyin.STYLE_NORMAL) == [[u'zhong'], [u'xin']]
     assert pinyin(hans, pypinyin.STYLE_TONE) == [[u'zh\u014dng'], [u'x\u012bn']]
     assert pinyin(hans, pypinyin.STYLE_TONE2) == [[u'zho1ng'], [u'xi1n']]
