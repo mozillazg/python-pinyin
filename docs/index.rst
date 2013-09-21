@@ -48,7 +48,7 @@ Basic Usage
     [[u'zh\u014dng'], [u'x\u012bn']]
     >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(hans, pypinyin.STYLE_INITIALS)  # 设置拼音风格
+    >>> pinyin(u'中心', pypinyin.STYLE_INITIALS)  # 设置拼音风格
     [['zh'], ['x']]
 
 
