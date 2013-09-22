@@ -4,7 +4,7 @@
 import sys
 import os
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 

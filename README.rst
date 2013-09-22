@@ -1,5 +1,5 @@
-Python 拼音
-===========
+汉语拼音转换工具(Python 版)
+===========================
 
 |Build| |Pypi version| |Pypi downloads|
 

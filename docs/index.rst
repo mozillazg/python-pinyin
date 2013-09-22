@@ -83,6 +83,23 @@ API
 .. autofunction:: pypinyin.slug
 
 
+Changelog
+---------
+
+0.2.0 (2013-09-22)
+``````````````````
+
+* 完善对中英文混合字符串的支持::
+
+    >> pypinyin.pinyin(u'你好abc')
+    [[u'n\u01d0'], [u'h\u01ceo'], [u'abc']]
+
+0.1.0 (2013-09-21)
+``````````````````
+
+* Initial Release
+
+
 Indices and tables
 ------------------
 
