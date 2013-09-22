@@ -151,6 +151,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     phrases = jieba.cut(hans)
     pys = []
     for words in phrases:
+        # 不处理非中文字符
         if not re.match(ur'^[\u4e00-\u9fff]+$', words):
             pys.append([words])
             continue
