@@ -24,18 +24,21 @@ PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
 INITIALS = "zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w".split(",")
 # 韵母表
-FINALS = "ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,ve,a,o,e,i,u,v"
-FINALS = FINALS.split(",")
+FINALS = "ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,"\
+         "ve,a,o,e,i,u,v".split(",")
 
 PINYIN_STYLE = {
-    'NORMAL': 0,        # 普通风格，不带音标
-    'TONE': 1,          # 标准风格，音标在韵母的第一个字母上
-    'TONE2': 2,         # 声调中拼音之后，使用数字 1~4 标识
-    'INITIALS': 3,      # 仅需要声母部分
-    'FIRST_LETTER': 4   # 仅保留首字母
+    'NORMAL': 0,          # 普通风格，不带声调
+    'TONE': 1,            # 标准风格，声调在韵母的第一个字母上
+    'TONE2': 2,           # 声调在拼音之后，使用数字 1~4 标识
+    'INITIALS': 3,        # 仅保留声母部分
+    'FIRST_LETTER': 4,    # 仅保留首字母
+    'FINALS': 5,          # 仅保留韵母部分，带声调
+    'FINALS_NORMAL': 6,   # 仅保留韵母部分，不带声调
+    'FINALS_TONE2': 7,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 }
 
-# 带音标字符
+# 带声调字符
 PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
 re_phonetic_symbol_source = ""
 for k in PHONETIC_SYMBOL:
@@ -47,6 +50,9 @@ STYLE_NORMAL = PINYIN_STYLE['NORMAL']
 STYLE_TONE = PINYIN_STYLE['TONE']
 STYLE_TONE2 = PINYIN_STYLE['TONE2']
 STYLE_INITIALS = PINYIN_STYLE['INITIALS']
+STYLE_FINALS = PINYIN_STYLE['FINALS']
+STYLE_FINALS_NORMAL = PINYIN_STYLE['FINALS_NORMAL']
+STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
 
 
@@ -64,6 +70,20 @@ def initials(pinyin):
     return ""
 
 
+def finals(pinyin):
+    """只显示不带声调的韵母.
+
+    :param pinyin: 不带声调的拼音
+    :type pinyin: str
+    :return: 韵母
+    :rtype: str
+    """
+    for i in FINALS:
+        if pinyin.endswith(i):
+            return i
+    return ""
+
+
 def toFixed(pinyin, style):
     """修改拼音词库表中的格式.
 
@@ -72,10 +92,8 @@ def toFixed(pinyin, style):
     """
     if style == PINYIN_STYLE['INITIALS']:
         return initials(pinyin)
-    # elif style == PINYIN_STYLE['FIRST_LETTER']:
-    #     return pinyin[0]
-    elif style == PINYIN_STYLE['NORMAL'] or\
-            style == PINYIN_STYLE['FIRST_LETTER']:
+    elif style in [PINYIN_STYLE['NORMAL'], PINYIN_STYLE['FIRST_LETTER'],
+                   PINYIN_STYLE['FINALS_NORMAL']]:
         def _replace(matchobj):
             x = matchobj.group(0)
             return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[x])
@@ -88,8 +106,11 @@ def toFixed(pinyin, style):
             x = matchobj.group(0)
             return x
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
+
     if style == PINYIN_STYLE['FIRST_LETTER']:
         py = py[0]
+    elif style == PINYIN_STYLE['FINALS_NORMAL']:
+        py = finals(py)
     return py
 
 
