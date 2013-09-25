@@ -72,9 +72,10 @@ def toFixed(pinyin, style):
     """
     if style == PINYIN_STYLE['INITIALS']:
         return initials(pinyin)
-    elif style == PINYIN_STYLE['FIRST_LETTER']:
-        return pinyin[0]
-    elif style == PINYIN_STYLE['NORMAL']:
+    # elif style == PINYIN_STYLE['FIRST_LETTER']:
+    #     return pinyin[0]
+    elif style == PINYIN_STYLE['NORMAL'] or\
+            style == PINYIN_STYLE['FIRST_LETTER']:
         def _replace(matchobj):
             x = matchobj.group(0)
             return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[x])
@@ -87,6 +88,8 @@ def toFixed(pinyin, style):
             x = matchobj.group(0)
             return x
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
+    if style == PINYIN_STYLE['FIRST_LETTER']:
+        py = py[0]
     return py
 
 
