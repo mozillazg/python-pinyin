@@ -22,10 +22,10 @@ PHRASES_DICT = phrases_dict.phrases_dict
 # 拼音词库
 PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
-INITIALS = "zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w".split(",")
+INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
 # 韵母表
-FINALS = "ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,"\
-         "ve,a,o,e,i,u,v".split(",")
+FINALS = 'ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,'\
+         've,a,o,e,i,u,v'.split(',')
 
 PINYIN_STYLE = {
     'NORMAL': 0,          # 普通风格，不带声调
@@ -33,8 +33,8 @@ PINYIN_STYLE = {
     'TONE2': 2,           # 声调在拼音之后，使用数字 1~4 标识
     'INITIALS': 3,        # 仅保留声母部分
     'FIRST_LETTER': 4,    # 仅保留首字母
-    'FINALS': 5,          # 仅保留韵母部分，带声调
-    'FINALS_NORMAL': 6,   # 仅保留韵母部分，不带声调
+    'FINALS': 5,          # 仅保留韵母部分，不带声调
+    'FINALS_TONE': 6,     # 仅保留韵母部分，带声调
     'FINALS_TONE2': 7,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 }
 
@@ -51,15 +51,15 @@ STYLE_TONE = PINYIN_STYLE['TONE']
 STYLE_TONE2 = PINYIN_STYLE['TONE2']
 STYLE_INITIALS = PINYIN_STYLE['INITIALS']
 STYLE_FINALS = PINYIN_STYLE['FINALS']
-STYLE_FINALS_NORMAL = PINYIN_STYLE['FINALS_NORMAL']
+STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
 
 
-def initials(pinyin):
-    """只显示声母.
+def initial(pinyin):
+    """获取单个拼音中的声母.
 
-    :param pinyin: 拼音
+    :param pinyin: 单个拼音
     :type pinyin: str
     :return: 声母
     :rtype: str
@@ -67,21 +67,21 @@ def initials(pinyin):
     for i in INITIALS:
         if pinyin.startswith(i):
             return i
-    return ""
+    return ''
 
 
-def finals(pinyin):
-    """只显示不带声调的韵母.
+def final(pinyin):
+    """获取单个拼音中的韵母.
 
-    :param pinyin: 不带声调的拼音
+    :param pinyin: 单个拼音
     :type pinyin: str
     :return: 韵母
     :rtype: str
     """
-    for i in FINALS:
-        if pinyin.endswith(i):
-            return i
-    return ""
+    initial_ = initial(pinyin) or None
+    if not initial_:
+        return pinyin
+    return ''.join(pinyin.split(initial_, 1))
 
 
 def toFixed(pinyin, style):
@@ -91,13 +91,13 @@ def toFixed(pinyin, style):
     :param style: 拼音风格
     """
     if style == PINYIN_STYLE['INITIALS']:
-        return initials(pinyin)
+        return initial(pinyin)
     elif style in [PINYIN_STYLE['NORMAL'], PINYIN_STYLE['FIRST_LETTER'],
-                   PINYIN_STYLE['FINALS_NORMAL']]:
+                   PINYIN_STYLE['FINALS']]:
         def _replace(matchobj):
             x = matchobj.group(0)
             return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[x])
-    elif style == PINYIN_STYLE['TONE2']:
+    elif style in [PINYIN_STYLE['TONE2'], PINYIN_STYLE['FINALS_TONE2']]:
         def _replace(matchobj):
             x = matchobj.group(0)
             return PHONETIC_SYMBOL[x]
@@ -109,8 +109,9 @@ def toFixed(pinyin, style):
 
     if style == PINYIN_STYLE['FIRST_LETTER']:
         py = py[0]
-    elif style == PINYIN_STYLE['FINALS_NORMAL']:
-        py = finals(py)
+    elif style in [PINYIN_STYLE['FINALS'], PINYIN_STYLE['FINALS_TONE'],
+                   PINYIN_STYLE['FINALS_TONE2']]:
+        py = final(py)
     return py
 
 
@@ -186,8 +187,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     return pys
 
 
-def slug(hans, style=STYLE_NORMAL, heteronym=False,
-         separator='-'):
+def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     """生成 slug 字符串.
 
     :param hans: 汉字
