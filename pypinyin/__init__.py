@@ -158,7 +158,7 @@ def phrases_pinyin(phrases, options):
 
 
 def pinyin(hans, style=STYLE_TONE, heteronym=False):
-    """将汉字转换为拼音.
+    u"""将汉字转换为拼音.
 
     :param hans: 汉字
     :type hans: unicode
@@ -166,6 +166,18 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     :param heteronym: 是否启用多音字
     :return: 拼音列表
     :rtype: list
+
+    Usage::
+
+      >>> from pypinyin import pinyin
+      >>> import pypinyin
+      >>> pinyin(u'中心')
+      [[u'zh\u014dng'], [u'x\u012bn']]
+      >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
+      [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
+      >>> pinyin(u'中心', pypinyin.STYLE_INITIALS)  # 设置拼音风格
+      [['zh'], ['x']]
+
     """
     if not isinstance(hans, basestring):
         return []
@@ -185,7 +197,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
 
 
 def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
-    """生成 slug 字符串.
+    u"""生成 slug 字符串.
 
     :param hans: 汉字
     :type hans: unicode
