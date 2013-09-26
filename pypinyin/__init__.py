@@ -23,9 +23,6 @@ PHRASES_DICT = phrases_dict.phrases_dict
 PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
 INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
-# 韵母表
-FINALS = 'ang,eng,ing,ong,an,en,in,un,er,ai,ei,ui,ao,ou,iu,ie,'\
-         've,a,o,e,i,u,v'.split(',')
 
 PINYIN_STYLE = {
     'NORMAL': 0,          # 普通风格，不带声调
