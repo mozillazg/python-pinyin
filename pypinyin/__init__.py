@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""汉语拼音转换工具."""
+u"""汉语拼音转换工具."""
 
 __title__ = 'pypinyin'
 __version__ = '0.3.0'
