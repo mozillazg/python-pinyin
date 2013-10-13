@@ -6,7 +6,7 @@ Changelog
 ------------------
 
 * 修复首字母风格无法正确处理只有韵母的汉字
-* 新增两个拼音风格:
+* 新增三个拼音风格:
     * ``pypinyin.STYLE_FINALS`` ：       韵母风格1，只返回各个拼音的韵母部分，不带声调。如： ``ong uo``
     * ``pypinyin.STYLE_FINALS_TONE`` ：   韵母风格2，带声调，声调在韵母第一个字母上。如： ``ōng uó``
     * ``pypinyin.STYLE_FINALS_TONE2`` ：  韵母风格2，带声调，声调在各个拼音之后，用数字 [0-4] 进行表示。如： ``o1ng uo2``
