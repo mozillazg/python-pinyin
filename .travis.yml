@@ -16,7 +16,7 @@ script:
   - "py.test --cov pypinyin tests/"
 
 after_script:
-  - "coveralls --verbose"
+  - "coveralls"
 
 notifications:
   email: false
