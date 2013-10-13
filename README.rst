@@ -1,7 +1,7 @@
 汉语拼音转换工具(Python 版)
 ===========================
 
-|Build| |Pypi version| |Pypi downloads|
+|Build| |Coverage| |Pypi version| |Pypi downloads|
 
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。基于 `pinyinjs <https://github.com/hotoo/node-pinyin>`__ 开发。
@@ -48,7 +48,9 @@ Basic Usage
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
-   :target: http://travis-ci.org/mozillazg/python-pinyin
+   :target: https://travis-ci.org/mozillazg/python-pinyin
+.. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.png?branch=master
+   :target: https://coveralls.io/r/mozillazg/python-pinyin
 .. |Pypi version| image:: https://pypip.in/v/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
 .. |Pypi downloads| image:: https://pypip.in/d/pypinyin/badge.png

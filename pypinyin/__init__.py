@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""汉语拼音转换工具."""
+u"""汉语拼音转换工具."""
 
 __title__ = 'pypinyin'
 __version__ = '0.3.0'
-__author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__author__ = u'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __license__ = 'MIT'
-__copyright__ = 'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__copyright__ = u'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__all__ = ['pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE', 'STYLE_TONE2',
+           'STYLE_INITIALS', 'STYLE_FINALS', 'STYLE_FINALS_TONE',
+           'STYLE_FINALS_TONE2', 'STYLE_FIRST_LETTER']
 
 import re
 from itertools import chain
