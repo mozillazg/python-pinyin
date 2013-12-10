@@ -121,17 +121,13 @@ def single_pinyin(han, options):
     :param han: 单个汉字
     :return: 返回拼音列表，多音字会有多个拼音项
     """
-    if not isinstance(han, basestring):
-        return []
-    if len(han) != 1:
-        return single_pinyin(han[0], options)
     if han not in PINYIN_DICT:
         return [han]
     pys = PINYIN_DICT[han].split(",")
     if not options['heteronym']:
         return [toFixed(pys[0], options['style'])]
 
-    # 临时存储已存在的拼音，避免多音字拼音转换为非注音风格出现重复。
+    # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
     py_cached = {}
     pinyins = []
     for i in pys:
@@ -195,7 +191,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
         if len(words) == 1:
             pys.append(single_pinyin(words, options))
         else:
-            pys = pys + phrases_pinyin(words, options)
+            pys.extend(phrases_pinyin(words, options))
     return pys
 
 
