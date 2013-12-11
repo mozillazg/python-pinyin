@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pypinyin import pinyin, slug
-from pypinyin import STYLE_NORMAL, STYLE_TONE, STYLE_TONE2, STYLE_INITIALS
-from pypinyin import STYLE_FIRST_LETTER, STYLE_FINALS, STYLE_FINALS_TONE
-from pypinyin import STYLE_FINALS_TONE2
+from pypinyin import pinyin, slug, lazy_pinyin
+from pypinyin import (STYLE_NORMAL, STYLE_TONE, STYLE_TONE2, STYLE_INITIALS,
+                       STYLE_FIRST_LETTER, STYLE_FINALS, STYLE_FINALS_TONE,
+                       STYLE_FINALS_TONE2)
 
 
 def test_pinyin_initials():
@@ -78,3 +78,7 @@ def test_others():
     assert pinyin(u'の') == [[u'\u306e']]
     # 没有读音的汉字，还不存在的汉字
     assert pinyin(u'\u9fff') == [[u'\u9fff']]
+
+
+def test_lazy_pinyin():
+    assert lazy_pinyin(u'中国人') == ['zhong', 'guo', 'ren']

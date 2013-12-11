@@ -206,3 +206,14 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     :return: slug 字符串.
     """
     return separator.join(chain(*pinyin(hans, style, heteronym)))
+
+
+def lazy_pinyin(hans):
+    """不包含音标和多音字的拼音列表.
+
+    :param hans: 汉字
+    :type hans: unicode
+    :return: 拼音列表(e.g. ['zhong', 'guo', 'ren'])
+    :rtype: list
+    """
+    return list(chain(*pinyin(hans, style=STYLE_NORMAL, heteronym=False)))
