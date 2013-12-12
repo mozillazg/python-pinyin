@@ -174,7 +174,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       [[u'zh\u014dng'], [u'x\u012bn']]
       >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
       [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', pypinyin.STYLE_INITIALS)  # 设置拼音风格
+      >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
       [['zh'], ['x']]
 
     """
@@ -208,12 +208,15 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     return separator.join(chain(*pinyin(hans, style, heteronym)))
 
 
-def lazy_pinyin(hans):
+def lazy_pinyin(hans, style=STYLE_NORMAL):
     """不包含音标和多音字的拼音列表.
+
+    与 ```pinyin``` 的区别是返回的拼音是个字符串.
 
     :param hans: 汉字
     :type hans: unicode
+    :param style: 指定拼音风格
     :return: 拼音列表(e.g. ['zhong', 'guo', 'ren'])
     :rtype: list
     """
-    return list(chain(*pinyin(hans, style=STYLE_NORMAL, heteronym=False)))
+    return list(chain(*pinyin(hans, style, heteronym=False)))
