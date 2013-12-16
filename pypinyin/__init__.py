@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-u"""汉语拼音转换工具."""
+from __future__ import unicode_literals
+
+"""汉语拼音转换工具."""
 
 __title__ = 'pypinyin'
 __version__ = '0.3.0'
-__author__ = u'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __license__ = 'MIT'
-__copyright__ = u'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__copyright__ = 'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __all__ = ['pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE', 'STYLE_TONE2',
            'STYLE_INITIALS', 'STYLE_FINALS', 'STYLE_FINALS_TONE',
            'STYLE_FINALS_TONE2', 'STYLE_FIRST_LETTER']
@@ -157,7 +159,7 @@ def phrases_pinyin(phrases, options):
 
 
 def pinyin(hans, style=STYLE_TONE, heteronym=False):
-    u"""将汉字转换为拼音.
+    """将汉字转换为拼音.
 
     :param hans: 汉字
     :type hans: unicode
@@ -196,7 +198,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
 
 
 def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
-    u"""生成 slug 字符串.
+    """生成 slug 字符串.
 
     :param hans: 汉字
     :type hans: unicode
@@ -211,12 +213,23 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
 def lazy_pinyin(hans, style=STYLE_NORMAL):
     """不包含音标和多音字的拼音列表.
 
-    与 ```pinyin``` 的区别是返回的拼音是个字符串.
+    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串.
 
     :param hans: 汉字
     :type hans: unicode
     :param style: 指定拼音风格
-    :return: 拼音列表(e.g. ['zhong', 'guo', 'ren'])
+    :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
+
+    Usage::
+
+      >>> from pypinyin import lazy_pinyin
+      >>> import pypinyin
+      >>> lazy_pinyin(u'中心')
+      [u'zhong', u'xin']
+      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE)
+      [u'zh\u014dng', u'x\u012bn']
+      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_INITIALS)
+      ['zh', 'x']
     """
-    return list(chain(*pinyin(hans, style, heteronym=False)))
+    return list(chain(*pinyin(hans, style=style, heteronym=False)))
