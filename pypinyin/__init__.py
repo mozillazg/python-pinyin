@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 """汉语拼音转换工具."""
 
 __title__ = 'pypinyin'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
@@ -211,9 +211,9 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
 
 
 def lazy_pinyin(hans, style=STYLE_NORMAL):
-    """不包含音标和多音字的拼音列表.
+    """不包含多音字的拼音列表.
 
-    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串.
+    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，并且每个字只包含一个读音.
 
     :param hans: 汉字
     :type hans: unicode

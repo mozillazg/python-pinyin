@@ -4,7 +4,7 @@
 import sys
 import os
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 
@@ -34,7 +34,7 @@ setup(
     description='汉语拼音转换工具',
     long_description=long_description(),
     url='https://github.com/mozillazg/python-pinyin',
-    download_url='https://github.com/mozillazg/python-pinyin',
+    download_url='https://github.com/mozillazg/python-pinyin/archive/master.zip',
     author=__author__,
     author_email='mozillazg101@gmail.com',
     license=__license__,
