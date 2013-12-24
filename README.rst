@@ -37,14 +37,16 @@ Basic Usage
 
 .. code-block:: python
 
-    >>> from pypinyin import pinyin
+    >>> from pypinyin import pinyin, lazy_pinyin
     >>> import pypinyin
     >>> pinyin(u'中心')
     [[u'zh\u014dng'], [u'x\u012bn']]
     >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', pypinyin.STYLE_INITIALS)  # 设置拼音风格
+    >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
     [['zh'], ['x']]
+    >>> lazy_pinyin(u'中心')
+    ['zhong', 'xin']
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master

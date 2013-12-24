@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-u"""汉语拼音转换工具."""
+from __future__ import unicode_literals
+
+"""汉语拼音转换工具."""
 
 __title__ = 'pypinyin'
-__version__ = '0.3.0'
-__author__ = u'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__version__ = '0.3.1'
+__author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __license__ = 'MIT'
-__copyright__ = u'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__copyright__ = 'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __all__ = ['pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE', 'STYLE_TONE2',
            'STYLE_INITIALS', 'STYLE_FINALS', 'STYLE_FINALS_TONE',
            'STYLE_FINALS_TONE2', 'STYLE_FIRST_LETTER']
@@ -121,17 +123,13 @@ def single_pinyin(han, options):
     :param han: 单个汉字
     :return: 返回拼音列表，多音字会有多个拼音项
     """
-    if not isinstance(han, basestring):
-        return []
-    if len(han) != 1:
-        return single_pinyin(han[0], options)
     if han not in PINYIN_DICT:
         return [han]
     pys = PINYIN_DICT[han].split(",")
     if not options['heteronym']:
         return [toFixed(pys[0], options['style'])]
 
-    # 临时存储已存在的拼音，避免多音字拼音转换为非注音风格出现重复。
+    # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
     py_cached = {}
     pinyins = []
     for i in pys:
@@ -161,7 +159,7 @@ def phrases_pinyin(phrases, options):
 
 
 def pinyin(hans, style=STYLE_TONE, heteronym=False):
-    u"""将汉字转换为拼音.
+    """将汉字转换为拼音.
 
     :param hans: 汉字
     :type hans: unicode
@@ -178,7 +176,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       [[u'zh\u014dng'], [u'x\u012bn']]
       >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
       [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', pypinyin.STYLE_INITIALS)  # 设置拼音风格
+      >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
       [['zh'], ['x']]
 
     """
@@ -195,12 +193,12 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
         if len(words) == 1:
             pys.append(single_pinyin(words, options))
         else:
-            pys = pys + phrases_pinyin(words, options)
+            pys.extend(phrases_pinyin(words, options))
     return pys
 
 
 def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
-    u"""生成 slug 字符串.
+    """生成 slug 字符串.
 
     :param hans: 汉字
     :type hans: unicode
@@ -210,3 +208,28 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     :return: slug 字符串.
     """
     return separator.join(chain(*pinyin(hans, style, heteronym)))
+
+
+def lazy_pinyin(hans, style=STYLE_NORMAL):
+    """不包含多音字的拼音列表.
+
+    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，并且每个字只包含一个读音.
+
+    :param hans: 汉字
+    :type hans: unicode
+    :param style: 指定拼音风格
+    :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
+    :rtype: list
+
+    Usage::
+
+      >>> from pypinyin import lazy_pinyin
+      >>> import pypinyin
+      >>> lazy_pinyin(u'中心')
+      [u'zhong', u'xin']
+      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE)
+      [u'zh\u014dng', u'x\u012bn']
+      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_INITIALS)
+      ['zh', 'x']
+    """
+    return list(chain(*pinyin(hans, style=style, heteronym=False)))
