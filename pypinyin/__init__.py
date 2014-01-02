@@ -9,7 +9,7 @@ __title__ = 'pypinyin'
 __version__ = '0.3.1'
 __author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __license__ = 'MIT'
-__copyright__ = 'Copyright (c) 2013 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
 __all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE',
            'STYLE_TONE2', 'STYLE_INITIALS', 'STYLE_FINALS',
            'STYLE_FINALS_TONE', 'STYLE_FINALS_TONE2',
@@ -178,11 +178,11 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
       [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
       >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
-      [['zh'], ['x']]
+      [[u'zh'], [u'x']]
+      >>> pinyin(u'中心', style=pypinyin.STYLE_TONE2)
+      [[u'zho1ng'], [u'xi1n']]
 
     """
-    if not isinstance(hans, basestring):
-        return []
     options = {'style': style, 'heteronym': heteronym}
     phrases = jieba.cut(hans)
     pys = []
@@ -231,6 +231,8 @@ def lazy_pinyin(hans, style=STYLE_NORMAL):
       >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE)
       [u'zh\u014dng', u'x\u012bn']
       >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_INITIALS)
-      ['zh', 'x']
+      [u'zh', u'x']
+      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE2)
+      [u'zho1ng', u'xi1n']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False)))

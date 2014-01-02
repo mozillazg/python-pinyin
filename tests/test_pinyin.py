@@ -68,8 +68,6 @@ def test_zh_and_en():
 
 
 def test_others():
-    # 非字符串
-    assert pinyin(1) == []
     # 空字符串
     assert pinyin('') == []
     # 单个汉字
