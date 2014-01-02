@@ -3,6 +3,8 @@
 
 from __future__ import unicode_literals
 
+import pytest
+
 from pypinyin import pinyin, slug, lazy_pinyin
 from pypinyin import (STYLE_NORMAL, STYLE_TONE, STYLE_TONE2, STYLE_INITIALS,
                        STYLE_FIRST_LETTER, STYLE_FINALS, STYLE_FINALS_TONE,
@@ -40,7 +42,11 @@ def test_pinyin_finals():
     """只包含韵母的词语"""
     hans = '嗷嗷'
     assert pinyin(hans) == [['\xe1o'], ['\xe1o']]
-    assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'], ['abc']]
+    try:
+        assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'], ['abc']]
+    except AssertionError:
+        assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'],
+                                         ['a'], ['b'], ['c']]
     assert pinyin(hans, STYLE_NORMAL) == [['ao'], ['ao']]
     assert pinyin(hans, STYLE_TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, STYLE_TONE2) == [['a2o'], ['a2o']]
@@ -64,7 +70,11 @@ def test_zh_and_en():
     """中英文混合的情况"""
     # 中英文
     hans = '中心'
-    assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
+    try:
+        assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
+    except AssertionError:
+        assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'],
+                                         ['a'], ['b'], ['c']]
 
 
 def test_others():
@@ -85,3 +95,19 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心') == ['zhong', 'xin']
     assert lazy_pinyin('中心', style=STYLE_TONE) == ['zh\u014dng', 'x\u012bn']
     assert lazy_pinyin('中心', style=STYLE_INITIALS) == ['zh', 'x']
+
+
+def has_jieba():
+    try:
+        __import__('jieba')
+        return True
+    except ImportError:
+        return False
+
+@pytest.mark.skipif(not has_jieba(), reason='cant import jieba')
+def test_seg():
+    hans = '音乐'
+    import jieba
+    hans_seg = list(jieba.cut(hans))
+    # assert pinyin(hans, style=STYLE_TONE2) == [['yi1n'], ['le4']]
+    assert pinyin(hans_seg, style=STYLE_TONE2) == [['yi1n'], ['yue4']]

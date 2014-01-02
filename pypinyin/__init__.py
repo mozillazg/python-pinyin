@@ -19,8 +19,6 @@ import re
 from itertools import chain
 from copy import deepcopy
 
-import jieba
-
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
 # 词语拼音库
@@ -162,8 +160,11 @@ def phrases_pinyin(phrases, options):
 def pinyin(hans, style=STYLE_TONE, heteronym=False):
     """将汉字转换为拼音.
 
-    :param hans: 汉字
-    :type hans: unicode
+    :param hans: 汉字字符串(u'你好吗')或列表([u'你好', u'吗'])
+                 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
+                 用户也可以使用自己喜爱的分词模块对字符串进行分词处理。
+                 只需将进行过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
     :return: 拼音列表
@@ -181,12 +182,20 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       [[u'zh'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.STYLE_TONE2)
       [[u'zho1ng'], [u'xi1n']]
+      >>> import jieba  # 分词
+      >>> pinyin(jieba.cut(u'中心'), style=pypinyin.STYLE_TONE2)
+      [[u'zho1ng'], [u'xi1n']]
 
     """
     options = {'style': style, 'heteronym': heteronym}
-    phrases = jieba.cut(hans)
+    if isinstance(hans, basestring):
+        try:
+            import jieba
+            hans = jieba.cut(hans)
+        except ImportError:
+            pass
     pys = []
-    for words in phrases:
+    for words in hans:
         # 不处理非中文字符
         if not re.match(ur'^[\u4e00-\u9fff]+$', words):
             pys.append([words])
@@ -202,7 +211,7 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     """生成 slug 字符串.
 
     :param hans: 汉字
-    :type hans: unicode
+    :type hans: unicode or list
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
     :param separstor: 两个拼音间的分隔符/连接符
@@ -217,7 +226,7 @@ def lazy_pinyin(hans, style=STYLE_NORMAL):
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，并且每个字只包含一个读音.
 
     :param hans: 汉字
-    :type hans: unicode
+    :type hans: unicode or list
     :param style: 指定拼音风格
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
