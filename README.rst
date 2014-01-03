@@ -10,7 +10,7 @@
 * GitHub: https://github.com/mozillazg/python-pinyin
 * Free software: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
-* Python version: 2.6, 2.7
+* Python version: 2.6, 2.7, 3.3
 
 
 .. 特性

@@ -21,6 +21,11 @@ from copy import deepcopy
 
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
+try:
+    unicode        # python 2
+except NameError:
+    unicode = str  # python 3
+
 # 词语拼音库
 PHRASES_DICT = phrases_dict.phrases_dict
 # 拼音词库
@@ -188,7 +193,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
 
     """
     options = {'style': style, 'heteronym': heteronym}
-    if isinstance(hans, basestring):
+    if isinstance(hans, unicode):
         try:
             import jieba
             hans = jieba.cut(hans)
@@ -197,7 +202,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     pys = []
     for words in hans:
         # 不处理非中文字符
-        if not re.match(ur'^[\u4e00-\u9fff]+$', words):
+        if not re.match(r'^[\u4e00-\u9fff]+$', words):
             pys.append([words])
             continue
         if len(words) == 1:
