@@ -2,15 +2,16 @@ language: python
 python:
   - "2.6"
   - "2.7"
+  - "pypy"
+  - "3.3"
 
 install:
   - "pip install coveralls"
   - "pip install pytest-cov"
-  - "pip install -r requirements.txt --use-mirrors"
   - "pip install -e . --use-mirrors"
 
 script:
-  - "python -m compileall -f ."
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements.txt --use-mirrors; fi
   - "python setup.py test"
   - "python setup.py develop"
   - "py.test --cov pypinyin tests/"
