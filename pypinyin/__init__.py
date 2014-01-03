@@ -187,9 +187,6 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       [[u'zh'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.STYLE_TONE2)
       [[u'zho1ng'], [u'xi1n']]
-      >>> import jieba  # 分词
-      >>> pinyin(jieba.cut(u'中心'), style=pypinyin.STYLE_TONE2)
-      [[u'zho1ng'], [u'xi1n']]
 
     """
     options = {'style': style, 'heteronym': heteronym}
