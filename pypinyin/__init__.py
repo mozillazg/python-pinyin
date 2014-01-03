@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 """汉语拼音转换工具."""
+
+from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
 __version__ = '0.3.1'
-__author__ = 'mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
-__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘 <hotoo.cn@gmail.com>'
+__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
 __all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE',
            'STYLE_TONE2', 'STYLE_INITIALS', 'STYLE_FINALS',
            'STYLE_FINALS_TONE', 'STYLE_FINALS_TONE2',
