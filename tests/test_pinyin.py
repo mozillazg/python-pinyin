@@ -5,7 +5,8 @@ from __future__ import unicode_literals
 
 import pytest
 
-from pypinyin import pinyin, slug, lazy_pinyin
+from pypinyin import (pinyin, slug, lazy_pinyin, load_single_dict,
+                       load_phrases_dict)
 from pypinyin import (STYLE_NORMAL, STYLE_TONE, STYLE_TONE2, STYLE_INITIALS,
                        STYLE_FIRST_LETTER, STYLE_FINALS, STYLE_FINALS_TONE,
                        STYLE_FINALS_TONE2)
@@ -102,7 +103,7 @@ def has_jieba():
         __import__('jieba')
         return True
     except ImportError:
-        return False
+        pass
 
 @pytest.mark.skipif(not has_jieba(), reason='cant import jieba')
 def test_seg():
@@ -111,3 +112,21 @@ def test_seg():
     hans_seg = list(jieba.cut(hans))
     # assert pinyin(hans, style=STYLE_TONE2) == [['yi1n'], ['le4']]
     assert pinyin(hans_seg, style=STYLE_TONE2) == [['yi1n'], ['yue4']]
+
+
+def test_custom_pinyin_dict():
+    hans = '桔'
+    try:
+        assert lazy_pinyin(hans, style=STYLE_TONE2) == ['jie2']
+    except AssertionError:
+        load_single_dict({'桔': ['jú', 'jié']})
+        assert lazy_pinyin(hans, style=STYLE_TONE2) == ['ju2']
+    hans = '桔子'
+    try:
+        assert lazy_pinyin(hans, style=STYLE_TONE2) == ['jie2', 'zi3']
+    except AssertionError:
+        load_phrases_dict({'桔子': [['jú'], ['zǐ']]})
+        assert lazy_pinyin(hans, style=STYLE_TONE2) == ['ju2', 'zi3']
+
+
+    

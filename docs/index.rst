@@ -3,13 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pypinyin's documentation!
-====================================
+汉语拼音转换工具（Python 版）
+=============================
 
 |Build| |Coverage| |Pypi version| |Pypi downloads|
 
 
-将汉语转为拼音。可以用于汉字注音、排序、检索。基于 `pinyinjs <https://github.com/hotoo/node-pinyin>`__ 开发。
+将汉语转为拼音。可以用于汉字注音、排序、检索。
+
+基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
 
 * 文档 http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
@@ -34,7 +36,7 @@ Welcome to pypinyin's documentation!
 
     $ pip install pypinyin
 
-为了更好的处理多音字及中英文混合的字符串，
+为了更好的包含处理多音字及中英文混合的字符串，
 推荐安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
 
 
@@ -70,16 +72,33 @@ Welcome to pypinyin's documentation!
        >> from pypinyin import lazy_pinyin, STYLE_TONE2
        >> from snownlp import SnowNLP
        >> hans = u'音乐123'
-       >>
+       >> 
        >> lazy_pinyin(hans, style=STYLE_TONE2)
-       >> [u'yi1n', u'le4', u'1', u'2', u'3']
+       [u'yi1n', u'le4', u'1', u'2', u'3']
        >>
        >> hans_seg = SnowNLP(hans).words  # 分词处理
        >> hans_seg
-       >> [u'\u97f3\u4e50', u'123']
+       [u'\u97f3\u4e50', u'123']
        >> lazy_pinyin(hans_seg, style=STYLE_TONE2)
-       >> [u'yi1n', u'yue4', u'123']
+       [u'yi1n', u'yue4', u'123']
 
+
+自定义拼音库
+------------
+
+如果对结果不满意，可以通过自定义拼音库的方式修正结果：
+
+.. code-block:: python
+
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, STYLE_TONE2
+    >> hans = u'桔子'
+    >> 
+    >> lazy_pinyin(hans, style=STYLE_TONE2)
+    [u'jie2', u'zi3']
+    >> 
+    >> load_phrases_dict({u'桔子': [[u'jú'], [u'zǐ']]})
+    >> lazy_pinyin(hans, style=STYLE_TONE2)
+    [u'ju2', u'zi3']
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
@@ -122,13 +141,23 @@ API
 
 .. autofunction:: pypinyin.lazy_pinyin
 
+.. autofunction:: pypinyin.load_single_dict
+
+.. autofunction:: pypinyin.load_phrases_dict
+
 
 Changelog
 ---------
 
 
-0.4.0 (2014-01-3)
-+++++++++++++++++
+0.4.1 (2014-01-04)
+++++++++++++++++++
+
+* 支持自定义拼音库，方便用户修正程序结果
+
+
+0.4.0 (2014-01-03)
+++++++++++++++++++
 
 * 将 ``jieba`` 模块改为可选安装，用户可以选择使用自己喜爱的分词模块对汉字进行分词处理
 * 支持 Python 3

@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -28,7 +28,7 @@ except NameError:
 
 # 词语拼音库
 PHRASES_DICT = phrases_dict.phrases_dict
-# 拼音词库
+# 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
 INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
@@ -60,6 +60,27 @@ STYLE_FINALS = PINYIN_STYLE['FINALS']
 STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
+
+
+def load_single_dict(pinyin_dict):
+    """载入用户自定义的单字拼音库
+
+    :param pinyin_dict: 单字拼音库。比如： {u"阿": u"ā,ē"}
+    :type pinyin_dict: dict
+
+    """
+    PINYIN_DICT.update(pinyin_dict)
+
+
+
+def load_phrases_dict(phrases_dict):
+    """载入用户自定义的词语拼音库
+
+    :param phrases_dict: 词语拼音库。比如： {u"阿爸": [[u"ā"], [u"bà"]]}
+    :type phrases_dict: dict
+
+    """
+    PHRASES_DICT.update(phrases_dict)
 
 
 def initial(pinyin):
