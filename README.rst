@@ -8,7 +8,7 @@
 
 基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
 
-* 文档 http://pypinyin.rtfd.org
+* 文档: http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
 * 开源协议: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
