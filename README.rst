@@ -31,8 +31,8 @@
 
     $ pip install pypinyin
 
-为了更好的包含处理多音字及中英文混合的字符串，
-推荐安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
+为了更好的处理包含多音字及非中文字符的字符串，
+推荐同时安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
 
 
 使用示例
