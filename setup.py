@@ -19,6 +19,10 @@ packages = [
     'pypinyin',
 ]
 
+requirements = []
+if sys.version_info[:2] < (2, 7):
+    requirements.append('argparse')
+
 
 def long_description():
     return open('README.rst').read() + '\n\n' + open('CHANGELOG.rst').read()
@@ -37,7 +41,13 @@ setup(
     package_data={'': ['LICENSE.txt']},
     package_dir={'pypinyin': 'pypinyin'},
     include_package_data=True,
+    install_requires=requirements,
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'pypinyin = pypinyin.cmd:main',
+        ],
+    },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
