@@ -56,7 +56,7 @@ def main():
     logging.disable(logging.CRITICAL)
     result = func(hans, style=style, **kwargs[func.func_name])
 
-    if isinstance(result, (list, tuple)):
+    if result and isinstance(result, (list, tuple)):
         if isinstance(result[0], (list, tuple)):
             print(' '.join([','.join(s) for s in result]))
         else:

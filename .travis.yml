@@ -15,7 +15,7 @@ script:
   - "python setup.py test"
   - "python setup.py develop"
   - "py.test --cov pypinyin tests/"
-  - "pypinyin 音乐"
+  # - "pypinyin 音乐"
 
 after_script:
   - "coveralls"
