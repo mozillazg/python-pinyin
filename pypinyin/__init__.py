@@ -73,7 +73,7 @@ RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 def load_single_dict(pinyin_dict):
     """载入用户自定义的单字拼音库
 
-    :param pinyin_dict: 单字拼音库。比如： {u"阿": u"ā,ē"}
+    :param pinyin_dict: 单字拼音库。比如： ``{u"阿": u"ā,ē"}``
     :type pinyin_dict: dict
 
     """
@@ -83,7 +83,7 @@ def load_single_dict(pinyin_dict):
 def load_phrases_dict(phrases_dict):
     """载入用户自定义的词语拼音库
 
-    :param phrases_dict: 词语拼音库。比如： {u"阿爸": [[u"ā"], [u"bà"]]}
+    :param phrases_dict: 词语拼音库。比如： ``{u"阿爸": [[u"ā"], [u"bà"]]}``
     :type phrases_dict: dict
 
     """
@@ -193,10 +193,10 @@ def phrases_pinyin(phrases, options):
 def pinyin(hans, style=TONE, heteronym=False):
     """将汉字转换为拼音.
 
-    :param hans: 汉字字符串(u'你好吗')或列表([u'你好', u'吗'])
-                 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
-                 用户也可以使用自己喜爱的分词模块对字符串进行分词处理。
-                 只需将进行过分词处理的字符串列表传进来就可以了。
+    :param hans: | 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` )
+                 | 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
+                 | 用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 | 只需将进行过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字

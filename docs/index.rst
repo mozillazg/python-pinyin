@@ -3,6 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+
 汉语拼音转换工具（Python 版）
 =============================
 
@@ -13,20 +14,20 @@
 
 基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
 
-* 文档 http://pypinyin.rtfd.org
+* 文档: http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
 * 开源协议: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
 * Python 版本: 2.6, 2.7, pypy, 3.3
 
 
-.. 特性
-.. ----
-.. 
-.. * 根据词组智能匹配最正确的拼音。
-.. * 支持多音字。
-.. * 简单的繁体支持。
-.. * 支持多种不同拼音风格。
+特性
+----
+
+* 根据词组智能匹配最正确的拼音。
+* 支持多音字。
+* 简单的繁体支持。
+* 支持多种不同拼音风格。
 
 
 安装
@@ -51,10 +52,18 @@
     [[u'zh\u014dng'], [u'x\u012bn']]
     >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
+    >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
     [['zh'], ['x']]
     >>> lazy_pinyin(u'中心')
     ['zhong', 'xin']
+
+命令行工具：
+
+.. code-block:: console
+
+    $ pypinyin 音乐
+    yīn yuè
+    $ pypinyin -h
 
 
 分词处理
@@ -69,17 +78,17 @@
 
    .. code-block:: python
 
-       >> from pypinyin import lazy_pinyin, TONE2
+       >> from pypinyin import lazy_pinyin, STYLE_TONE2
        >> from snownlp import SnowNLP
        >> hans = u'音乐123'
        >> 
-       >> lazy_pinyin(hans, style=TONE2)
+       >> lazy_pinyin(hans, style=STYLE_TONE2)
        [u'yi1n', u'le4', u'1', u'2', u'3']
        >>
        >> hans_seg = SnowNLP(hans).words  # 分词处理
        >> hans_seg
        [u'\u97f3\u4e50', u'123']
-       >> lazy_pinyin(hans_seg, style=TONE2)
+       >> lazy_pinyin(hans_seg, style=STYLE_TONE2)
        [u'yi1n', u'yue4', u'123']
 
 
@@ -90,14 +99,14 @@
 
 .. code-block:: python
 
-    >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, STYLE_TONE2
     >> hans = u'桔子'
     >> 
-    >> lazy_pinyin(hans, style=TONE2)
+    >> lazy_pinyin(hans, style=STYLE_TONE2)
     [u'jie2', u'zi3']
     >> 
     >> load_phrases_dict({u'桔子': [[u'jú'], [u'zǐ']]})
-    >> lazy_pinyin(hans, style=TONE2)
+    >> lazy_pinyin(hans, style=STYLE_TONE2)
     [u'ju2', u'zi3']
 
 
@@ -109,6 +118,7 @@
    :target: https://crate.io/packages/pypinyin
 .. |Pypi downloads| image:: https://pypip.in/d/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
+
 
 
 API
@@ -150,6 +160,13 @@ Changelog
 ---------
 
 
+0.4.2 (2014-xx-yy)
+++++++++++++++++++
+
+* 去除拼音风格前的 ``STYLE_`` 前缀（兼容包含 ``STYLE_`` 前缀的拼音风格）
+* 增加命令行工具，具体用法请见： ``pypinyin -h``
+
+
 0.4.1 (2014-01-04)
 ++++++++++++++++++
 
@@ -178,9 +195,9 @@ Changelog
 * 修复首字母风格无法正确处理只有韵母的汉字
 
 * 新增三个拼音风格:
-    * ``pypinyin.FINALS`` ：       韵母风格1，只返回各个拼音的韵母部分，不带声调。如： ``ong uo``
-    * ``pypinyin.FINALS_TONE`` ：   韵母风格2，带声调，声调在韵母第一个字母上。如： ``ōng uó``
-    * ``pypinyin.FINALS_TONE2`` ：  韵母风格2，带声调，声调在各个拼音之后，用数字 [0-4] 进行表示。如： ``o1ng uo2``
+    * ``pypinyin.STYLE_FINALS`` ：       韵母风格1，只返回各个拼音的韵母部分，不带声调。如： ``ong uo``
+    * ``pypinyin.STYLE_FINALS_TONE`` ：   韵母风格2，带声调，声调在韵母第一个字母上。如： ``ōng uó``
+    * ``pypinyin.STYLE_FINALS_TONE2`` ：  韵母风格2，带声调，声调在各个拼音之后，用数字 [0-4] 进行表示。如： ``o1ng uo2``
 
 
 0.2.0 (2013-09-22)
@@ -196,6 +213,7 @@ Changelog
 ++++++++++++++++++
 
 * Initial Release
+
 
 
 Indices and tables
