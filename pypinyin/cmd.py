@@ -15,9 +15,9 @@ parser = ArgumentParser(description='convert chinese to pinyin.')
 parser.add_argument('-V', '--version', action='version',
                     version='{0} {1}'.format(__title__, __version__))
 # 要执行的函数名称
-parser.add_argument('--func', help='function name (default: "lazy_pinyin")',
-                    choices=['pinyin', 'lazy_pinyin', 'slug'],
-                    default='lazy_pinyin')
+parser.add_argument('--func', help='function name (default: "pinyin")',
+                    choices=['pinyin', 'slug'],
+                    default='pinyin')
 # 拼音风格
 parser.add_argument('--style', help='pinyin style (default: "TONE")',
                     choices=['NORMAL', 'TONE', 'TONE2', 'INITIALS',
@@ -48,16 +48,16 @@ def main():
     separator = options.separator
 
     kwargs = {
-        'lazy_pinyin': {},
         'pinyin': {'heteronym': heteronym},
         'slug': {'heteronym': heteronym, 'separator': separator},
     }
+    import logging
+    # 禁用除 CRITICAL 外的日志消息
+    logging.disable(logging.CRITICAL)
     result = func(hans, style=style, **kwargs[func.func_name])
 
     if isinstance(result, (list, tuple)):
-        if isinstance(result[0], (str, unicode)):
-            print(' '.join(result))
-        elif isinstance(result[0], (list, tuple)):
+        if isinstance(result[0], (list, tuple)):
             print(' '.join([','.join(s) for s in result]))
         else:
             print(result)

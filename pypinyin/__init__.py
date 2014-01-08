@@ -16,9 +16,9 @@ __all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'NORMAL',
            'FINALS_TONE', 'STYLE_FINALS_TONE2', 'FINALS_TONE2',
            'STYLE_FIRST_LETTER', 'FIRST_LETTER']
 
-import re
-from itertools import chain
 from copy import deepcopy
+from itertools import chain
+import re
 
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
