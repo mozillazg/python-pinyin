@@ -11,7 +11,7 @@ install:
   - "pip install -e . --use-mirrors"
 
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements.txt --use-mirrors; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements_dev.txt --use-mirrors; fi
   - "python setup.py test"
   - "python setup.py develop"
   - "py.test --cov pypinyin tests/"

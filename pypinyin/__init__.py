@@ -6,18 +6,19 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
-__all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'STYLE_TONE',
-           'STYLE_TONE2', 'STYLE_INITIALS', 'STYLE_FINALS',
-           'STYLE_FINALS_TONE', 'STYLE_FINALS_TONE2',
-           'STYLE_FIRST_LETTER']
+__all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'NORMAL',
+           'STYLE_TONE', 'TONE', 'STYLE_TONE2', 'TONE2', 'STYLE_INITIALS',
+           'INITIALS', 'STYLE_FINALS', 'FINALS', 'STYLE_FINALS_TONE',
+           'FINALS_TONE', 'STYLE_FINALS_TONE2', 'FINALS_TONE2',
+           'STYLE_FIRST_LETTER', 'FIRST_LETTER']
 
-import re
-from itertools import chain
 from copy import deepcopy
+from itertools import chain
+import re
 
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
@@ -31,7 +32,7 @@ PHRASES_DICT = phrases_dict.phrases_dict
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
-INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
+_INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
 
 PINYIN_STYLE = {
     'NORMAL': 0,          # 普通风格，不带声调
@@ -43,6 +44,22 @@ PINYIN_STYLE = {
     'FINALS_TONE': 6,     # 仅保留韵母部分，带声调
     'FINALS_TONE2': 7,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 }
+# 普通风格，不带声调
+NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
+# 标准风格，声调在韵母的第一个字母上
+TONE = STYLE_TONE = PINYIN_STYLE['TONE']
+# 声调在拼音之后，使用数字 1~4 标识
+TONE2 = STYLE_TONE2 = PINYIN_STYLE['TONE2']
+# 仅保留声母部分
+INITIALS = STYLE_INITIALS = PINYIN_STYLE['INITIALS']
+# 仅保留首字母
+FIRST_LETTER = STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
+# 仅保留韵母部分，不带声调
+FINALS = STYLE_FINALS = PINYIN_STYLE['FINALS']
+# 仅保留韵母部分，带声调
+FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
+# 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
+FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 # 带声调字符
 PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
@@ -52,31 +69,21 @@ for k in PHONETIC_SYMBOL:
 RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 
-STYLE_NORMAL = PINYIN_STYLE['NORMAL']
-STYLE_TONE = PINYIN_STYLE['TONE']
-STYLE_TONE2 = PINYIN_STYLE['TONE2']
-STYLE_INITIALS = PINYIN_STYLE['INITIALS']
-STYLE_FINALS = PINYIN_STYLE['FINALS']
-STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
-STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
-STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
-
 
 def load_single_dict(pinyin_dict):
     """载入用户自定义的单字拼音库
 
-    :param pinyin_dict: 单字拼音库。比如： {u"阿": u"ā,ē"}
+    :param pinyin_dict: 单字拼音库。比如： ``{u"阿": u"ā,ē"}``
     :type pinyin_dict: dict
 
     """
     PINYIN_DICT.update(pinyin_dict)
 
 
-
 def load_phrases_dict(phrases_dict):
     """载入用户自定义的词语拼音库
 
-    :param phrases_dict: 词语拼音库。比如： {u"阿爸": [[u"ā"], [u"bà"]]}
+    :param phrases_dict: 词语拼音库。比如： ``{u"阿爸": [[u"ā"], [u"bà"]]}``
     :type phrases_dict: dict
 
     """
@@ -91,7 +98,7 @@ def initial(pinyin):
     :return: 声母
     :rtype: str
     """
-    for i in INITIALS:
+    for i in _INITIALS:
         if pinyin.startswith(i):
             return i
     return ''
@@ -183,13 +190,13 @@ def phrases_pinyin(phrases, options):
     return py
 
 
-def pinyin(hans, style=STYLE_TONE, heteronym=False):
+def pinyin(hans, style=TONE, heteronym=False):
     """将汉字转换为拼音.
 
-    :param hans: 汉字字符串(u'你好吗')或列表([u'你好', u'吗'])
-                 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
-                 用户也可以使用自己喜爱的分词模块对字符串进行分词处理。
-                 只需将进行过分词处理的字符串列表传进来就可以了。
+    :param hans: | 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` )
+                 | 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
+                 | 用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 | 只需将进行过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
@@ -204,9 +211,9 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
       [[u'zh\u014dng'], [u'x\u012bn']]
       >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
       [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
+      >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
       [[u'zh'], [u'x']]
-      >>> pinyin(u'中心', style=pypinyin.STYLE_TONE2)
+      >>> pinyin(u'中心', style=pypinyin.TONE2)
       [[u'zho1ng'], [u'xi1n']]
 
     """
@@ -230,7 +237,7 @@ def pinyin(hans, style=STYLE_TONE, heteronym=False):
     return pys
 
 
-def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
+def slug(hans, style=NORMAL, heteronym=False, separator='-'):
     """生成 slug 字符串.
 
     :param hans: 汉字
@@ -243,7 +250,7 @@ def slug(hans, style=STYLE_NORMAL, heteronym=False, separator='-'):
     return separator.join(chain(*pinyin(hans, style, heteronym)))
 
 
-def lazy_pinyin(hans, style=STYLE_NORMAL):
+def lazy_pinyin(hans, style=NORMAL):
     """不包含多音字的拼音列表.
 
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，并且每个字只包含一个读音.
@@ -260,11 +267,11 @@ def lazy_pinyin(hans, style=STYLE_NORMAL):
       >>> import pypinyin
       >>> lazy_pinyin(u'中心')
       [u'zhong', u'xin']
-      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE)
+      >>> lazy_pinyin(u'中心', style=pypinyin.TONE)
       [u'zh\u014dng', u'x\u012bn']
-      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_INITIALS)
+      >>> lazy_pinyin(u'中心', style=pypinyin.INITIALS)
       [u'zh', u'x']
-      >>> lazy_pinyin(u'中心', style=pypinyin.STYLE_TONE2)
+      >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
       [u'zho1ng', u'xi1n']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False)))
