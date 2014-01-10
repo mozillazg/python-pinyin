@@ -48,8 +48,8 @@ def main():
         hans = options.hans
     else:
         hans = options.hans.decode(sys.stdin.encoding)
-    func = getattr(pypinyin, options.func, 'pinyin')
-    style = getattr(pypinyin, options.style, 'TONE')
+    func = getattr(pypinyin, options.func)
+    style = getattr(pypinyin, options.style)
     heteronym = options.heteronym
     separator = options.separator
 
