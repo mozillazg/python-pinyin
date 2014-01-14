@@ -115,13 +115,13 @@ def test_seg():
 def test_custom_pinyin_dict():
     hans = '桔'
     try:
-        assert lazy_pinyin(hans, style=TONE2) == ['jie2']
+        assert lazy_pinyin(hans, style=TONE2) == ['ju2']
     except AssertionError:
-        load_single_dict({'桔': ['jú', 'jié']})
+        load_single_dict({'桔': 'jú,jié'})
         assert lazy_pinyin(hans, style=TONE2) == ['ju2']
     hans = '桔子'
     try:
-        assert lazy_pinyin(hans, style=TONE2) == ['jie2', 'zi3']
+        assert lazy_pinyin(hans, style=TONE2) == ['ju2', 'zi3']
     except AssertionError:
         load_phrases_dict({'桔子': [['jú'], ['zǐ']]})
         assert lazy_pinyin(hans, style=TONE2) == ['ju2', 'zi3']
