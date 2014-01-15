@@ -13,6 +13,12 @@ if py3:
     unicode = str
 
 
+class NullWriter(object):
+    """数据流黑洞，类似 linux/unix 下 /dev/null 的效果。"""
+    def write(self, string):
+        pass
+
+
 def get_parser():
     parser = ArgumentParser(description='convert chinese to pinyin.')
     parser.add_argument('-V', '--version', action='version',
@@ -61,7 +67,15 @@ def main():
         kwargs = func_kwargs[func.__name__]
     else:
         kwargs = func_kwargs[func.func_name]
+
+    # 重设标准输出流和标准错误流
+    # 不输出任何字符，防止污染命令行命令的输出结果
+    # 其实主要是为了干掉 jieba 内的 print 语句 ;)
+    sys.stdout = sys.stderr = NullWriter()
     result = func(hans, style=style, **kwargs)
+    # 恢复默认
+    sys.stdout = sys.__stdout__
+    sys.stderr = sys.__stderr__
 
     if result and isinstance(result, (list, tuple)):
         if isinstance(result[0], (list, tuple)):
