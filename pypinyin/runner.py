@@ -5,8 +5,9 @@ from __future__ import unicode_literals
 from argparse import ArgumentParser
 import sys
 
-import pypinyin
-from pypinyin import __title__, __version__
+from .__init__ import (__title__, __version__, pinyin, slug,
+                       NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
+                       FINALS, FINALS_TONE, FINALS_TONE2)
 
 py3 = sys.version_info[0] == 3
 if py3:
@@ -54,8 +55,8 @@ def main():
         hans = options.hans
     else:
         hans = options.hans.decode(sys.stdin.encoding)
-    func = getattr(pypinyin, options.func)
-    style = getattr(pypinyin, options.style)
+    func = globals()[options.func]
+    style = globals()[options.style]
     heteronym = options.heteronym
     separator = options.separator
 
