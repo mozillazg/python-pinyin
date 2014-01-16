@@ -45,7 +45,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'pypinyin = runner:main',
+            'pypinyin = pypinyin.__main__:main',
         ],
     },
     classifiers=[

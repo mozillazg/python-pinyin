@@ -6,14 +6,19 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
-__all__ = ['pinyin', 'lazy_pinyin', 'slug', 'STYLE_NORMAL', 'NORMAL',
-           'STYLE_TONE', 'TONE', 'STYLE_TONE2', 'TONE2', 'STYLE_INITIALS',
-           'INITIALS', 'STYLE_FINALS', 'FINALS', 'STYLE_FINALS_TONE',
-           'FINALS_TONE', 'STYLE_FINALS_TONE2', 'FINALS_TONE2',
+
+__all__ = ['pinyin', 'lazy_pinyin', 'slug',
+           'STYLE_NORMAL', 'NORMAL',
+           'STYLE_TONE', 'TONE',
+           'STYLE_TONE2', 'TONE2',
+           'STYLE_INITIALS', 'INITIALS',
+           'STYLE_FINALS', 'FINALS',
+           'STYLE_FINALS_TONE', 'FINALS_TONE',
+           'STYLE_FINALS_TONE2', 'FINALS_TONE2',
            'STYLE_FIRST_LETTER', 'FIRST_LETTER']
 
 from copy import deepcopy
@@ -23,9 +28,9 @@ import re
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
 try:
-    unicode        # python 2
+    unicode = unicode   # python 2
 except NameError:
-    unicode = str  # python 3
+    unicode = str       # python 3
 
 # 词语拼音库
 PHRASES_DICT = phrases_dict.phrases_dict
@@ -33,7 +38,16 @@ PHRASES_DICT = phrases_dict.phrases_dict
 PINYIN_DICT = pinyin_dict.pinyin_dict
 # 声母表
 _INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
+# 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
+PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
+# 所有的带声调字符
+re_phonetic_symbol_source = ''.join(PHONETIC_SYMBOL.keys())
+# 匹配带声调字符的正则表达式
+RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
+# 匹配使用数字标识声调的字符的正则表达式
+RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 
+# 拼音风格
 PINYIN_STYLE = {
     'NORMAL': 0,          # 普通风格，不带声调
     'TONE': 1,            # 标准风格，声调在韵母的第一个字母上
@@ -61,21 +75,12 @@ FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
-# 带声调字符
-PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
-re_phonetic_symbol_source = ""
-for k in PHONETIC_SYMBOL:
-    re_phonetic_symbol_source += k
-RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
-RE_TONE2 = r'([aeoiuvnm])([0-4])$'
-
 
 def load_single_dict(pinyin_dict):
     """载入用户自定义的单字拼音库
 
     :param pinyin_dict: 单字拼音库。比如： ``{u"阿": u"ā,ē"}``
     :type pinyin_dict: dict
-
     """
     PINYIN_DICT.update(pinyin_dict)
 
@@ -85,7 +90,6 @@ def load_phrases_dict(phrases_dict):
 
     :param phrases_dict: 词语拼音库。比如： ``{u"阿爸": [[u"ā"], [u"bà"]]}``
     :type phrases_dict: dict
-
     """
     PHRASES_DICT.update(phrases_dict)
 
@@ -94,9 +98,9 @@ def initial(pinyin):
     """获取单个拼音中的声母.
 
     :param pinyin: 单个拼音
-    :type pinyin: str
+    :type pinyin: unicode
     :return: 声母
-    :rtype: str
+    :rtype: unicode
     """
     for i in _INITIALS:
         if pinyin.startswith(i):
@@ -108,9 +112,9 @@ def final(pinyin):
     """获取单个拼音中的韵母.
 
     :param pinyin: 单个拼音
-    :type pinyin: str
+    :type pinyin: unicode
     :return: 韵母
-    :rtype: str
+    :rtype: unicode
     """
     initial_ = initial(pinyin) or None
     if not initial_:
@@ -119,53 +123,62 @@ def final(pinyin):
 
 
 def toFixed(pinyin, style):
-    """修改拼音词库表中的格式.
+    """根据拼音风格格式化带声调的拼音.
 
     :param pinyin: 单个拼音
     :param style: 拼音风格
+    :return: 根据拼音风格格式化后的拼音字符串
+    :rtype: unicode
     """
-    if style == PINYIN_STYLE['INITIALS']:
+    # 声母
+    if style == INITIALS:
         return initial(pinyin)
-    elif style in [PINYIN_STYLE['NORMAL'], PINYIN_STYLE['FIRST_LETTER'],
-                   PINYIN_STYLE['FINALS']]:
-        def _replace(matchobj):
-            x = matchobj.group(0)
-            return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[x])
-    elif style in [PINYIN_STYLE['TONE2'], PINYIN_STYLE['FINALS_TONE2']]:
-        def _replace(matchobj):
-            x = matchobj.group(0)
-            return PHONETIC_SYMBOL[x]
-    else:
-        def _replace(matchobj):
-            x = matchobj.group(0)
-            return x
+
+    def _replace(m):
+        symbol = m.group(0)  # 带声调的字符
+        # 不包含声调
+        if style in [NORMAL, FIRST_LETTER, FINALS]:
+            # 去掉声调: a1 -> a
+            return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
+        # 使用数字标识声调
+        elif style in [TONE2, FINALS_TONE2]:
+            # 返回使用数字标识声调的字符
+            return PHONETIC_SYMBOL[symbol]
+        # 声调在头上
+        else:
+            return symbol
+
+    # 替换拼音中的带声调字符
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
 
-    if style == PINYIN_STYLE['FIRST_LETTER']:
+    # 首字母
+    if style == FIRST_LETTER:
         py = py[0]
-    elif style in [PINYIN_STYLE['FINALS'], PINYIN_STYLE['FINALS_TONE'],
-                   PINYIN_STYLE['FINALS_TONE2']]:
+    # 韵母
+    elif style in [FINALS, FINALS_TONE, FINALS_TONE2]:
         py = final(py)
     return py
 
 
-def single_pinyin(han, options):
+def single_pinyin(han, style, heteronym):
     """单字拼音转换.
 
     :param han: 单个汉字
     :return: 返回拼音列表，多音字会有多个拼音项
+    :rtype: list
     """
     if han not in PINYIN_DICT:
         return [han]
-    pys = PINYIN_DICT[han].split(",")
-    if not options['heteronym']:
-        return [toFixed(pys[0], options['style'])]
+    pys = PINYIN_DICT[han].split(",")  # 字的拼音列表
+    if not heteronym:
+        return [toFixed(pys[0], style)]
 
+    # 输出多音字的多个读音
     # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
     py_cached = {}
     pinyins = []
     for i in pys:
-        py = toFixed(i, options['style'])
+        py = toFixed(i, style)
         if py in py_cached:
             continue
         py_cached[py] = py
@@ -173,30 +186,32 @@ def single_pinyin(han, options):
     return pinyins
 
 
-def phrases_pinyin(phrases, options):
+def phrases_pinyin(phrases, style, heteronym):
     """词语拼音转换.
 
     :param phrases: 词语
     :return: 拼音列表
+    :rtype: list
     """
     py = []
     if phrases in PHRASES_DICT:
         py = deepcopy(PHRASES_DICT[phrases])
         for idx, item in enumerate(py):
-            py[idx] = [toFixed(item[0], options['style'])]
+            py[idx] = [toFixed(item[0], style=style)]
     else:
         for i in phrases:
-            py.append(single_pinyin(i, options))
+            py.append(single_pinyin(i, style=style, heteronym=heteronym))
     return py
 
 
 def pinyin(hans, style=TONE, heteronym=False):
     """将汉字转换为拼音.
 
-    :param hans: | 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` )
-                 | 如果用户安装了 jieba，将使用 jieba 对字符串进行分词处理。
-                 | 用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
-                 | 只需将进行过分词处理的字符串列表传进来就可以了。
+    :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
+        如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行分词处理。
+
+        用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
+        只需将经过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
@@ -215,9 +230,8 @@ def pinyin(hans, style=TONE, heteronym=False):
       [[u'zh'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.TONE2)
       [[u'zho1ng'], [u'xi1n']]
-
     """
-    options = {'style': style, 'heteronym': heteronym}
+    # 对字符串进行分词处理
     if isinstance(hans, unicode):
         try:
             import jieba
@@ -231,9 +245,9 @@ def pinyin(hans, style=TONE, heteronym=False):
             pys.append([words])
             continue
         if len(words) == 1:
-            pys.append(single_pinyin(words, options))
+            pys.append(single_pinyin(words, style=style, heteronym=heteronym))
         else:
-            pys.extend(phrases_pinyin(words, options))
+            pys.extend(phrases_pinyin(words, style=style, heteronym=heteronym))
     return pys
 
 
@@ -247,13 +261,15 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-'):
     :param separstor: 两个拼音间的分隔符/连接符
     :return: slug 字符串.
     """
-    return separator.join(chain(*pinyin(hans, style, heteronym)))
+    return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym)
+                                ))
 
 
 def lazy_pinyin(hans, style=NORMAL):
     """不包含多音字的拼音列表.
 
-    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，并且每个字只包含一个读音.
+    与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
+    并且每个字只包含一个读音.
 
     :param hans: 汉字
     :type hans: unicode or list
