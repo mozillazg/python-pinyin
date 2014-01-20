@@ -8,11 +8,11 @@
 
 基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
 
-* 文档: http://pypinyin.rtfd.org
+* Documentation: http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
-* 开源协议: MIT license
+* License: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
-* Python 版本: 2.6, 2.7, pypy, 3.3
+* Python version: 2.6, 2.7, pypy, 3.3
 
 
 特性
@@ -104,11 +104,26 @@
     [u'ju2', u'zi3']
 
 
+贡献
+----
+
+* `New Issue <https://github.com/mozillazg/python-pinyin/issues/new>`__
+* Pull Request:
+  1. ``git clone https://github.com/mozillazg/python-pinyin.git``
+  2. ``git checkout develop``
+  3. ``git checkout -b your-branch-name``
+  4. ``git commit -am "commit"``
+  5. ``git push origin your-branch-name``
+  6. `New pull request to develop branch <https://github.com/mozillazg/python-pinyin/compare/>`__
+
+
+
+
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
    :target: https://travis-ci.org/mozillazg/python-pinyin
 .. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.png?branch=master
    :target: https://coveralls.io/r/mozillazg/python-pinyin
-.. |Pypi version| image:: https://pypip.in/v/pypinyin/badge.png
+.. |PyPI version| image:: https://pypip.in/v/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
-.. |Pypi downloads| image:: https://pypip.in/d/pypinyin/badge.png
+.. |PyPI downloads| image:: https://pypip.in/d/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
