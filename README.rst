@@ -110,12 +110,12 @@
 * `New Issue <https://github.com/mozillazg/python-pinyin/issues/new>`__
 * Pull Request:
    1. `Fork <https://github.com/mozillazg/python-pinyin/fork>`__
-   2. ``git clone https://github.com/youname/python-pinyin.git``
+   2. ``git clone git@github.com:your-username/python-pinyin.git``
    3. ``git checkout develop``
    4. ``git checkout -b your-branch-name``
    5. ``git commit -am "commit"``
    6. ``git push origin your-branch-name``
-   7. `New pull request to develop branch <https://github.com/mozillazg/python-pinyin/compare/>`__
+   7. New pull request to **develop** branch
 
 
 
