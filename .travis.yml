@@ -8,6 +8,7 @@ python:
 install:
   - "pip install coveralls"
   - "pip install pytest-cov"
+  - "pip install pytest-random"
   - "pip install -e . --use-mirrors"
 
 script:
