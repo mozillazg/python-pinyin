@@ -1,0 +1,13 @@
+[run]
+omit =
+    # pypinyin/runner.py
+    pypinyin/__main__.py
+
+[report]
+exclude_lines =
+    except NameError
+    except ImportError
+    pass
+    def main
+    if py3:
+    if __name__ == .__main__.:
