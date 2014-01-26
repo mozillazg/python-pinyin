@@ -10541,6 +10541,7 @@ pinyin_dict = {
     "菱": "líng",
     "伶": "líng",
     "棱": "léng,lēng,líng",
+    "楞": "léng",
     "翎": "líng",
     "绫": "líng",
     "酃": "líng",
