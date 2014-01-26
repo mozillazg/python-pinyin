@@ -8,11 +8,11 @@
 
 基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
 
-* 文档: http://pypinyin.rtfd.org
+* Documentation: http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
-* 开源协议: MIT license
+* License: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
-* Python 版本: 2.6, 2.7, pypy, 3.3
+* Python version: 2.6, 2.7, pypy, 3.3
 
 
 特性
@@ -46,7 +46,7 @@
     [[u'zh\u014dng'], [u'x\u012bn']]
     >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', style=pypinyin.STYLE_INITIALS)  # 设置拼音风格
+    >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
     [['zh'], ['x']]
     >>> lazy_pinyin(u'中心')
     ['zhong', 'xin']
@@ -72,17 +72,17 @@
 
    .. code-block:: python
 
-       >> from pypinyin import lazy_pinyin, STYLE_TONE2
+       >> from pypinyin import lazy_pinyin, TONE2
        >> from snownlp import SnowNLP
        >> hans = u'音乐123'
        >> 
-       >> lazy_pinyin(hans, style=STYLE_TONE2)
+       >> lazy_pinyin(hans, style=TONE2)
        [u'yi1n', u'le4', u'1', u'2', u'3']
        >>
        >> hans_seg = SnowNLP(hans).words  # 分词处理
        >> hans_seg
        [u'\u97f3\u4e50', u'123']
-       >> lazy_pinyin(hans_seg, style=STYLE_TONE2)
+       >> lazy_pinyin(hans_seg, style=TONE2)
        [u'yi1n', u'yue4', u'123']
 
 
@@ -93,22 +93,38 @@
 
 .. code-block:: python
 
-    >> from pypinyin import lazy_pinyin, load_phrases_dict, STYLE_TONE2
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2
     >> hans = u'桔子'
     >> 
-    >> lazy_pinyin(hans, style=STYLE_TONE2)
+    >> lazy_pinyin(hans, style=TONE2)
     [u'jie2', u'zi3']
     >> 
     >> load_phrases_dict({u'桔子': [[u'jú'], [u'zǐ']]})
-    >> lazy_pinyin(hans, style=STYLE_TONE2)
+    >> lazy_pinyin(hans, style=TONE2)
     [u'ju2', u'zi3']
+
+
+贡献
+----
+
+* `New Issue <https://github.com/mozillazg/python-pinyin/issues/new>`__
+* Pull Request:
+    1. `Fork <https://github.com/mozillazg/python-pinyin/fork>`__
+    2. ``git clone git@github.com:your-username/python-pinyin.git``
+    3. ``git checkout develop``
+    4. ``git checkout -b your-branch-name``
+    5. ``git commit -am "commit"``
+    6. ``git push origin your-branch-name``
+    7. New pull request to **develop** branch
+
+
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
    :target: https://travis-ci.org/mozillazg/python-pinyin
 .. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.png?branch=master
    :target: https://coveralls.io/r/mozillazg/python-pinyin
-.. |Pypi version| image:: https://pypip.in/v/pypinyin/badge.png
+.. |PyPI version| image:: https://pypip.in/v/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
-.. |Pypi downloads| image:: https://pypip.in/d/pypinyin/badge.png
+.. |PyPI downloads| image:: https://pypip.in/d/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
