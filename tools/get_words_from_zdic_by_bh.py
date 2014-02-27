@@ -19,10 +19,6 @@ def parse_words(html):
     return [x.text for x in a_list if x.text]
 
 
-def parse_next_page_url(html):
-    soup = BeautifulSoup(html)
-
-
 def get_one_page(url, cookies, headers):
     r = requests.get(url, headers=headers, cookies=cookies)
     cookies.update(r.cookies.get_dict())
@@ -36,7 +32,7 @@ def main():
     headers = {
         'Referer': 'http://www.zdic.net/z/jbs/zbh/',
         'User-Agent': ('Mozilla/5.0 (Windows NT 6.2; rv:26.0) Gecko/20100101 '
-                        'Firefox/26.0'),
+                       'Firefox/26.0'),
     }
     url_base = 'http://www.zdic.net/z/jbs/zbh/bs/?jzbh=%s|%s'
     cookies = requests.get('http://www.zdic.net/z/jbs/zbh/').cookies.get_dict()
@@ -68,5 +64,5 @@ def main():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    logging.getLogger("requests").setLevel(logging.ERROR)
+    logging.getLogger('requests').setLevel(logging.ERROR)
     main()
