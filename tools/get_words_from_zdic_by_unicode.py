@@ -77,14 +77,18 @@ def get_words(unicode_range, url_base, headers, cookies):
 
 
 def main():
+    # CJK 汉字 Unicode 编码范围
     unicode_ranges = (
-        ('3400', '4DBF'),     # CJK扩展A:[3400-4DBF]
-        ('4E00', '9FFF'),     # CJK基本:[4E00-9FFF]
-        ('F900', 'FAFF'),     # CJK兼容:[F900-FAFF]
-        ('20000', '2A6DF'),   # CJK扩展B:[20000-2A6DF]
-        ('2A700', '2B73F'),   # CJK扩展C:[2A700-2B73F]
-        ('2B740', '2B81D'),   # CJK扩展D:[2B740-2B81D]
-        ('2F800', '2FA1F'),   # CJK兼容扩展:[2F800-2FA1F]
+        ('2E80', '2EFF'),     # CJK 部首扩展:[2E80-2EFF]
+        ('2F00', '2FDF'),     # CJK 康熙部首:[2F00-2FDF]
+        ('31C0', '31EF'),     # CJK 笔画:[31C0-31EF]
+        ('3400', '4DBF'),     # CJK 扩展 A:[3400-4DBF]
+        ('4E00', '9FFF'),     # CJK 基本:[4E00-9FFF]
+        ('F900', 'FAFF'),     # CJK 兼容:[F900-FAFF]
+        ('20000', '2A6DF'),   # CJK 扩展 B:[20000-2A6DF]
+        ('2A700', '2B73F'),   # CJK 扩展 C:[2A700-2B73F]
+        ('2B740', '2B81D'),   # CJK 扩展 D:[2B740-2B81D]
+        ('2F800', '2FA1F'),   # CJK 兼容扩展:[2F800-2FA1F]
     )
     url_base = 'http://www.zdic.net/sousuo/ac/?q=%s&tp=tp2&lb=uno'
     headers = {
@@ -101,12 +105,19 @@ def main():
         'Connection': 'keep-alive'
     }
     cookies = {}
-    f = io.open('pinyins.txt', 'w', buffering=1, encoding='utf8')
-    for unicode_range in unicode_ranges:
-        for word in get_words(unicode_range, url_base, headers, cookies):
-            f.write(u"'{0}': '{1}'  # {2}\n".format(word[0],','.join(word[2]),
-                                                  word[1]))
-    f.close()
+
+    for n, unicode_range in enumerate(unicode_ranges):
+        filename = 'pinyins_%s-%s.txt' % unicode_range
+        with io.open(filename, 'w', buffering=1, encoding='utf8') as f:
+            for word_info in get_words(unicode_range, url_base, headers, cookies):
+                unicode_num, word, pinyins = word_info
+                if pinyins:
+                    f.write(u"'{0}': '{1}',  # {2}\n".format(unicode_num,
+                                                             ','.join(pinyins),
+                                                             word))
+                else:
+                    f.write(u"# '{0}': '{1}',  # {2}\n".format(unicode_num,
+                                                               '', word))
 
 
 if __name__ == '__main__':
