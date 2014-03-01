@@ -118,7 +118,7 @@ def test_custom_pinyin_dict():
         assert lazy_pinyin(hans, style=TONE2) == ['ju2']
     except AssertionError:
         pass
-    load_single_dict({'桔': 'jú,jié'})
+    load_single_dict({ord('桔'): 'jú,jié'})
     assert lazy_pinyin(hans, style=TONE2) == ['ju2']
 
 def test_custom_pinyin_dict2():
