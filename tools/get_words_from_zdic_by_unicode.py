@@ -112,11 +112,11 @@ def main():
             for word_info in get_words(unicode_range, url_base, headers, cookies):
                 unicode_num, word, pinyins = word_info
                 if pinyins:
-                    f.write(u"'{0}': '{1}',  # {2}\n".format(unicode_num,
+                    f.write(u"0x{0}: '{1}',  # {2}\n".format(unicode_num,
                                                              ','.join(pinyins),
                                                              word))
                 else:
-                    f.write(u"# '{0}': '{1}',  # {2}\n".format(unicode_num,
+                    f.write(u"# 0x{0}: '{1}',  # {2}\n".format(unicode_num,
                                                                '', word))
 
 
