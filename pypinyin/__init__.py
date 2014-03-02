@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.4.4'
+__version__ = '0.5.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -79,7 +79,7 @@ FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 def load_single_dict(pinyin_dict):
     """载入用户自定义的单字拼音库
 
-    :param pinyin_dict: 单字拼音库。比如： ``{u"阿": u"ā,ē"}``
+    :param pinyin_dict: 单字拼音库。比如： ``{0x963F: u"ā,ē"}``
     :type pinyin_dict: dict
     """
     PINYIN_DICT.update(pinyin_dict)
@@ -167,9 +167,10 @@ def single_pinyin(han, style, heteronym):
     :return: 返回拼音列表，多音字会有多个拼音项
     :rtype: list
     """
-    if han not in PINYIN_DICT:
+    num = ord(han)
+    if num not in PINYIN_DICT:
         return [han]
-    pys = PINYIN_DICT[han].split(",")  # 字的拼音列表
+    pys = PINYIN_DICT[num].split(",")  # 字的拼音列表
     if not heteronym:
         return [toFixed(pys[0], style)]
 
@@ -240,8 +241,13 @@ def pinyin(hans, style=TONE, heteronym=False):
             pass
     pys = []
     for words in hans:
-        # 不处理非中文字符
-        if not re.match(r'^[\u4e00-\u9fff]+$', words):
+        # 初步过滤没有拼音的字符
+        re_hans = re.compile(r'''^(?:
+                             [\u3400-\u4dbf]    # CJK 扩展 A:[3400-4DBF]
+                             |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+                             |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+                             )+$''', re.X)
+        if not re_hans.match(words):
             pys.append([words])
             continue
         if len(words) == 1:

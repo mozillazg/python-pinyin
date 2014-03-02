@@ -36,3 +36,5 @@ htmlcov
 .mr.developer.cfg
 .project
 .pydevproject
+
+tools/words.txt
