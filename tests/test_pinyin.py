@@ -121,6 +121,7 @@ def test_custom_pinyin_dict():
     load_single_dict({ord('桔'): 'jú,jié'})
     assert lazy_pinyin(hans, style=TONE2) == ['ju2']
 
+
 def test_custom_pinyin_dict2():
     hans = ['同行']
     try:
@@ -129,3 +130,18 @@ def test_custom_pinyin_dict2():
         pass
     load_phrases_dict({'同行': [['tóng'], ['xíng']]})
     assert lazy_pinyin(hans, style=TONE2) == ['to2ng', 'xi2ng']
+
+
+def test_errors():
+    hans = (
+        ('啊', {'style': TONE2}, ['a1']),
+        ('啊a', {'style': TONE2}, ['a1', 'a']),
+        ('⺁', {'style': TONE2}, ['\u2e81']),
+        ('⺁', {'style': TONE2, 'errors': 'ignore'}, []),
+        ('⺁', {'style': TONE2, 'errors': 'replace'}, ['2e81']),
+        ('鿅', {'style': TONE2}, ['\u9fc5']),
+        ('鿅', {'style': TONE2, 'errors': 'ignore'}, []),
+        ('鿅', {'style': TONE2, 'errors': 'replace'}, ['9fc5']),
+    )
+    for han in hans:
+        assert lazy_pinyin(han[0], **han[1]) == han[2]
