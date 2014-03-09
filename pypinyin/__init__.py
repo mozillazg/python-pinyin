@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -160,16 +160,28 @@ def toFixed(pinyin, style):
     return py
 
 
-def single_pinyin(han, style, heteronym):
+def _handle_nopinyin_char(char, errors='default'):
+    """处理没有拼音的字符"""
+    if errors == 'default':
+        return char
+    elif errors == 'ignore':
+        return None
+    elif errors == 'replace':
+        return unicode('%x' % ord(char))
+
+
+def single_pinyin(han, style, heteronym, errors='default'):
     """单字拼音转换.
 
     :param han: 单个汉字
+    :param errors: 指定如何处理没有拼音的字符
     :return: 返回拼音列表，多音字会有多个拼音项
     :rtype: list
     """
     num = ord(han)
     if num not in PINYIN_DICT:
-        return [han]
+        py = _handle_nopinyin_char(han, errors=errors)
+        return [py] if py else None
     pys = PINYIN_DICT[num].split(",")  # 字的拼音列表
     if not heteronym:
         return [toFixed(pys[0], style)]
@@ -187,10 +199,11 @@ def single_pinyin(han, style, heteronym):
     return pinyins
 
 
-def phrases_pinyin(phrases, style, heteronym):
+def phrases_pinyin(phrases, style, heteronym, errors='default'):
     """词语拼音转换.
 
     :param phrases: 词语
+    :param errors: 指定如何处理没有拼音的字符
     :return: 拼音列表
     :rtype: list
     """
@@ -201,20 +214,31 @@ def phrases_pinyin(phrases, style, heteronym):
             py[idx] = [toFixed(item[0], style=style)]
     else:
         for i in phrases:
-            py.append(single_pinyin(i, style=style, heteronym=heteronym))
+            single = single_pinyin(i, style=style, heteronym=heteronym,
+                                   errors=errors)
+            if single:
+                py.append(single)
     return py
 
 
-def pinyin(hans, style=TONE, heteronym=False):
+def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     """将汉字转换为拼音.
 
     :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
-        如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行分词处理。
 
-        用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
-        只需将经过分词处理的字符串列表传进来就可以了。
+                 如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
+                 分词处理。
+
+                 也可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
+    :param errors: 指定如何处理没有拼音的字符
+
+                   * ``'default'``: 保留原始字符
+                   * ``'ignore'``: 忽略该字符
+                   * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                                    （``u'\\u90aa'`` => ``u'90aa'``）
     :param heteronym: 是否启用多音字
     :return: 拼音列表
     :rtype: list
@@ -248,16 +272,19 @@ def pinyin(hans, style=TONE, heteronym=False):
                              |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
                              )+$''', re.X)
         if not re_hans.match(words):
-            pys.append([words])
+            if re.match(r'^[a-zA-Z0-9_]+$', words):
+                pys.append([words])
+            else:
+                for word in words:
+                    py = _handle_nopinyin_char(word, errors=errors)
+                    pys.append([py]) if py else None
             continue
-        if len(words) == 1:
-            pys.append(single_pinyin(words, style=style, heteronym=heteronym))
-        else:
-            pys.extend(phrases_pinyin(words, style=style, heteronym=heteronym))
+        pys.extend(phrases_pinyin(words, style=style, heteronym=heteronym,
+                                  errors=errors))
     return pys
 
 
-def slug(hans, style=NORMAL, heteronym=False, separator='-'):
+def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
     """生成 slug 字符串.
 
     :param hans: 汉字
@@ -265,13 +292,15 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-'):
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
     :param separstor: 两个拼音间的分隔符/连接符
+    :param errors: 指定如何处理没有拼音的字符
     :return: slug 字符串.
     """
-    return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym)
+    return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
+                                        errors=errors)
                                 ))
 
 
-def lazy_pinyin(hans, style=NORMAL):
+def lazy_pinyin(hans, style=NORMAL, errors='default'):
     """不包含多音字的拼音列表.
 
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
@@ -280,6 +309,7 @@ def lazy_pinyin(hans, style=NORMAL):
     :param hans: 汉字
     :type hans: unicode or list
     :param style: 指定拼音风格
+    :param errors: 指定如何处理没有拼音的字符
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 
@@ -296,4 +326,5 @@ def lazy_pinyin(hans, style=NORMAL):
       >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
       [u'zho1ng', u'xi1n']
     """
-    return list(chain(*pinyin(hans, style=style, heteronym=False)))
+    return list(chain(*pinyin(hans, style=style, heteronym=False,
+                              errors=errors)))
