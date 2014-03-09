@@ -226,18 +226,19 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
 
     :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
 
-                 | 如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
+                 如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
                  分词处理。
-                 | 用户也可以使用自己喜爱的分词模块对字符串进行分词处理,
-                 | 只需将经过分词处理的字符串列表传进来就可以了。
+
+                 也可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格
     :param errors: 指定如何处理没有拼音的字符
 
-                   * 'default': 保留原始字符
-                   * 'ignore': 忽略该字符
-                   * 'replace': 替换为去掉 ``\\u`` 的 unicode 编码字符串
-                                （``u'\\u90aa'`` => ``u'90aa'``）
+                   * ``'default'``: 保留原始字符
+                   * ``'ignore'``: 忽略该字符
+                   * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                                    （``u'\\u90aa'`` => ``u'90aa'``）
     :param heteronym: 是否启用多音字
     :return: 拼音列表
     :rtype: list
