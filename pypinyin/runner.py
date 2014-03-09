@@ -6,8 +6,8 @@ from argparse import ArgumentParser
 import sys
 
 from . import (__title__, __version__, pinyin, slug,
-                NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
-                FINALS, FINALS_TONE, FINALS_TONE2)
+               NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
+               FINALS, FINALS_TONE, FINALS_TONE2)
 
 py3 = sys.version_info[0] == 3
 if py3:
@@ -35,6 +35,10 @@ def get_parser():
                                  'FINALS_TONE2'], default='TONE')
     parser.add_argument('--separator', help='slug separator (default: "-")',
                         default='-')
+    parser.add_argument('--errors', help=('how to handle none-pinyin string '
+                                          '(default: "default")'),
+                        choices=['default', 'ignore', 'replace'],
+                        default='default')
     # 输出多音字
     parser.add_argument('--heteronym', help='enable heteronym',
                         action='store_true')
@@ -59,10 +63,12 @@ def main():
     style = globals()[options.style]
     heteronym = options.heteronym
     separator = options.separator
+    errors = options.errors
 
     func_kwargs = {
-        'pinyin': {'heteronym': heteronym},
-        'slug': {'heteronym': heteronym, 'separator': separator},
+        'pinyin': {'heteronym': heteronym, 'errors': errors},
+        'slug': {'heteronym': heteronym, 'separator': separator,
+                 'errors': errors},
     }
     if py3:
         kwargs = func_kwargs[func.__name__]
@@ -78,7 +84,9 @@ def main():
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
 
-    if result and isinstance(result, (list, tuple)):
+    if not result:
+        print('')
+    elif result and isinstance(result, (list, tuple)):
         if isinstance(result[0], (list, tuple)):
             print(' '.join([','.join(s) for s in result]))
         else:
