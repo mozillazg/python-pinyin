@@ -9,10 +9,10 @@ install:
   - "pip install coveralls"
   - "pip install pytest-cov"
   - "pip install pytest-random"
-  - "pip install -e . --use-mirrors"
+  - "pip install -e ."
 
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements_dev.txt --use-mirrors; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements_dev.txt; fi
   - "python setup.py test"
   - "python setup.py develop"
   - "py.test --cov pypinyin tests/"
