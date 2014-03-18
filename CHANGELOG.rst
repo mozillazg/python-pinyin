@@ -8,7 +8,7 @@ Changelog
 
   * ``'default'``: 保留原始字符
   * ``'ignore'``: 忽略该字符
-  * ``'replace'``: 替换为去掉 \u 的 unicode 编码字符串（u'\u90aa' => u'90aa'）
+  * ``'replace'``: 替换为去掉 ``\u`` 的 unicode 编码字符串(``u'\u90aa'`` => ``u'90aa'``)
 
   只处理 ``[^a-zA-Z0-9_]`` 字符。
 
