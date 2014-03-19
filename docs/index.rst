@@ -6,8 +6,6 @@
 
 .. include:: ../README.rst
 
-.. include:: ../CHANGELOG.rst
-
 
 API
 ---
@@ -44,7 +42,7 @@ API
 .. autofunction:: pypinyin.load_phrases_dict
 
 
-${changelog}
+.. include:: ../CHANGELOG.rst
 
 
 Indices and tables
