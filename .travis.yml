@@ -3,6 +3,7 @@ python:
   - "2.6"
   - "2.7"
   - "pypy"
+  - "3.2"
   - "3.3"
   - "3.4"
 
@@ -20,6 +21,11 @@ script:
 
 after_script:
   - "coveralls"
+
+
+matrix:
+  allow_failures:
+    - python: "3.2"
 
 notifications:
   email:
