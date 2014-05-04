@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from codecs import open
 import sys
 import os
 
@@ -25,7 +26,9 @@ if sys.version_info[:2] < (2, 7):
 
 
 def long_description():
-    return open('README.rst').read() + '\n\n' + open('CHANGELOG.rst').read()
+    readme = open('README.rst', encoding='utf8').read()
+    text = readme + '\n\n' + open('CHANGELOG.rst', encoding='utf8').read()
+    return text
 
 setup(
     name=pypinyin.__title__,
@@ -59,6 +62,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Utilities',
     ],
     keywords='pinyin, 拼音',
