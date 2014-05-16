@@ -6,7 +6,7 @@
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。
 
-基于 `hotoo/node-pinyin <https://github.com/hotoo/node-pinyin>`__ 开发。
+基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
 * Documentation: http://pypinyin.rtfd.org
 * GitHub: https://github.com/mozillazg/python-pinyin
@@ -75,10 +75,8 @@
        >> from pypinyin import lazy_pinyin, TONE2
        >> from snownlp import SnowNLP
        >> hans = u'音乐123'
-       >> 
        >> lazy_pinyin(hans, style=TONE2)
        [u'yi1n', u'le4', u'1', u'2', u'3']
-       >>
        >> hans_seg = SnowNLP(hans).words  # 分词处理
        >> hans_seg
        [u'\u97f3\u4e50', u'123']
@@ -95,29 +93,11 @@
 
     >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2
     >> hans = u'桔子'
-    >> 
     >> lazy_pinyin(hans, style=TONE2)
     [u'jie2', u'zi3']
-    >> 
     >> load_phrases_dict({u'桔子': [[u'jú'], [u'zǐ']]})
     >> lazy_pinyin(hans, style=TONE2)
     [u'ju2', u'zi3']
-
-
-贡献
-----
-
-* `New Issue <https://github.com/mozillazg/python-pinyin/issues/new>`__
-* Pull Request:
-    1. `Fork <https://github.com/mozillazg/python-pinyin/fork>`__
-    2. ``git clone git@github.com:your-username/python-pinyin.git``
-    3. ``git checkout develop``
-    4. ``git checkout -b your-branch-name``
-    5. ``git commit -am "commit"``
-    6. ``git push origin your-branch-name``
-    7. New pull request to **develop** branch
-
-
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
