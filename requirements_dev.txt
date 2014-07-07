@@ -2,3 +2,4 @@ git+https://github.com/fxsjy/jieba.git#egg=jieba-dev
 argparse
 pytest
 pytest-random
+wheel>=0.21

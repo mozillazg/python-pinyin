@@ -14,6 +14,7 @@ import pypinyin
 
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
+    os.system('python setup.py bdist_wheel upload')
     sys.exit()
 
 packages = [
@@ -36,7 +37,6 @@ setup(
     description=pypinyin.__doc__,
     long_description=long_description(),
     url='https://github.com/mozillazg/python-pinyin',
-    download_url='https://github.com/mozillazg/python-pinyin/archive/master.zip',
     author=pypinyin.__author__,
     author_email='mozillazg101@gmail.com',
     license=pypinyin.__license__,
