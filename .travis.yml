@@ -11,17 +11,14 @@ install:
   - "pip install coveralls"
   - "pip install pytest-cov"
   - "pip install pytest-random"
-  - "pip install -e ."
 
 script:
   - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements_dev.txt; fi
-  - "python setup.py test"
-  - "python setup.py develop"
+  - "python setup.py install"
   - "py.test --cov pypinyin tests/"
 
 after_script:
   - "coveralls"
-
 
 matrix:
   allow_failures:
