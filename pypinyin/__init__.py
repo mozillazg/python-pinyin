@@ -33,13 +33,13 @@ except NameError:
     unicode = str       # python 3
 
 # 词语拼音库
-PHRASES_DICT = phrases_dict.phrases_dict
+PHRASES_DICT = phrases_dict.phrases_dict.copy()
 # 单字拼音库
-PINYIN_DICT = pinyin_dict.pinyin_dict
+PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
 _INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
 # 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
-PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol
+PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol.copy()
 # 所有的带声调字符
 re_phonetic_symbol_source = ''.join(PHONETIC_SYMBOL.keys())
 # 匹配带声调字符的正则表达式
