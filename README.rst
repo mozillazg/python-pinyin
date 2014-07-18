@@ -1,7 +1,7 @@
 汉语拼音转换工具（Python 版）
 =============================
 
-|Build| |Coverage| |Pypi version| |Pypi downloads|
+|Build| |Coverage| |Pypi version| |Pypi downloads| |Python 3|
 
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。
@@ -108,3 +108,5 @@
    :target: https://crate.io/packages/pypinyin
 .. |PyPI downloads| image:: https://pypip.in/d/pypinyin/badge.png
    :target: https://crate.io/packages/pypinyin
+.. |Python 3| image:: https://caniusepython3.com/project/pypinyin.svg
+   :target: https://caniusepython3.com/project/pypinyin
