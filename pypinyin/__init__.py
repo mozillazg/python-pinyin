@@ -294,6 +294,16 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
     :param separstor: 两个拼音间的分隔符/连接符
     :param errors: 指定如何处理没有拼音的字符
     :return: slug 字符串.
+
+    ::
+
+      >>> import pypinyin
+      >>> pypinyin.slug(u'中国人')
+      u'zhong-guo-ren'
+      >>> pypinyin.slug(u'中国人', separator=u' ')
+      u'zhong guo ren'
+      >>> pypinyin.slug(u'中国人', style=pypinyin.INITIALS)
+      u'zh-g-r'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
                                         errors=errors)
