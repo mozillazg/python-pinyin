@@ -1,28 +1,26 @@
 language: python
 python:
-  - "2.6"
-  - "2.7"
-  - "pypy"
-  - "3.2"
-  - "3.3"
-  - "3.4"
+  - 3.4
+
+env:
+  - TOX_ENV=py26
+  - TOX_ENV=py27
+  - TOX_ENV=py33
+  - TOX_ENV=py34
+  - TOX_ENV=pypy
+  - TOX_ENV=py2_snownlp
+  - TOX_ENV=py2_jieba
+  - TOX_ENV=py3_jieba
 
 install:
-  - "pip install coveralls"
-  - "pip install pytest-cov"
-  - "pip install pytest-random"
+  - pip install coveralls
+  - pip install tox
 
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install -r requirements_dev.txt; fi
-  - "python setup.py install"
-  - "py.test --cov pypinyin tests/"
+  - tox -e $TOX_ENV
 
 after_script:
-  - "coveralls"
-
-matrix:
-  allow_failures:
-    - python: "3.2"
+  - coveralls
 
 notifications:
   email:
