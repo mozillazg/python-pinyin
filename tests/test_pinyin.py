@@ -95,21 +95,29 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心', style=INITIALS) == ['zh', 'x']
 
 
-def has_jieba():
+def has_module(module):
     try:
-        __import__('jieba')
+        __import__(module)
         return True
     except ImportError:
         pass
 
 
-@pytest.mark.skipif(not has_jieba(), reason='cant import jieba')
-def test_seg():
+@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
+def test_seg_jieba():
     hans = '音乐'
     import jieba
     hans_seg = list(jieba.cut(hans))
-    # assert pinyin(hans, style=TONE2) == [['yi1n'], ['le4']]
     assert pinyin(hans_seg, style=TONE2) == [['yi1n'], ['yue4']]
+
+
+@pytest.mark.skipif(not has_module('snownlp'), reason='cant import snownlp')
+def test_other_seg_module():
+    hans = '音乐123'
+    assert lazy_pinyin(hans, style=TONE2) == [u'yi1n', u'le4', u'1', u'2', u'3']
+    from snownlp import SnowNLP
+    hans_seg = SnowNLP(hans).words
+    assert lazy_pinyin(hans_seg, style=TONE2) == [u'yi1n', u'yue4', u'123']
 
 
 def test_custom_pinyin_dict():
