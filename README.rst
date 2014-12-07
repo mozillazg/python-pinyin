@@ -100,6 +100,16 @@
     [u'ju2', u'zi3']
 
 
+Related Projects
+-----------------
+
+* `hotoo/pinyin`__: 汉语拼音转换工具 Node.js/JavaScript 版。
+* `mozillazg/go-pinyin`__: 汉语拼音转换工具 Go 版。
+
+__ https://github.com/hotoo/pinyin
+__ https://github.com/mozillazg/go-pinyin
+
+
 .. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
    :target: https://travis-ci.org/mozillazg/python-pinyin
 .. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.png?branch=master

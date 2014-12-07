@@ -11,6 +11,8 @@ from time import sleep
 from bs4 import BeautifulSoup
 import requests
 
+from pypinyin.pinyin_dict import pinyin_dict
+
 
 class Message(object):
     def __init__(self, file_name):
@@ -51,28 +53,42 @@ def parse_pinyin(html):
     word_html = soup.find(id='ziip').text.encode('raw_unicode_escape').decode('utf8')
     words = re.findall(ur'“([^”]+)”', word_html)
     word = words[0] if words else ''
+
     try:
         pinyins = [x.text for x in soup.select('td.z_i_t2_py')[0].select('a')]
         pinyins = [x.encode('raw_unicode_escape').decode('utf8') for x in pinyins]
-    except:
-        pinyins = []
+    except Exception as e:
+        e.word = word
+        raise
     return word, pinyins
 
 
-def get_words(unicode_range, url_base, headers, cookies):
-    for n in xrange(int(unicode_range[0], 16), int(unicode_range[1], 16) + 1):
-        url = url_base % '{0:x}'.format(n)
-        print n,
+def get_word(n, url_base, headers, cookies):
+    url = url_base % '{0:x}'.format(n)
+    print hex(n)
+    try:
         html = request(url, headers, cookies)
-        try:
-            unicode_num, url = parse_word_url(html)
-            html = request(url, headers, cookies)
-            word, pinyins = parse_pinyin(html)
-            print unicode_num, repr(word), pinyins
-            yield unicode_num, word, pinyins
-        except Exception as e:
-            print e
-            yield '{0:x}'.format(n).upper(), '', []
+        unicode_num, url = parse_word_url(html)
+        html = request(url, headers, cookies)
+        word, pinyins = parse_pinyin(html)
+        # print unicode_num, repr(word), pinyins
+        return unicode_num, word, pinyins
+    except Exception as e:
+        print e
+        return '{0:x}'.format(n).upper(), getattr(e, 'word', ''), []
+
+
+def get_words(unicode_range, url_base, headers, cookies):
+    m = 0
+    for n in xrange(int(unicode_range[0], 16), int(unicode_range[1], 16) + 1):
+        if n in pinyin_dict:
+            continue
+        if m > 900:
+            m = 0
+            sleep(120)
+        m += 1
+
+        yield get_word(n, url_base, headers, cookies)
         sleep(1)
 
 
@@ -116,8 +132,10 @@ def main():
                                                              ','.join(pinyins),
                                                              word))
                 else:
-                    f.write(u"# 0x{0}: '{1}',  # {2}\n".format(unicode_num,
-                                                               '', word))
+                    if word:
+                        word = ' ' + word
+                    f.write(u"# 0x{0}: '{1}',  #{2}\n".format(unicode_num,
+                                                              '', word))
 
 
 if __name__ == '__main__':
