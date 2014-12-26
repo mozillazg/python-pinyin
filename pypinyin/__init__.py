@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
