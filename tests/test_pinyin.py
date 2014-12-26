@@ -68,9 +68,9 @@ def test_zh_and_en():
     """中英文混合的情况"""
     # 中英文
     hans = '中心'
-    try:
+    if has_module('jieba'):
         assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
-    except AssertionError:
+    else:
         assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'],
                                         ['a'], ['b'], ['c']]
     # 中英文混合的固定词组
@@ -79,7 +79,10 @@ def test_zh_and_en():
     assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
     assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
     assert pinyin('AB超C', style=TONE2) == [['A'], ['B'], ['cha1o'], ['C']]
-    assert pinyin('AB阿C', style=TONE2) == [['A'], ['B'], ['a1'], ['C']]
+    if has_module('jieba'):
+        assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
+    else:
+        assert pinyin('AB阿C', style=TONE2) == [['A'], ['B'], ['a1'], ['C']]
     assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
