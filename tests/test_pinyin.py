@@ -73,6 +73,14 @@ def test_zh_and_en():
     except AssertionError:
         assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'],
                                         ['a'], ['b'], ['c']]
+    # 中英文混合的固定词组
+    assert pinyin('黄山B股', style=TONE2) == [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
+    assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
+    assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
+    assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
+    assert pinyin('AB超C', style=TONE2) == [['A'], ['B'], ['cha1o'], ['C']]
+    assert pinyin('AB阿C', style=TONE2) == [['A'], ['B'], ['a1'], ['C']]
+    assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
 def test_others():
@@ -109,6 +117,14 @@ def test_seg_jieba():
     import jieba
     hans_seg = list(jieba.cut(hans))
     assert pinyin(hans_seg, style=TONE2) == [['yi1n'], ['yue4']]
+    # 中英文混合的固定词组
+    assert pinyin('黄山B股', style=TONE2) == [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
+    assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
+    assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
+    assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
+    assert pinyin('AB超C', style=TONE2) == [['A'], ['B'], ['cha1o'], ['C']]
+    assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
+    assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
 @pytest.mark.skipif(not has_module('snownlp'), reason='cant import snownlp')
