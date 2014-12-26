@@ -14674,7 +14674,7 @@ pinyin_dict = {
     0x6BE5: 'xún,xùn',  # 毥
     0x6BE6: 'ěr',  # 毦
     0x6BE7: 'róng',  # 毧
-    # 0x6BE8: '',  #
+    0x6BE8: 'xiǎn',  # 毨
     0x6BE9: 'jū',  # 毩
     0x6BEA: 'mú',  # 毪
     0x6BEB: 'háo',  # 毫
@@ -56153,7 +56153,7 @@ pinyin_dict = {
     # 0x26BE5: '',  # 𦯥
     # 0x26BE6: '',  # 𦯦
     # 0x26BE7: '',  # 𦯧
-    0x6BE8: 'xiǎn',  # 毨
+    # 0x26BE8: '',  # 𦯨
     # 0x26BE9: '',  # 𦯩
     0x26BEA: 'xiào',  # 𦯪
     0x26BEB: 'zhī',  # 𦯫

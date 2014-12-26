@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -221,6 +221,33 @@ def phrases_pinyin(phrases, style, heteronym, errors='default'):
     return py
 
 
+def _pinyin(words, style, heteronym, errors):
+    re_hans = re.compile(r'''^(?:
+                         [\u3400-\u4dbf]    # CJK 扩展 A:[3400-4DBF]
+                         |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+                         |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+                         )+$''', re.X)
+    pys = []
+    # 初步过滤没有拼音的字符
+    if re_hans.match(words):
+        pys = phrases_pinyin(words, style=style, heteronym=heteronym,
+                             errors=errors)
+    else:
+        if re.match(r'^[a-zA-Z0-9_]+$', words):
+            pys.append([words])
+        else:
+            for word in words:
+                # 字母汉字混合的固定词组（这种情况来自分词结果）
+                if not (re_hans.match(word)
+                        or re.match(r'^[a-zA-Z0-9_]+$', word)
+                        ):
+                    py = _handle_nopinyin_char(word, errors=errors)
+                    pys.append([py]) if py else None
+                else:
+                    pys.extend(_pinyin(word, style, heteronym, errors))
+    return pys
+
+
 def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     """将汉字转换为拼音.
 
@@ -265,22 +292,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
             pass
     pys = []
     for words in hans:
-        # 初步过滤没有拼音的字符
-        re_hans = re.compile(r'''^(?:
-                             [\u3400-\u4dbf]    # CJK 扩展 A:[3400-4DBF]
-                             |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-                             |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-                             )+$''', re.X)
-        if not re_hans.match(words):
-            if re.match(r'^[a-zA-Z0-9_]+$', words):
-                pys.append([words])
-            else:
-                for word in words:
-                    py = _handle_nopinyin_char(word, errors=errors)
-                    pys.append([py]) if py else None
-            continue
-        pys.extend(phrases_pinyin(words, style=style, heteronym=heteronym,
-                                  errors=errors))
+        pys.extend(_pinyin(words, style, heteronym, errors))
     return pys
 
 
