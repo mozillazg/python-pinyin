@@ -76,6 +76,20 @@ FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 
+def seg(hans):
+    if getattr(seg, 'no_jieba', None):
+        return hans
+    if 'jieba' not in globals():
+        try:
+            import jieba
+            return jieba.cut(hans)
+        except ImportError:
+            seg.no_jieba = True
+            return hans
+    else:
+        return jieba.cut(hans)
+
+
 def load_single_dict(pinyin_dict):
     """载入用户自定义的单字拼音库
 
@@ -254,7 +268,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
 
                  如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
-                 分词处理。
+                 分词处理。可以通过传入列表的方式禁用这种行为。
 
                  也可以使用自己喜爱的分词模块对字符串进行分词处理,
                  只需将经过分词处理的字符串列表传进来就可以了。
@@ -285,11 +299,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     """
     # 对字符串进行分词处理
     if isinstance(hans, unicode):
-        try:
-            import jieba
-            hans = jieba.cut(hans)
-        except ImportError:
-            pass
+        hans = seg(hans)
     pys = []
     for words in hans:
         pys.extend(_pinyin(words, style, heteronym, errors))
