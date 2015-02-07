@@ -2,6 +2,8 @@ language: python
 python:
   - 3.4
 
+sudo: false
+
 env:
   - TOX_ENV=py26
   - TOX_ENV=py27
@@ -24,5 +26,5 @@ after_script:
 
 notifications:
   email:
-    on_success: change
+    on_success: never
     on_failure: always
