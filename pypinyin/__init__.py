@@ -79,15 +79,17 @@ FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 def seg(hans):
     if getattr(seg, 'no_jieba', None):
         return hans
-    if 'jieba' not in globals():
+    if seg.jieba is None:
         try:
             import jieba
+            seg.jieba = jieba
             return jieba.cut(hans)
         except ImportError:
             seg.no_jieba = True
             return hans
     else:
-        return jieba.cut(hans)
+        return seg.jieba.cut(hans)
+seg.jieba = None
 
 
 def load_single_dict(pinyin_dict):
