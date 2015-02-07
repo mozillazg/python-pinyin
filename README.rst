@@ -1,7 +1,7 @@
 汉语拼音转换工具（Python 版）
 =============================
 
-|Build| |Coverage| |Pypi version| |Pypi downloads| |Python 3|
+|Build| |Coverage| |Pypi version| |Pypi downloads|
 
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。
@@ -110,13 +110,11 @@ __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 
 
-.. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.png?branch=master
+.. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.svg?branch=master
    :target: https://travis-ci.org/mozillazg/python-pinyin
-.. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.png?branch=master
+.. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.svg?branch=master
    :target: https://coveralls.io/r/mozillazg/python-pinyin
-.. |PyPI version| image:: https://pypip.in/v/pypinyin/badge.png
-   :target: https://crate.io/packages/pypinyin
-.. |PyPI downloads| image:: https://pypip.in/d/pypinyin/badge.png
-   :target: https://crate.io/packages/pypinyin
-.. |Python 3| image:: https://caniusepython3.com/project/pypinyin.svg
-   :target: https://caniusepython3.com/project/pypinyin
+.. |PyPI version| image:: https://pypip.in/version/pypinyin/badge.svg
+   :target: https://pypi.python.org/pypi/pypinyin
+.. |PyPI downloads| image:: https://pypip.in/download/pypinyin/badge.svg
+   :target: https://pypi.python.org/pypi/pypinyin
