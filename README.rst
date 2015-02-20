@@ -48,7 +48,9 @@
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
     >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
     [['zh'], ['x']]
-    >>> lazy_pinyin(u'中心')
+    >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
+    [['zho1ng', 'zho4ng'], ['xi1n']]
+    >>> lazy_pinyin(u'中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
 
 命令行工具：
@@ -89,6 +91,9 @@
 
 如果对结果不满意，可以通过自定义拼音库的方式修正结果：
 
+
+**安装了 ``jieba`` 分词模块，并且可以分词的词组**
+
 .. code-block:: python
 
     >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2
@@ -98,6 +103,26 @@
     >> load_phrases_dict({u'桔子': [[u'jú'], [u'zǐ']]})
     >> lazy_pinyin(hans, style=TONE2)
     [u'ju2', u'zi3']
+
+
+**未安装 jieba 分词 and/or 不支持未分词的词组**
+
+.. code-block:: python
+
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2, load_single_dict
+    >> hans = u'还没'
+    >> lazy_pinyin(hans, style=TONE2)
+    ['hua2n', 'me2i']
+    >>>  # 第一种自定义词组的方法
+    >> load_phrases_dict({u'还没': [[u'hái'], [u'méi']]})
+    >>> lazy_pinyin(u'还没', style=TONE2)})
+    ['hua2n', 'me2i']
+    >>> lazy_pinyin([u'还没'], style=TONE2)  # 手动指定 "还没" 为一个词组
+    ['ha2i', 'me2i']
+    >>>  # 第二种自定义词组的方法
+    >> load_single_dict({ord(u'还'): u'hái,huán'})  # 调整 "还" 字的拼音顺序
+    >>> lazy_pinyin(u'还没', style=TONE2)
+    ['ha2i', 'me2i']
 
 
 Related Projects
