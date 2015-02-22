@@ -5,6 +5,9 @@ Changelog
 +++++++++++++++++++
 
 * fix "苹果" pinyin error. `#11`__
+* 精简 phrases_dict
+* fix 重复 import jieba 的问题
+* 更新文档
 
 __ https://github.com/mozillazg/python-pinyin/issues/11
 
