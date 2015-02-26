@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-0.5.6 (2015-mm-dd)
+0.5.6 (2015-02-26)
 +++++++++++++++++++
 
 * fix "苹果" pinyin error. `#11`__
@@ -10,6 +10,7 @@ Changelog
 * 更新文档
 
 __ https://github.com/mozillazg/python-pinyin/issues/11
+
 
 0.5.5 (2015-01-27)
 +++++++++++++++++++
