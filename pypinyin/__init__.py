@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.5.5'
+__version__ = '0.5.6'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -74,6 +74,22 @@ FINALS = STYLE_FINALS = PINYIN_STYLE['FINALS']
 FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
+
+
+def seg(hans):
+    if getattr(seg, 'no_jieba', None):
+        return hans
+    if seg.jieba is None:
+        try:
+            import jieba
+            seg.jieba = jieba
+            return jieba.cut(hans)
+        except ImportError:
+            seg.no_jieba = True
+            return hans
+    else:
+        return seg.jieba.cut(hans)
+seg.jieba = None
 
 
 def load_single_dict(pinyin_dict):
@@ -254,7 +270,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
 
                  如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
-                 分词处理。
+                 分词处理。可以通过传入列表的方式禁用这种行为。
 
                  也可以使用自己喜爱的分词模块对字符串进行分词处理,
                  只需将经过分词处理的字符串列表传进来就可以了。
@@ -285,11 +301,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     """
     # 对字符串进行分词处理
     if isinstance(hans, unicode):
-        try:
-            import jieba
-            hans = jieba.cut(hans)
-        except ImportError:
-            pass
+        hans = seg(hans)
     pys = []
     for words in hans:
         pys.extend(_pinyin(words, style, heteronym, errors))
