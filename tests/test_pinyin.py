@@ -172,3 +172,17 @@ def test_errors():
     )
     for han in hans:
         assert lazy_pinyin(han[0], **han[1]) == han[2]
+
+
+def test_fixbug():
+    data = {
+        '便宜': 'pia2n yi2',
+        '便宜从事': 'bia4n yi2 co2ng shi4',
+        '便宜货': 'pia2n yi2 huo4',
+        '贪便宜': 'ta1n pia2n yi2',
+        '讨便宜': 'ta3o pia2n yi2',
+        '小便宜': 'xia3o pia2n yi2',
+        '占便宜': 'zha4n pia2n yi2',
+    }
+    for h, p in data.items():
+        assert slug([h], style=TONE2, separator=' ') == p
