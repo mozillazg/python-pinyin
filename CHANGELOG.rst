@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+0.5.8 (2015-mm-dd)
++++++++++++++++++++++
+
+* ``errors`` 参数支持回调函数: ::
+
+    def foobar(char):
+        return 'a'
+    pinyin(u'あ', errors=foobar)
+
 0.5.7 (2015-05-17)
 +++++++++++++++++++
 
