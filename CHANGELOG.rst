@@ -1,10 +1,10 @@
 Changelog
 ---------
 
-0.5.8 (2015-mm-dd)
+0.6.0 (2015-06-10)
 +++++++++++++++++++++
 
-* ``errors`` 参数支持回调函数: ::
+* ``errors`` 参数支持回调函数(`#17`_): ::
 
     def foobar(char):
         return 'a'
@@ -141,3 +141,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 ++++++++++++++++++
 
 * Initial Release
+
+.. _#17: https://github.com/mozillazg/python-pinyin/pull/17
