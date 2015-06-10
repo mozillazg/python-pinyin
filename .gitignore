@@ -38,3 +38,4 @@ htmlcov
 .pydevproject
 
 tools/words.txt
+*~

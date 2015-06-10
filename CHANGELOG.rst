@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+0.6.0 (2015-06-10)
++++++++++++++++++++++
+
+* ``errors`` 参数支持回调函数(`#17`_): ::
+
+    def foobar(char):
+        return 'a'
+    pinyin(u'あ', errors=foobar)
+
 0.5.7 (2015-05-17)
 +++++++++++++++++++
 
@@ -132,3 +141,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 ++++++++++++++++++
 
 * Initial Release
+
+.. _#17: https://github.com/mozillazg/python-pinyin/pull/17

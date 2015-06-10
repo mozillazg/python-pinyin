@@ -174,6 +174,19 @@ def test_errors():
         assert lazy_pinyin(han[0], **han[1]) == han[2]
 
 
+def test_errors_callable():
+    def foobar(char):
+        return 'a'
+
+    class Foobar(object):
+        def __call__(self, char):
+            return 'a'
+
+    n = 5
+    assert lazy_pinyin('あ' * n, errors=foobar) == ['a'] * n
+    assert lazy_pinyin('あ' * n, errors=Foobar()) == ['a'] * n
+
+
 def test_update():
     data = {
         '便宜': 'pia2n yi2',

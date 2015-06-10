@@ -135,11 +135,11 @@ __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 
 
-.. |Build| image:: https://api.travis-ci.org/mozillazg/python-pinyin.svg?branch=master
+.. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg
    :target: https://travis-ci.org/mozillazg/python-pinyin
-.. |Coverage| image:: https://coveralls.io/repos/mozillazg/python-pinyin/badge.svg?branch=master
+.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg
    :target: https://coveralls.io/r/mozillazg/python-pinyin
-.. |PyPI version| image:: https://pypip.in/version/pypinyin/badge.svg
+.. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin
-.. |PyPI downloads| image:: https://pypip.in/download/pypinyin/badge.svg
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin

@@ -6,7 +6,7 @@
 from __future__ import unicode_literals
 
 __title__ = 'pypinyin'
-__version__ = '0.5.7'
+__version__ = '0.6.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -24,13 +24,14 @@ __all__ = ['pinyin', 'lazy_pinyin', 'slug',
 from copy import deepcopy
 from itertools import chain
 import re
+import sys
 
 from . import phrases_dict, phonetic_symbol, pinyin_dict
 
-try:
-    unicode = unicode   # python 2
-except NameError:
-    unicode = str       # python 3
+py3k = sys.version_info >= (3, 0)
+if py3k:
+    unicode = str
+    callable = lambda x: getattr(x, '__call__', None)
 
 # 词语拼音库
 PHRASES_DICT = phrases_dict.phrases_dict.copy()
@@ -178,6 +179,9 @@ def toFixed(pinyin, style):
 
 def _handle_nopinyin_char(char, errors='default'):
     """处理没有拼音的字符"""
+    if callable(errors):
+        return errors(char)
+
     if errors == 'default':
         return char
     elif errors == 'ignore':
@@ -190,7 +194,8 @@ def single_pinyin(han, style, heteronym, errors='default'):
     """单字拼音转换.
 
     :param han: 单个汉字
-    :param errors: 指定如何处理没有拼音的字符
+    :param errors: 指定如何处理没有拼音的字符，详情请参考
+                   :py:func:`~pypinyin.pinyin`
     :return: 返回拼音列表，多音字会有多个拼音项
     :rtype: list
     """
@@ -282,6 +287,14 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
                    * ``'ignore'``: 忽略该字符
                    * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
                      (``u'\\u90aa'`` => ``u'90aa'``)
+                   * callable 对象: 回调函数之类的可调用对象。如果 ``erros``
+                     参数 的值是个可调用对象，那么程序会回调这个函数:
+                     ``func(char)``::
+
+                         def foobar(char):
+                             return 'a'
+                         pinyin(u'あ', errors=foobar)
+
     :param heteronym: 是否启用多音字
     :return: 拼音列表
     :rtype: list
@@ -316,7 +329,8 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
     :param style: 指定拼音风格
     :param heteronym: 是否启用多音字
     :param separstor: 两个拼音间的分隔符/连接符
-    :param errors: 指定如何处理没有拼音的字符
+    :param errors: 指定如何处理没有拼音的字符，详情请参考
+                   :py:func:`~pypinyin.pinyin`
     :return: slug 字符串.
 
     ::
@@ -343,7 +357,8 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
     :param hans: 汉字
     :type hans: unicode or list
     :param style: 指定拼音风格
-    :param errors: 指定如何处理没有拼音的字符
+    :param errors: 指定如何处理没有拼音的字符，详情请参考
+                   :py:func:`~pypinyin.pinyin`
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 
