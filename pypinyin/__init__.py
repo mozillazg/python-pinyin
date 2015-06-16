@@ -3,6 +3,8 @@
 
 """汉语拼音转换工具."""
 
+from __future__ import unicode_literals
+
 __title__ = 'pypinyin'
 __version__ = '0.6.0'
 __author__ = 'mozillazg, 闲耘'
@@ -18,6 +20,8 @@ __all__ = ['pinyin', 'lazy_pinyin', 'slug',
            'STYLE_FINALS_TONE', 'FINALS_TONE',
            'STYLE_FINALS_TONE2', 'FINALS_TONE2',
            'STYLE_FIRST_LETTER', 'FIRST_LETTER']
+# fix "TypeError: Item in ``from list'' not a string" in Python 2
+__all__ = [str(x) for x in __all__]
 
 from copy import deepcopy
 from itertools import chain
