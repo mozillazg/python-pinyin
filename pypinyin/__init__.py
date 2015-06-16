@@ -3,8 +3,6 @@
 
 """汉语拼音转换工具."""
 
-from __future__ import unicode_literals
-
 __title__ = 'pypinyin'
 __version__ = '0.6.0'
 __author__ = 'mozillazg, 闲耘'
