@@ -5,9 +5,12 @@ from __future__ import unicode_literals
 
 import pytest
 
-from pypinyin import (pinyin, slug, lazy_pinyin, load_single_dict,
-                      load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
-                      FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2)
+import pypinyin
+from pypinyin import (
+    pinyin, slug, lazy_pinyin, load_single_dict,
+    load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
+    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
+)
 
 
 def test_pinyin_initials():
@@ -200,3 +203,9 @@ def test_update():
     }
     for h, p in data.items():
         assert slug([h], style=TONE2, separator=' ') == p
+
+
+@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
+def test_set_no_jieba():
+    pypinyin.seg.no_jieba = True
+    assert pinyin('音乐', style=TONE2) != [['yi1n'], ['yue4']]

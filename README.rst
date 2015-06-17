@@ -35,6 +35,12 @@
 推荐同时安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
 
 
+文档
+--------
+
+http://pypinyin.rtfd.org
+
+
 使用示例
 --------
 
@@ -85,6 +91,12 @@
        >> lazy_pinyin(hans_seg, style=TONE2)
        [u'yi1n', u'yue4', u'123']
 
+如果不想让程序自动调用 ``jieba``, 设置 ``pypinyin.seg.no_jieba = True`` 即可:
+
+.. code-block:: python
+
+    import pypinyin
+    pypinyin.seg.no_jieba = True
 
 自定义拼音库
 ------------
