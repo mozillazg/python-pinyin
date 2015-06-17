@@ -212,3 +212,4 @@ def test_set_no_jieba():
     assert pinyin(hans, style=TONE2) == ret
     pypinyin.seg.no_jieba = True
     assert pinyin(hans, style=TONE2) != ret
+    pypinyin.seg.no_jieba = None
