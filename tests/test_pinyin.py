@@ -207,5 +207,8 @@ def test_update():
 
 @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
 def test_set_no_jieba():
+    hans = '音乐'
+    ret = [['yi1n'], ['yue4']]
+    assert pinyin(hans, style=TONE2) == ret
     pypinyin.seg.no_jieba = True
-    assert pinyin('音乐', style=TONE2) != [['yi1n'], ['yue4']]
+    assert pinyin(hans, style=TONE2) != ret
