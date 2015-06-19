@@ -25,18 +25,24 @@ __all__ = [str(x) for x in __all__]
 
 from copy import deepcopy
 from itertools import chain
+import os
 import re
 import sys
 
-from . import phrases_dict, phonetic_symbol, pinyin_dict
+from . import phonetic_symbol, pinyin_dict
 
-py3k = sys.version_info >= (3, 0)
-if py3k:
+PY2 = sys.version_info < (3, 0)
+if not PY2:
     unicode = str
     callable = lambda x: getattr(x, '__call__', None)
 
 # 词语拼音库
-PHRASES_DICT = phrases_dict.phrases_dict.copy()
+if os.environ.get('PYPINYIN_NO_PHRASES'):
+    PHRASES_DICT = {}
+else:
+    from . import phrases_dict
+    PHRASES_DICT = phrases_dict.phrases_dict.copy()
+
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
@@ -93,6 +99,8 @@ def seg(hans):
     else:
         return seg.jieba.cut(hans)
 seg.jieba = None
+if os.environ.get('PYPINYIN_NO_JIEBA'):
+    seg.no_jieba = True
 
 
 def load_single_dict(pinyin_dict):

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from pypinyin import *   # noqa
+from .utils import has_module
 
 
 def test_import_all():

@@ -11,6 +11,7 @@ from pypinyin import (
     load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
 )
+from .utils import has_module
 
 
 def test_pinyin_initials():
@@ -107,14 +108,6 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心') == ['zhong', 'xin']
     assert lazy_pinyin('中心', style=TONE) == ['zh\u014dng', 'x\u012bn']
     assert lazy_pinyin('中心', style=INITIALS) == ['zh', 'x']
-
-
-def has_module(module):
-    try:
-        __import__(module)
-        return True
-    except ImportError:
-        pass
 
 
 @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
