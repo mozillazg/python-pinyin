@@ -5,36 +5,45 @@
 
 from __future__ import unicode_literals
 
-__title__ = 'pypinyin'
-__version__ = '0.6.0'
-__author__ = 'mozillazg, 闲耘'
-__license__ = 'MIT'
-__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
-
-__all__ = ['pinyin', 'lazy_pinyin', 'slug',
-           'STYLE_NORMAL', 'NORMAL',
-           'STYLE_TONE', 'TONE',
-           'STYLE_TONE2', 'TONE2',
-           'STYLE_INITIALS', 'INITIALS',
-           'STYLE_FINALS', 'FINALS',
-           'STYLE_FINALS_TONE', 'FINALS_TONE',
-           'STYLE_FINALS_TONE2', 'FINALS_TONE2',
-           'STYLE_FIRST_LETTER', 'FIRST_LETTER']
-
 from copy import deepcopy
 from itertools import chain
+import os
 import re
 import sys
 
-from . import phrases_dict, phonetic_symbol, pinyin_dict
+from . import phonetic_symbol, pinyin_dict
 
-py3k = sys.version_info >= (3, 0)
-if py3k:
+__title__ = 'pypinyin'
+__version__ = '0.7.0'
+__author__ = 'mozillazg, 闲耘'
+__license__ = 'MIT'
+__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
+__all__ = [
+    'pinyin', 'lazy_pinyin', 'slug',
+    'STYLE_NORMAL', 'NORMAL',
+    'STYLE_TONE', 'TONE',
+    'STYLE_TONE2', 'TONE2',
+    'STYLE_INITIALS', 'INITIALS',
+    'STYLE_FINALS', 'FINALS',
+    'STYLE_FINALS_TONE', 'FINALS_TONE',
+    'STYLE_FINALS_TONE2', 'FINALS_TONE2',
+    'STYLE_FIRST_LETTER', 'FIRST_LETTER'
+]
+# fix "TypeError: Item in ``from list'' not a string" in Python 2
+__all__ = [str(x) for x in __all__]
+
+PY2 = sys.version_info < (3, 0)
+if not PY2:
     unicode = str
     callable = lambda x: getattr(x, '__call__', None)
 
 # 词语拼音库
-PHRASES_DICT = phrases_dict.phrases_dict.copy()
+if os.environ.get('PYPINYIN_NO_PHRASES'):
+    PHRASES_DICT = {}
+else:
+    from . import phrases_dict
+    PHRASES_DICT = phrases_dict.phrases_dict.copy()
+
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
@@ -91,6 +100,8 @@ def seg(hans):
     else:
         return seg.jieba.cut(hans)
 seg.jieba = None
+if os.environ.get('PYPINYIN_NO_JIEBA'):
+    seg.no_jieba = True
 
 
 def load_single_dict(pinyin_dict):

@@ -35,6 +35,12 @@
 推荐同时安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
 
 
+文档
+--------
+
+http://pypinyin.rtfd.org
+
+
 使用示例
 --------
 

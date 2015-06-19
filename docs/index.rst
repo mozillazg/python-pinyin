@@ -37,6 +37,16 @@ pypinyin.FINALS_TONE2    7      韵母风格2，带声调，声调在各个拼�
 .. autofunction:: pypinyin.load_phrases_dict
 
 
+TIPS
+-----
+
+* | 禁用“自动调用结巴分词模块”功能：
+  | 设置环境变量 ``PYPINYIN_NO_JIEBA=true``
+
+* | 禁用内置的“词组拼音库”：
+  | 设置环境变量 ``PYPINYIN_NO_PHRASES=true``
+
+
 .. include:: ../CHANGELOG.rst
 
 

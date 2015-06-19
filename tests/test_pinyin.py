@@ -5,9 +5,13 @@ from __future__ import unicode_literals
 
 import pytest
 
-from pypinyin import (pinyin, slug, lazy_pinyin, load_single_dict,
-                      load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
-                      FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2)
+import pypinyin
+from pypinyin import (
+    pinyin, slug, lazy_pinyin, load_single_dict,
+    load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
+    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
+)
+from .utils import has_module
 
 
 def test_pinyin_initials():
@@ -106,14 +110,6 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心', style=INITIALS) == ['zh', 'x']
 
 
-def has_module(module):
-    try:
-        __import__(module)
-        return True
-    except ImportError:
-        pass
-
-
 @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
 def test_seg_jieba():
     hans = '音乐'
@@ -200,3 +196,13 @@ def test_update():
     }
     for h, p in data.items():
         assert slug([h], style=TONE2, separator=' ') == p
+
+
+@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
+def test_set_no_jieba():
+    hans = '音乐'
+    ret = [['yi1n'], ['yue4']]
+    assert pinyin(hans, style=TONE2) == ret
+    pypinyin.seg.no_jieba = True
+    assert pinyin(hans, style=TONE2) != ret
+    pypinyin.seg.no_jieba = None
