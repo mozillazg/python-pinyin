@@ -5,24 +5,6 @@
 
 from __future__ import unicode_literals
 
-__title__ = 'pypinyin'
-__version__ = '0.6.0'
-__author__ = 'mozillazg, 闲耘'
-__license__ = 'MIT'
-__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
-
-__all__ = ['pinyin', 'lazy_pinyin', 'slug',
-           'STYLE_NORMAL', 'NORMAL',
-           'STYLE_TONE', 'TONE',
-           'STYLE_TONE2', 'TONE2',
-           'STYLE_INITIALS', 'INITIALS',
-           'STYLE_FINALS', 'FINALS',
-           'STYLE_FINALS_TONE', 'FINALS_TONE',
-           'STYLE_FINALS_TONE2', 'FINALS_TONE2',
-           'STYLE_FIRST_LETTER', 'FIRST_LETTER']
-# fix "TypeError: Item in ``from list'' not a string" in Python 2
-__all__ = [str(x) for x in __all__]
-
 from copy import deepcopy
 from itertools import chain
 import os
@@ -30,6 +12,25 @@ import re
 import sys
 
 from . import phonetic_symbol, pinyin_dict
+
+__title__ = 'pypinyin'
+__version__ = '0.7.0'
+__author__ = 'mozillazg, 闲耘'
+__license__ = 'MIT'
+__copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
+__all__ = [
+    'pinyin', 'lazy_pinyin', 'slug',
+    'STYLE_NORMAL', 'NORMAL',
+    'STYLE_TONE', 'TONE',
+    'STYLE_TONE2', 'TONE2',
+    'STYLE_INITIALS', 'INITIALS',
+    'STYLE_FINALS', 'FINALS',
+    'STYLE_FINALS_TONE', 'FINALS_TONE',
+    'STYLE_FINALS_TONE2', 'FINALS_TONE2',
+    'STYLE_FIRST_LETTER', 'FIRST_LETTER'
+]
+# fix "TypeError: Item in ``from list'' not a string" in Python 2
+__all__ = [str(x) for x in __all__]
 
 PY2 = sys.version_info < (3, 0)
 if not PY2:

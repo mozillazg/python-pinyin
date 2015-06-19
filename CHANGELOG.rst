@@ -1,10 +1,10 @@
 Changelog
 ---------
 
-0.7.0 (2015-06-dd)
+0.7.0 (2015-06-20)
 +++++++++++++++++++++
 
-* 修复使用 ``from pypinyin import *`` 报错的问题
+* 修复 Python 2 下无法使用 ``from pypinyin import *`` 的问题
 * 新增支持以下环境变量:
 
   * ``PYPINYIN_NO_JIEBA=true``: 禁用“自动调用结巴分词模块”
