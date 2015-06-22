@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 import pytest
 
-import pypinyin
 from pypinyin import (
     pinyin, slug, lazy_pinyin, load_single_dict,
     load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
@@ -193,16 +192,33 @@ def test_update():
         '讨便宜': 'ta3o pia2n yi2',
         '小便宜': 'xia3o pia2n yi2',
         '占便宜': 'zha4n pia2n yi2',
+        '\u3400': 'qiu1',  # CJK 扩展 A:[3400-4DBF]
+        '\u4E00': 'yi1',   # CJK 基本:[4E00-9FFF]
+        '\uFA29': 'da3o',  # CJK 兼容:[F900-FAFF]
     }
     for h, p in data.items():
         assert slug([h], style=TONE2, separator=' ') == p
 
 
-@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
-def test_set_no_jieba():
-    hans = '音乐'
-    ret = [['yi1n'], ['yue4']]
-    assert pinyin(hans, style=TONE2) == ret
-    pypinyin.seg.no_jieba = True
-    assert pinyin(hans, style=TONE2) != ret
-    pypinyin.seg.no_jieba = None
+# @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
+# def test_set_no_jieba():
+#     hans = '音乐ba'
+#     ret = [['yi1n'], ['yue4'], ['ba']]
+#     assert pinyin(hans, style=TONE2) != ret
+#     pypinyin.seg.no_jieba = True
+#     assert pinyin(hans, style=TONE2) == ret
+#     pypinyin.seg.no_jieba = None
+
+
+def test_simple_seg():
+    data = {
+        '北京abcc': 'be3i ji1ng abcc',
+        '你好にほんごРусский язык': 'ni3 ha3o にほんごРусский язык',
+    }
+    for h, p in data.items():
+        assert slug([h], style=TONE2, separator=' ') == p
+
+    hans = '你好にほんごРусский язык'
+    ret = 'ni3 ha3o'
+    errors = lambda x: None
+    assert slug(hans, style=TONE2, separator=' ', errors=errors)

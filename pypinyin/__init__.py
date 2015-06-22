@@ -56,6 +56,43 @@ re_phonetic_symbol_source = ''.join(PHONETIC_SYMBOL.keys())
 RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 # 匹配使用数字标识声调的字符的正则表达式
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
+# 有拼音的汉字
+RE_HANS = re.compile(r'''^(?:
+    [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+    |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+    |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+)+$''', re.X)
+# 分割中文字符和非中文字符
+RE_NONE_HANS_SPLIT = re.compile(r'''
+(?:
+    (?<=                        # 非中文字符
+        [^\u3400-\u4dbf
+         \u4e00-\u9fff
+         \uf900-\ufaff]
+    )
+    (?=                         # 中文字符
+        (?:
+            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+        )
+    )
+)
+| (?:
+    (?<=                        # 中文字符
+        (?:
+            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+        )
+    )
+    (?=                         # 非中文字符
+        [^\u3400-\u4dbf
+         \u4e00-\u9fff
+         \uf900-\ufaff]
+    )
+)
+''', re.X)
 
 # 拼音风格
 PINYIN_STYLE = {
@@ -86,19 +123,28 @@ FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 
+def simple_seg(hans):
+    '将传入的字符串按是否有拼音来分割'
+    if isinstance(hans, unicode):
+        return RE_NONE_HANS_SPLIT.sub('\b', hans).split('\b')
+    else:
+        return list(chain(*[simple_seg(x) for x in hans]))
+
+
 def seg(hans):
     if getattr(seg, 'no_jieba', None):
-        return hans
+        ret = hans
     if seg.jieba is None:
         try:
             import jieba
             seg.jieba = jieba
-            return jieba.cut(hans)
         except ImportError:
             seg.no_jieba = True
-            return hans
+        return seg(hans)
     else:
-        return seg.jieba.cut(hans)
+        ret = seg.jieba.cut(hans)
+
+    return simple_seg(ret)
 seg.jieba = None
 if os.environ.get('PYPINYIN_NO_JIEBA'):
     seg.no_jieba = True
@@ -254,29 +300,25 @@ def phrases_pinyin(phrases, style, heteronym, errors='default'):
 
 
 def _pinyin(words, style, heteronym, errors):
-    re_hans = re.compile(r'''^(?:
-                         [\u3400-\u4dbf]    # CJK 扩展 A:[3400-4DBF]
-                         |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-                         |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-                         )+$''', re.X)
     pys = []
     # 初步过滤没有拼音的字符
-    if re_hans.match(words):
+    if RE_HANS.match(words):
         pys = phrases_pinyin(words, style=style, heteronym=heteronym,
                              errors=errors)
+        return pys
+
+    if re.match(r'^[a-zA-Z0-9_]+$', words):
+        pys.append([words])
     else:
-        if re.match(r'^[a-zA-Z0-9_]+$', words):
-            pys.append([words])
-        else:
-            for word in words:
-                # 字母汉字混合的固定词组（这种情况来自分词结果）
-                if not (re_hans.match(word)
-                        or re.match(r'^[a-zA-Z0-9_]+$', word)
-                        ):
-                    py = _handle_nopinyin_char(word, errors=errors)
-                    pys.append([py]) if py else None
-                else:
-                    pys.extend(_pinyin(word, style, heteronym, errors))
+        for word in simple_seg(words):
+            # 字母汉字混合的固定词组（这种情况来自分词结果）
+            if not (RE_HANS.match(word)
+                    or re.match(r'^[a-zA-Z0-9_]+$', word)
+                    ):
+                py = _handle_nopinyin_char(word, errors=errors)
+                pys.append([py]) if py else None
+            else:
+                pys.extend(_pinyin(word, style, heteronym, errors))
     return pys
 
 
