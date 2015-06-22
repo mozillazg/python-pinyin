@@ -62,6 +62,12 @@ RE_HANS = re.compile(r'''^(?:
     |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
     |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
 )+$''', re.X)
+# 没有拼音的字符
+RE_NONE_HANS = re.compile(r'''^(?:
+    [^\u3400-\u4dbf
+     \u4e00-\u9fff
+     \uf900-\ufaff]
+)+$''', re.X)
 # 分割中文字符和非中文字符
 RE_NONE_HANS_SPLIT = re.compile(r'''
 (?:
@@ -128,12 +134,17 @@ def simple_seg(hans):
     if isinstance(hans, unicode):
         return RE_NONE_HANS_SPLIT.sub('\b', hans).split('\b')
     else:
+        hans = list(hans)
+        if len(hans) == 1:
+            return simple_seg(hans[0])
         return list(chain(*[simple_seg(x) for x in hans]))
 
 
 def seg(hans):
     if getattr(seg, 'no_jieba', None):
         ret = hans
+        return simple_seg(ret)
+
     if seg.jieba is None:
         try:
             import jieba
@@ -142,9 +153,15 @@ def seg(hans):
             seg.no_jieba = True
         return seg(hans)
     else:
-        ret = seg.jieba.cut(hans)
+        hans = simple_seg(hans)
+        ret = []
+        for x in hans:
+            if RE_NONE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
+                ret.append(x)
+            else:
+                ret.extend(list(seg.jieba.cut(x)))
+        return ret
 
-    return simple_seg(ret)
 seg.jieba = None
 if os.environ.get('PYPINYIN_NO_JIEBA'):
     seg.no_jieba = True
