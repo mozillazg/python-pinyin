@@ -31,14 +31,11 @@
 
     $ pip install pypinyin
 
-为了更好的处理包含多音字及非中文字符的字符串，
-推荐同时安装 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块。
-
 
 文档
 --------
 
-http://pypinyin.rtfd.org
+详细文档请访问：http://pypinyin.rtfd.org
 
 
 使用示例
@@ -68,28 +65,65 @@ http://pypinyin.rtfd.org
     $ pypinyin -h
 
 
+处理不包含拼音的字符
+---------------------
+
+当程序遇到不包含拼音的字符(串)时，会根据 ``errors`` 参数的值做相应的处理:
+
+* ``default`` (默认行为): 不做任何处理，原样返回::
+
+      lazy_pinyin(u'你好☆')
+      [u'ni', u'hao', u'\u2606']
+* ``ignore`` : 忽略该字符 ::
+
+      lazy_pinyin(u'你好☆', errors='ignore')
+      [u'ni', u'hao']
+* ``replace`` : 替换为去掉 ``\u`` 的 unicode 编码::
+
+      lazy_pinyin(u'你好☆', errors='replace')
+      [u'ni', u'hao', u'2606']
+
+* callable 对象 : 提供一个回调函数，接受无拼音字符(串)作为参数,
+  支持的返回值类型: ``unicode`` 或 ``list`` ([unicode, ...]) 或 ``None`` 。
+
+  可参考 `单元测试代码`_  ::
+
+      lazy_pinyin(u'你好☆', errors=lambda x: 'star')
+      [u'ni', u'hao', 'star']
+
+.. _单元测试代码: https://github.com/mozillazg/python-pinyin/blob/3d52fe821b7f55aecf5af9bad78380762484f4d9/tests/test_pinyin.py#L161-L166
+
+
 分词处理
 --------
 
-如果安装了 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块，程序会自动调用。
+* 内置了简单的分词功能，对字符串按是否是中文字符进行分词。
 
-使用其他分词模块：
+  .. code-block:: python
 
-1. 安装分词模块，比如 ``pip install snownlp`` ；
-2. 使用经过分词处理的字符串列表作参数：
+        >> from pypinyin import lazy_pinyin
+        >> lazy_pinyin(u'你好abcこんにちは')
+        [u'ni', u'hao', u'abc\u3053\u3093\u306b\u3061\u306f']
 
-   .. code-block:: python
+  如果需要处理多音字问题，推荐同时安装其他分词模块。
 
-       >> from pypinyin import lazy_pinyin, TONE2
-       >> from snownlp import SnowNLP
-       >> hans = u'音乐123'
-       >> lazy_pinyin(hans, style=TONE2)
-       [u'yi1n', u'le4', u'1', u'2', u'3']
-       >> hans_seg = SnowNLP(hans).words  # 分词处理
-       >> hans_seg
-       [u'\u97f3\u4e50', u'123']
-       >> lazy_pinyin(hans_seg, style=TONE2)
-       [u'yi1n', u'yue4', u'123']
+* 如果安装了 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块，程序会自动调用。
+
+* 使用其他分词模块：
+
+    1. 安装分词模块，比如 ``pip install snownlp`` ；
+    2. 使用经过分词处理的字符串列表作参数：
+
+       .. code-block:: python
+
+           >> from pypinyin import lazy_pinyin, TONE2
+           >> from snownlp import SnowNLP
+           >> hans = u'音乐123'
+           >> hans_seg = SnowNLP(hans).words  # 分词处理
+           >> hans_seg
+           [u'\u97f3\u4e50', u'123']
+           >> lazy_pinyin(hans_seg, style=TONE2)
+           [u'yi1n', u'yue4', u'123']
 
 
 自定义拼音库
