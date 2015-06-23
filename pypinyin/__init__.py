@@ -35,6 +35,7 @@ __all__ = [str(x) for x in __all__]
 PY2 = sys.version_info < (3, 0)
 if not PY2:
     unicode = str
+    str = bytes
     callable = lambda x: getattr(x, '__call__', None)
 
 # 词语拼音库
@@ -131,6 +132,9 @@ FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 def simple_seg(hans):
     '将传入的字符串按是否有拼音来分割'
+    assert not isinstance(hans, str), \
+        'must be unicode string or [unicode, ...] list'
+
     if isinstance(hans, unicode):
         return RE_NONE_HANS_SPLIT.sub('\b', hans).split('\b')
     else:
