@@ -251,17 +251,30 @@ def toFixed(pinyin, style):
     return py
 
 
-def _handle_nopinyin_char(char, errors='default'):
+def _handle_nopinyin_char(chars, errors='default'):
     """处理没有拼音的字符"""
     if callable(errors):
-        return errors(char)
+        return errors(chars)
 
     if errors == 'default':
-        return char
+        return chars
     elif errors == 'ignore':
         return None
     elif errors == 'replace':
-        return unicode('%x' % ord(char))
+        if len(chars) > 1:
+            return ''.join(unicode('%x' % ord(x)) for x in chars)
+        else:
+            return unicode('%x' % ord(chars))
+
+
+def handle_nopinyin(chars, errors='default'):
+    py = _handle_nopinyin_char(chars, errors=errors)
+    if not py:
+        return []
+    if isinstance(py, list):
+        return py
+    else:
+        return [py]
 
 
 def single_pinyin(han, style, heteronym, errors='default'):
@@ -274,9 +287,10 @@ def single_pinyin(han, style, heteronym, errors='default'):
     :rtype: list
     """
     num = ord(han)
+    # 处理没有拼音的字符
     if num not in PINYIN_DICT:
-        py = _handle_nopinyin_char(han, errors=errors)
-        return [py] if py else None
+        return handle_nopinyin(han, errors=errors)
+
     pys = PINYIN_DICT[num].split(",")  # 字的拼音列表
     if not heteronym:
         return [toFixed(pys[0], style)]
@@ -324,18 +338,12 @@ def _pinyin(words, style, heteronym, errors):
                              errors=errors)
         return pys
 
-    if re.match(r'^[a-zA-Z0-9_]+$', words):
-        pys.append([words])
-    else:
-        for word in simple_seg(words):
-            # 字母汉字混合的固定词组（这种情况来自分词结果）
-            if not (RE_HANS.match(word)
-                    or re.match(r'^[a-zA-Z0-9_]+$', word)
-                    ):
-                py = _handle_nopinyin_char(word, errors=errors)
-                pys.append([py]) if py else None
-            else:
-                pys.extend(_pinyin(word, style, heteronym, errors))
+    for word in simple_seg(words):
+        if not (RE_HANS.match(word)):
+            py = handle_nopinyin(word, errors=errors)
+            pys.append(py) if py else None
+        else:
+            pys.extend(_pinyin(word, style, heteronym, errors))
     return pys
 
 
