@@ -14,7 +14,7 @@ import sys
 from . import phonetic_symbol, pinyin_dict
 
 __title__ = 'pypinyin'
-__version__ = '0.7.0'
+__version__ = '0.8.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -35,6 +35,7 @@ __all__ = [str(x) for x in __all__]
 PY2 = sys.version_info < (3, 0)
 if not PY2:
     unicode = str
+    str = bytes
     callable = lambda x: getattr(x, '__call__', None)
 
 # 词语拼音库
@@ -56,6 +57,49 @@ re_phonetic_symbol_source = ''.join(PHONETIC_SYMBOL.keys())
 RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 # 匹配使用数字标识声调的字符的正则表达式
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
+# 有拼音的汉字
+RE_HANS = re.compile(r'''^(?:
+    [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+    |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+    |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+)+$''', re.X)
+# 没有拼音的字符
+RE_NONE_HANS = re.compile(r'''^(?:
+    [^\u3400-\u4dbf
+     \u4e00-\u9fff
+     \uf900-\ufaff]
+)+$''', re.X)
+# 分割中文字符和非中文字符
+RE_NONE_HANS_SPLIT = re.compile(r'''
+(?:
+    (?<=                        # 非中文字符
+        [^\u3400-\u4dbf
+         \u4e00-\u9fff
+         \uf900-\ufaff]
+    )
+    (?=                         # 中文字符
+        (?:
+            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+        )
+    )
+)
+| (?:
+    (?<=                        # 中文字符
+        (?:
+            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
+            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
+            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
+        )
+    )
+    (?=                         # 非中文字符
+        [^\u3400-\u4dbf
+         \u4e00-\u9fff
+         \uf900-\ufaff]
+    )
+)
+''', re.X)
 
 # 拼音风格
 PINYIN_STYLE = {
@@ -86,19 +130,42 @@ FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 
+def simple_seg(hans):
+    '将传入的字符串按是否有拼音来分割'
+    assert not isinstance(hans, str), \
+        'must be unicode string or [unicode, ...] list'
+
+    if isinstance(hans, unicode):
+        return RE_NONE_HANS_SPLIT.sub('\b', hans).split('\b')
+    else:
+        hans = list(hans)
+        if len(hans) == 1:
+            return simple_seg(hans[0])
+        return list(chain(*[simple_seg(x) for x in hans]))
+
+
 def seg(hans):
     if getattr(seg, 'no_jieba', None):
-        return hans
+        ret = hans
+        return simple_seg(ret)
+
     if seg.jieba is None:
         try:
             import jieba
             seg.jieba = jieba
-            return jieba.cut(hans)
         except ImportError:
             seg.no_jieba = True
-            return hans
+        return seg(hans)
     else:
-        return seg.jieba.cut(hans)
+        hans = simple_seg(hans)
+        ret = []
+        for x in hans:
+            if RE_NONE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
+                ret.append(x)
+            else:
+                ret.extend(list(seg.jieba.cut(x)))
+        return ret
+
 seg.jieba = None
 if os.environ.get('PYPINYIN_NO_JIEBA'):
     seg.no_jieba = True
@@ -188,17 +255,30 @@ def toFixed(pinyin, style):
     return py
 
 
-def _handle_nopinyin_char(char, errors='default'):
+def _handle_nopinyin_char(chars, errors='default'):
     """处理没有拼音的字符"""
     if callable(errors):
-        return errors(char)
+        return errors(chars)
 
     if errors == 'default':
-        return char
+        return chars
     elif errors == 'ignore':
         return None
     elif errors == 'replace':
-        return unicode('%x' % ord(char))
+        if len(chars) > 1:
+            return ''.join(unicode('%x' % ord(x)) for x in chars)
+        else:
+            return unicode('%x' % ord(chars))
+
+
+def handle_nopinyin(chars, errors='default'):
+    py = _handle_nopinyin_char(chars, errors=errors)
+    if not py:
+        return []
+    if isinstance(py, list):
+        return py
+    else:
+        return [py]
 
 
 def single_pinyin(han, style, heteronym, errors='default'):
@@ -211,9 +291,10 @@ def single_pinyin(han, style, heteronym, errors='default'):
     :rtype: list
     """
     num = ord(han)
+    # 处理没有拼音的字符
     if num not in PINYIN_DICT:
-        py = _handle_nopinyin_char(han, errors=errors)
-        return [py] if py else None
+        return handle_nopinyin(han, errors=errors)
+
     pys = PINYIN_DICT[num].split(",")  # 字的拼音列表
     if not heteronym:
         return [toFixed(pys[0], style)]
@@ -254,29 +335,19 @@ def phrases_pinyin(phrases, style, heteronym, errors='default'):
 
 
 def _pinyin(words, style, heteronym, errors):
-    re_hans = re.compile(r'''^(?:
-                         [\u3400-\u4dbf]    # CJK 扩展 A:[3400-4DBF]
-                         |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-                         |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-                         )+$''', re.X)
     pys = []
     # 初步过滤没有拼音的字符
-    if re_hans.match(words):
+    if RE_HANS.match(words):
         pys = phrases_pinyin(words, style=style, heteronym=heteronym,
                              errors=errors)
-    else:
-        if re.match(r'^[a-zA-Z0-9_]+$', words):
-            pys.append([words])
+        return pys
+
+    for word in simple_seg(words):
+        if not (RE_HANS.match(word)):
+            py = handle_nopinyin(word, errors=errors)
+            pys.append(py) if py else None
         else:
-            for word in words:
-                # 字母汉字混合的固定词组（这种情况来自分词结果）
-                if not (re_hans.match(word)
-                        or re.match(r'^[a-zA-Z0-9_]+$', word)
-                        ):
-                    py = _handle_nopinyin_char(word, errors=errors)
-                    pys.append([py]) if py else None
-                else:
-                    pys.extend(_pinyin(word, style, heteronym, errors))
+            pys.extend(_pinyin(word, style, heteronym, errors))
     return pys
 
 

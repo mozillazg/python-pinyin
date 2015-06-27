@@ -5,6 +5,7 @@ omit =
 
 [report]
 exclude_lines =
+    pragma: no cover
     except NameError
     except ImportError
     pass

@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 
 import pytest
 
-import pypinyin
 from pypinyin import (
     pinyin, slug, lazy_pinyin, load_single_dict,
     load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
@@ -44,11 +43,7 @@ def test_pinyin_finals():
     """只包含韵母的词语"""
     hans = '嗷嗷'
     assert pinyin(hans) == [['\xe1o'], ['\xe1o']]
-    try:
-        assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'], ['abc']]
-    except AssertionError:
-        assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'],
-                                        ['a'], ['b'], ['c']]
+    assert pinyin(hans + 'abc') == [['\xe1o'], ['\xe1o'], ['abc']]
     assert pinyin(hans, NORMAL) == [['ao'], ['ao']]
     assert pinyin(hans, TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, TONE2) == [['a2o'], ['a2o']]
@@ -72,21 +67,14 @@ def test_zh_and_en():
     """中英文混合的情况"""
     # 中英文
     hans = '中心'
-    if has_module('jieba'):
-        assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
-    else:
-        assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'],
-                                        ['a'], ['b'], ['c']]
+    assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
     # 中英文混合的固定词组
     assert pinyin('黄山B股', style=TONE2) == [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
     assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
     assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
     assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
-    assert pinyin('AB超C', style=TONE2) == [['A'], ['B'], ['cha1o'], ['C']]
-    if has_module('jieba'):
-        assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
-    else:
-        assert pinyin('AB阿C', style=TONE2) == [['A'], ['B'], ['a1'], ['C']]
+    assert pinyin('AB超C', style=TONE2) == [['AB'], ['cha1o'], ['C']]
+    assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
     assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
@@ -121,16 +109,15 @@ def test_seg_jieba():
     assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
     assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
     assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
-    assert pinyin('AB超C', style=TONE2) == [['A'], ['B'], ['cha1o'], ['C']]
+    assert pinyin('AB超C', style=TONE2) == [['AB'], ['cha1o'], ['C']]
     assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
     assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
 @pytest.mark.skipif(not has_module('snownlp'), reason='cant import snownlp')
 def test_other_seg_module():
-    hans = '音乐123'
-    assert lazy_pinyin(hans, style=TONE2) == [u'yi1n', u'le4', u'1', u'2', u'3']
     from snownlp import SnowNLP
+    hans = '音乐123'
     hans_seg = SnowNLP(hans).words
     assert lazy_pinyin(hans_seg, style=TONE2) == [u'yi1n', u'yue4', u'123']
 
@@ -171,16 +158,16 @@ def test_errors():
 
 
 def test_errors_callable():
-    def foobar(char):
-        return 'a'
+    def foobar(chars):
+        return 'a' * len(chars)
 
     class Foobar(object):
-        def __call__(self, char):
-            return 'a'
+        def __call__(self, chars):
+            return 'a' * len(chars)
 
     n = 5
-    assert lazy_pinyin('あ' * n, errors=foobar) == ['a'] * n
-    assert lazy_pinyin('あ' * n, errors=Foobar()) == ['a'] * n
+    assert lazy_pinyin('あ' * n, errors=foobar) == ['a' * n]
+    assert lazy_pinyin('あ' * n, errors=Foobar()) == ['a' * n]
 
 
 def test_update():
@@ -193,16 +180,33 @@ def test_update():
         '讨便宜': 'ta3o pia2n yi2',
         '小便宜': 'xia3o pia2n yi2',
         '占便宜': 'zha4n pia2n yi2',
+        '\u3400': 'qiu1',  # CJK 扩展 A:[3400-4DBF]
+        '\u4E00': 'yi1',   # CJK 基本:[4E00-9FFF]
+        '\uFA29': 'da3o',  # CJK 兼容:[F900-FAFF]
     }
     for h, p in data.items():
         assert slug([h], style=TONE2, separator=' ') == p
 
 
-@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
-def test_set_no_jieba():
-    hans = '音乐'
-    ret = [['yi1n'], ['yue4']]
-    assert pinyin(hans, style=TONE2) == ret
-    pypinyin.seg.no_jieba = True
-    assert pinyin(hans, style=TONE2) != ret
-    pypinyin.seg.no_jieba = None
+# @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
+# def test_set_no_jieba():
+#     hans = '音乐ba'
+#     ret = [['yi1n'], ['yue4'], ['ba']]
+#     assert pinyin(hans, style=TONE2) != ret
+#     pypinyin.seg.no_jieba = True
+#     assert pinyin(hans, style=TONE2) == ret
+#     pypinyin.seg.no_jieba = None
+
+
+def test_simple_seg():
+    data = {
+        '北京abcc': 'be3i ji1ng abcc',
+        '你好にほんごРусский язык': 'ni3 ha3o にほんごРусский язык',
+    }
+    for h, p in data.items():
+        assert slug([h], style=TONE2, separator=' ') == p
+
+    hans = '你好にほんごРусский язык'
+    ret = 'ni3 ha3o'
+    errors = lambda x: None
+    assert slug(hans, style=TONE2, separator=' ', errors=errors) == ret
