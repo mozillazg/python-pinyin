@@ -88,8 +88,8 @@
 
   可参考 `单元测试代码`_  ::
 
-      lazy_pinyin(u'你好☆', errors=lambda x: 'star')
-      [u'ni', u'hao', 'star']
+      lazy_pinyin(u'你好☆', errors=lambda x: u'star')
+      [u'ni', u'hao', u'star']
 
 .. _单元测试代码: https://github.com/mozillazg/python-pinyin/blob/3d52fe821b7f55aecf5af9bad78380762484f4d9/tests/test_pinyin.py#L161-L166
 
