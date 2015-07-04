@@ -21,3 +21,8 @@ def test_simple_seg():
     assert simple_seg('哦ほ#') == ['哦', 'ほ#']
     assert simple_seg(['啦啦']) == ['啦啦']
     assert simple_seg(['啦啦', 'abc']) == ['啦啦', 'abc']
+    assert simple_seg('哦ほ#哪') == ['哦', 'ほ#', '哪']
+    assert simple_seg('哦ほ#哪#') == ['哦', 'ほ#', '哪', '#']
+    assert simple_seg('啊 --') == ['啊', ' --']
+    assert simple_seg('啊 -- ') == ['啊', ' -- ']
+    assert simple_seg('啊 -- 那') == ['啊', ' -- ', '那']
