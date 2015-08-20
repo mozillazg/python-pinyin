@@ -170,34 +170,6 @@ def test_errors_callable():
     assert lazy_pinyin('あ' * n, errors=Foobar()) == ['a' * n]
 
 
-def test_update():
-    data = {
-        '便宜': 'pia2n yi2',
-        '便宜从事': 'bia4n yi2 co2ng shi4',
-        '便宜施行': 'bia4n yi2 shi1 xi2ng',
-        '便宜货': 'pia2n yi2 huo4',
-        '贪便宜': 'ta1n pia2n yi2',
-        '讨便宜': 'ta3o pia2n yi2',
-        '小便宜': 'xia3o pia2n yi2',
-        '占便宜': 'zha4n pia2n yi2',
-        '\u3400': 'qiu1',  # CJK 扩展 A:[3400-4DBF]
-        '\u4E00': 'yi1',   # CJK 基本:[4E00-9FFF]
-        '\uFA29': 'da3o',  # CJK 兼容:[F900-FAFF]
-    }
-    for h, p in data.items():
-        assert slug([h], style=TONE2, separator=' ') == p
-
-
-# @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
-# def test_set_no_jieba():
-#     hans = '音乐ba'
-#     ret = [['yi1n'], ['yue4'], ['ba']]
-#     assert pinyin(hans, style=TONE2) != ret
-#     pypinyin.seg.no_jieba = True
-#     assert pinyin(hans, style=TONE2) == ret
-#     pypinyin.seg.no_jieba = None
-
-
 def test_simple_seg():
     data = {
         '北京abcc': 'be3i ji1ng abcc',
@@ -210,3 +182,54 @@ def test_simple_seg():
     ret = 'ni3 ha3o'
     errors = lambda x: None
     assert slug(hans, style=TONE2, separator=' ', errors=errors) == ret
+
+
+data_for_update = [
+    # 便宜的发音
+    [
+        ['便宜'], {'style': TONE2}, ['pia2n', 'yi2']
+    ],
+    [
+        ['便宜从事'], {'style': TONE2}, ['bia4n', 'yi2', 'co2ng', 'shi4']
+    ],
+    [
+        ['便宜施行'], {'style': TONE2}, ['bia4n', 'yi2', 'shi1', 'xi2ng']
+    ],
+    [
+        ['便宜货'], {'style': TONE2}, ['pia2n', 'yi2', 'huo4']
+    ],
+    [
+        ['贪便宜'], {'style': TONE2}, ['ta1n', 'pia2n', 'yi2']
+    ],
+    [
+        ['讨便宜'], {'style': TONE2}, ['ta3o', 'pia2n', 'yi2']
+    ],
+    [
+        ['小便宜'], {'style': TONE2}, ['xia3o', 'pia2n', 'yi2']
+    ],
+    [
+        ['占便宜'], {'style': TONE2}, ['zha4n', 'pia2n', 'yi2']
+    ],
+    #
+    [
+        '\u3400', {'style': TONE2}, ['qiu1'],  # CJK 扩展 A:[3400-4DBF]
+    ],
+    [
+        '\u4E00', {'style': TONE2}, ['yi1'],   # CJK 基本:[4E00-9FFF]
+    ],
+    [
+        '\uFA29', {'style': TONE2}, ['da3o'],  # CJK 兼容:[F900-FAFF]
+    ],
+    # 误把 yu 放到声母列表了
+    ['鱼', {'style': TONE2}, ['yu2']],
+    ['鱼', {'style': FINALS}, ['u']],
+    ['雨', {'style': TONE2}, ['yu3']],
+    ['雨', {'style': FINALS}, ['u']],
+    ['元', {'style': TONE2}, ['yua2n']],
+    ['元', {'style': FINALS}, ['uan']],
+]
+
+
+@pytest.mark.parametrize('hans, kwargs,result', data_for_update)
+def test_update(hans, kwargs, result):
+    assert lazy_pinyin(hans, **kwargs) == result
