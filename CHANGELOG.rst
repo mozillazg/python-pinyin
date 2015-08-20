@@ -2,6 +2,12 @@ Changelog
 ---------
 
 
+0.8.2 (2015-08-20)
+++++++++++++++++++++
+
+* **bugfix** 修复误把 yu 放入声母列表里的 BUG(`#22`_). Thanks `@MingStar`_
+
+
 0.8.1 (2015-07-04)
 ++++++++++++++++++++
 
@@ -187,3 +193,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 * Initial Release
 
 .. _#17: https://github.com/mozillazg/python-pinyin/pull/17
+.. _#22: https://github.com/mozillazg/python-pinyin/pull/22
+.. _@MingStar: https://github.com/MingStar
