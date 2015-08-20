@@ -14,7 +14,7 @@ import sys
 from . import phonetic_symbol, pinyin_dict
 
 __title__ = 'pypinyin'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -48,7 +48,7 @@ else:
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
-_INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,yu,y,w'.split(',')
+_INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,y,w'.split(',')
 # 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
 PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol.copy()
 # 所有的带声调字符
@@ -58,48 +58,9 @@ RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 # 匹配使用数字标识声调的字符的正则表达式
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 # 有拼音的汉字
-RE_HANS = re.compile(r'''^(?:
-    [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
-    |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-    |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-)+$''', re.X)
+RE_HANS = re.compile(r'^(?:[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])+$')
 # 没有拼音的字符
-RE_NONE_HANS = re.compile(r'''^(?:
-    [^\u3400-\u4dbf
-     \u4e00-\u9fff
-     \uf900-\ufaff]
-)+$''', re.X)
-# 分割中文字符和非中文字符
-RE_NONE_HANS_SPLIT = re.compile(r'''
-(?:
-    (?<=                        # 非中文字符
-        [^\u3400-\u4dbf
-         \u4e00-\u9fff
-         \uf900-\ufaff]
-    )
-    (?=                         # 中文字符
-        (?:
-            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
-            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-        )
-    )
-)
-| (?:
-    (?<=                        # 中文字符
-        (?:
-            [\u3400-\u4dbf]     # CJK 扩展 A:[3400-4DBF]
-            |[\u4e00-\u9fff]    # CJK 基本:[4E00-9FFF]
-            |[\uf900-\ufaff]    # CJK 兼容:[F900-FAFF]
-        )
-    )
-    (?=                         # 非中文字符
-        [^\u3400-\u4dbf
-         \u4e00-\u9fff
-         \uf900-\ufaff]
-    )
-)
-''', re.X)
+RE_NONE_HANS = re.compile(r'^(?:[^\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])+$')
 
 # 拼音风格
 PINYIN_STYLE = {
@@ -130,13 +91,46 @@ FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
 
 
+def _seg(chars):
+    """按是否是汉字进行分词"""
+    s = ''  # 保存一个词
+    ret = []  # 分词结果
+    flag = 0  # 上一个字符是什么? 0: 汉字, 1: 不是汉字
+
+    for n, c in enumerate(chars):
+        if RE_HANS.match(c):  # 汉字, 确定 flag 的初始值
+            if n == 0:  # 第一个字符
+                flag = 0
+
+            if flag == 0:
+                s += c
+            else:  # 上一个字符不是汉字, 分词
+                ret.append(s)
+                flag = 0
+                s = c
+
+        else:  # 不是汉字
+            if n == 0:  # 第一个字符, 确定 flag 的初始值
+                flag = 1
+
+            if flag == 1:
+                s += c
+            else:  # 上一个字符是汉字, 分词
+                ret.append(s)
+                flag = 1
+                s = c
+
+    ret.append(s)  # 最后的词
+    return ret
+
+
 def simple_seg(hans):
     '将传入的字符串按是否有拼音来分割'
     assert not isinstance(hans, str), \
         'must be unicode string or [unicode, ...] list'
 
     if isinstance(hans, unicode):
-        return RE_NONE_HANS_SPLIT.sub('\b', hans).split('\b')
+        return _seg(hans)
     else:
         hans = list(hans)
         if len(hans) == 1:
