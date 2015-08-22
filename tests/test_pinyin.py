@@ -222,11 +222,14 @@ data_for_update = [
     ],
     # 误把 yu 放到声母列表了
     ['鱼', {'style': TONE2}, ['yu2']],
-    ['鱼', {'style': FINALS}, ['u']],
+    ['鱼', {'style': FINALS}, ['yu']],
     ['雨', {'style': TONE2}, ['yu3']],
-    ['雨', {'style': FINALS}, ['u']],
+    ['雨', {'style': FINALS}, ['yu']],
     ['元', {'style': TONE2}, ['yua2n']],
-    ['元', {'style': FINALS}, ['uan']],
+    ['元', {'style': FINALS}, ['yuan']],
+    # y, w 也不是拼音
+    ['呀', {'style': INITIALS}, ['']],
+    ['无', {'style': INITIALS}, ['']],
 ]
 
 
