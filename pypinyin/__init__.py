@@ -14,7 +14,7 @@ import sys
 from . import phonetic_symbol, pinyin_dict
 
 __title__ = 'pypinyin'
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
@@ -48,7 +48,7 @@ else:
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
-_INITIALS = 'zh,ch,sh,b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,y,w'.split(',')
+_INITIALS = 'b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,z,c,s,zh,ch,sh'.split(',')
 # 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
 PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol.copy()
 # 所有的带声调字符
