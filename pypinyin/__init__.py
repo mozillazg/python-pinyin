@@ -48,7 +48,7 @@ else:
 # 单字拼音库
 PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
 # 声母表
-_INITIALS = 'b,p,m,f,d,t,n,l,g,k,h,j,q,x,r,zh,ch,sh,z,c,s,'.split(',')
+_INITIALS = 'b,p,m,f,d,t,n,l,g,k,h,j,q,x,zh,ch,sh,r,z,c,s'.split(',')
 # 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
 PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol.copy()
 # 所有的带声调字符
