@@ -213,18 +213,7 @@ def final(pinyin):
     """
     initial_ = initial(pinyin) or None
     if not initial_:
-        # 特例 y/w
-        if pinyin.startswith('y'):
-            if pinyin.startswith('yu'):
-                pinyin = 'v' + pinyin[2:]
-            else:                
-                pinyin = 'i' + pinyin[1:]
-        if pinyin.startswith('w'):
-            if pinyin.startswith('wu'):
-                pinyin = 'u' + pinyin[2:]
-            else:
-                pinyin = 'u' + pinyin[1:]
-        return pinyin
+        return no_initial_final(pinyin)
     # 特例 j/q/x
     m = re.match(u'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
     if m:
@@ -233,6 +222,21 @@ def final(pinyin):
     
     return ''.join(pinyin.split(initial_, 1))
 
+def no_initial_final(pinyin):
+    # 特例 y/w
+    if pinyin.startswith('y'):
+        if pinyin.startswith('yu'):
+            pinyin = 'v' + pinyin[2:]
+        elif pinyin.startswith('yi'):
+            pinyin = pinyin[1:]
+        else:                
+            pinyin = 'i' + pinyin[1:]
+    if pinyin.startswith('w'):
+        if pinyin.startswith('wu'):
+            pinyin = pinyin[1:]
+        else:
+            pinyin = 'u' + pinyin[1:]
+    return pinyin    
 
 def toFixed(pinyin, style):
     """根据拼音风格格式化带声调的拼音.

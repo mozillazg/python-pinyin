@@ -235,6 +235,8 @@ data_for_update = [
     ['无', {'style': INITIALS}, ['']],
     ['无', {'style': TONE2}, ['wu2']],
     ['无', {'style': FINALS}, ['u']],
+    ['衣', {'style': TONE2}, ['yi1']],
+    ['衣', {'style': FINALS}, ['i']],    
     ['万', {'style': TONE2}, ['wa4n']],
     ['万', {'style': FINALS}, ['uan']],    
     # ju, qu, xu 的韵母应该是 v
