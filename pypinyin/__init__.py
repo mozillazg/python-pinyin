@@ -213,13 +213,24 @@ def final(pinyin):
     """
     initial_ = initial(pinyin) or None
     if not initial_:
+        # 特例 y/w
+        if pinyin.startswith('y'):
+            if pinyin.startswith('yu'):
+                pinyin = 'v' + pinyin[2:]
+            else:                
+                pinyin = 'i' + pinyin[1:]
+        if pinyin.startswith('w'):
+            if pinyin.startswith('wu'):
+                pinyin = 'u' + pinyin[2:]
+            else:
+                pinyin = 'u' + pinyin[1:]
         return pinyin
-    # 特例 1
+    # 特例 j/q/x
     m = re.match(u'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
     if m:
         return (U_FINALS_EXCEPTIONS_MAP[m.group(2)])
-    # 特例 2
     pinyin = re.sub('^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
+    
     return ''.join(pinyin.split(initial_, 1))
 
 
