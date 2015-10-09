@@ -196,6 +196,12 @@ def initial(pinyin):
             return i
     return ''
 
+U_FINALS_EXCEPTIONS_MAP = {
+   u'ū': u'ǖ',
+   u'ú': u'ǘ',
+   u'ǔ': u'ǚ',
+   u'ù': u'ǜ',
+}
 
 def final(pinyin):
     """获取单个拼音中的韵母.
@@ -208,6 +214,12 @@ def final(pinyin):
     initial_ = initial(pinyin) or None
     if not initial_:
         return pinyin
+    # 特例 1
+    m = re.match(u'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
+    if m:
+        return (U_FINALS_EXCEPTIONS_MAP[m.group(2)])
+    # 特例 2
+    pinyin = re.sub('^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
     return ''.join(pinyin.split(initial_, 1))
 
 

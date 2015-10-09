@@ -230,6 +230,17 @@ data_for_update = [
     # y, w 也不是拼音
     ['呀', {'style': INITIALS}, ['']],
     ['无', {'style': INITIALS}, ['']],
+    # ju, qu, xu 的韵母应该是 v
+    ['具', {'style': FINALS_TONE}, ['ǜ']],
+    ['具', {'style': FINALS_TONE2}, ['v4']],
+    ['具', {'style': FINALS}, ['v']],
+    ['取', {'style': FINALS_TONE}, ['ǚ']],    
+    ['取', {'style': FINALS_TONE2}, ['v3']],
+    ['取', {'style': FINALS}, ['v']],
+    ['徐', {'style': FINALS_TONE}, ['ǘ']],
+    ['徐', {'style': FINALS_TONE2}, ['v2']],
+    ['徐', {'style': FINALS}, ['v']],
+
 ]
 
 
