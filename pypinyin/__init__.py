@@ -219,7 +219,6 @@ def final(pinyin):
     if m:
         return (U_FINALS_EXCEPTIONS_MAP[m.group(2)])
     pinyin = re.sub('^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
-    
     return ''.join(pinyin.split(initial_, 1))
 
 def no_initial_final(pinyin):
@@ -229,14 +228,14 @@ def no_initial_final(pinyin):
             pinyin = 'v' + pinyin[2:]
         elif pinyin.startswith('yi'):
             pinyin = pinyin[1:]
-        else:                
+        else:
             pinyin = 'i' + pinyin[1:]
     if pinyin.startswith('w'):
         if pinyin.startswith('wu'):
             pinyin = pinyin[1:]
         else:
             pinyin = 'u' + pinyin[1:]
-    return pinyin    
+    return pinyin
 
 def toFixed(pinyin, style):
     """根据拼音风格格式化带声调的拼音.
