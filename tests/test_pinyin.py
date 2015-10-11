@@ -222,14 +222,33 @@ data_for_update = [
     ],
     # 误把 yu 放到声母列表了
     ['鱼', {'style': TONE2}, ['yu2']],
-    ['鱼', {'style': FINALS}, ['yu']],
+    ['鱼', {'style': FINALS}, ['v']],
     ['雨', {'style': TONE2}, ['yu3']],
-    ['雨', {'style': FINALS}, ['yu']],
+    ['雨', {'style': FINALS}, ['v']],
     ['元', {'style': TONE2}, ['yua2n']],
-    ['元', {'style': FINALS}, ['yuan']],
-    # y, w 也不是拼音
+    ['元', {'style': FINALS}, ['van']],
+    # y, w 也不是拼音, yu的韵母是v, yi的韵母是i, wu的韵母是u
     ['呀', {'style': INITIALS}, ['']],
+    ['呀', {'style': TONE2}, ['ya1']],
+    ['呀', {'style': FINALS}, ['ia']],
     ['无', {'style': INITIALS}, ['']],
+    ['无', {'style': TONE2}, ['wu2']],
+    ['无', {'style': FINALS}, ['u']],
+    ['衣', {'style': TONE2}, ['yi1']],
+    ['衣', {'style': FINALS}, ['i']],
+    ['万', {'style': TONE2}, ['wa4n']],
+    ['万', {'style': FINALS}, ['uan']],
+    # ju, qu, xu 的韵母应该是 v
+    ['具', {'style': FINALS_TONE}, ['ǜ']],
+    ['具', {'style': FINALS_TONE2}, ['v4']],
+    ['具', {'style': FINALS}, ['v']],
+    ['取', {'style': FINALS_TONE}, ['ǚ']],
+    ['取', {'style': FINALS_TONE2}, ['v3']],
+    ['取', {'style': FINALS}, ['v']],
+    ['徐', {'style': FINALS_TONE}, ['ǘ']],
+    ['徐', {'style': FINALS_TONE2}, ['v2']],
+    ['徐', {'style': FINALS}, ['v']],
+
 ]
 
 
