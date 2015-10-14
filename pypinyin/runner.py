@@ -5,9 +5,11 @@ from __future__ import unicode_literals
 from argparse import ArgumentParser
 import sys
 
-from . import (__title__, __version__, pinyin, slug,
-               NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
-               FINALS, FINALS_TONE, FINALS_TONE2)
+from . import (                                    # noqa
+    __title__, __version__, pinyin, slug,
+    NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
+    FINALS, FINALS_TONE, FINALS_TONE2
+)
 
 py3 = sys.version_info[0] == 3
 if py3:

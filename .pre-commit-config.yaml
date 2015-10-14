@@ -3,8 +3,11 @@
   hooks:
     - id: check-merge-conflict
     - id: debug-statements
+      exclude: 'tools/|(pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py))'
     - id: double-quote-string-fixer
+      exclude: 'pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)'
     - id: end-of-file-fixer
     - id: requirements-txt-fixer
     - id: trailing-whitespace
     - id: flake8
+      exclude: 'tools|pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)|(docs/conf.py)'
