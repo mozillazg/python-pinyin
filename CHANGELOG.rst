@@ -2,6 +2,12 @@ Changelog
 ---------
 
 
+0.9.1 (2015-mm-dd)
+++++++++++++++++++++
+
+* 修复 ju, qu, xu, yu, yi 和 wu 的韵母( `#26`_ ). Thanks `@MingStar`_ :
+
+
 0.9.0 (2015-09-20)
 ++++++++++++++++++++
 
@@ -220,4 +226,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 
 .. _#17: https://github.com/mozillazg/python-pinyin/pull/17
 .. _#22: https://github.com/mozillazg/python-pinyin/pull/22
+.. _#26: https://github.com/mozillazg/python-pinyin/pull/26
 .. _@MingStar: https://github.com/MingStar

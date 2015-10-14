@@ -197,11 +197,12 @@ def initial(pinyin):
     return ''
 
 U_FINALS_EXCEPTIONS_MAP = {
-   u'ū': u'ǖ',
-   u'ú': u'ǘ',
-   u'ǔ': u'ǚ',
-   u'ù': u'ǜ',
+    u'ū': u'ǖ',
+    u'ú': u'ǘ',
+    u'ǔ': u'ǚ',
+    u'ù': u'ǜ',
 }
+
 
 def final(pinyin):
     """获取单个拼音中的韵母.
@@ -221,6 +222,7 @@ def final(pinyin):
     pinyin = re.sub('^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
     return ''.join(pinyin.split(initial_, 1))
 
+
 def no_initial_final(pinyin):
     # 特例 y/w
     if pinyin.startswith('y'):
@@ -236,6 +238,7 @@ def no_initial_final(pinyin):
         else:
             pinyin = 'u' + pinyin[1:]
     return pinyin
+
 
 def toFixed(pinyin, style):
     """根据拼音风格格式化带声调的拼音.
@@ -315,7 +318,7 @@ def single_pinyin(han, style, heteronym, errors='default'):
     if num not in PINYIN_DICT:
         return handle_nopinyin(han, errors=errors)
 
-    pys = PINYIN_DICT[num].split(",")  # 字的拼音列表
+    pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
         return [toFixed(pys[0], style)]
 
