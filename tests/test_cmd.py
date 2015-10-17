@@ -11,7 +11,7 @@ def test_default():
     assert options.func == 'pinyin'
     assert options.style == 'TONE'
     assert options.separator == '-'
-    assert options.heteronym == False
+    assert not options.heteronym
     assert options.hans == '你好'
     assert options.errors == 'default'
 
@@ -26,5 +26,5 @@ def test_custom():
     assert options.style == 'NORMAL'
     assert options.separator == ' '
     assert options.errors == 'ignore'
-    assert options.heteronym == True
+    assert options.heteronym
     assert options.hans == '你好啊'

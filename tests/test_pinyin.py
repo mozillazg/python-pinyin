@@ -50,8 +50,8 @@ def test_pinyin_finals():
     assert pinyin(hans, INITIALS) == [[''], ['']]
     assert pinyin(hans, FIRST_LETTER) == [['a'], ['a']]
     assert pinyin(hans, heteronym=True) == [['\xe1o'], ['\xe1o']]
-    assert pinyin('啊', heteronym=True) == [['\u0101', '\xe1',
-                                              '\u01ce', '\xe0', 'a']]
+    assert pinyin('啊', heteronym=True) == \
+        [['\u0101', '\xe1', '\u01ce', '\xe0', 'a']]
     assert pinyin(hans, style=FINALS) == [['ao'], ['ao']]
     assert pinyin(hans, style=FINALS_TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, style=FINALS_TONE2) == [['a2o'], ['a2o']]
@@ -69,13 +69,15 @@ def test_zh_and_en():
     hans = '中心'
     assert pinyin(hans + 'abc') == [['zh\u014dng'], ['x\u012bn'], ['abc']]
     # 中英文混合的固定词组
-    assert pinyin('黄山B股', style=TONE2) == [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
+    assert pinyin('黄山B股', style=TONE2) == \
+        [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
     assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
     assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
     assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
     assert pinyin('AB超C', style=TONE2) == [['AB'], ['cha1o'], ['C']]
     assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
-    assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
+    assert pinyin('维生素C', style=TONE2) == \
+        [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
 def test_others():
@@ -105,13 +107,15 @@ def test_seg_jieba():
     hans_seg = list(jieba.cut(hans))
     assert pinyin(hans_seg, style=TONE2) == [['yi1n'], ['yue4']]
     # 中英文混合的固定词组
-    assert pinyin('黄山B股', style=TONE2) == [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
+    assert pinyin('黄山B股', style=TONE2) == \
+        [['hua2ng'], ['sha1n'], ['B'], ['gu3']]
     assert pinyin('A股', style=TONE2) == [['A'], ['gu3']]
     assert pinyin('阿Q', style=TONE2) == [['a1'], ['Q']]
     assert pinyin('B超', style=TONE2) == [['B'], ['cha1o']]
     assert pinyin('AB超C', style=TONE2) == [['AB'], ['cha1o'], ['C']]
     assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
-    assert pinyin('维生素C', style=TONE2) == [['we2i'], ['she1ng'], ['su4'], ['C']]
+    assert pinyin('维生素C', style=TONE2) == \
+        [['we2i'], ['she1ng'], ['su4'], ['C']]
 
 
 @pytest.mark.skipif(not has_module('snownlp'), reason='cant import snownlp')
@@ -222,14 +226,33 @@ data_for_update = [
     ],
     # 误把 yu 放到声母列表了
     ['鱼', {'style': TONE2}, ['yu2']],
-    ['鱼', {'style': FINALS}, ['yu']],
+    ['鱼', {'style': FINALS}, ['v']],
     ['雨', {'style': TONE2}, ['yu3']],
-    ['雨', {'style': FINALS}, ['yu']],
+    ['雨', {'style': FINALS}, ['v']],
     ['元', {'style': TONE2}, ['yua2n']],
-    ['元', {'style': FINALS}, ['yuan']],
-    # y, w 也不是拼音
+    ['元', {'style': FINALS}, ['van']],
+    # y, w 也不是拼音, yu的韵母是v, yi的韵母是i, wu的韵母是u
     ['呀', {'style': INITIALS}, ['']],
+    ['呀', {'style': TONE2}, ['ya1']],
+    ['呀', {'style': FINALS}, ['ia']],
     ['无', {'style': INITIALS}, ['']],
+    ['无', {'style': TONE2}, ['wu2']],
+    ['无', {'style': FINALS}, ['u']],
+    ['衣', {'style': TONE2}, ['yi1']],
+    ['衣', {'style': FINALS}, ['i']],
+    ['万', {'style': TONE2}, ['wa4n']],
+    ['万', {'style': FINALS}, ['uan']],
+    # ju, qu, xu 的韵母应该是 v
+    ['具', {'style': FINALS_TONE}, ['ǜ']],
+    ['具', {'style': FINALS_TONE2}, ['v4']],
+    ['具', {'style': FINALS}, ['v']],
+    ['取', {'style': FINALS_TONE}, ['ǚ']],
+    ['取', {'style': FINALS_TONE2}, ['v3']],
+    ['取', {'style': FINALS}, ['v']],
+    ['徐', {'style': FINALS_TONE}, ['ǘ']],
+    ['徐', {'style': FINALS_TONE2}, ['v2']],
+    ['徐', {'style': FINALS}, ['v']],
+
 ]
 
 

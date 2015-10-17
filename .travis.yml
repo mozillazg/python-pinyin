@@ -19,8 +19,10 @@ env:
 install:
   - pip install coveralls
   - pip install tox
+  - pip install -r requirements_dev.txt
 
 script:
+  - pre-commit run --all-files
   - tox -e $TOX_ENV
 
 after_script:

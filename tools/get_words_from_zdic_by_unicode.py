@@ -50,13 +50,16 @@ def parse_word_url(html):
 
 def parse_pinyin(html):
     soup = BeautifulSoup(html)
-    word_html = soup.find(id='ziip').text.encode('raw_unicode_escape').decode('utf8')
+    word_html = soup.find(id='ziip').text.encode(
+        'raw_unicode_escape'
+    ).decode('utf8')
     words = re.findall(ur'“([^”]+)”', word_html)
     word = words[0] if words else ''
 
     try:
         pinyins = [x.text for x in soup.select('td.z_i_t2_py')[0].select('a')]
-        pinyins = [x.encode('raw_unicode_escape').decode('utf8') for x in pinyins]
+        pinyins = [x.encode('raw_unicode_escape'
+                            ).decode('utf8') for x in pinyins]
     except Exception as e:
         e.word = word
         raise
@@ -125,7 +128,8 @@ def main():
     for n, unicode_range in enumerate(unicode_ranges):
         filename = 'pinyins_%s-%s.txt' % unicode_range
         with io.open(filename, 'w', buffering=1, encoding='utf8') as f:
-            for word_info in get_words(unicode_range, url_base, headers, cookies):
+            for word_info in get_words(unicode_range, url_base,
+                                       headers, cookies):
                 unicode_num, word, pinyins = word_info
                 if pinyins:
                     f.write(u"0x{0}: '{1}',  # {2}\n".format(unicode_num,
