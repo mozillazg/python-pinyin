@@ -29,7 +29,7 @@ __all__ = [
     'STYLE_FINALS_TONE2', 'FINALS_TONE2',
     'STYLE_FIRST_LETTER', 'FIRST_LETTER'
 ]
-# fix "TypeError: Item in ``from list'' not a string" in Python 2
+# fix "TypeError: Item in ``from list'' not a string" on Python 2
 __all__ = [str(x) for x in __all__]
 
 PY2 = sys.version_info < (3, 0)
