@@ -146,6 +146,18 @@ def test_custom_pinyin_dict2():
     assert lazy_pinyin(hans, style=TONE2) == ['to2ng', 'xi2ng']
 
 
+def test_custom_pinyin_dict_tone2():
+    load_single_dict({ord('桔'): 'ce4,si4'}, style='tone2')
+    assert lazy_pinyin('桔', style=TONE2) == ['ce4']
+    assert pinyin('桔') == [['cè']]
+
+
+def test_custom_pinyin_dict2_tone2():
+    load_phrases_dict({'同行': [['to4ng'], ['ku1']]}, style='tone2')
+    assert lazy_pinyin(['同行'], style=TONE2) == ['to4ng', 'ku1']
+    assert pinyin(['同行']) == [['tòng'], ['kū']]
+
+
 def test_errors():
     hans = (
         ('啊', {'style': TONE2}, ['a1']),

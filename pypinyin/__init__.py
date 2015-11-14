@@ -165,22 +165,48 @@ if os.environ.get('PYPINYIN_NO_JIEBA'):
     seg.no_jieba = True
 
 
-def load_single_dict(pinyin_dict):
+def _replace_tone2_style_dict_to_default(string):
+    regex = re.compile(RE_TONE2.replace('$', ''))
+    d = phonetic_symbol.phonetic_symbol_reverse
+
+    def _replace(m):
+        s = m.group(0)
+        return d.get(s) or s
+
+    return regex.sub(_replace, string)
+
+
+def load_single_dict(pinyin_dict, style='default'):
     """载入用户自定义的单字拼音库
 
     :param pinyin_dict: 单字拼音库。比如： ``{0x963F: u"ā,ē"}``
+    :param style: pinyin_dict 参数值的拼音库风格. 支持 'default', 'tone2'
     :type pinyin_dict: dict
     """
-    PINYIN_DICT.update(pinyin_dict)
+    if style == 'tone2':
+        for k, v in pinyin_dict.items():
+            v = _replace_tone2_style_dict_to_default(v)
+            PINYIN_DICT[k] = v
+    else:
+        PINYIN_DICT.update(pinyin_dict)
 
 
-def load_phrases_dict(phrases_dict):
+def load_phrases_dict(phrases_dict, style='default'):
     """载入用户自定义的词语拼音库
 
     :param phrases_dict: 词语拼音库。比如： ``{u"阿爸": [[u"ā"], [u"bà"]]}``
+    :param style: phrases_dict 参数值的拼音库风格. 支持 'default', 'tone2'
     :type phrases_dict: dict
     """
-    PHRASES_DICT.update(phrases_dict)
+    if style == 'tone2':
+        for k, value in phrases_dict.items():
+            v = [
+                map(_replace_tone2_style_dict_to_default, pys)
+                for pys in value
+            ]
+            PHRASES_DICT[k] = v
+    else:
+        PHRASES_DICT.update(phrases_dict)
 
 
 def initial(pinyin):
