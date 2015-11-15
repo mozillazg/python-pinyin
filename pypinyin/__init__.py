@@ -201,7 +201,7 @@ def load_phrases_dict(phrases_dict, style='default'):
     if style == 'tone2':
         for k, value in phrases_dict.items():
             v = [
-                map(_replace_tone2_style_dict_to_default, pys)
+                list(map(_replace_tone2_style_dict_to_default, pys))
                 for pys in value
             ]
             PHRASES_DICT[k] = v
