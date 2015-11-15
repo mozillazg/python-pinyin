@@ -2,6 +2,16 @@ Changelog
 ---------
 
 
+0.9.2 (2015-11-15)
+++++++++++++++++++++
+
+* ``load_single_dict`` 和 ``load_phrases_dict`` 增加 style 参数支持 TONE2 风格的拼音 ::
+
+      load_single_dict({ord('啊'): 'a1'}, style='tone2')
+      load_phrases_dict({u"阿爸": [[u"a1"], [u"ba4"]]}, style='tone2'}
+* Imporved docs
+
+
 0.9.1 (2015-10-17)
 ++++++++++++++++++++
 

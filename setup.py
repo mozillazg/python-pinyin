@@ -28,8 +28,7 @@ if sys.version_info[:2] < (2, 7):
 
 def long_description():
     readme = open('README.rst', encoding='utf8').read()
-    text = readme + '\n\n' + open('CHANGELOG.rst', encoding='utf8').read()
-    return text
+    return readme
 
 setup(
     name=pypinyin.__title__,
