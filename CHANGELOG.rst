@@ -9,7 +9,7 @@ Changelog
 
       load_single_dict({ord('啊'): 'a1'}, style='tone2')
       load_phrases_dict({u"阿爸": [[u"a1"], [u"ba4"]]}, style='tone2'}
-* Imporved docs
+* Improved docs
 
 
 0.9.1 (2015-10-17)
