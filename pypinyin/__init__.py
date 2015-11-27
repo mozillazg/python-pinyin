@@ -242,10 +242,10 @@ def final(pinyin):
     if not initial_:
         return no_initial_final(pinyin)
     # 特例 j/q/x
-    m = re.match(u'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
+    m = re.match(r'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
     if m:
         return (U_FINALS_EXCEPTIONS_MAP[m.group(2)])
-    pinyin = re.sub('^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
+    pinyin = re.sub(r'^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
     return ''.join(pinyin.split(initial_, 1))
 
 
