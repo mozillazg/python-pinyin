@@ -5,78 +5,81 @@ Changelog
 0.9.4 (2015-11-27)
 ++++++++++++++++++++
 
-* [Improved] 细微调整，主要是更新文档
+* **[Improved]** 细微调整，主要是更新文档
 
 
 0.9.3 (2015-11-15)
 ++++++++++++++++++++
 
-* [Bugfixed] Fixed Python 3 compatibility was broken.
+* **[Bugfixed]** Fixed Python 3 compatibility was broken.
 
 
 0.9.2 (2015-11-15)
 ++++++++++++++++++++
 
-* [New] ``load_single_dict`` 和 ``load_phrases_dict`` 增加 style 参数支持 TONE2 风格的拼音 ::
+* **[New]** ``load_single_dict`` 和 ``load_phrases_dict`` 增加 ``style`` 参数支持 TONE2 风格的拼音 ::
 
-      load_single_dict({ord('啊'): 'a1'}, style='tone2')
+      load_single_dict({ord(u'啊'): 'a1'}, style='tone2')
       load_phrases_dict({u"阿爸": [[u"a1"], [u"ba4"]]}, style='tone2'}
-* Improved docs
+* **[Improved]** Improved docs
 
 
 0.9.1 (2015-10-17)
 ++++++++++++++++++++
 
-* [Bugfixed][Changed] ``ju``, ``qu``, ``xu``, ``yu``, ``yi`` 和 ``wu`` 的韵母( `#26`_ ). Thanks `@MingStar`_ :
-    * ``ju``, ``qu``, ``xu`` 的韵母应该是 v
-    * ``yi`` 的韵母是 ``i``
-    * ``wu`` 的韵母是 ``u``
-    * **从现在开始 ``y`` 既不是声母也不是韵母** 详见 `汉语拼音方案`_
+* **[Bugfixed][Changed]** ``ju``, ``qu``, ``xu``, ``yu``, ``yi`` 和 ``wu`` 的韵母( `#26`_ ). Thanks `@MingStar`_ :
+
+  * ``ju``, ``qu``, ``xu`` 的韵母应该是 ``v``
+  * ``yi`` 的韵母是 ``i``
+  * ``wu`` 的韵母是 ``u``
+  * 从现在开始 ``y`` 既不是声母也不是韵母，详见 `汉语拼音方案`_
 
 
 0.9.0 (2015-09-20)
 ++++++++++++++++++++
 
-* [Changed] 将拼音词典库里的国际音标字母替换为 ASCII 字母. Thanks `@MingStar`_ :
-    * ``ɑ -> a``
-    * ``ɡ -> g``
+* **[Changed]** 将拼音词典库里的国际音标字母替换为 ASCII 字母. Thanks `@MingStar`_ :
+
+  * ``ɑ -> a``
+  * ``ɡ -> g``
 
 
 0.8.5 (2015-08-23)
 ++++++++++++++++++++
 
-* [Bugfixed] 修复 zh, ch, sh, z, c, s 顺序问题导致获取声母有误
+* **[Bugfixed]** 修复 zh, ch, sh, z, c, s 顺序问题导致获取声母有误
 
 
 0.8.4 (2015-08-23)
 ++++++++++++++++++++
 
-* [Changed] ``y``, ``w`` 也不是声母. (`hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__):
-    * 以 ``y``, ``w`` 开头的拼音在声母(``INITIALS``)模式下将返回 ``['']``
+* **[Changed]** ``y``, ``w`` 也不是声母. (`hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__):
+
+  * 以 ``y``, ``w`` 开头的拼音在声母(``INITIALS``)模式下将返回 ``['']``
 
 
 0.8.3 (2015-08-20)
 ++++++++++++++++++++
 
-* [Improved] 上传到 PyPI 出了点问题，但是又 `没法重新上传 <http://sourceforge.net/p/pypi/support-requests/468/>`__ ，只好新增一个版本
+* **[Improved]** 上传到 PyPI 出了点问题，但是又 `没法重新上传 <http://sourceforge.net/p/pypi/support-requests/468/>`__ ，只好新增一个版本
 
 
 0.8.2 (2015-08-20)
 ++++++++++++++++++++
 
-* [Bugfixed][Changed] 修复误把 yu 放入声母列表里的 BUG(`#22`_). Thanks `@MingStar`_
+* **[Bugfixed][Changed]** 修复误把 yu 放入声母列表里的 BUG(`#22`_). Thanks `@MingStar`_
 
 
 0.8.1 (2015-07-04)
 ++++++++++++++++++++
 
-* [Bugfixed] 重构内置的分词功能，修复“无法正确处理包含空格的字符串的问题”
+* **[Bugfixed]** 重构内置的分词功能，修复“无法正确处理包含空格的字符串的问题”
 
 
 0.8.0 (2015-06-27)
 +++++++++++++++++++++
 
-* [New] 内置简单的分词功能，完善处理没有拼音的字符
+* **[New]** 内置简单的分词功能，完善处理没有拼音的字符
   （如果不需要处理多音字问题, 现在可以不用安装 ``jieba`` 或其他分词模块了）::
 
         # 之前, 安装了结巴分词模块
@@ -87,10 +90,10 @@ Changelog
         lazy_pinyin(u'你好abc☆☆')
         [u'ni', u'hao', u'abc\u2606\u2606']
 
-* | [Changed] 当 ``errors`` 参数是回调函数时，函数的参数由 ``单个字符`` 变更为 ``单个字符或词组`` 。
+* | **[Changed]** 当 ``errors`` 参数是回调函数时，函数的参数由 ``单个字符`` 变更为 ``单个字符或词组`` 。
   | 即: 对于 ``abc`` 字符串, 之前将调用三次 ``errors`` 回调函数: ``func('a') ... func('b') ... func('abc')``
   | 现在只调用一次: ``func('abc')`` 。
-* [Changed] 将英文字符也纳入 ``errors`` 参数的处理范围::
+* **[Changed]** 将英文字符也纳入 ``errors`` 参数的处理范围::
 
         # 之前
         lazy_pinyin(u'abc', errors='ignore')
@@ -103,8 +106,8 @@ Changelog
 0.7.0 (2015-06-20)
 +++++++++++++++++++++
 
-* [Bugfixed] Python 2 下无法使用 ``from pypinyin import *`` 的问题
-* [New] 支持以下环境变量:
+* **[Bugfixed]** Python 2 下无法使用 ``from pypinyin import *`` 的问题
+* **[New]** 支持以下环境变量:
 
   * ``PYPINYIN_NO_JIEBA=true``: 禁用“自动调用结巴分词模块”
   * ``PYPINYIN_NO_PHRASES=true``: 禁用内置的“词组拼音库”
@@ -113,7 +116,7 @@ Changelog
 0.6.0 (2015-06-10)
 +++++++++++++++++++++
 
-* [New] ``errors`` 参数支持回调函数(`#17`_): ::
+* **[New]** ``errors`` 参数支持回调函数(`#17`_): ::
 
     def foobar(char):
         return u'a'
@@ -122,16 +125,16 @@ Changelog
 0.5.7 (2015-05-17)
 +++++++++++++++++++
 
-* [Bugfixed] 纠正包含 "便宜" 的一些词组的读音
+* **[Bugfixed]** 纠正包含 "便宜" 的一些词组的读音
 
 
 0.5.6 (2015-02-26)
 +++++++++++++++++++
 
-* [Bugfixed] "苹果" pinyin error. `#11`__
-* [Improved] 精简 phrases_dict
-* [Bugfixed] 重复 import jieba 的问题
-* [Improved] 更新文档
+* **[Bugfixed]** "苹果" pinyin error. `#11`__
+* **[Bugfixed]** 重复 import jieba 的问题
+* **[Improved]** 精简 phrases_dict
+* **[Improved]** 更新文档
 
 __ https://github.com/mozillazg/python-pinyin/issues/11
 
@@ -139,13 +142,13 @@ __ https://github.com/mozillazg/python-pinyin/issues/11
 0.5.5 (2015-01-27)
 +++++++++++++++++++
 
-* [Bugfixed] phrases_dict error
+* **[Bugfixed]** phrases_dict error
 
 
 0.5.4 (2014-12-26)
 +++++++++++++++++++
 
-* [Bugfixed] 无法正确处理由分词模块产生的中英文混合词组（比如：B超，维生素C）的问题.  `#8`__
+* **[Bugfixed]** 无法正确处理由分词模块产生的中英文混合词组（比如：B超，维生素C）的问题.  `#8`__
 
 __ https://github.com/mozillazg/python-pinyin/issues/8
 
@@ -153,20 +156,20 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.5.3 (2014-12-07)
 +++++++++++++++++++
 
-* [Improved] 更新拼音库
+* **[Improved]** 更新拼音库
 
 
 0.5.2 (2014-09-21)
 ++++++++++++++++++
 
-* [Improved] 载入拼音库时，改为载入其副本。防止内置的拼音库被破坏
-* [Bugfixed] ``胜败乃兵家常事`` 的音标问题
+* **[Improved]** 载入拼音库时，改为载入其副本。防止内置的拼音库被破坏
+* **[Bugfixed]** ``胜败乃兵家常事`` 的音标问题
 
 
 0.5.1 (2014-03-09)
 ++++++++++++++++++
 
-* [New] 参数 ``errors`` 用来控制如何处理没有拼音的字符:
+* **[New]** 参数 ``errors`` 用来控制如何处理没有拼音的字符:
 
   * ``'default'``: 保留原始字符
   * ``'ignore'``: 忽略该字符
@@ -178,7 +181,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.5.0 (2014-03-01)
 ++++++++++++++++++
 
-* [Changed] **使用新的单字拼音库内容和格式**
+* **[Changed]** **使用新的单字拼音库内容和格式**
 
   | 新的格式：``{0x963F: u"ā,ē"}``
   | 旧的格式：``{u'啊': u"ā,ē"}``
@@ -187,40 +190,40 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.4.4 (2014-01-16)
 ++++++++++++++++++
 
-* [Improved] 清理命令行命令的输出结果，去除无关信息
-* [Bugfixed] “ImportError: No module named runner”
+* **[Improved]** 清理命令行命令的输出结果，去除无关信息
+* **[Bugfixed]** “ImportError: No module named runner”
 
 
 0.4.3 (2014-01-10)
 ++++++++++++++++++
 
-* [Bugfixed] 命令行工具在 Python 3 下的兼容性问题
+* **[Bugfixed]** 命令行工具在 Python 3 下的兼容性问题
 
 
 0.4.2 (2014-01-10)
 ++++++++++++++++++
 
-* [Changed] 拼音风格前的 ``STYLE_`` 前缀（兼容包含 ``STYLE_`` 前缀的拼音风格）
-* [New] 命令行工具，具体用法请见： ``pypinyin -h``
+* **[Changed]** 拼音风格前的 ``STYLE_`` 前缀（兼容包含 ``STYLE_`` 前缀的拼音风格）
+* **[New]** 命令行工具，具体用法请见： ``pypinyin -h``
 
 
 0.4.1 (2014-01-04)
 ++++++++++++++++++
 
-* [New] 支持自定义拼音库，方便用户修正程序结果(``load_single_dict``, ``load_phrases_dict``)
+* **[New]** 支持自定义拼音库，方便用户修正程序结果(``load_single_dict``, ``load_phrases_dict``)
 
 
 0.4.0 (2014-01-03)
 ++++++++++++++++++
 
-* [Changed] 将 ``jieba`` 模块改为可选安装，用户可以选择使用自己喜爱的分词模块对汉字进行分词处理
-* [New] 支持 Python 3
+* **[Changed]** 将 ``jieba`` 模块改为可选安装，用户可以选择使用自己喜爱的分词模块对汉字进行分词处理
+* **[New]** 支持 Python 3
 
 
 0.3.1 (2013-12-24)
 ++++++++++++++++++
 
-* [New] ``lazy_pinyin`` ::
+* **[New]** ``lazy_pinyin`` ::
 
     >>> lazy_pinyin(u'中心')
     ['zhong', 'xin']
@@ -229,9 +232,9 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.3.0 (2013-09-26)
 ++++++++++++++++++
 
-* [Bugfixed] 首字母风格无法正确处理只有韵母的汉字
+* **[Bugfixed]** 首字母风格无法正确处理只有韵母的汉字
 
-* [New] 三个拼音风格:
+* **[New]** 三个拼音风格:
     * ``pypinyin.STYLE_FINALS`` ：       韵母风格1，只返回各个拼音的韵母部分，不带声调。如： ``ong uo``
     * ``pypinyin.STYLE_FINALS_TONE`` ：   韵母风格2，带声调，声调在韵母第一个字母上。如： ``ōng uó``
     * ``pypinyin.STYLE_FINALS_TONE2`` ：  韵母风格2，带声调，声调在各个拼音之后，用数字 [0-4] 进行表示。如： ``o1ng uo2``
@@ -240,7 +243,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.2.0 (2013-09-22)
 ++++++++++++++++++
 
-* [Improved] 完善对中英文混合字符串的支持::
+* **[Improved]** 完善对中英文混合字符串的支持::
 
     >> pypinyin.pinyin(u'你好abc')
     [[u'n\u01d0'], [u'h\u01ceo'], [u'abc']]
@@ -249,7 +252,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 0.1.0 (2013-09-21)
 ++++++++++++++++++
 
-* Initial Release
+* **[New]** Initial Release
 
 .. _#17: https://github.com/mozillazg/python-pinyin/pull/17
 .. _#22: https://github.com/mozillazg/python-pinyin/pull/22
