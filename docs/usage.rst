@@ -13,8 +13,8 @@
     [[u'zh\u014dng'], [u'x\u012bn']]
     >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
     [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
-    [['zh'], ['x']]
+    >>> pinyin(u'中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+    [['z'], ['x']]
     >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
     >>> lazy_pinyin(u'中心')  # 不考虑多音字的情况
