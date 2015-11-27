@@ -27,7 +27,7 @@ Changelog
 0.9.1 (2015-10-17)
 ++++++++++++++++++++
 
-* **[Bugfixed][Changed]** ``ju``, ``qu``, ``xu``, ``yu``, ``yi`` 和 ``wu`` 的韵母( `#26`_ ). Thanks `@MingStar`_ :
+* **[Bugfixed][Changed]** 修复 ``ju``, ``qu``, ``xu``, ``yu``, ``yi`` 和 ``wu`` 的韵母( `#26`_ ). Thanks `@MingStar`_ :
 
   * ``ju``, ``qu``, ``xu`` 的韵母应该是 ``v``
   * ``yi`` 的韵母是 ``i``
