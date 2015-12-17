@@ -258,7 +258,7 @@ def no_initial_final(pinyin):
             pinyin = pinyin[1:]
         else:
             pinyin = 'i' + pinyin[1:]
-    if pinyin.startswith('w'):
+    elif pinyin.startswith('w'):
         if pinyin.startswith('wu'):
             pinyin = pinyin[1:]
         else:
@@ -283,7 +283,11 @@ def toFixed(pinyin, style):
         # 不包含声调
         if style in [NORMAL, FIRST_LETTER, FINALS]:
             # 去掉声调: a1 -> a
-            return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
+            # 鼻音: 'ḿ', 'ń', 'ň', 'ǹ '
+            if symbol in ['\u1e3f', '\u0144', '\u0148', '\u01f9']:
+                return re.sub(r'\d', r'', PHONETIC_SYMBOL[symbol])
+            else:
+                return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
         # 使用数字标识声调
         elif style in [TONE2, FINALS_TONE2]:
             # 返回使用数字标识声调的字符
@@ -300,7 +304,11 @@ def toFixed(pinyin, style):
         py = py[0]
     # 韵母
     elif style in [FINALS, FINALS_TONE, FINALS_TONE2]:
-        py = final(py)
+        # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ '
+        if pinyin and pinyin[0] not in [
+            '\u1e3f', '\u0144', '\u0148', '\u01f9'
+        ]:
+            py = final(py)
     return py
 
 

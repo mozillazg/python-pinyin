@@ -264,7 +264,24 @@ data_for_update = [
     ['徐', {'style': FINALS_TONE}, ['ǘ']],
     ['徐', {'style': FINALS_TONE2}, ['v2']],
     ['徐', {'style': FINALS}, ['v']],
-
+    # ǹ
+    ['嗯', {'style': NORMAL}, ['ng']],
+    ['嗯', {'style': TONE}, ['ǹg']],
+    ['嗯', {'style': TONE2}, ['n4g']],
+    ['嗯', {'style': INITIALS}, ['']],
+    ['嗯', {'style': FIRST_LETTER}, ['n']],
+    ['嗯', {'style': FINALS}, ['ng']],
+    ['嗯', {'style': FINALS_TONE}, ['ǹg']],
+    ['嗯', {'style': FINALS_TONE2}, ['n4g']],
+    # ḿ  \u1e3f  U+1E3F
+    ['呣', {'style': NORMAL}, ['m']],
+    ['呣', {'style': TONE}, ['ḿ']],
+    ['呣', {'style': TONE2}, ['m2']],
+    ['呣', {'style': INITIALS}, ['']],
+    ['呣', {'style': FIRST_LETTER}, ['m']],
+    ['呣', {'style': FINALS}, ['m']],
+    ['呣', {'style': FINALS_TONE}, ['ḿ']],
+    ['呣', {'style': FINALS_TONE2}, ['m2']],
 ]
 
 
