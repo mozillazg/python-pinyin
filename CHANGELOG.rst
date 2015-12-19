@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+0.9.5 (2015-12-19)
+++++++++++++++++++++
+
+* **[Bugfixed]** 修复未正确处理鼻音（详见 `汉语拼音 - 维基百科`_ ）的问题(`#31`_ 感谢 `@xulin97`_ 汇报):
+
+  * ``ḿ、ń、ň、ǹ`` 对应 “呒”、“呣”、“唔”、“嗯”等字。
+    这些字之前在各种风格下都输出原始的汉字而不是拼音。
+
 
 0.9.4 (2015-11-27)
 ++++++++++++++++++++
@@ -259,3 +267,6 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#26: https://github.com/mozillazg/python-pinyin/pull/26
 .. _@MingStar: https://github.com/MingStar
 .. _汉语拼音方案: http://www.edu.cn/20011114/3009777.shtml
+.. _汉语拼音 - 维基百科: https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%AD%E6%8B%BC%E9%9F%B3#cite_ref-10
+.. _@xulin97: https://github.com/xulin97
+.. _#31: https://github.com/mozillazg/python-pinyin/issues/31
