@@ -11,7 +11,6 @@ env:
   - TOX_ENV=py34
   - TOX_ENV=py35
   - TOX_ENV=pypy
-  - TOX_ENV=pypy3
   - TOX_ENV=py2_snownlp
   - TOX_ENV=py2_jieba
   - TOX_ENV=py3_jieba
