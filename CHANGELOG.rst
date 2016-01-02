@@ -4,7 +4,7 @@ Changelog
 0.10.0 (2016-mm-dd)
 ++++++++++++++++++++
 
-* **[New]** Python 3.3+ 以上版本默认支持 `U+20000 ~ U+2FA1F` 区间内的汉字(详见 `#32`_)
+* **[New]** Python 3.3+ 以上版本默认支持 `U+20000 ~ U+2FA1F` 区间内的汉字(详见 `#33`_)
 
 
 0.9.5 (2015-12-19)
@@ -276,4 +276,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _汉语拼音 - 维基百科: https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%AD%E6%8B%BC%E9%9F%B3#cite_ref-10
 .. _@xulin97: https://github.com/xulin97
 .. _#31: https://github.com/mozillazg/python-pinyin/issues/31
-.. _#32: https://github.com/mozillazg/python-pinyin/pull/32
+.. _#33: https://github.com/mozillazg/python-pinyin/pull/33

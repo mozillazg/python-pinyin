@@ -10,7 +10,8 @@ from pypinyin import (
     load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
 )
-from .utils import has_module, support_ucs4
+from pypinyin.compat import SUPPORT_UCS4
+from .utils import has_module
 
 
 def test_pinyin_initials():
@@ -290,7 +291,7 @@ def test_update(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
 
 
-@pytest.mark.skipif(not support_ucs4(), reason='dont support ucs4')
+@pytest.mark.skipif(not SUPPORT_UCS4, reason='dont support ucs4')
 @pytest.mark.parametrize(
     'han, result', [
         ['\U00020000', ['he']],      # CJK 扩展 B:[20000-2A6DF]
@@ -303,7 +304,7 @@ def test_support_ucs4(han, result):
     assert lazy_pinyin(han) == result
 
 
-@pytest.mark.skipif(support_ucs4(), reason='support ucs4')
+@pytest.mark.skipif(SUPPORT_UCS4, reason='support ucs4')
 @pytest.mark.parametrize(
     'han', [
         '\U00020000',      # CJK 扩展 B:[20000-2A6DF]
