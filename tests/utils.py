@@ -9,3 +9,7 @@ def has_module(module):
         return True
     except ImportError:
         pass
+
+
+def support_ucs4():
+    return len('\U00020000') == 1
