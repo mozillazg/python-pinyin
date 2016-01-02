@@ -12,7 +12,7 @@
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
-* Python version: 2.6, 2.7, pypy, pypy3, 3.3, 3.4, 3.5
+* Python version: 2.6, 2.7, pypy, 3.3, 3.4, 3.5
 
 
 特性
