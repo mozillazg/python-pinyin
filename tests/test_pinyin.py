@@ -306,10 +306,10 @@ def test_support_ucs4(han, result):
 @pytest.mark.skipif(support_ucs4(), reason='support ucs4')
 @pytest.mark.parametrize(
     'han', [
-        ['\U00020000'],      # CJK 扩展 B:[20000-2A6DF]
-        ['\U0002A703'],      # CJK 扩展 C:[2A700-2B73F]
-        ['\U0002B740'],      # CJK 扩展 D:[2B740-2B81D]
-        ['\U0002F80A'],      # CJK 兼容扩展:[2F800-2FA1F]
+        '\U00020000',      # CJK 扩展 B:[20000-2A6DF]
+        '\U0002A703',      # CJK 扩展 C:[2A700-2B73F]
+        '\U0002B740',      # CJK 扩展 D:[2B740-2B81D]
+        '\U0002F80A',      # CJK 兼容扩展:[2F800-2FA1F]
     ]
 )
 def test_dont_support_ucs4(han):
