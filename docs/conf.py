@@ -262,7 +262,7 @@ texinfo_documents = [
 epub_title = 'pypinyin'
 epub_author = 'mozillazg'
 epub_publisher = 'mozillazg'
-epub_copyright = '2014 mozillazg'
+epub_copyright = '2016 mozillazg'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
