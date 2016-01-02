@@ -12,7 +12,7 @@ import re
 import warnings
 
 from . import phonetic_symbol, pinyin_dict
-from .compat import SUPPORT_UCS4, unicode, str, callable, PY2
+from .compat import SUPPORT_UCS4, text_type, bytes_type, callable_check, PY2
 
 __title__ = 'pypinyin'
 __version__ = '0.10.0'
@@ -139,10 +139,10 @@ def _seg(chars):
 
 def simple_seg(hans):
     '将传入的字符串按是否有拼音来分割'
-    assert not isinstance(hans, str), \
+    assert not isinstance(hans, bytes_type), \
         'must be unicode string or [unicode, ...] list'
 
-    if isinstance(hans, unicode):
+    if isinstance(hans, text_type):
         return _seg(hans)
     else:
         hans = list(hans)
@@ -334,7 +334,7 @@ def toFixed(pinyin, style):
 
 def _handle_nopinyin_char(chars, errors='default'):
     """处理没有拼音的字符"""
-    if callable(errors):
+    if callable_check(errors):
         return errors(chars)
 
     if errors == 'default':
@@ -343,9 +343,9 @@ def _handle_nopinyin_char(chars, errors='default'):
         return None
     elif errors == 'replace':
         if len(chars) > 1:
-            return ''.join(unicode('%x' % ord(x)) for x in chars)
+            return ''.join(text_type('%x' % ord(x)) for x in chars)
         else:
-            return unicode('%x' % ord(chars))
+            return text_type('%x' % ord(chars))
 
 
 def handle_nopinyin(chars, errors='default'):
@@ -472,7 +472,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
       [[u'zho1ng'], [u'xi1n']]
     """
     # 对字符串进行分词处理
-    if isinstance(hans, unicode):
+    if isinstance(hans, text_type):
         hans = seg(hans)
     pys = []
     for words in hans:

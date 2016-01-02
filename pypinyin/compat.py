@@ -9,10 +9,10 @@ SUPPORT_UCS4 = len('\U00020000') == 1
 
 PY2 = sys.version_info < (3, 0)
 if not PY2:
-    unicode = str
-    str = bytes
-    callable = lambda x: getattr(x, '__call__', None)
+    text_type = str
+    bytes_type = bytes
+    callable_check = lambda x: hasattr(x, '__call__')
 else:
-    unicode = unicode
-    str = str
-    callable = callable
+    text_type = unicode           # noqa
+    bytes_type = str
+    callable_check = callable     # noqa
