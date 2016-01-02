@@ -12,6 +12,7 @@ import re
 import sys
 
 from . import phonetic_symbol, pinyin_dict
+from .compat import SUPPORT_UCS4
 
 __title__ = 'pypinyin'
 __version__ = '0.9.5'
@@ -58,9 +59,26 @@ RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
 # 匹配使用数字标识声调的字符的正则表达式
 RE_TONE2 = r'([aeoiuvnm])([0-4])$'
 # 有拼音的汉字
-RE_HANS = re.compile(r'^(?:[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])+$')
-# 没有拼音的字符
-RE_NONE_HANS = re.compile(r'^(?:[^\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff])+$')
+if SUPPORT_UCS4:
+    RE_HANS = re.compile(
+        r'^(?:['
+        r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
+        r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
+        r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
+        r'\U00020000-\U0002A6DF'   # CJK扩展B:[20000-2A6DF]
+        r'\U0002A703-\U0002B73F'   # CJK扩展C:[2A700-2B73F]
+        r'\U0002B740-\U0002B81D'   # CJK扩展D:[2B740-2B81D]
+        r'\U0002F80A-\U0002FA1F'   # CJK兼容扩展:[2F800-2FA1F]
+        r'])+$'
+    )
+else:
+    RE_HANS = re.compile(
+        r'^(?:['
+        r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
+        r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
+        r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
+        r'])+$'
+    )
 
 # 拼音风格
 PINYIN_STYLE = {
@@ -154,7 +172,7 @@ def seg(hans):
         hans = simple_seg(hans)
         ret = []
         for x in hans:
-            if RE_NONE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
+            if not RE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
                 ret.append(x)
             else:
                 ret.extend(list(seg.jieba.cut(x)))

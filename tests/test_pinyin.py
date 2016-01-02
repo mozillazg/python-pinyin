@@ -10,6 +10,7 @@ from pypinyin import (
     load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
 )
+from pypinyin.compat import SUPPORT_UCS4
 from .utils import has_module
 
 
@@ -285,6 +286,32 @@ data_for_update = [
 ]
 
 
-@pytest.mark.parametrize('hans, kwargs,result', data_for_update)
+@pytest.mark.parametrize('hans, kwargs, result', data_for_update)
 def test_update(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+
+
+@pytest.mark.skipif(not SUPPORT_UCS4, reason='dont support ucs4')
+@pytest.mark.parametrize(
+    'han, result', [
+        ['\U00020000', ['he']],      # CJK 扩展 B:[20000-2A6DF]
+        ['\U0002A703', ['ga']],      # CJK 扩展 C:[2A700-2B73F]
+        ['\U0002B740', ['wu']],      # CJK 扩展 D:[2B740-2B81D]
+        ['\U0002F80A', ['seng']],    # CJK 兼容扩展:[2F800-2FA1F]
+    ]
+)
+def test_support_ucs4(han, result):
+    assert lazy_pinyin(han) == result
+
+
+@pytest.mark.skipif(SUPPORT_UCS4, reason='support ucs4')
+@pytest.mark.parametrize(
+    'han', [
+        '\U00020000',      # CJK 扩展 B:[20000-2A6DF]
+        '\U0002A703',      # CJK 扩展 C:[2A700-2B73F]
+        '\U0002B740',      # CJK 扩展 D:[2B740-2B81D]
+        '\U0002F80A',      # CJK 兼容扩展:[2F800-2FA1F]
+    ]
+)
+def test_dont_support_ucs4(han):
+    assert pinyin(han) == [[han]]

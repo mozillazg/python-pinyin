@@ -40,3 +40,6 @@ htmlcov
 tools/words.txt
 *~
 tools/phrases_dict.txt
+venv
+.cache/
+2.7/
