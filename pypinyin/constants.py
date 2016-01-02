@@ -77,3 +77,10 @@ FINALS = STYLE_FINALS = PINYIN_STYLE['FINALS']
 FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
 # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
 FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
+
+U_FINALS_EXCEPTIONS_MAP = {
+    u'ū': u'ǖ',
+    u'ú': u'ǘ',
+    u'ǔ': u'ǚ',
+    u'ù': u'ǜ',
+}
