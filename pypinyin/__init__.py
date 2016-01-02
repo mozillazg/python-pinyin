@@ -10,6 +10,7 @@ from itertools import chain
 import os
 import re
 import sys
+import warnings
 
 from . import phonetic_symbol, pinyin_dict
 from .compat import SUPPORT_UCS4
@@ -284,7 +285,7 @@ def no_initial_final(pinyin):
     return pinyin
 
 
-def toFixed(pinyin, style):
+def to_fixed(pinyin, style):
     """根据拼音风格格式化带声调的拼音.
 
     :param pinyin: 单个拼音
@@ -330,6 +331,13 @@ def toFixed(pinyin, style):
     return py
 
 
+def toFixed(pinyin, style):
+    warnings.warn(
+        DeprecationWarning('"toFixed" is deprecated. Use "to_fixed" instead')
+    )
+    return to_fixed(pinyin, style)
+
+
 def _handle_nopinyin_char(chars, errors='default'):
     """处理没有拼音的字符"""
     if callable(errors):
@@ -372,14 +380,14 @@ def single_pinyin(han, style, heteronym, errors='default'):
 
     pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
-        return [toFixed(pys[0], style)]
+        return [to_fixed(pys[0], style)]
 
     # 输出多音字的多个读音
     # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
     py_cached = {}
     pinyins = []
     for i in pys:
-        py = toFixed(i, style)
+        py = to_fixed(i, style)
         if py in py_cached:
             continue
         py_cached[py] = py
@@ -399,7 +407,7 @@ def phrases_pinyin(phrases, style, heteronym, errors='default'):
     if phrases in PHRASES_DICT:
         py = deepcopy(PHRASES_DICT[phrases])
         for idx, item in enumerate(py):
-            py[idx] = [toFixed(item[0], style=style)]
+            py[idx] = [to_fixed(item[0], style=style)]
     else:
         for i in phrases:
             single = single_pinyin(i, style=style, heteronym=heteronym,
