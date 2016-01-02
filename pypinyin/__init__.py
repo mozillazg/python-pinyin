@@ -15,7 +15,7 @@ from . import phonetic_symbol, pinyin_dict
 from .compat import SUPPORT_UCS4
 
 __title__ = 'pypinyin'
-__version__ = '0.9.5'
+__version__ = '0.10.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2014 mozillazg, 闲耘'
