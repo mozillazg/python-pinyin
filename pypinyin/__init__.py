@@ -9,11 +9,10 @@ from copy import deepcopy
 from itertools import chain
 import os
 import re
-import sys
 import warnings
 
 from . import phonetic_symbol, pinyin_dict
-from .compat import SUPPORT_UCS4
+from .compat import SUPPORT_UCS4, unicode, str, callable, PY2
 
 __title__ = 'pypinyin'
 __version__ = '0.10.0'
@@ -31,14 +30,9 @@ __all__ = [
     'STYLE_FINALS_TONE2', 'FINALS_TONE2',
     'STYLE_FIRST_LETTER', 'FIRST_LETTER'
 ]
-# fix "TypeError: Item in ``from list'' not a string" on Python 2
-__all__ = [str(x) for x in __all__]
-
-PY2 = sys.version_info < (3, 0)
-if not PY2:
-    unicode = str
-    str = bytes
-    callable = lambda x: getattr(x, '__call__', None)
+if PY2:
+    # fix "TypeError: Item in ``from list'' not a string" on Python 2
+    __all__ = [x.encode('utf-8') for x in __all__]
 
 # 词语拼音库
 if os.environ.get('PYPINYIN_NO_PHRASES'):
