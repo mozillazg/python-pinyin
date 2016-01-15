@@ -6,7 +6,7 @@ import os
 os.environ['PYPINYIN_NO_PHRASES'] = 'true'
 os.environ['PYPINYIN_NO_JIEBA'] = 'true'
 
-import pypinyin.core
+import pypinyin.core  # noqa
 
 
 def test_env():

@@ -197,8 +197,7 @@ def test_simple_seg():
 
     hans = '你好にほんごРусский язык'
     ret = 'ni3 ha3o'
-    errors = lambda x: None
-    assert slug(hans, style=TONE2, separator=' ', errors=errors) == ret
+    assert slug(hans, style=TONE2, separator=' ', errors=lambda x: None) == ret
 
 
 data_for_update = [
