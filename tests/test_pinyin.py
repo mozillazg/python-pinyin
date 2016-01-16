@@ -166,9 +166,11 @@ def test_errors():
         ('⺁', {'style': TONE2}, ['\u2e81']),
         ('⺁', {'style': TONE2, 'errors': 'ignore'}, []),
         ('⺁', {'style': TONE2, 'errors': 'replace'}, ['2e81']),
+        ('⺁⺁', {'style': TONE2, 'errors': 'replace'}, ['2e812e81']),
         ('鿅', {'style': TONE2}, ['\u9fc5']),
         ('鿅', {'style': TONE2, 'errors': 'ignore'}, []),
         ('鿅', {'style': TONE2, 'errors': 'replace'}, ['9fc5']),
+        ('鿅', {'style': TONE2, 'errors': lambda x: ['a']}, ['a']),
     )
     for han in hans:
         assert lazy_pinyin(han[0], **han[1]) == han[2]
