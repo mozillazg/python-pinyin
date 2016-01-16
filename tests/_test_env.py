@@ -6,10 +6,10 @@ import os
 os.environ['PYPINYIN_NO_PHRASES'] = 'true'
 os.environ['PYPINYIN_NO_JIEBA'] = 'true'
 
-import pypinyin
+import pypinyin.core  # noqa
 
 
 def test_env():
-    assert pypinyin.PHRASES_DICT == {}
-    assert pypinyin.seg.no_jieba
-    assert pypinyin.seg('北京') == ['北京']
+    assert pypinyin.core.PHRASES_DICT == {}
+    assert pypinyin.core.seg.no_jieba
+    assert pypinyin.core.seg('北京') == ['北京']

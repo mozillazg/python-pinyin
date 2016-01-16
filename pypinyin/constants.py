@@ -1,0 +1,86 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import unicode_literals
+
+import os
+import re
+
+from . import phonetic_symbol, pinyin_dict
+from .compat import SUPPORT_UCS4
+
+# 词语拼音库
+if os.environ.get('PYPINYIN_NO_PHRASES'):
+    PHRASES_DICT = {}
+else:
+    from . import phrases_dict
+    PHRASES_DICT = phrases_dict.phrases_dict.copy()
+
+# 单字拼音库
+PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
+# 声母表
+_INITIALS = 'b,p,m,f,d,t,n,l,g,k,h,j,q,x,zh,ch,sh,r,z,c,s'.split(',')
+# 带声调字符与使用数字标识的字符的对应关系，类似： {u'ā': 'a1'}
+PHONETIC_SYMBOL = phonetic_symbol.phonetic_symbol.copy()
+# 所有的带声调字符
+re_phonetic_symbol_source = ''.join(PHONETIC_SYMBOL.keys())
+# 匹配带声调字符的正则表达式
+RE_PHONETIC_SYMBOL = r'[' + re.escape(re_phonetic_symbol_source) + r']'
+# 匹配使用数字标识声调的字符的正则表达式
+RE_TONE2 = r'([aeoiuvnm])([0-4])$'
+# 有拼音的汉字
+if SUPPORT_UCS4:
+    RE_HANS = re.compile(
+        r'^(?:['
+        r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
+        r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
+        r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
+        r'\U00020000-\U0002A6DF'   # CJK扩展B:[20000-2A6DF]
+        r'\U0002A703-\U0002B73F'   # CJK扩展C:[2A700-2B73F]
+        r'\U0002B740-\U0002B81D'   # CJK扩展D:[2B740-2B81D]
+        r'\U0002F80A-\U0002FA1F'   # CJK兼容扩展:[2F800-2FA1F]
+        r'])+$'
+    )
+else:
+    RE_HANS = re.compile(
+        r'^(?:['
+        r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
+        r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
+        r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
+        r'])+$'
+    )
+
+# 拼音风格
+PINYIN_STYLE = {
+    'NORMAL': 0,          # 普通风格，不带声调
+    'TONE': 1,            # 标准风格，声调在韵母的第一个字母上
+    'TONE2': 2,           # 声调在拼音之后，使用数字 1~4 标识
+    'INITIALS': 3,        # 仅保留声母部分
+    'FIRST_LETTER': 4,    # 仅保留首字母
+    'FINALS': 5,          # 仅保留韵母部分，不带声调
+    'FINALS_TONE': 6,     # 仅保留韵母部分，带声调
+    'FINALS_TONE2': 7,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
+}
+# 普通风格，不带声调
+NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
+# 标准风格，声调在韵母的第一个字母上
+TONE = STYLE_TONE = PINYIN_STYLE['TONE']
+# 声调在拼音之后，使用数字 1~4 标识
+TONE2 = STYLE_TONE2 = PINYIN_STYLE['TONE2']
+# 仅保留声母部分
+INITIALS = STYLE_INITIALS = PINYIN_STYLE['INITIALS']
+# 仅保留首字母
+FIRST_LETTER = STYLE_FIRST_LETTER = PINYIN_STYLE['FIRST_LETTER']
+# 仅保留韵母部分，不带声调
+FINALS = STYLE_FINALS = PINYIN_STYLE['FINALS']
+# 仅保留韵母部分，带声调
+FINALS_TONE = STYLE_FINALS_TONE = PINYIN_STYLE['FINALS_TONE']
+# 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
+FINALS_TONE2 = STYLE_FINALS_TONE2 = PINYIN_STYLE['FINALS_TONE2']
+
+U_FINALS_EXCEPTIONS_MAP = {
+    u'ū': u'ǖ',
+    u'ú': u'ǘ',
+    u'ǔ': u'ǚ',
+    u'ù': u'ǜ',
+}

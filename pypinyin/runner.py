@@ -10,10 +10,7 @@ from . import (                                    # noqa
     NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
     FINALS, FINALS_TONE, FINALS_TONE2
 )
-
-py3 = sys.version_info[0] == 3
-if py3:
-    unicode = str
+from .compat import PY2
 
 
 class NullWriter(object):
@@ -57,10 +54,10 @@ def main():
     # 获取命令行选项和参数
     parser = get_parser()
     options = parser.parse_args()
-    if py3:
-        hans = options.hans
-    else:
+    if PY2:
         hans = options.hans.decode(sys.stdin.encoding)
+    else:
+        hans = options.hans
     func = globals()[options.func]
     style = globals()[options.style]
     heteronym = options.heteronym
@@ -72,10 +69,10 @@ def main():
         'slug': {'heteronym': heteronym, 'separator': separator,
                  'errors': errors},
     }
-    if py3:
-        kwargs = func_kwargs[func.__name__]
-    else:
+    if PY2:
         kwargs = func_kwargs[func.func_name]
+    else:
+        kwargs = func_kwargs[func.__name__]
 
     # 重设标准输出流和标准错误流
     # 不输出任何字符，防止污染命令行命令的输出结果

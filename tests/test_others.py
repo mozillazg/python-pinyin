@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from pypinyin import *   # noqa
-from pypinyin import simple_seg
+from pypinyin.utils import simple_seg
 
 
 def test_import_all():

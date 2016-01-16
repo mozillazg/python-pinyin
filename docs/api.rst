@@ -20,10 +20,10 @@ pypinyin.FINALS_TONE2    7      韵母风格2，带声调，声调在各个拼�
 
 .. autofunction:: pypinyin.pinyin
 
-.. autofunction:: pypinyin.slug
-
 .. autofunction:: pypinyin.lazy_pinyin
 
 .. autofunction:: pypinyin.load_single_dict
 
 .. autofunction:: pypinyin.load_phrases_dict
+
+.. autofunction:: pypinyin.slug
