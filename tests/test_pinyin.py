@@ -316,3 +316,9 @@ def test_support_ucs4(han, result):
 )
 def test_dont_support_ucs4(han):
     assert pinyin(han) == [[han]]
+
+
+def test_36():
+    hans = '两年前七斤喝醉了酒'
+    pys = ['liang', 'nian', 'qian', 'qi', 'jin', 'he', 'zui', 'liao', 'jiu']
+    assert lazy_pinyin(hans) == pys
