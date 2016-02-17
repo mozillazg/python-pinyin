@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+
+0.11.1 (2016-02-17)
+++++++++++++++++++++
+
+* **[Bugfixed]** fixed `#36`_
+
+
 0.11.0 (2016-01-16)
 ++++++++++++++++++++
 
@@ -284,3 +291,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _@xulin97: https://github.com/xulin97
 .. _#31: https://github.com/mozillazg/python-pinyin/issues/31
 .. _#33: https://github.com/mozillazg/python-pinyin/pull/33
+.. _#36: https://github.com/mozillazg/python-pinyin/issues/36
