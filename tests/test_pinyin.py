@@ -31,7 +31,7 @@ def test_pinyin_initials():
     assert pinyin(hans, FIRST_LETTER) == [['z'], ['x']]
     # 启用多音字模式
     assert pinyin(hans, heteronym=True) == [['zh\u014dng', 'zh\xf2ng'],
-                                            ['x\u012bn', 'xin']]
+                                            ['x\u012bn']]
     # 韵母风格1，只返回各个拼音的韵母部分，不带声调
     assert pinyin(hans, style=FINALS) == [['ong'], ['in']]
     # 韵母风格2，带声调，声调在韵母第一个字母上
