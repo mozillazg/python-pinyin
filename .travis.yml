@@ -24,6 +24,10 @@ install:
 script:
   - pre-commit run --all-files
   - tox -e $TOX_ENV
+  - python setup.py install
+  - pypinyin hello
+  - echo hello | pypinyin
+  - pypinyin < setup.cfg
 
 after_script:
   - coveralls

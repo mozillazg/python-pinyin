@@ -52,7 +52,7 @@ def test_pinyin_finals():
     assert pinyin(hans, FIRST_LETTER) == [['a'], ['a']]
     assert pinyin(hans, heteronym=True) == [['\xe1o'], ['\xe1o']]
     assert pinyin('啊', heteronym=True) == \
-        [['\u0101', '\xe1', '\u01ce', '\xe0', 'a']]
+        [['a', 'è', 'ā', 'á', 'ǎ', 'à']]
     assert pinyin(hans, style=FINALS) == [['ao'], ['ao']]
     assert pinyin(hans, style=FINALS_TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, style=FINALS_TONE2) == [['a2o'], ['a2o']]
@@ -161,8 +161,8 @@ def test_custom_pinyin_dict2_tone2():
 
 def test_errors():
     hans = (
-        ('啊', {'style': TONE2}, ['a1']),
-        ('啊a', {'style': TONE2}, ['a1', 'a']),
+        ('啊', {'style': TONE2}, ['a']),
+        ('啊a', {'style': TONE2}, ['a', 'a']),
         ('⺁', {'style': TONE2}, ['\u2e81']),
         ('⺁', {'style': TONE2, 'errors': 'ignore'}, []),
         ('⺁', {'style': TONE2, 'errors': 'replace'}, ['2e81']),
@@ -235,9 +235,9 @@ data_for_update = [
     [
         '\u4E00', {'style': TONE2}, ['yi1'],   # CJK 基本:[4E00-9FFF]
     ],
-    [
-        '\uFA29', {'style': TONE2}, ['da3o'],  # CJK 兼容:[F900-FAFF]
-    ],
+    # [
+    #     '\uFA29', {'style': TONE2}, ['da3o'],  # CJK 兼容:[F900-FAFF]
+    # ],
     # 误把 yu 放到声母列表了
     ['鱼', {'style': TONE2}, ['yu2']],
     ['鱼', {'style': FINALS}, ['v']],
@@ -247,7 +247,7 @@ data_for_update = [
     ['元', {'style': FINALS}, ['van']],
     # y, w 也不是拼音, yu的韵母是v, yi的韵母是i, wu的韵母是u
     ['呀', {'style': INITIALS}, ['']],
-    ['呀', {'style': TONE2}, ['ya1']],
+    ['呀', {'style': TONE2}, ['ya']],
     ['呀', {'style': FINALS}, ['ia']],
     ['无', {'style': INITIALS}, ['']],
     ['无', {'style': TONE2}, ['wu2']],
@@ -266,15 +266,15 @@ data_for_update = [
     ['徐', {'style': FINALS_TONE}, ['ǘ']],
     ['徐', {'style': FINALS_TONE2}, ['v2']],
     ['徐', {'style': FINALS}, ['v']],
-    # ǹ
-    ['嗯', {'style': NORMAL}, ['ng']],
-    ['嗯', {'style': TONE}, ['ǹg']],
-    ['嗯', {'style': TONE2}, ['n4g']],
+    # ń
+    ['嗯', {'style': NORMAL}, ['n']],
+    ['嗯', {'style': TONE}, ['ń']],
+    ['嗯', {'style': TONE2}, ['n2']],
     ['嗯', {'style': INITIALS}, ['']],
     ['嗯', {'style': FIRST_LETTER}, ['n']],
-    ['嗯', {'style': FINALS}, ['ng']],
-    ['嗯', {'style': FINALS_TONE}, ['ǹg']],
-    ['嗯', {'style': FINALS_TONE2}, ['n4g']],
+    ['嗯', {'style': FINALS}, ['n']],
+    ['嗯', {'style': FINALS_TONE}, ['ń']],
+    ['嗯', {'style': FINALS_TONE2}, ['n2']],
     # ḿ  \u1e3f  U+1E3F
     ['呣', {'style': NORMAL}, ['m']],
     ['呣', {'style': TONE}, ['ḿ']],
@@ -296,9 +296,9 @@ def test_update(hans, kwargs, result):
 @pytest.mark.parametrize(
     'han, result', [
         ['\U00020000', ['he']],      # CJK 扩展 B:[20000-2A6DF]
-        ['\U0002A703', ['ga']],      # CJK 扩展 C:[2A700-2B73F]
-        ['\U0002B740', ['wu']],      # CJK 扩展 D:[2B740-2B81D]
-        ['\U0002F80A', ['seng']],    # CJK 兼容扩展:[2F800-2FA1F]
+        ['\U0002A79D', ['duo']],      # CJK 扩展 C:[2A700-2B73F]
+        # ['\U0002B740', ['wu']],      # CJK 扩展 D:[2B740-2B81D]
+        # ['\U0002F80A', ['seng']],    # CJK 兼容扩展:[2F800-2FA1F]
     ]
 )
 def test_support_ucs4(han, result):
@@ -309,9 +309,9 @@ def test_support_ucs4(han, result):
 @pytest.mark.parametrize(
     'han', [
         '\U00020000',      # CJK 扩展 B:[20000-2A6DF]
-        '\U0002A703',      # CJK 扩展 C:[2A700-2B73F]
-        '\U0002B740',      # CJK 扩展 D:[2B740-2B81D]
-        '\U0002F80A',      # CJK 兼容扩展:[2F800-2FA1F]
+        '\U0002A79D',      # CJK 扩展 C:[2A700-2B73F]
+        # '\U0002B740',      # CJK 扩展 D:[2B740-2B81D]
+        # '\U0002F80A',      # CJK 兼容扩展:[2F800-2FA1F]
     ]
 )
 def test_dont_support_ucs4(han):
@@ -320,5 +320,5 @@ def test_dont_support_ucs4(han):
 
 def test_36():
     hans = '两年前七斤喝醉了酒'
-    pys = ['liang', 'nian', 'qian', 'qi', 'jin', 'he', 'zui', 'liao', 'jiu']
+    pys = ['liang', 'nian', 'qian', 'qi', 'jin', 'he', 'zui', 'le', 'jiu']
     assert lazy_pinyin(hans) == pys

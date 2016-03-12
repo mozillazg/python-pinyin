@@ -2,10 +2,22 @@ Changelog
 ---------
 
 
+0.12.0 (2016-mm-dd)
++++++++++++++++++++++
+
+* **[Changed]** 单个汉字的拼音数据改为使用来自 `pinyin-data`_ 的拼音数据。
+* **[New]** 命令行程序支持从标准输入读取汉字信息::
+
+    $ echo "你好" | pypinyin
+    nǐ hǎo
+    $ pypinyin < hello.txt
+    nǐ hǎo
+
+
 0.11.1 (2016-02-17)
 ++++++++++++++++++++
 
-* **[Bugfixed]** fixed `#36`_
+* **[Bugfixed]** fixed `#36`_, thanks `@someus`_
 
 
 0.11.0 (2016-01-16)
@@ -292,3 +304,6 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#31: https://github.com/mozillazg/python-pinyin/issues/31
 .. _#33: https://github.com/mozillazg/python-pinyin/pull/33
 .. _#36: https://github.com/mozillazg/python-pinyin/issues/36
+.. _pinyin-data: https://github.com/mozillazg/pinyin-data
+.. _@someus: https://github.com/someus
+.. _#34: https://github.com/mozillazg/python-pinyin/issues/34

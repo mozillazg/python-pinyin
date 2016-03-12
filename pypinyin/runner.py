@@ -51,9 +51,18 @@ def main():
     # 禁用除 CRITICAL 外的日志消息
     logging.disable(logging.CRITICAL)
 
+    # read hans from stdin
+    if not sys.stdin.isatty():
+        pipe_data = sys.stdin.read().strip()
+    else:
+        pipe_data = ''
+    args = sys.argv[1:]
+    if pipe_data:
+        args.append(pipe_data)
+
     # 获取命令行选项和参数
     parser = get_parser()
-    options = parser.parse_args()
+    options = parser.parse_args(args)
     if PY2:
         hans = options.hans.decode(sys.stdin.encoding)
     else:
