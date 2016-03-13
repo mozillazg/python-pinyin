@@ -1,6 +1,10 @@
 汉语拼音转换工具（Python 版）
 =============================
 
+.. image:: https://badges.gitter.im/mozillazg/python-pinyin.svg
+   :alt: Join the chat at https://gitter.im/mozillazg/python-pinyin
+   :target: https://gitter.im/mozillazg/python-pinyin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+
 |Build| |Coverage| |Pypi version| |Pypi downloads|
 
 
