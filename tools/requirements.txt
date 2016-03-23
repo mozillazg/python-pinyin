@@ -1,3 +1,0 @@
-beautifulsoup4
-html5lib
-requests>=2.0.1
