@@ -2,6 +2,12 @@ Changelog
 ---------
 
 
+0.12.1 (2016-mm-dd)
++++++++++++++++++++++
+
+* **[Bugfixed]** 修复一些词语存在拼音粘连在一起的情况. (`#41`_ thanks `@jolly-tao`_ )
+
+
 0.12.0 (2016-03-12)
 +++++++++++++++++++++
 
@@ -307,3 +313,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _@someus: https://github.com/someus
 .. _#34: https://github.com/mozillazg/python-pinyin/issues/34
+.. _#41: https://github.com/mozillazg/python-pinyin/issues/41
+.. _@jolly-tao: https://github.com/jolly-tao
