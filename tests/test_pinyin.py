@@ -284,6 +284,8 @@ data_for_update = [
     ['呣', {'style': FINALS}, ['m']],
     ['呣', {'style': FINALS_TONE}, ['ḿ']],
     ['呣', {'style': FINALS_TONE2}, ['m2']],
+    # 41
+    ['彷徨', {}, ['pang', 'huang']],
 ]
 
 
