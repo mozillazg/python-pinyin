@@ -316,8 +316,8 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
       [[u'zh\u014dng'], [u'x\u012bn']]
       >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
       [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', style=pypinyin.INITIALS)  # 设置拼音风格
-      [[u'zh'], [u'x']]
+      >>> pinyin(u'中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+      [[u'z'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.TONE2)
       [[u'zho1ng'], [u'xi1n']]
     """
@@ -349,8 +349,8 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
       u'zhong-guo-ren'
       >>> pypinyin.slug(u'中国人', separator=u' ')
       u'zhong guo ren'
-      >>> pypinyin.slug(u'中国人', style=pypinyin.INITIALS)
-      u'zh-g-r'
+      >>> pypinyin.slug(u'中国人', style=pypinyin.FIRST_LETTER)
+      u'z-g-r'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
                                         errors=errors)
@@ -379,8 +379,8 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
       [u'zhong', u'xin']
       >>> lazy_pinyin(u'中心', style=pypinyin.TONE)
       [u'zh\u014dng', u'x\u012bn']
-      >>> lazy_pinyin(u'中心', style=pypinyin.INITIALS)
-      [u'zh', u'x']
+      >>> lazy_pinyin(u'中心', style=pypinyin.FIRST_LETTER)
+      [u'z', u'x']
       >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
       [u'zho1ng', u'xi1n']
     """
