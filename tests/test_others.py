@@ -7,10 +7,10 @@ from pypinyin.utils import simple_seg
 
 
 def test_import_all():
-    pinyin('啦啦啦')
-    pinyin('啦啦啦', TONE2)
-    lazy_pinyin('啦啦啦')
-    slug('啦啦啦')
+    pinyin('啦啦啦')         # noqa
+    pinyin('啦啦啦', TONE2)  # noqa
+    lazy_pinyin('啦啦啦')    # noqa
+    slug('啦啦啦')           # noqa
 
 
 def test_simple_seg():
