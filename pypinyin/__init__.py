@@ -24,7 +24,7 @@ FINALS_TONE = STYLE_FINALS_TONE
 FINALS_TONE2 = STYLE_FINALS_TONE2
 
 __title__ = 'pypinyin'
-__version__ = '0.12.1'
+__version__ = '0.13.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2016 mozillazg, 闲耘'
