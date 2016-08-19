@@ -6,14 +6,14 @@
 汉语拼音转换工具（Python 版）
 =============================
 
-|Build| |Coverage| |Pypi version| |Pypi downloads|
+|Build| |Coverage| |Pypi version|
 
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。
 
 基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
-* Documentation: http://pypinyin.rtfd.org
+* Documentation: http://pypinyin.rtfd.io
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin

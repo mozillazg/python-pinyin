@@ -1,18 +1,14 @@
 汉语拼音转换工具（Python 版）
 =============================
 
-.. image:: https://badges.gitter.im/mozillazg/python-pinyin.svg
-   :alt: Join the chat at https://gitter.im/mozillazg/python-pinyin
-   :target: https://gitter.im/mozillazg/python-pinyin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
-
-|Build| |Coverage| |Pypi version| |Pypi downloads|
+|Build| |Coverage| |Pypi version|
 
 
 将汉语转为拼音。可以用于汉字注音、排序、检索。
 
 基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
-* Documentation: http://pypinyin.mozillazg.com
+* Documentation: http://pypinyin.rtfd.io/
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.python.org/pypi/pypinyin
@@ -39,7 +35,7 @@
 文档
 --------
 
-详细文档请访问：http://pypinyin.mozillazg.com
+详细文档请访问：http://pypinyin.rtfd.io/
 
 
 使用示例
@@ -67,6 +63,20 @@
     $ pypinyin 音乐
     yīn yuè
     $ pypinyin -h
+
+
+FAQ
+---------
+
+为什么没有 y, w, yu 几个声母？
+++++++++++++++++++++++++++++++++++++++++++++
+
+    声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据 `《汉语拼音方案》 <http://www.edu.cn/20011114/3009777.shtml>`__ ， y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
+
+    如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。 这时候你也许需要的是首字母风格（FIRST_LETTER）。    —— @hotoo
+
+    参考: `hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__, `#22 <https://github.com/mozillazg/python-pinyin/pull/22>`__, `#27 <https://github.com/mozillazg/python-pinyin/issues/27>`__,
+    `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
 
 
 Related Projects
