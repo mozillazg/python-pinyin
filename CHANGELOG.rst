@@ -2,6 +2,13 @@ Changelog
 ---------
 
 
+0.13.0 (2016-08-19)
++++++++++++++++++++++
+
+* **[Changed]** 分离词组库中包含中文逗号的词语(via `f097b6a <https://github.com/mozillazg/python-pinyin/commit/f097b6ad7b9e2acbc1ecc214991be510f4f95d72>`_)
+* **[Changed]** 使用 `pinyin-data`_ v0.3.0 的拼音数据
+
+
 0.12.1 (2016-05-11)
 +++++++++++++++++++++
 
