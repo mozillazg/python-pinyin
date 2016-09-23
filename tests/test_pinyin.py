@@ -315,6 +315,14 @@ data_for_update = [
     # 注音
     ['打量', {'style': BOPOMOFO}, ['ㄉㄚˇ', 'ㄌㄧㄤ˙']],
     ['黄山b股', {'style': BOPOMOFO}, ['ㄏㄨㄤˊ', 'ㄕㄢ', 'b', 'ㄍㄨˇ']],
+    # 50
+    ['打量', {'style': TONE2}, ['da3', 'liang']],
+    ['打量', {'style': TONE3}, ['da3', 'liang']],
+    ['侵略', {'style': TONE2}, ['qi1n', 'lve4']],
+    ['侵略', {'style': TONE3}, ['qin1', 'lve4']],
+    ['侵略', {'style': FINALS_TONE2}, ['i1n', 've4']],
+    ['侵略', {'style': FINALS_TONE3}, ['in1', 've4']],
+    ['侵略', {'style': BOPOMOFO}, ['ㄑㄧㄣ', 'ㄌㄩㄝˋ']],
 ]
 
 
