@@ -12,9 +12,11 @@ import warnings
 from .compat import text_type, callable_check
 from .constants import (
     PHRASES_DICT, PINYIN_DICT, _INITIALS, PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
-    RE_TONE2, RE_HANS, U_FINALS_EXCEPTIONS_MAP,
-    NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
-    FINALS, FINALS_TONE, FINALS_TONE2
+    RE_TONE2, RE_TONE3, RE_HANS, U_FINALS_EXCEPTIONS_MAP,
+    BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
+    NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
+    FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
+    BOPOMOFO, BOPOMOFO_FIRST
 )
 from .utils import simple_seg, _replace_tone2_style_dict_to_default
 
@@ -152,7 +154,8 @@ def to_fixed(pinyin, style):
             else:
                 return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
         # 使用数字标识声调
-        elif style in [TONE2, FINALS_TONE2]:
+        elif style in [TONE2, TONE3, FINALS_TONE2, FINALS_TONE3,
+                       BOPOMOFO, BOPOMOFO_FIRST]:
             # 返回使用数字标识声调的字符
             return PHONETIC_SYMBOL[symbol]
         # 声调在头上
@@ -161,17 +164,28 @@ def to_fixed(pinyin, style):
 
     # 替换拼音中的带声调字符
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
+    # 将声调移动到最后
+    if style in [TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST]:
+        py = RE_TONE3.sub(r'\1\3\2', py)
 
     # 首字母
     if style == FIRST_LETTER:
         py = py[0]
     # 韵母
-    elif style in [FINALS, FINALS_TONE, FINALS_TONE2]:
-        # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ '
+    elif style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
+        # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ'
         if pinyin and pinyin[0] not in [
             '\u1e3f', '\u0144', '\u0148', '\u01f9'
         ]:
             py = final(py)
+    # 声调在拼音之后、注音
+    elif style in [BOPOMOFO, BOPOMOFO_FIRST]:
+        # 查表替换成注音
+        for f, r in BOPOMOFO_REPLACE:
+            py = f.sub(r, py)
+        py = ''.join(BOPOMOFO_TABLE.get(x, x) for x in py)
+        if style == BOPOMOFO_FIRST:
+            py = py[0]
     return py
 
 

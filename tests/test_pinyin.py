@@ -7,8 +7,9 @@ import pytest
 
 from pypinyin import (
     pinyin, slug, lazy_pinyin, load_single_dict,
-    load_phrases_dict, NORMAL, TONE, TONE2, INITIALS,
-    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2
+    load_phrases_dict, NORMAL, TONE, TONE2, TONE3, INITIALS,
+    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
+    BOPOMOFO, BOPOMOFO_FIRST
 )
 from pypinyin.compat import SUPPORT_UCS4
 from .utils import has_module
@@ -23,12 +24,18 @@ def test_pinyin_initials():
     assert pinyin(hans, NORMAL) == [['zhong'], ['xin']]
     # 声调风格，拼音声调在韵母第一个字母上
     assert pinyin(hans, TONE) == [['zh\u014dng'], ['x\u012bn']]
-    # 声调风格2，即拼音声调在各个拼音之后，用数字 [0-4] 进行表示
+    # 声调风格2，即拼音声调在各个声母之后，用数字 [1-4] 进行表示
     assert pinyin(hans, TONE2) == [['zho1ng'], ['xi1n']]
+    # 声调风格3，即拼音声调在各个拼音之后，用数字 [1-4] 进行表示
+    assert pinyin(hans, TONE3) == [['zhong1'], ['xin1']]
     # 声母风格，只返回各个拼音的声母部分
     assert pinyin(hans, INITIALS) == [['zh'], ['x']]
     # 首字母风格，只返回拼音的首字母部分
     assert pinyin(hans, FIRST_LETTER) == [['z'], ['x']]
+    # 注音风格，带声调
+    assert pinyin(hans, BOPOMOFO) == [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+    # 注音风格，首字母
+    assert pinyin(hans, BOPOMOFO_FIRST) == [['ㄓ'], ['ㄒ']]
     # 启用多音字模式
     assert pinyin(hans, heteronym=True) == [['zh\u014dng', 'zh\xf2ng'],
                                             ['x\u012bn']]
@@ -36,8 +43,10 @@ def test_pinyin_initials():
     assert pinyin(hans, style=FINALS) == [['ong'], ['in']]
     # 韵母风格2，带声调，声调在韵母第一个字母上
     assert pinyin(hans, style=FINALS_TONE) == [['\u014dng'], ['\u012bn']]
-    # 韵母风格2，带声调，声调在各个拼音之后，用数字 [0-4] 进行表示
+    # 韵母风格2，带声调，声调在各个声母之后，用数字 [1-4] 进行表示
     assert pinyin(hans, style=FINALS_TONE2) == [['o1ng'], ['i1n']]
+    # 韵母风格3，带声调，声调在各个拼音之后，用数字 [1-4] 进行表示
+    assert pinyin(hans, style=FINALS_TONE3) == [['ong1'], ['in1']]
 
 
 def test_pinyin_finals():
@@ -48,14 +57,18 @@ def test_pinyin_finals():
     assert pinyin(hans, NORMAL) == [['ao'], ['ao']]
     assert pinyin(hans, TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, TONE2) == [['a2o'], ['a2o']]
+    assert pinyin(hans, TONE3) == [['ao2'], ['ao2']]
     assert pinyin(hans, INITIALS) == [[''], ['']]
     assert pinyin(hans, FIRST_LETTER) == [['a'], ['a']]
+    assert pinyin(hans, BOPOMOFO) == [['ㄠˊ'], ['ㄠˊ']]
+    assert pinyin(hans, BOPOMOFO_FIRST) == [['ㄠ'], ['ㄠ']]
     assert pinyin(hans, heteronym=True) == [['\xe1o'], ['\xe1o']]
     assert pinyin('啊', heteronym=True) == \
         [['a', 'è', 'ā', 'á', 'ǎ', 'à']]
     assert pinyin(hans, style=FINALS) == [['ao'], ['ao']]
     assert pinyin(hans, style=FINALS_TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, style=FINALS_TONE2) == [['a2o'], ['a2o']]
+    assert pinyin(hans, style=FINALS_TONE3) == [['ao2'], ['ao2']]
 
 
 def test_slug():
@@ -99,6 +112,7 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心') == ['zhong', 'xin']
     assert lazy_pinyin('中心', style=TONE) == ['zh\u014dng', 'x\u012bn']
     assert lazy_pinyin('中心', style=INITIALS) == ['zh', 'x']
+    assert lazy_pinyin('中心', style=BOPOMOFO) == ['ㄓㄨㄥ', 'ㄒㄧㄣ']
 
 
 @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
@@ -241,31 +255,41 @@ data_for_update = [
     # 误把 yu 放到声母列表了
     ['鱼', {'style': TONE2}, ['yu2']],
     ['鱼', {'style': FINALS}, ['v']],
+    ['鱼', {'style': BOPOMOFO}, ['ㄩˊ']],
     ['雨', {'style': TONE2}, ['yu3']],
     ['雨', {'style': FINALS}, ['v']],
+    ['雨', {'style': BOPOMOFO}, ['ㄩˇ']],
     ['元', {'style': TONE2}, ['yua2n']],
     ['元', {'style': FINALS}, ['van']],
+    ['元', {'style': BOPOMOFO}, ['ㄩㄢˊ']],
     # y, w 也不是拼音, yu的韵母是v, yi的韵母是i, wu的韵母是u
     ['呀', {'style': INITIALS}, ['']],
     ['呀', {'style': TONE2}, ['ya']],
     ['呀', {'style': FINALS}, ['ia']],
+    ['呀', {'style': BOPOMOFO}, ['ㄧㄚ˙']],
     ['无', {'style': INITIALS}, ['']],
     ['无', {'style': TONE2}, ['wu2']],
     ['无', {'style': FINALS}, ['u']],
+    ['无', {'style': BOPOMOFO}, ['ㄨˊ']],
     ['衣', {'style': TONE2}, ['yi1']],
     ['衣', {'style': FINALS}, ['i']],
+    ['衣', {'style': BOPOMOFO}, ['ㄧ']],
     ['万', {'style': TONE2}, ['wa4n']],
     ['万', {'style': FINALS}, ['uan']],
+    ['万', {'style': BOPOMOFO}, ['ㄨㄢˋ']],
     # ju, qu, xu 的韵母应该是 v
     ['具', {'style': FINALS_TONE}, ['ǜ']],
     ['具', {'style': FINALS_TONE2}, ['v4']],
     ['具', {'style': FINALS}, ['v']],
+    ['具', {'style': BOPOMOFO}, ['ㄐㄩˋ']],
     ['取', {'style': FINALS_TONE}, ['ǚ']],
     ['取', {'style': FINALS_TONE2}, ['v3']],
     ['取', {'style': FINALS}, ['v']],
+    ['取', {'style': BOPOMOFO}, ['ㄑㄩˇ']],
     ['徐', {'style': FINALS_TONE}, ['ǘ']],
     ['徐', {'style': FINALS_TONE2}, ['v2']],
     ['徐', {'style': FINALS}, ['v']],
+    ['徐', {'style': BOPOMOFO}, ['ㄒㄩˊ']],
     # ń
     ['嗯', {'style': NORMAL}, ['n']],
     ['嗯', {'style': TONE}, ['ń']],
@@ -275,6 +299,7 @@ data_for_update = [
     ['嗯', {'style': FINALS}, ['n']],
     ['嗯', {'style': FINALS_TONE}, ['ń']],
     ['嗯', {'style': FINALS_TONE2}, ['n2']],
+    ['嗯', {'style': BOPOMOFO}, ['ㄣˊ']],
     # ḿ  \u1e3f  U+1E3F
     ['呣', {'style': NORMAL}, ['m']],
     ['呣', {'style': TONE}, ['ḿ']],
@@ -284,8 +309,12 @@ data_for_update = [
     ['呣', {'style': FINALS}, ['m']],
     ['呣', {'style': FINALS_TONE}, ['ḿ']],
     ['呣', {'style': FINALS_TONE2}, ['m2']],
+    ['呣', {'style': BOPOMOFO}, ['ㄇㄨˊ']],
     # 41
     ['彷徨', {}, ['pang', 'huang']],
+    # 注音
+    ['打量', {'style': BOPOMOFO}, ['ㄉㄚˇ', 'ㄌㄧㄤ˙']],
+    ['黄山b股', {'style': BOPOMOFO}, ['ㄏㄨㄤˊ', 'ㄕㄢ', 'b', 'ㄍㄨˇ']],
 ]
 
 
