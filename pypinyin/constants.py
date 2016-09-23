@@ -65,7 +65,7 @@ PINYIN_STYLE = {
     'FINALS_TONE2': 7,    # 仅保留韵母部分，声调在韵母之后，使用数字 1~4 标识
     'FINALS_TONE3': 9,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
     'BOPOMOFO': 10,       # 注音符号，带声调，阴平（第一声）不标
-    'BOPOMOFO_FIRST': 11, # 注音符号首字母
+    'BOPOMOFO_FIRST': 11,  # 注音符号首字母
 }
 # 普通风格，不带声调
 NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
@@ -129,5 +129,7 @@ BOPOMOFO_REPLACE = (
     (re.compile('([^0-4])$'), '\\g<1>0'),
     (re.compile('1$'), ''),
 )
-BOPOMOFO_TABLE = dict(zip('bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
-    'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'))
+BOPOMOFO_TABLE = dict(zip(
+    'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
+    'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'
+))
