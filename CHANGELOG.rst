@@ -5,7 +5,7 @@ Changelog
 0.14.0 (2016-09-24)
 +++++++++++++++++++++
 
-* **[New]** 新增注音 ``BOPOMOFO`` 及注音首字母 ``BOPOMOFO_FIRST`` 风格(via `#51`_ thanks `@gumblex`_)
+* **[New]** 新增注音 ``BOPOMOFO`` 及注音首字母 ``BOPOMOFO_FIRST`` 风格(via `#51`_ thanks `@gumblex`_ `@Artoria2e5`_)
 
   .. code-block:: python
 
@@ -15,7 +15,7 @@ Changelog
       [['ㄓ'], ['ㄒ']]
 
 
-* **[New]** 新增音调在拼音后的 ``TONE3`` 以及 ``FINALS_TONE3`` 风格(via `#51`_ thanks `@gumblex`_)
+* **[New]** 新增音调在拼音后的 ``TONE3`` 以及 ``FINALS_TONE3`` 风格(via `#51`_ thanks `@gumblex`_ `@Artoria2e5`_ )
 
   .. code-block:: python
 
@@ -349,4 +349,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#41: https://github.com/mozillazg/python-pinyin/issues/41
 .. _@jolly-tao: https://github.com/jolly-tao
 .. _@gumblex: https://github.com/gumblex
+.. _@Artoria2e5: https://github.com/Artoria2e5
 .. _#51: https://github.com/mozillazg/python-pinyin/issues/51

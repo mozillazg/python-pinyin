@@ -253,6 +253,28 @@ def single_pinyin(han, style, heteronym, errors='default'):
     return pinyins
 
 
+def phrase_pinyin(phrase, style, heteronym, errors='default'):
+    """词语拼音转换.
+
+    :param phrase: 词语
+    :param errors: 指定如何处理没有拼音的字符
+    :return: 拼音列表
+    :rtype: list
+    """
+    py = []
+    if phrase in PHRASES_DICT:
+        py = deepcopy(PHRASES_DICT[phrase])
+        for idx, item in enumerate(py):
+            py[idx] = [to_fixed(item[0], style=style)]
+    else:
+        for i in phrase:
+            single = single_pinyin(i, style=style, heteronym=heteronym,
+                                   errors=errors)
+            if single:
+                py.append(single)
+    return py
+
+
 def phrases_pinyin(phrases, style, heteronym, errors='default'):
     """词语拼音转换.
 
@@ -261,18 +283,12 @@ def phrases_pinyin(phrases, style, heteronym, errors='default'):
     :return: 拼音列表
     :rtype: list
     """
-    py = []
-    if phrases in PHRASES_DICT:
-        py = deepcopy(PHRASES_DICT[phrases])
-        for idx, item in enumerate(py):
-            py[idx] = [to_fixed(item[0], style=style)]
-    else:
-        for i in phrases:
-            single = single_pinyin(i, style=style, heteronym=heteronym,
-                                   errors=errors)
-            if single:
-                py.append(single)
-    return py
+    warnings.warn(
+        DeprecationWarning(
+            '"phrases_pinyin" is deprecated. Use "phrase_pinyin" instead'
+        )
+    )
+    return phrase_pinyin(phrases, style, heteronym, errors=errors)
 
 
 def _pinyin(words, style, heteronym, errors):
