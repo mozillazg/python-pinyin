@@ -2,6 +2,32 @@ Changelog
 ---------
 
 
+0.14.0 (2016-mm-dd)
++++++++++++++++++++++
+
+* **[New]** 新增注音 ``BOPOMOFO`` 及注音首字母 ``BOPOMOFO_FIRST`` 风格(via `#51`_ thanks `@gumblex`_)
+
+  .. code-block:: python
+
+      >>> pypinyin.pinyin('中心', style=pypinyin.BOPOMOFO)
+      [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+      >>> pypinyin.pinyin('中心', style=pypinyin.BOPOMOFO_FIRST)
+      [['ㄓ'], ['ㄒ']]
+
+
+* **[New]** 新增音调在拼音后的 ``TONE3`` 以及 ``FINALS_TONE3`` 风格(via `#51`_ thanks `@gumblex`_)
+
+  .. code-block:: python
+
+      >>> pypinyin.pinyin('中心', style=pypinyin.TONE3)
+      [['zhong1'], ['xin1']]
+      >>> pypinyin.pinyin('中心', style=pypinyin.FINALS_TONE3)
+      [['ong1'], ['in1']]
+
+* **[New]** 命令行程序支持新增的四个风格: ``TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST``
+* **[Bugfixed]** 修复 TONE2 中 ü 标轻声的问题（像 侵略 -> qi1n lv0e4），以及去除文档中 0 表示轻声(via `#51`_ thanks `@gumblex`_)
+
+
 0.13.0 (2016-08-19)
 +++++++++++++++++++++
 
@@ -322,3 +348,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#34: https://github.com/mozillazg/python-pinyin/issues/34
 .. _#41: https://github.com/mozillazg/python-pinyin/issues/41
 .. _@jolly-tao: https://github.com/jolly-tao
+.. _@gumblex: https://github.com/gumblex
+.. _#51: https://github.com/mozillazg/python-pinyin/issues/51
