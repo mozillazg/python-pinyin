@@ -3,13 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-汉语拼音转换工具（Python 版）
+汉字拼音转换工具（Python 版）
 =============================
 
 |Build| |Coverage| |Pypi version|
 
 
-将汉语转为拼音。可以用于汉字注音、排序、检索。
+将汉字转为拼音。可以用于汉字注音、排序、检索。
 
 基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
@@ -25,7 +25,7 @@
 
 * 根据词组智能匹配最正确的拼音。
 * 支持多音字。
-* 简单的繁体支持。
+* 简单的繁体支持, 注音支持。
 * 支持多种不同拼音风格。
 
 

@@ -1,10 +1,10 @@
-汉语拼音转换工具（Python 版）
+汉字拼音转换工具（Python 版）
 =============================
 
 |Build| |Coverage| |Pypi version|
 
 
-将汉语转为拼音。可以用于汉字注音、排序、检索。
+将汉字转为拼音。可以用于汉字注音、排序、检索。
 
 基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
@@ -20,8 +20,8 @@
 
 * 根据词组智能匹配最正确的拼音。
 * 支持多音字。
-* 简单的繁体支持。
-* 支持多种不同拼音风格。
+* 简单的繁体支持, 注音支持。
+* 支持多种不同拼音/注音风格。
 
 
 安装
@@ -41,19 +41,23 @@
 使用示例
 --------
 
+Python 3(Python 2 下把 `'中心'` 替换为 `u'中心'` 即可):
+
 .. code-block:: python
 
     >>> from pypinyin import pinyin, lazy_pinyin
     >>> import pypinyin
-    >>> pinyin(u'中心')
-    [[u'zh\u014dng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
-    [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-    >>> pinyin(u'中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+    >>> pinyin('中心')
+    [['zhōng'], ['xīn']]
+    >>> pinyin('中心', heteronym=True)  # 启用多音字模式
+    [['zhōng', 'zhòng'], ['xīn']]
+    >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
     [['z'], ['x']]
     >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
-    >>> lazy_pinyin(u'中心')  # 不考虑多音字的情况
+    >>> pinyin('中心', style=pypinyin.BOPOMOFO)  # 注音风格
+    [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+    >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
 
 命令行工具：
@@ -71,7 +75,7 @@ FAQ
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
 
-    声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据 `《汉语拼音方案》 <http://www.edu.cn/20011114/3009777.shtml>`__ ， y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
+    声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据 `《汉字拼音方案》 <http://www.edu.cn/20011114/3009777.shtml>`__ ， y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
 
     如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。 这时候你也许需要的是首字母风格（FIRST_LETTER）。    —— @hotoo
 
@@ -82,9 +86,9 @@ FAQ
 Related Projects
 -----------------
 
-* `hotoo/pinyin`__: 汉语拼音转换工具 Node.js/JavaScript 版。
-* `mozillazg/go-pinyin`__: 汉语拼音转换工具 Go 版。
-* `mozillazg/rust-pinyin`__: 汉语拼音转换工具 Rust 版。
+* `hotoo/pinyin`__: 汉字拼音转换工具 Node.js/JavaScript 版。
+* `mozillazg/go-pinyin`__: 汉字拼音转换工具 Go 版。
+* `mozillazg/rust-pinyin`__: 汉字拼音转换工具 Rust 版。
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
