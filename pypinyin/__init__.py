@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""汉语拼音转换工具."""
+"""汉字拼音转换工具."""
 
 from __future__ import unicode_literals
 
