@@ -2,7 +2,7 @@ Changelog
 ---------
 
 
-0.14.0 (2016-mm-dd)
+0.14.0 (2016-09-24)
 +++++++++++++++++++++
 
 * **[New]** 新增注音 ``BOPOMOFO`` 及注音首字母 ``BOPOMOFO_FIRST`` 风格(via `#51`_ thanks `@gumblex`_)
