@@ -7,8 +7,9 @@ import sys
 
 from . import (                                    # noqa
     __title__, __version__, pinyin, slug,
-    NORMAL, TONE, TONE2, INITIALS, FIRST_LETTER,
-    FINALS, FINALS_TONE, FINALS_TONE2
+    NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
+    FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
+    BOPOMOFO, BOPOMOFO_FIRST
 )
 from .compat import PY2
 
@@ -29,9 +30,10 @@ def get_parser():
                         default='pinyin')
     # 拼音风格
     parser.add_argument('--style', help='pinyin style (default: "TONE")',
-                        choices=['NORMAL', 'TONE', 'TONE2', 'INITIALS',
-                                 'FIRST_LETTER', 'FINALS', 'FINALS_TONE',
-                                 'FINALS_TONE2'], default='TONE')
+                        choices=['NORMAL', 'TONE', 'TONE2', 'TONE3',
+                                 'INITIALS', 'FIRST_LETTER', 'FINALS',
+                                 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
+                                 'BOPOMOFO', 'BOPOMOFO_FIRST'], default='TONE')
     parser.add_argument('--separator', help='slug separator (default: "-")',
                         default='-')
     parser.add_argument('--errors', help=('how to handle none-pinyin string '
