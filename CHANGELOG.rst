@@ -32,6 +32,7 @@ Changelog
 
 * **[New]** 命令行程序支持新增的四个风格: ``TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST``
 * **[Bugfixed]** 修复 TONE2 中 ü 标轻声的问题（像 侵略 -> qi1n lv0e4），以及去除文档中 0 表示轻声(via `#51`_ thanks `@gumblex`_)
+* **[Changed]** 不再使用 0 表示轻声，轻声时没有数字(via `#51`_ thanks `@gumblex`_)
 
 
 0.13.0 (2016-08-19)
