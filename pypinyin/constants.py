@@ -66,6 +66,8 @@ PINYIN_STYLE = {
     'FINALS_TONE3': 9,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
     'BOPOMOFO': 10,       # 注音符号，带声调，阴平（第一声）不标
     'BOPOMOFO_FIRST': 11,  # 注音符号首字母
+	'KIRILLIC': 12,       # 注音符号，带声调，阴平（第一声）不标
+    'KIRILLIC_FIRST': 13,  
 }
 # 普通风格，不带声调
 NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
@@ -91,6 +93,10 @@ FINALS_TONE3 = STYLE_FINALS_TONE3 = PINYIN_STYLE['FINALS_TONE3']
 BOPOMOFO = STYLE_BOPOMOFO = PINYIN_STYLE['BOPOMOFO']
 # 注音符号首字母
 BOPOMOFO_FIRST = STYLE_BOPOMOFO_FIRST = PINYIN_STYLE['BOPOMOFO_FIRST']
+
+KIRILLIC= STYLE_KIRILLIC = PINYIN_STYLE['KIRILLIC']
+
+KIRILLIC_FIRST= STYLE_KIRILLIC_FIRST = PINYIN_STYLE['KIRILLIC_FIRST']
 
 U_FINALS_EXCEPTIONS_MAP = {
     u'ū': u'ǖ',
@@ -132,4 +138,42 @@ BOPOMOFO_REPLACE = (
 BOPOMOFO_TABLE = dict(zip(
     'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
     'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'
+))
+
+KIRILLIC_REPLACE = (
+    (re.compile('^([cghklmnrz]|zh)u(o\d{0,1})$'), '\\1\\2'),
+    (re.compile('^ng(\d{0,1})$'), 'нг\\1'),
+    (re.compile('^hng(\d{0,1})$'), 'хнг\\1'),
+    (re.compile("([zsc])i(\d{0,1})$"),"\\1ы\\2"),
+    (re.compile("(.*[uea])i(\d{0,1})$"),"\\1й\\2"),
+    (re.compile("^([^yi]+)o(ng\d{0,1})$"),"\\1у\\2"),
+    (re.compile("(.+)n(\d{0,1})$"),"\\1нь\\2"),
+    (re.compile("(.+)ng(\d{0,1})$"),"\\1н\\2"),
+    (re.compile("(.+)ie(\d{0,1})$"),"\\1е\\2"),
+    (re.compile("(.+)iu(\d{0,1})$"),"\\1ю\\2"),
+    (re.compile("(.+)v(\d{0,1})$"),"\\1юй\\2"),
+    (re.compile("([xqj])u(\d{0,1})$"),"\\1юй\\2"),
+    (re.compile("([xqj])u(.+)$"),"\\1ю\\2"),
+    (re.compile("(.+)r(\d{0,1})$"),"\\1р\\2"),
+    (re.compile("ia"),"я"),
+    (re.compile("io"),"ю"),
+    (re.compile("^wu(\d{0,1})$"),"у\\1"),
+    (re.compile("^ya(.*)$"),"я\\1"),
+    (re.compile("^ye(\d{0,1})$"),"е\\1"),
+    (re.compile("^yi(.*)$"),"и\\1"),
+    (re.compile("^you(\d{0,1})$"),"ю\\1"),
+    (re.compile("^yo(\d{0,1})$"),"ё\\1"),
+    (re.compile("^yo(.+)$"),"ю\\1"),
+    (re.compile("^yu(\d{0,1})$"),"юй\\1"),
+    (re.compile("^yu(.+)$"),"ю\\1"),
+    (re.compile("zh"),"чж"),
+    (re.compile("ch"),"ч"),
+    (re.compile("j"),"цз"),
+    (re.compile("z"),"цз"),
+    (re.compile("sh"),"ш"),
+    (re.compile("^(.)i(\d{0,1})$"),"\\1и\\2"),
+)
+KIRILLIC_TABLE = dict(zip(
+    u'aioefubpdtgkmnlfshrvxcqw',
+    u'аиоэфубпдтгкмнлфсхжюсццв'
 ))
