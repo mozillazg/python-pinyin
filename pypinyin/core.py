@@ -192,7 +192,7 @@ def to_fixed(pinyin, style):
         # 查表替换成注音
         for f, r in KIRILLIC_REPLACE:
             py = f.sub(r, py)
-        py = ''.join(KIRILLIC_TABLE.get(x, x) for x in py)
+        py = py.translate(KIRILLIC_TABLE)
         if style == KIRILLIC_FIRST:
             py = py[0]
     return py
