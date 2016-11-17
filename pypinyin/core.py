@@ -14,11 +14,11 @@ from .constants import (
     PHRASES_DICT, PINYIN_DICT, _INITIALS, PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
     RE_TONE2, RE_TONE3, RE_HANS, U_FINALS_EXCEPTIONS_MAP,
     BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
-	KIRILLIC_REPLACE,KIRILLIC_TABLE,
+	CYRILLIC_REPLACE,CYRILLIC_TABLE,
     NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
     FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
     BOPOMOFO, BOPOMOFO_FIRST,
-	KIRILLIC,KIRILLIC_FIRST
+	CYRILLIC,CYRILLIC_FIRST
 )
 from .utils import simple_seg, _replace_tone2_style_dict_to_default
 
@@ -157,7 +157,7 @@ def to_fixed(pinyin, style):
                 return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
         # 使用数字标识声调
         elif style in [TONE2, TONE3, FINALS_TONE2, FINALS_TONE3,
-                       BOPOMOFO, BOPOMOFO_FIRST,KIRILLIC, KIRILLIC_FIRST]:
+                       BOPOMOFO, BOPOMOFO_FIRST,CYRILLIC, CYRILLIC_FIRST]:
             # 返回使用数字标识声调的字符
             return PHONETIC_SYMBOL[symbol]
         # 声调在头上
@@ -167,7 +167,7 @@ def to_fixed(pinyin, style):
     # 替换拼音中的带声调字符
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
     # 将声调移动到最后
-    if style in [TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST,KIRILLIC, KIRILLIC_FIRST]:
+    if style in [TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST,CYRILLIC, CYRILLIC_FIRST]:
         py = RE_TONE3.sub(r'\1\3\2', py)
 
     # 首字母
@@ -188,12 +188,12 @@ def to_fixed(pinyin, style):
         py = ''.join(BOPOMOFO_TABLE.get(x, x) for x in py)
         if style == BOPOMOFO_FIRST:
             py = py[0]
-    elif style in [KIRILLIC, KIRILLIC_FIRST]:
+    elif style in [CYRILLIC, CYRILLIC_FIRST]:
         # 查表替换成注音
-        for f, r in KIRILLIC_REPLACE:
+        for f, r in CYRILLIC_REPLACE:
             py = f.sub(r, py)
-        py = py.translate(KIRILLIC_TABLE)
-        if style == KIRILLIC_FIRST:
+        py = py.translate(CYRILLIC_TABLE)
+        if style == CYRILLIC_FIRST:
             py = py[0]
     return py
 

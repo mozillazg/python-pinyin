@@ -66,8 +66,8 @@ PINYIN_STYLE = {
     'FINALS_TONE3': 9,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
     'BOPOMOFO': 10,       # 注音符号，带声调，阴平（第一声）不标
     'BOPOMOFO_FIRST': 11,  # 注音符号首字母
-	'KIRILLIC': 12,       # 注音符号，带声调，阴平（第一声）不标
-    'KIRILLIC_FIRST': 13,  
+	'CYRILLIC': 12,       # 注音符号，带声调，阴平（第一声）不标
+    'CYRILLIC_FIRST': 13,  
 }
 # 普通风格，不带声调
 NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
@@ -94,9 +94,9 @@ BOPOMOFO = STYLE_BOPOMOFO = PINYIN_STYLE['BOPOMOFO']
 # 注音符号首字母
 BOPOMOFO_FIRST = STYLE_BOPOMOFO_FIRST = PINYIN_STYLE['BOPOMOFO_FIRST']
 
-KIRILLIC= STYLE_KIRILLIC = PINYIN_STYLE['KIRILLIC']
+CYRILLIC= STYLE_CYRILLIC = PINYIN_STYLE['CYRILLIC']
 
-KIRILLIC_FIRST= STYLE_KIRILLIC_FIRST = PINYIN_STYLE['KIRILLIC_FIRST']
+CYRILLIC_FIRST= STYLE_CYRILLIC_FIRST = PINYIN_STYLE['CYRILLIC_FIRST']
 
 U_FINALS_EXCEPTIONS_MAP = {
     u'ū': u'ǖ',
@@ -140,7 +140,7 @@ BOPOMOFO_TABLE = dict(zip(
     'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'
 ))
 
-KIRILLIC_REPLACE = (
+CYRILLIC_REPLACE = (
     (re.compile("ong"),"ung"),
     (re.compile("([zcs])i"),"\\1U"),
     (re.compile("([xqj])u"),"\\1v"),
@@ -173,4 +173,4 @@ KIRILLIC_REPLACE = (
     (re.compile("(.*[^h])ng(.?)$"),"\\1n\\2"),
     (re.compile("^v(\d?$)"),"vI"),
 )
-KIRILLIC_TABLE = str.maketrans(u'abwgdEOrZiIklmnopRstufhqcCSHTMUevAV', u'абвгдеёжзийклмнопрстуфхццчшщъьыэюяю')
+CYRILLIC_TABLE = str.maketrans(u'abwgdEOrZiIklmnopRstufhqcCSHTMUevAV', u'абвгдеёжзийклмнопрстуфхццчшщъьыэюяю')
