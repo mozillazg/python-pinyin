@@ -66,7 +66,7 @@ PINYIN_STYLE = {
     'FINALS_TONE3': 9,    # 仅保留韵母部分，声调在拼音之后，使用数字 1~4 标识
     'BOPOMOFO': 10,       # 注音符号，带声调，阴平（第一声）不标
     'BOPOMOFO_FIRST': 11,  # 注音符号首字母
-	'CYRILLIC': 12,       # 注音符号，带声调，阴平（第一声）不标
+    'CYRILLIC': 12,
     'CYRILLIC_FIRST': 13,  
 }
 # 普通风格，不带声调
@@ -94,9 +94,9 @@ BOPOMOFO = STYLE_BOPOMOFO = PINYIN_STYLE['BOPOMOFO']
 # 注音符号首字母
 BOPOMOFO_FIRST = STYLE_BOPOMOFO_FIRST = PINYIN_STYLE['BOPOMOFO_FIRST']
 
-CYRILLIC= STYLE_CYRILLIC = PINYIN_STYLE['CYRILLIC']
+CYRILLIC = STYLE_CYRILLIC = PINYIN_STYLE['CYRILLIC']
 
-CYRILLIC_FIRST= STYLE_CYRILLIC_FIRST = PINYIN_STYLE['CYRILLIC_FIRST']
+CYRILLIC_FIRST = STYLE_CYRILLIC_FIRST = PINYIN_STYLE['CYRILLIC_FIRST']
 
 U_FINALS_EXCEPTIONS_MAP = {
     u'ū': u'ǖ',
@@ -141,36 +141,39 @@ BOPOMOFO_TABLE = dict(zip(
 ))
 
 CYRILLIC_REPLACE = (
-    (re.compile("ong"),"ung"),
-    (re.compile("([zcs])i"),"\\1U"),
-    (re.compile("([xqj])u"),"\\1v"),
-    (re.compile("^wu(.?)$"),"u\\1"),
-    (re.compile("(.+)r(.?)$"),"\\1R\\2"),
-    (re.compile("^zh"),"Cr"),
-    (re.compile("^ch"),"C"),
-    (re.compile("^j"),"qZ"),
-    (re.compile("^z"),"qZ"),
-    (re.compile("^x"),"s"),
-    (re.compile("^sh"),"S"),
-    (re.compile("([^CSdst])uo"),"\\1o"),
-    (re.compile("^y(.*)$"),"I\\1"),
-    (re.compile("Iai"),"AI"),
-    (re.compile("Ia"),"A"),
-    (re.compile("Ie"),"E"),
-    (re.compile("Ii"),"i"),
-    (re.compile("Iou"),"V"),
-    (re.compile("Iu"),"v"),
-    (re.compile("(.v)(\d?)$"),"\\1I\\2"),
-    (re.compile("Io"),"O"),
-    (re.compile("iu"),"v"),
-    (re.compile("ie"),"E"),
-    (re.compile("hui"),"huei"),
-    (re.compile("ui"),"uI"),
-    (re.compile("ai"),"aI"),
-    (re.compile("ei"),"eI"),
-    (re.compile("ia"),"A"),
-    (re.compile("(.*[^h])n([^g]?)$"),"\\1nM\\2"),
-    (re.compile("(.*[^h])ng(.?)$"),"\\1n\\2"),
-    (re.compile("^v(\d?$)"),"vI"),
+    (re.compile("ong"), "ung"),
+    (re.compile("([zcs])i"), "\\1U"),
+    (re.compile("([xqj])u"), "\\1v"),
+    (re.compile("^wu(.?)$"), "u\\1"),
+    (re.compile("(.+)r(.?)$"), "\\1R\\2"),
+    (re.compile("^zh"), "Cr"),
+    (re.compile("^ch"), "C"),
+    (re.compile("^j"), "qZ"),
+    (re.compile("^z"), "qZ"),
+    (re.compile("^x"), "s"),
+    (re.compile("^sh"), "S"),
+    (re.compile("([^CSdst])uo"), "\\1o"),
+    (re.compile("^y(.*)$"), "I\\1"),
+    (re.compile("Iai"), "AI"),
+    (re.compile("Ia"), "A"),
+    (re.compile("Ie"), "E"),
+    (re.compile("Ii"), "i"),
+    (re.compile("Iou"), "V"),
+    (re.compile("Iu"), "v"),
+    (re.compile("(.v)(\d?)$"), "\\1I\\2"),
+    (re.compile("Io"), "O"),
+    (re.compile("iu"), "v"),
+    (re.compile("ie"), "E"),
+    (re.compile("hui"), "huei"),
+    (re.compile("ui"), "uI"),
+    (re.compile("ai"), "aI"),
+    (re.compile("ei"), "eI"),
+    (re.compile("ia"), "A"),
+    (re.compile("(.*[^h])n([^g]?)$"), "\\1nM\\2"),
+    (re.compile("(.*[^h])ng(.?)$"), "\\1n\\2"),
+    (re.compile("^v(\d?$)"), "vI"),
 )
-CYRILLIC_TABLE = str.maketrans(u'abwgdEOrZiIklmnopRstufhqcCSHTMUevAV', u'абвгдеёжзийклмнопрстуфхццчшщъьыэюяю')
+CYRILLIC_TABLE = dict(zip(
+    u'abwgdEOrZiIklmnopRstufhqcCSHTMUevAV',
+    u'абвгдеёжзийклмнопрстуфхццчшщъьыэюяю'
+))
