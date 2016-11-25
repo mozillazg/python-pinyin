@@ -362,6 +362,8 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
       [[u'z'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.TONE2)
       [[u'zho1ng'], [u'xi1n']]
+      >>> pinyin(u'中心', style=pypinyin.CYRILLIC)
+      [[u'чжун1'], [u'синь1']]
     """
     # 对字符串进行分词处理
     if isinstance(hans, text_type):
@@ -393,6 +395,8 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
       u'zhong guo ren'
       >>> pypinyin.slug(u'中国人', style=pypinyin.FIRST_LETTER)
       u'z-g-r'
+      >>> pypinyin.slug(u'中国人', style=pypinyin.CYRILLIC)
+      u'чжун1-го2-жэнь2'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
                                         errors=errors)
@@ -425,6 +429,8 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
       [u'z', u'x']
       >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
       [u'zho1ng', u'xi1n']
+      >>> lazy_pinyin(u'中心', style=pypinyin.CYRILLIC)
+      [u'чжун1', u'синь1']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False,
                               errors=errors)))
