@@ -9,7 +9,7 @@ from pypinyin import (
     pinyin, slug, lazy_pinyin, load_single_dict,
     load_phrases_dict, NORMAL, TONE, TONE2, TONE3, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST
+    BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
 )
 from pypinyin.compat import SUPPORT_UCS4
 from .utils import has_module
@@ -36,6 +36,10 @@ def test_pinyin_initials():
     assert pinyin(hans, BOPOMOFO) == [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
     # 注音风格，首字母
     assert pinyin(hans, BOPOMOFO_FIRST) == [['ㄓ'], ['ㄒ']]
+    # test CYRILLIC style
+    assert pinyin(hans, CYRILLIC) == [['чжун1'], ['синь1']]
+    # CYRILLIC_FIRST style return only first letters
+    assert pinyin(hans, CYRILLIC_FIRST) == [['ч'], ['с']]
     # 启用多音字模式
     assert pinyin(hans, heteronym=True) == [['zh\u014dng', 'zh\xf2ng'],
                                             ['x\u012bn']]
@@ -62,6 +66,8 @@ def test_pinyin_finals():
     assert pinyin(hans, FIRST_LETTER) == [['a'], ['a']]
     assert pinyin(hans, BOPOMOFO) == [['ㄠˊ'], ['ㄠˊ']]
     assert pinyin(hans, BOPOMOFO_FIRST) == [['ㄠ'], ['ㄠ']]
+    assert pinyin(hans, CYRILLIC) == [['ао2'], ['ао2']]
+    assert pinyin(hans, CYRILLIC_FIRST) == [['а'], ['а']]
     assert pinyin(hans, heteronym=True) == [['\xe1o'], ['\xe1o']]
     assert pinyin('啊', heteronym=True) == \
         [['a', 'è', 'ā', 'á', 'ǎ', 'à']]
@@ -113,6 +119,7 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心', style=TONE) == ['zh\u014dng', 'x\u012bn']
     assert lazy_pinyin('中心', style=INITIALS) == ['zh', 'x']
     assert lazy_pinyin('中心', style=BOPOMOFO) == ['ㄓㄨㄥ', 'ㄒㄧㄣ']
+    assert lazy_pinyin('中心', style=CYRILLIC) == ['чжун1', 'синь1']
 
 
 @pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
@@ -256,40 +263,50 @@ data_for_update = [
     ['鱼', {'style': TONE2}, ['yu2']],
     ['鱼', {'style': FINALS}, ['v']],
     ['鱼', {'style': BOPOMOFO}, ['ㄩˊ']],
+    ['鱼', {'style': CYRILLIC}, ['юй']],
     ['雨', {'style': TONE2}, ['yu3']],
     ['雨', {'style': FINALS}, ['v']],
     ['雨', {'style': BOPOMOFO}, ['ㄩˇ']],
+    ['雨', {'style': CYRILLIC}, ['юй']],
     ['元', {'style': TONE2}, ['yua2n']],
     ['元', {'style': FINALS}, ['van']],
     ['元', {'style': BOPOMOFO}, ['ㄩㄢˊ']],
+    ['元', {'style': CYRILLIC}, ['юань2']],
     # y, w 也不是拼音, yu的韵母是v, yi的韵母是i, wu的韵母是u
     ['呀', {'style': INITIALS}, ['']],
     ['呀', {'style': TONE2}, ['ya']],
     ['呀', {'style': FINALS}, ['ia']],
     ['呀', {'style': BOPOMOFO}, ['ㄧㄚ˙']],
+    ['呀', {'style': CYRILLIC}, ['я']],
     ['无', {'style': INITIALS}, ['']],
     ['无', {'style': TONE2}, ['wu2']],
     ['无', {'style': FINALS}, ['u']],
     ['无', {'style': BOPOMOFO}, ['ㄨˊ']],
+    ['无', {'style': CYRILLIC}, ['у2']],
     ['衣', {'style': TONE2}, ['yi1']],
     ['衣', {'style': FINALS}, ['i']],
     ['衣', {'style': BOPOMOFO}, ['ㄧ']],
+    ['衣', {'style': CYRILLIC}, ['и1']],
     ['万', {'style': TONE2}, ['wa4n']],
     ['万', {'style': FINALS}, ['uan']],
     ['万', {'style': BOPOMOFO}, ['ㄨㄢˋ']],
+    ['万', {'style': CYRILLIC}, ['вань4']],
     # ju, qu, xu 的韵母应该是 v
     ['具', {'style': FINALS_TONE}, ['ǜ']],
     ['具', {'style': FINALS_TONE2}, ['v4']],
     ['具', {'style': FINALS}, ['v']],
     ['具', {'style': BOPOMOFO}, ['ㄐㄩˋ']],
+    ['具', {'style': CYRILLIC}, ['цзюй4']],
     ['取', {'style': FINALS_TONE}, ['ǚ']],
     ['取', {'style': FINALS_TONE2}, ['v3']],
     ['取', {'style': FINALS}, ['v']],
     ['取', {'style': BOPOMOFO}, ['ㄑㄩˇ']],
+    ['取', {'style': CYRILLIC}, ['цюй3']],
     ['徐', {'style': FINALS_TONE}, ['ǘ']],
     ['徐', {'style': FINALS_TONE2}, ['v2']],
     ['徐', {'style': FINALS}, ['v']],
     ['徐', {'style': BOPOMOFO}, ['ㄒㄩˊ']],
+    ['徐', {'style': CYRILLIC}, ['сюй2']],
     # ń
     ['嗯', {'style': NORMAL}, ['n']],
     ['嗯', {'style': TONE}, ['ń']],
@@ -300,6 +317,7 @@ data_for_update = [
     ['嗯', {'style': FINALS_TONE}, ['ń']],
     ['嗯', {'style': FINALS_TONE2}, ['n2']],
     ['嗯', {'style': BOPOMOFO}, ['ㄣˊ']],
+    ['嗯', {'style': CYRILLIC}, ['н2']],
     # ḿ  \u1e3f  U+1E3F
     ['呣', {'style': NORMAL}, ['m']],
     ['呣', {'style': TONE}, ['ḿ']],
@@ -310,11 +328,15 @@ data_for_update = [
     ['呣', {'style': FINALS_TONE}, ['ḿ']],
     ['呣', {'style': FINALS_TONE2}, ['m2']],
     ['呣', {'style': BOPOMOFO}, ['ㄇㄨˊ']],
+    ['呣', {'style': CYRILLIC}, ['м2']],
     # 41
     ['彷徨', {}, ['pang', 'huang']],
+    ['彷徨', {'style': CYRILLIC}, ['пан2', 'хуан2']],
     # 注音
     ['打量', {'style': BOPOMOFO}, ['ㄉㄚˇ', 'ㄌㄧㄤ˙']],
     ['黄山b股', {'style': BOPOMOFO}, ['ㄏㄨㄤˊ', 'ㄕㄢ', 'b', 'ㄍㄨˇ']],
+    ['打量', {'style': CYRILLIC}, ['да3', 'лян']],
+    ['黄山b股', {'style': CYRILLIC}, ['хуан2', 'шань1', 'b', 'гу3']],
     # 50
     ['打量', {'style': TONE2}, ['da3', 'liang']],
     ['打量', {'style': TONE3}, ['da3', 'liang']],
@@ -323,6 +345,7 @@ data_for_update = [
     ['侵略', {'style': FINALS_TONE2}, ['i1n', 've4']],
     ['侵略', {'style': FINALS_TONE3}, ['in1', 've4']],
     ['侵略', {'style': BOPOMOFO}, ['ㄑㄧㄣ', 'ㄌㄩㄝˋ']],
+    ['侵略', {'style': CYRILLIC}, ['цинь1', 'люэ4']],
 ]
 
 
