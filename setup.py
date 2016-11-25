@@ -30,6 +30,7 @@ def long_description():
     readme = open('README.rst', encoding='utf8').read()
     return readme
 
+
 setup(
     name=pypinyin.__title__,
     version=pypinyin.__version__,

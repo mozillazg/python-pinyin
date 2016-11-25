@@ -45,6 +45,7 @@ def seg(hans):
                 ret.extend(list(seg.jieba.cut(x)))
         return ret
 
+
 seg.jieba = None
 if os.environ.get('PYPINYIN_NO_JIEBA'):
     seg.no_jieba = True
@@ -167,7 +168,9 @@ def to_fixed(pinyin, style):
     # 替换拼音中的带声调字符
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
     # 将声调移动到最后
-    if style in [TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST]:
+    if style in [TONE3, FINALS_TONE3,
+	             BOPOMOFO, BOPOMOFO_FIRST,
+				 CYRILLIC, CYRILLIC_FIRST]:
         py = RE_TONE3.sub(r'\1\3\2', py)
 
     # 首字母

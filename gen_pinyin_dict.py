@@ -23,6 +23,7 @@ pinyin_dict = {
             out_fp.write(' ' * 4 + new_line + '\n')
     out_fp.write('}\n')
 
+
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print('python gen.py INPUT OUTPUT')
