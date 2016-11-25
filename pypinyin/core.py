@@ -169,8 +169,8 @@ def to_fixed(pinyin, style):
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
     # 将声调移动到最后
     if style in [TONE3, FINALS_TONE3,
-	             BOPOMOFO, BOPOMOFO_FIRST,
-				 CYRILLIC, CYRILLIC_FIRST]:
+                 BOPOMOFO, BOPOMOFO_FIRST,
+                 CYRILLIC, CYRILLIC_FIRST]:
         py = RE_TONE3.sub(r'\1\3\2', py)
 
     # 首字母
