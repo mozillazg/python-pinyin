@@ -67,7 +67,7 @@ PINYIN_STYLE = {
     'BOPOMOFO': 10,       # 注音符号，带声调，阴平（第一声）不标
     'BOPOMOFO_FIRST': 11,  # 注音符号首字母
     'CYRILLIC': 12,
-    'CYRILLIC_FIRST': 13,  
+    'CYRILLIC_FIRST': 13,
 }
 # 普通风格，不带声调
 NORMAL = STYLE_NORMAL = PINYIN_STYLE['NORMAL']
