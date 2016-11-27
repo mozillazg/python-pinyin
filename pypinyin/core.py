@@ -323,7 +323,7 @@ def _pinyin(words, style, heteronym, errors):
 def pinyin(hans, style=TONE, heteronym=False, errors='default'):
     """将汉字转换为拼音.
 
-    :param hans: 汉字字符串( ``u'你好吗'`` )或列表( ``[u'你好', u'吗']`` ).
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
 
                  如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
                  分词处理。可以通过传入列表的方式禁用这种行为。
@@ -337,14 +337,14 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
                    * ``'default'``: 保留原始字符
                    * ``'ignore'``: 忽略该字符
                    * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
-                     (``u'\\u90aa'`` => ``u'90aa'``)
+                     (``'\\u90aa'`` => ``'90aa'``)
                    * callable 对象: 回调函数之类的可调用对象。如果 ``erros``
                      参数 的值是个可调用对象，那么程序会回调这个函数:
                      ``func(char)``::
 
                          def foobar(char):
                              return 'a'
-                         pinyin(u'あ', errors=foobar)
+                         pinyin('あ', errors=foobar)
 
     :param heteronym: 是否启用多音字
     :return: 拼音列表
@@ -354,16 +354,16 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
 
       >>> from pypinyin import pinyin
       >>> import pypinyin
-      >>> pinyin(u'中心')
-      [[u'zh\u014dng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', heteronym=True)  # 启用多音字模式
-      [[u'zh\u014dng', u'zh\xf2ng'], [u'x\u012bn']]
-      >>> pinyin(u'中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
-      [[u'z'], [u'x']]
-      >>> pinyin(u'中心', style=pypinyin.TONE2)
-      [[u'zho1ng'], [u'xi1n']]
-      >>> pinyin(u'中心', style=pypinyin.CYRILLIC)
-      [[u'чжун1'], [u'синь1']]
+      >>> pinyin('中心')
+      [['zhōng'], ['xīn']]
+      >>> pinyin('中心', heteronym=True)  # 启用多音字模式
+      [['zhōng', 'zhòng'], ['xīn']]
+      >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+      [['z'], ['x']]
+      >>> pinyin('中心', style=pypinyin.TONE2)
+      [['zho1ng'], ['xi1n']]
+      >>> pinyin('中心', style=pypinyin.CYRILLIC)
+      [['чжун1'], ['синь1']]
     """
     # 对字符串进行分词处理
     if isinstance(hans, text_type):
@@ -389,14 +389,14 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
     ::
 
       >>> import pypinyin
-      >>> pypinyin.slug(u'中国人')
-      u'zhong-guo-ren'
-      >>> pypinyin.slug(u'中国人', separator=u' ')
-      u'zhong guo ren'
-      >>> pypinyin.slug(u'中国人', style=pypinyin.FIRST_LETTER)
-      u'z-g-r'
-      >>> pypinyin.slug(u'中国人', style=pypinyin.CYRILLIC)
-      u'чжун1-го2-жэнь2'
+      >>> pypinyin.slug('中国人')
+      'zhong-guo-ren'
+      >>> pypinyin.slug('中国人', separator=' ')
+      'zhong guo ren'
+      >>> pypinyin.slug('中国人', style=pypinyin.FIRST_LETTER)
+      'z-g-r'
+      >>> pypinyin.slug('中国人', style=pypinyin.CYRILLIC)
+      'чжун1-го2-жэнь2'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
                                         errors=errors)
@@ -421,16 +421,16 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
 
       >>> from pypinyin import lazy_pinyin
       >>> import pypinyin
-      >>> lazy_pinyin(u'中心')
-      [u'zhong', u'xin']
-      >>> lazy_pinyin(u'中心', style=pypinyin.TONE)
-      [u'zh\u014dng', u'x\u012bn']
-      >>> lazy_pinyin(u'中心', style=pypinyin.FIRST_LETTER)
-      [u'z', u'x']
-      >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
-      [u'zho1ng', u'xi1n']
-      >>> lazy_pinyin(u'中心', style=pypinyin.CYRILLIC)
-      [u'чжун1', u'синь1']
+      >>> lazy_pinyin('中心')
+      ['zhong', 'xin']
+      >>> lazy_pinyin('中心', style=pypinyin.TONE)
+      lazy_pinyin('中心', style=pypinyin.TONE)
+      >>> lazy_pinyin('中心', style=pypinyin.FIRST_LETTER)
+      ['z', 'x']
+      >>> lazy_pinyin('中心', style=pypinyin.TONE2)
+      ['zho1ng', 'xi1n']
+      >>> lazy_pinyin('中心', style=pypinyin.CYRILLIC)
+      ['чжун1', 'синь1']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False,
                               errors=errors)))

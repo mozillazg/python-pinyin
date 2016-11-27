@@ -9,7 +9,7 @@
 |Build| |Coverage| |Pypi version|
 
 
-将汉字转为拼音。可以用于汉字注音、排序、检索。
+将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
 
 基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
 
@@ -37,6 +37,7 @@
    :target: https://pypi.python.org/pypi/pypinyin
 .. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin
+.. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 
 
 Contents
