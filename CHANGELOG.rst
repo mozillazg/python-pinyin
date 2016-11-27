@@ -2,6 +2,21 @@ Changelog
 ---------
 
 
+0.16.0 (2016-11-27)
++++++++++++++++++++++
+
+* **[New]** Added new pinyin styles - ``CYRILLIC`` (汉语拼音与俄语字母对照表) and ``CYRILLIC _FIRST`` (via `#55`_ thanks `@tyrbonit`_)
+
+  .. code-block:: python
+
+      >>> pypinyin.pinyin('中心', style=pypinyin.CYRILLIC)
+      [['чжун1'], ['синь1']]
+      >>> pypinyin.pinyin('中心', style=pypinyin.CYRILLIC_FIRST)
+      [['ч'], ['с']]
+* **[New]** Added Russian translation README (`README_ru.rst`_)
+* **[New]** Command-line tool supported the new pinyin styles: ``CYRILLIC, CYRILLIC_FIRST``
+
+
 0.15.0 (2016-10-18)
 +++++++++++++++++++++
 
@@ -32,6 +47,7 @@ Changelog
 
 * **[New]** 命令行程序支持新增的四个风格: ``TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST``
 * **[Bugfixed]** 修复 TONE2 中 ü 标轻声的问题（像 侵略 -> qi1n lv0e4），以及去除文档中 0 表示轻声(via `#51`_ thanks `@gumblex`_)
+* **[Changed]** 不再使用 0 表示轻声，轻声时没有数字(via `#51`_ thanks `@gumblex`_)
 
 
 0.13.0 (2016-08-19)
@@ -357,3 +373,6 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _@gumblex: https://github.com/gumblex
 .. _@Artoria2e5: https://github.com/Artoria2e5
 .. _#51: https://github.com/mozillazg/python-pinyin/issues/51
+.. _#55: https://github.com/mozillazg/python-pinyin/pull/55
+.. _@tyrbonit: https://github.com/tyrbonit
+.. _README_ru.rst: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst

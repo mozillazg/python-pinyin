@@ -145,7 +145,7 @@ def test_other_seg_module():
     from snownlp import SnowNLP
     hans = '音乐123'
     hans_seg = SnowNLP(hans).words
-    assert lazy_pinyin(hans_seg, style=TONE2) == [u'yi1n', u'yue4', u'123']
+    assert lazy_pinyin(hans_seg, style=TONE2) == ['yi1n', 'yue4', '123']
 
 
 def test_custom_pinyin_dict():

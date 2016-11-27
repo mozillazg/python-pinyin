@@ -12,8 +12,8 @@ FAQ
 
   .. code:: python
 
-      pinyin(u'火影忍者', style=pypinyin.INITIALS)
-      [[u'h'], [u''], [u'r'], [u'zh']]
+      pinyin('火影忍者', style=pypinyin.INITIALS)
+      [['h'], [''], ['r'], ['zh']]
 
   | A: 因为 ``y``, ``w``, ``yu`` 都不是声母。参考: `hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__, `#22 <https://github.com/mozillazg/python-pinyin/pull/22>`__, `#27 <https://github.com/mozillazg/python-pinyin/issues/27>`__,
     `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
