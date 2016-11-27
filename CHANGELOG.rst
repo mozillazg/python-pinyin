@@ -2,6 +2,20 @@ Changelog
 ---------
 
 
+0.16.0 (2016-mm-dd)
++++++++++++++++++++++
+
+* **[New]** Added new pinyin styles - ``CYRILLIC`` (汉语拼音与俄语字母对照表) and ``CYRILLIC _FIRST`` (via `#55`_ thanks `@tyrbonit`_)
+
+  .. code-block:: python
+
+      >>> pypinyin.pinyin('中心', style=pypinyin.CYRILLIC)
+      [['чжун1'], ['синь1']]
+      >>> pypinyin.pinyin('中心', style=pypinyin.CYRILLIC_FIRST)
+      [['ч'], ['с']]
+* **[New]** Added Russian translation README (`README_ru.rst`_)
+
+
 0.15.0 (2016-10-18)
 +++++++++++++++++++++
 
@@ -358,3 +372,6 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _@gumblex: https://github.com/gumblex
 .. _@Artoria2e5: https://github.com/Artoria2e5
 .. _#51: https://github.com/mozillazg/python-pinyin/issues/51
+.. _#55: https://github.com/mozillazg/python-pinyin/pull/55
+.. _@tyrbonit: https://github.com/tyrbonit
+.. _README_ru.rst: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
