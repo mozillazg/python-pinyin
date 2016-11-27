@@ -14,6 +14,7 @@ Changelog
       >>> pypinyin.pinyin('中心', style=pypinyin.CYRILLIC_FIRST)
       [['ч'], ['с']]
 * **[New]** Added Russian translation README (`README_ru.rst`_)
+* **[New]** Command-line tool supported the new pinyin styles: ``CYRILLIC, CYRILLIC_FIRST``
 
 
 0.15.0 (2016-10-18)
