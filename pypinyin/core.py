@@ -424,7 +424,7 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
       >>> lazy_pinyin('中心')
       ['zhong', 'xin']
       >>> lazy_pinyin('中心', style=pypinyin.TONE)
-      lazy_pinyin('中心', style=pypinyin.TONE)
+      ['zhōng', 'xīn']
       >>> lazy_pinyin('中心', style=pypinyin.FIRST_LETTER)
       ['z', 'x']
       >>> lazy_pinyin('中心', style=pypinyin.TONE2)
