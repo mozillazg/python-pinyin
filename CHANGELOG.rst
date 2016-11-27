@@ -2,7 +2,7 @@ Changelog
 ---------
 
 
-0.16.0 (2016-mm-dd)
+0.16.0 (2016-11-27)
 +++++++++++++++++++++
 
 * **[New]** Added new pinyin styles - ``CYRILLIC`` (汉语拼音与俄语字母对照表) and ``CYRILLIC _FIRST`` (via `#55`_ thanks `@tyrbonit`_)
