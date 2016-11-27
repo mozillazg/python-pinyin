@@ -57,7 +57,7 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['zho1ng', 'zho4ng'], ['xi1n']]
     >>> pinyin('中心', style=pypinyin.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
-    >>> pinyin('中心', style=pypinyin.CYRILLIC)  # 俄语发音风格
+    >>> pinyin('中心', style=pypinyin.CYRILLIC)  # 俄语字母风格
     [['чжун1'], ['синь1']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
