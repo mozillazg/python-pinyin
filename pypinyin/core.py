@@ -14,9 +14,11 @@ from .constants import (
     PHRASES_DICT, PINYIN_DICT, _INITIALS, PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
     RE_TONE2, RE_TONE3, RE_HANS, U_FINALS_EXCEPTIONS_MAP,
     BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
+    CYRILLIC_REPLACE, CYRILLIC_TABLE,
     NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
     FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST
+    BOPOMOFO, BOPOMOFO_FIRST,
+    CYRILLIC, CYRILLIC_FIRST
 )
 from .utils import simple_seg, _replace_tone2_style_dict_to_default
 
@@ -42,6 +44,7 @@ def seg(hans):
             else:
                 ret.extend(list(seg.jieba.cut(x)))
         return ret
+
 
 seg.jieba = None
 if os.environ.get('PYPINYIN_NO_JIEBA'):
@@ -155,7 +158,7 @@ def to_fixed(pinyin, style):
                 return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
         # 使用数字标识声调
         elif style in [TONE2, TONE3, FINALS_TONE2, FINALS_TONE3,
-                       BOPOMOFO, BOPOMOFO_FIRST]:
+                       BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST]:
             # 返回使用数字标识声调的字符
             return PHONETIC_SYMBOL[symbol]
         # 声调在头上
@@ -165,7 +168,9 @@ def to_fixed(pinyin, style):
     # 替换拼音中的带声调字符
     py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
     # 将声调移动到最后
-    if style in [TONE3, FINALS_TONE3, BOPOMOFO, BOPOMOFO_FIRST]:
+    if style in [TONE3, FINALS_TONE3,
+                 BOPOMOFO, BOPOMOFO_FIRST,
+                 CYRILLIC, CYRILLIC_FIRST]:
         py = RE_TONE3.sub(r'\1\3\2', py)
 
     # 首字母
@@ -185,6 +190,13 @@ def to_fixed(pinyin, style):
             py = f.sub(r, py)
         py = ''.join(BOPOMOFO_TABLE.get(x, x) for x in py)
         if style == BOPOMOFO_FIRST:
+            py = py[0]
+    elif style in [CYRILLIC, CYRILLIC_FIRST]:
+        # 汉语拼音与俄语字母对照表
+        for f, r in CYRILLIC_REPLACE:
+            py = f.sub(r, py)
+        py = ''.join(CYRILLIC_TABLE.get(x, x) for x in py)
+        if style == CYRILLIC_FIRST:
             py = py[0]
     return py
 
@@ -350,6 +362,8 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default'):
       [[u'z'], [u'x']]
       >>> pinyin(u'中心', style=pypinyin.TONE2)
       [[u'zho1ng'], [u'xi1n']]
+      >>> pinyin(u'中心', style=pypinyin.CYRILLIC)
+      [[u'чжун1'], [u'синь1']]
     """
     # 对字符串进行分词处理
     if isinstance(hans, text_type):
@@ -381,6 +395,8 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-', errors='default'):
       u'zhong guo ren'
       >>> pypinyin.slug(u'中国人', style=pypinyin.FIRST_LETTER)
       u'z-g-r'
+      >>> pypinyin.slug(u'中国人', style=pypinyin.CYRILLIC)
+      u'чжун1-го2-жэнь2'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
                                         errors=errors)
@@ -413,6 +429,8 @@ def lazy_pinyin(hans, style=NORMAL, errors='default'):
       [u'z', u'x']
       >>> lazy_pinyin(u'中心', style=pypinyin.TONE2)
       [u'zho1ng', u'xi1n']
+      >>> lazy_pinyin(u'中心', style=pypinyin.CYRILLIC)
+      [u'чжун1', u'синь1']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False,
                               errors=errors)))
