@@ -2,6 +2,13 @@ Changelog
 ---------
 
 
+0.16.1 (2017-02-12)
++++++++++++++++++++++
+
+* **[Improved]** 使用 `pinyin-data`_ v0.4.1 的拼音数据. fixed `#58`_
+* **[Improved]** 更新 `厦门` 的拼音. fixed `#59`_
+
+
 0.16.0 (2016-11-27)
 +++++++++++++++++++++
 
@@ -376,3 +383,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#55: https://github.com/mozillazg/python-pinyin/pull/55
 .. _@tyrbonit: https://github.com/tyrbonit
 .. _README_ru.rst: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
+.. _#58: https://github.com/mozillazg/python-pinyin/issues/58
+.. _#59: https://github.com/mozillazg/python-pinyin/issues/59
