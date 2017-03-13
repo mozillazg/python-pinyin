@@ -11,7 +11,7 @@ pypinyin.NORMAL          0      普通风格，不带声调。如： 中国 -> `
 pypinyin.TONE            1      声调风格1，拼音声调在韵母第一个字母上（默认风格）。如： 中国 -> ``zhōng guó``
 pypinyin.TONE2           2      声调风格2，即拼音声调在各个韵母之后，用数字 [1-4] 进行表示。如： 中国 -> ``zho1ng guo2``
 pypinyin.TONE3           8      声调风格3，即拼音声调在各个拼音之后，用数字 [1-4] 进行表示。如： 中国 -> ``zhong1 guo2``
-pypinyin.INITIALS        3      声母风格，只返回各个拼音的声母部分。如： 中国 -> ``zh g``
+pypinyin.INITIALS        3      声母风格，只返回各个拼音的声母部分（注：有的拼音没有声母，详见 `#27`_）。如： 中国 -> ``zh g``
 pypinyin.FIRST_LETTER    4      首字母风格，只返回拼音的首字母部分。如： 中国 -> ``z g``
 pypinyin.FINALS          5      韵母风格，只返回各个拼音的韵母部分，不带声调。如： 中国 -> ``ong uo``
 pypinyin.FINALS_TONE     6      韵母风格1，带声调，声调在韵母第一个字母上。如：中国 -> ``ōng uó``
@@ -33,3 +33,5 @@ pypinyin.CYRILLIC_FIRST  13     汉语拼音与俄语字母对照风格，仅首
 .. autofunction:: pypinyin.load_phrases_dict
 
 .. autofunction:: pypinyin.slug
+
+.. _#27: https://github.com/mozillazg/python-pinyin/issues/27

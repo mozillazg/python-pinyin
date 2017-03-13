@@ -36,3 +36,9 @@ notifications:
   email:
     on_success: never
     on_failure: always
+
+matrix:
+  include:
+    - python: 3.6
+      env:
+        - TOX_ENV=py36

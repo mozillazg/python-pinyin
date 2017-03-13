@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+0.17.0 (2017-03-13)
++++++++++++++++++++++
+
+* **[Changed]** 词语拼音数据改为使用来自 `phrase-pinyin-data`_ 的拼音数据。
+* **[Fixed]** 修正 ``斯事体大`` 的拼音。
+
 
 0.16.1 (2017-02-12)
 +++++++++++++++++++++
@@ -385,3 +391,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _README_ru.rst: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _#58: https://github.com/mozillazg/python-pinyin/issues/58
 .. _#59: https://github.com/mozillazg/python-pinyin/issues/59
+.. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data

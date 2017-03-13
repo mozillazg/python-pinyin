@@ -3,7 +3,9 @@ help:
 	@echo "publish          publish to PyPI"
 	@echo "publish_test     publish to TestPyPI"
 	@echo "docs_html        make html docs"
-	@echo "gen_pinyin_dict  gen pinyin dict"
+	@echo "gen_data         gen pinyin data"
+	@echo "gen_pinyin_dict  gen single hanzi pinyin dict"
+	@echo "gen_phrases_dict gen phrase hanzi pinyin dict"
 
 .PHONY: test
 test:
@@ -26,6 +28,13 @@ publish_test:
 docs_html:
 	cd docs && make html
 
+.PHONY: gen_data
+gen_data: gen_pinyin_dict gen_phrases_dict
+
 .PHONY: gen_pinyin_dict
 gen_pinyin_dict:
 	python gen_pinyin_dict.py pinyin-data/pinyin.txt pypinyin/pinyin_dict.py
+
+.PHONY: gen_phrases_dict
+gen_phrases_dict:
+	python gen_phrases_dict.py phrase-pinyin-data/pinyin.txt pypinyin/phrases_dict.py
