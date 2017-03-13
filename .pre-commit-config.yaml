@@ -1,5 +1,5 @@
-- repo: git://github.com/pre-commit/pre-commit-hooks
-  sha: f82fb149af2c1b552b50e3e38e38ed3a44d4cda1
+- repo: https://github.com/pre-commit/pre-commit-hooks.git
+  sha: v0.7.1
   hooks:
     - id: check-merge-conflict
     - id: debug-statements
