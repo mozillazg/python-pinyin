@@ -85,6 +85,13 @@ FAQ
     `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
 
 
+拼音数据
+---------
+
+* 单个汉字的拼音使用 `pinyin-data`_ 的数据
+* 词组的拼音使用 `phrase-pinyin-data`_ 的数据
+
+
 Related Projects
 -----------------
 
@@ -106,3 +113,5 @@ __ https://github.com/mozillazg/rust-pinyin
 .. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
+.. _pinyin-data: https://github.com/mozillazg/pinyin-data
+.. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
