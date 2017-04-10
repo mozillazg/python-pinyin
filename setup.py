@@ -41,7 +41,6 @@ setup(
     author_email='mozillazg101@gmail.com',
     license=pypinyin.__license__,
     packages=packages,
-    package_data={'': ['LICENSE.txt']},
     package_dir={'pypinyin': 'pypinyin'},
     include_package_data=True,
     install_requires=requirements,
