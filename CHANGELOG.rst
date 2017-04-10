@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+0.18.2 (2017-mm-dd)
++++++++++++++++++++++
+
+* **[Fixed]** 使用 `phrase-pinyin-data`_ v0.4.1 的词语拼音数据, fixed `#72`_ 。
+
+
 0.18.1 (2017-03-22)
 +++++++++++++++++++++
 
@@ -403,4 +409,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _README_ru.rst: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _#58: https://github.com/mozillazg/python-pinyin/issues/58
 .. _#59: https://github.com/mozillazg/python-pinyin/issues/59
+.. _#72: https://github.com/mozillazg/python-pinyin/issues/72
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
