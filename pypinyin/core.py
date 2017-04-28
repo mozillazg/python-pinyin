@@ -20,7 +20,7 @@ from .constants import (
     BOPOMOFO, BOPOMOFO_FIRST,
     CYRILLIC, CYRILLIC_FIRST
 )
-from .standard import convert_zero_consonant, convert_uv
+from .standard import convert_finals
 from .utils import simple_seg, _replace_tone2_style_dict_to_default
 
 
@@ -131,9 +131,7 @@ def to_fixed(pinyin, style):
 
     # 根据标准还原正确的韵母
     if style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
-        # 处理零声母和特殊情况下 u -> ü
-        pinyin = convert_zero_consonant(pinyin)
-        pinyin = convert_uv(pinyin)
+        pinyin = convert_finals(pinyin)
 
     def _replace(m):
         symbol = m.group(0)  # 带声调的字符

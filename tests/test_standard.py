@@ -166,9 +166,64 @@ def test_uv(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
 
 
-# data_for_iou = []
-#
-#
-# @pytest.mark.parametrize('hans, kwargs, result', data_for_iou)
-# def test_iou(hans, kwargs, result):
-#     assert lazy_pinyin(hans, **kwargs) == result
+data_for_iou = [
+    # iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    # 例如niu(牛)，gui(归)，lun(论)。
+    ['牛', {'style': NORMAL}, ['niu']],
+    ['牛', {'style': TONE}, ['niú']],
+    ['牛', {'style': TONE2}, ['niu2']],
+    ['牛', {'style': TONE3}, ['niu2']],
+    ['牛', {'style': INITIALS}, ['n']],
+    ['牛', {'style': FIRST_LETTER}, ['n']],
+    ['牛', {'style': FINALS}, ['iou']],
+    ['牛', {'style': FINALS_TONE}, ['ioú']],
+    ['牛', {'style': FINALS_TONE2}, ['iou2']],
+    ['牛', {'style': FINALS_TONE3}, ['iou2']],
+]
+
+
+@pytest.mark.parametrize('hans, kwargs, result', data_for_iou)
+def test_iou(hans, kwargs, result):
+    assert lazy_pinyin(hans, **kwargs) == result
+
+
+data_for_uei = [
+    # iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    # 例如niu(牛)，gui(归)，lun(论)。
+    ['鬼', {'style': NORMAL}, ['gui']],
+    ['鬼', {'style': TONE}, ['guǐ']],
+    ['鬼', {'style': TONE2}, ['gui3']],
+    ['鬼', {'style': TONE3}, ['gui3']],
+    ['鬼', {'style': INITIALS}, ['g']],
+    ['鬼', {'style': FIRST_LETTER}, ['g']],
+    ['鬼', {'style': FINALS}, ['uei']],
+    ['鬼', {'style': FINALS_TONE}, ['ueǐ']],
+    ['鬼', {'style': FINALS_TONE2}, ['uei3']],
+    ['鬼', {'style': FINALS_TONE3}, ['uei3']],
+]
+
+
+@pytest.mark.parametrize('hans, kwargs, result', data_for_uei)
+def test_uei(hans, kwargs, result):
+    assert lazy_pinyin(hans, **kwargs) == result
+
+
+data_for_uen = [
+    # iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    # 例如niu(牛)，gui(归)，lun(论)。
+    ['论', {'style': NORMAL}, ['lun']],
+    ['论', {'style': TONE}, ['lùn']],
+    ['论', {'style': TONE2}, ['lu4n']],
+    ['论', {'style': TONE3}, ['lun4']],
+    ['论', {'style': INITIALS}, ['l']],
+    ['论', {'style': FIRST_LETTER}, ['l']],
+    ['论', {'style': FINALS}, ['uen']],
+    ['论', {'style': FINALS_TONE}, ['ùen']],
+    ['论', {'style': FINALS_TONE2}, ['u4en']],
+    ['论', {'style': FINALS_TONE3}, ['uen4']],
+]
+
+
+@pytest.mark.parametrize('hans, kwargs, result', data_for_uen)
+def test_uen(hans, kwargs, result):
+    assert lazy_pinyin(hans, **kwargs) == result

@@ -23,8 +23,41 @@ UV_MAP = {
 }
 U_TONES = set(UV_MAP.keys())
 # ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)
-UV_RE = re.compile(r'^(j|q|x)({keys})$'.format(keys='|'.join(UV_MAP.keys())))
+UV_RE = re.compile(r'^(j|q|x)({tones})$'.format(tones='|'.join(UV_MAP.keys())))
 I_TONES = {'i', 'ī', 'í', 'ǐ', 'ì'}
+
+# iu -> iou
+IU_MAP = {
+    'iu': 'iou',
+    'iū': 'ioū',
+    'iú': 'ioú',
+    'iǔ': 'ioǔ',
+    'iù': 'ioù',
+}
+IU_TONES = set(IU_MAP.keys())
+IU_RE = re.compile(r'^([a-z]+)({tones})$'.format(tones='|'.join(IU_TONES)))
+
+# ui -> uei
+UI_MAP = {
+    'ui': 'uei',
+    'uī': 'ueī',
+    'uí': 'ueí',
+    'uǐ': 'ueǐ',
+    'uì': 'ueì',
+}
+UI_TONES = set(UI_MAP.keys())
+UI_RE = re.compile(r'([a-z]+)({tones})$'.format(tones='|'.join(UI_TONES)))
+
+# un -> uen
+UN_MAP = {
+    'un': 'uen',
+    'ūn': 'ūen',
+    'ún': 'úen',
+    'ǔn': 'ǔen',
+    'ùn': 'ùen',
+}
+UN_TONES = set(UN_MAP.keys())
+UN_RE = re.compile(r'([a-z]+)({tones})$'.format(tones='|'.join(UN_TONES)))
 
 
 def convert_zero_consonant(pinyin):
@@ -79,13 +112,41 @@ def convert_uv(pinyin):
     ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)，
     ü上两点也省略；但是跟声母n，l拼的时候，仍然写成nü(女)，lü(吕)。
     """
-    return UV_RE.sub(lambda m: UV_MAP[m.group(2)], pinyin)
+    return UV_RE.sub(lambda m: m.group(1) + UV_MAP[m.group(2)], pinyin)
 
 
 def convert_iou(pinyin):
-    """iou, uei, uen 转换，还原原始的韵母
+    """iou 转换，还原原始的韵母
 
     iou，uei，uen前面加声母的时候，写成iu，ui，un。
     例如niu(牛)，gui(归)，lun(论)。
     """
-    pass
+    return IU_RE.sub(lambda m: m.group(1) + IU_MAP[m.group(2)], pinyin)
+
+
+def convert_uei(pinyin):
+    """uei 转换，还原原始的韵母
+
+    iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    例如niu(牛)，gui(归)，lun(论)。
+    """
+    return UI_RE.sub(lambda m: m.group(1) + UI_MAP[m.group(2)], pinyin)
+
+
+def convert_uen(pinyin):
+    """uen 转换，还原原始的韵母
+
+    iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    例如niu(牛)，gui(归)，lun(论)。
+    """
+    return UN_RE.sub(lambda m: m.group(1) + UN_MAP[m.group(2)], pinyin)
+
+
+def convert_finals(pinyin):
+    """还原原始的韵母"""
+    pinyin = convert_zero_consonant(pinyin)
+    pinyin = convert_uv(pinyin)
+    pinyin = convert_iou(pinyin)
+    pinyin = convert_uei(pinyin)
+    pinyin = convert_uen(pinyin)
+    return pinyin
