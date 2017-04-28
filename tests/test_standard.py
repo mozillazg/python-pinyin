@@ -46,6 +46,18 @@ data_for_zero_consonant = [
     ['元', {'style': FINALS_TONE2}, ['va2n']],
     ['元', {'style': FINALS_TONE3}, ['van2']],
 
+    # yun 不应该受 un -> uen 规则的影响
+    ['晕', {'style': NORMAL}, ['yun']],
+    ['晕', {'style': TONE}, ['yūn']],
+    ['晕', {'style': TONE2}, ['yu1n']],
+    ['晕', {'style': TONE3}, ['yun1']],
+    ['晕', {'style': INITIALS}, ['']],
+    ['晕', {'style': FIRST_LETTER}, ['y']],
+    ['晕', {'style': FINALS}, ['vn']],
+    ['晕', {'style': FINALS_TONE}, ['ǖn']],
+    ['晕', {'style': FINALS_TONE2}, ['v1n']],
+    ['晕', {'style': FINALS_TONE3}, ['vn1']],
+
     # u行的韵母，前面没有声母的时候，写成wu(乌)，wa(蛙)，wo(窝)，wai(歪)，
     # wei(威)，wan(弯)，wen(温)，wang(汪)，weng(翁)。
     ['武', {'style': NORMAL}, ['wu']],
