@@ -12,7 +12,7 @@ import warnings
 from .compat import text_type, callable_check
 from .constants import (
     PHRASES_DICT, PINYIN_DICT, _INITIALS, PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
-    RE_TONE2, RE_TONE3, RE_HANS, U_FINALS_EXCEPTIONS_MAP,
+    RE_TONE2, RE_TONE3, RE_HANS,
     BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
     CYRILLIC_REPLACE, CYRILLIC_TABLE,
     NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
@@ -20,6 +20,7 @@ from .constants import (
     BOPOMOFO, BOPOMOFO_FIRST,
     CYRILLIC, CYRILLIC_FIRST
 )
+from .standard import convert_zero_consonant, convert_uv
 from .utils import simple_seg, _replace_tone2_style_dict_to_default
 
 
@@ -106,32 +107,12 @@ def final(pinyin):
     :return: 韵母
     :rtype: unicode
     """
-    initial_ = initial(pinyin) or None
+    initial_ = initial(pinyin) or ''
+    # 没有声母，整个都是韵母
     if not initial_:
-        return no_initial_final(pinyin)
-    # 特例 j/q/x
-    m = re.match(r'^(j|q|x)(ū|ú|ǔ|ù)$', pinyin)
-    if m:
-        return (U_FINALS_EXCEPTIONS_MAP[m.group(2)])
-    pinyin = re.sub(r'^(j|q|x)u(\d?)$', r'\1v\2', pinyin)
+        return pinyin
+    # 按声母分割，剩下的就是韵母
     return ''.join(pinyin.split(initial_, 1))
-
-
-def no_initial_final(pinyin):
-    # 特例 y/w
-    if pinyin.startswith('y'):
-        if pinyin.startswith('yu'):
-            pinyin = 'v' + pinyin[2:]
-        elif pinyin.startswith('yi'):
-            pinyin = pinyin[1:]
-        else:
-            pinyin = 'i' + pinyin[1:]
-    elif pinyin.startswith('w'):
-        if pinyin.startswith('wu'):
-            pinyin = pinyin[1:]
-        else:
-            pinyin = 'u' + pinyin[1:]
-    return pinyin
 
 
 def to_fixed(pinyin, style):
@@ -145,6 +126,14 @@ def to_fixed(pinyin, style):
     # 声母
     if style == INITIALS:
         return initial(pinyin)
+    if style == TONE:
+        return pinyin
+
+    # 根据标准还原正确的韵母
+    if style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
+        # 处理零声母和特殊情况下 u -> ü
+        pinyin = convert_zero_consonant(pinyin)
+        pinyin = convert_uv(pinyin)
 
     def _replace(m):
         symbol = m.group(0)  # 带声调的字符

@@ -93,18 +93,10 @@ FINALS_TONE3 = STYLE_FINALS_TONE3 = PINYIN_STYLE['FINALS_TONE3']
 BOPOMOFO = STYLE_BOPOMOFO = PINYIN_STYLE['BOPOMOFO']
 # 注音符号首字母
 BOPOMOFO_FIRST = STYLE_BOPOMOFO_FIRST = PINYIN_STYLE['BOPOMOFO_FIRST']
-
+# 俄语
 CYRILLIC = STYLE_CYRILLIC = PINYIN_STYLE['CYRILLIC']
-
 CYRILLIC_FIRST = STYLE_CYRILLIC_FIRST = PINYIN_STYLE['CYRILLIC_FIRST']
-
-U_FINALS_EXCEPTIONS_MAP = {
-    u'ū': u'ǖ',
-    u'ú': u'ǘ',
-    u'ǔ': u'ǚ',
-    u'ù': u'ǜ',
-}
-
+# 注音转换表
 BOPOMOFO_REPLACE = (
     (re.compile('^m(\d)$'), 'mu\\1'),  # 呣
     (re.compile('^n(\d)$'), 'N\\1'),  # 嗯
@@ -139,7 +131,7 @@ BOPOMOFO_TABLE = dict(zip(
     'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
     'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'
 ))
-
+# 俄语转换表
 CYRILLIC_REPLACE = (
     (re.compile('ong'), 'ung'),
     (re.compile('([zcs])i'), '\\1U'),
