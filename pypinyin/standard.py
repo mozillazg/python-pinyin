@@ -24,7 +24,7 @@ UV_MAP = {
 U_TONES = set(UV_MAP.keys())
 # ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)
 UV_RE = re.compile(r'^(j|q|x)({tones})$'.format(tones='|'.join(UV_MAP.keys())))
-I_TONES = {'i', 'ī', 'í', 'ǐ', 'ì'}
+I_TONES = set(['i', 'ī', 'í', 'ǐ', 'ì'])
 
 # iu -> iou
 IU_MAP = {
