@@ -9,8 +9,8 @@ import os
 import re
 import warnings
 
-from .compat import text_type, callable_check
-from .constants import (
+from pypinyin.compat import text_type, callable_check
+from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT, _INITIALS, PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
     RE_TONE2, RE_TONE3, RE_HANS,
     BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
@@ -20,8 +20,8 @@ from .constants import (
     BOPOMOFO, BOPOMOFO_FIRST,
     CYRILLIC, CYRILLIC_FIRST
 )
-from .standard import convert_finals
-from .utils import simple_seg, _replace_tone2_style_dict_to_default
+from pypinyin.standard import convert_finals
+from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
 
 
 def seg(hans):

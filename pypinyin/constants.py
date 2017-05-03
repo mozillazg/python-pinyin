@@ -6,14 +6,14 @@ from __future__ import unicode_literals
 import os
 import re
 
-from . import phonetic_symbol, pinyin_dict
-from .compat import SUPPORT_UCS4
+from pypinyin import phonetic_symbol, pinyin_dict
+from pypinyin.compat import SUPPORT_UCS4
 
 # 词语拼音库
 if os.environ.get('PYPINYIN_NO_PHRASES'):
     PHRASES_DICT = {}
 else:
-    from . import phrases_dict
+    from pypinyin import phrases_dict
     PHRASES_DICT = phrases_dict.phrases_dict.copy()
 
 # 单字拼音库

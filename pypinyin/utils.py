@@ -5,9 +5,9 @@ from __future__ import unicode_literals
 from itertools import chain
 import re
 
-from . import phonetic_symbol
-from .compat import text_type, bytes_type
-from .constants import RE_HANS, RE_TONE2
+from pypinyin import phonetic_symbol
+from pypinyin.compat import text_type, bytes_type
+from pypinyin.constants import RE_HANS, RE_TONE2
 
 
 def _seg(chars):
@@ -44,7 +44,7 @@ def _seg(chars):
 
 
 def simple_seg(hans):
-    '将传入的字符串按是否有拼音来分割'
+    """将传入的字符串按是否有拼音来分割"""
     assert not isinstance(hans, bytes_type), \
         'must be unicode string or [unicode, ...] list'
 
