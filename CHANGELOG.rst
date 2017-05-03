@@ -1,6 +1,23 @@
 Changelog
 ---------
 
+0.19.0 (2017-05-03)
++++++++++++++++++++++
+
+* **[New]** 韵母风格下根据 `汉语拼音方案`_ 还原原始的 ``iou`` , ``uei`` , ``uen`` 韵母。
+
+    iou，uei，uen前面加声母的时候，写成iu，ui，un。
+    例如niu(牛)，gui(归)，lun(论)。即：
+
+    * niu 的韵母是 iou
+    * gui 的韵母是 uei
+    * lun 的韵母是 uen
+* **[Fixed]** 修复韵母相关风格下没有正确处理 ``wu`` 的韵母的问题
+  (比如: ``无`` 在 ``FINALS_TONE`` 风格下的结果是 ``uú`` 的问题) 。
+* **[Fixed]** 修复漏了 ǖ -> v1 的转换。
+
+
+
 0.18.2 (2017-04-25)
 +++++++++++++++++++++
 
@@ -390,7 +407,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#22: https://github.com/mozillazg/python-pinyin/pull/22
 .. _#26: https://github.com/mozillazg/python-pinyin/pull/26
 .. _@MingStar: https://github.com/MingStar
-.. _汉语拼音方案: http://www.edu.cn/20011114/3009777.shtml
+.. _汉语拼音方案: https://zh.wiktionary.org/wiki/%E9%99%84%E5%BD%95:%E6%B1%89%E8%AF%AD%E6%8B%BC%E9%9F%B3%E6%96%B9%E6%A1%88
+.. _汉语拼音方案.pdf: http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html
 .. _汉语拼音 - 维基百科: https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%AD%E6%8B%BC%E9%9F%B3#cite_ref-10
 .. _@xulin97: https://github.com/xulin97
 .. _#31: https://github.com/mozillazg/python-pinyin/issues/31
