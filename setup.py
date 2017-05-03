@@ -24,6 +24,8 @@ packages = [
 requirements = []
 if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
+if sys.version_info[:2] < (3, 4):
+    requirements.append('enum34')
 
 
 def long_description():

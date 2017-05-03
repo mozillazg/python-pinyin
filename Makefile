@@ -3,6 +3,7 @@ help:
 	@echo "publish          publish to PyPI"
 	@echo "publish_test     publish to TestPyPI"
 	@echo "docs_html        make html docs"
+	@echo "docs_serve       serve docs"
 	@echo "gen_data         gen pinyin data"
 	@echo "gen_pinyin_dict  gen single hanzi pinyin dict"
 	@echo "gen_phrases_dict gen phrase hanzi pinyin dict"
@@ -27,6 +28,10 @@ publish_test:
 .PHONY: docs_html
 docs_html:
 	cd docs && make html
+
+.PHONY: docs_serve
+docs_serve: docs_html
+	cd docs/_build/html && python -m http.server
 
 .PHONY: gen_data
 gen_data: gen_pinyin_dict gen_phrases_dict
