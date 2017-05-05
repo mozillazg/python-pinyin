@@ -281,6 +281,7 @@ data_for_update = [
     ['无', {'style': INITIALS}, ['']],
     ['无', {'style': TONE2}, ['wu2']],
     ['无', {'style': FINALS}, ['u']],
+    ['无', {'style': FINALS_TONE}, ['ú']],
     ['无', {'style': BOPOMOFO}, ['ㄨˊ']],
     ['无', {'style': CYRILLIC}, ['у2']],
     ['衣', {'style': TONE2}, ['yi1']],
