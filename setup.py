@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 from codecs import open
-import sys
 import os
+import re
+import sys
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-import pypinyin
-
 if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     os.system('python setup.py bdist_wheel upload')
     sys.exit()
+
+current_dir = os.path.dirname(os.path.realpath(__file__))
 
 packages = [
     'pypinyin',
@@ -28,20 +28,32 @@ if sys.version_info[:2] < (3, 4):
     requirements.append('enum34')
 
 
+def get_meta():
+    meta_re = re.compile(r"(?P<name>__\w+__) = '(?P<value>[^']+)'")
+    meta_d = {}
+    with open(os.path.join(current_dir, 'pypinyin/__init__.py'),
+              encoding='utf8') as fp:
+        for match in meta_re.finditer(fp.read()):
+            meta_d[match.group('name')] = match.group('value')
+    return meta_d
+
+
 def long_description():
-    readme = open('README.rst', encoding='utf8').read()
-    return readme
+    with open(os.path.join(current_dir, 'README.rst'),
+              encoding='utf8') as fp:
+        return fp.read()
 
 
+meta_d = get_meta()
 setup(
-    name=pypinyin.__title__,
-    version=pypinyin.__version__,
-    description=pypinyin.__doc__,
+    name=meta_d['__title__'],
+    version=meta_d['__version__'],
+    description='汉字拼音转换工具.',
     long_description=long_description(),
     url='https://github.com/mozillazg/python-pinyin',
-    author=pypinyin.__author__,
+    author=meta_d['__author__'],
     author_email='mozillazg101@gmail.com',
-    license=pypinyin.__license__,
+    license=meta_d['__license__'],
     packages=packages,
     package_dir={'pypinyin': 'pypinyin'},
     include_package_data=True,
