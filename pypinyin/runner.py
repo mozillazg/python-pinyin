@@ -5,13 +5,13 @@ from __future__ import unicode_literals
 from argparse import ArgumentParser
 import sys
 
-from . import (                                    # noqa
+from pypinyin import (                                    # noqa
     __title__, __version__, pinyin, slug,
     NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
     FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
     BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
 )
-from .compat import PY2
+from pypinyin.compat import PY2
 
 
 class NullWriter(object):
