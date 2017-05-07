@@ -19,6 +19,7 @@ if sys.argv[-1] == 'publish':
 
 packages = [
     'pypinyin',
+    'pypinyin.contrib',
 ]
 
 requirements = []
