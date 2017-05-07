@@ -5,22 +5,29 @@
 
 from __future__ import unicode_literals
 
-from .compat import PY2
-from .constants import (  # noqa
-    STYLE_NORMAL, NORMAL, STYLE_TONE, TONE,
-    STYLE_TONE2, TONE2, STYLE_TONE3, TONE3,
-    STYLE_INITIALS, INITIALS, STYLE_FIRST_LETTER, FIRST_LETTER,
-    STYLE_FINALS, FINALS, STYLE_FINALS_TONE, FINALS_TONE,
-    STYLE_FINALS_TONE2, FINALS_TONE2, STYLE_FINALS_TONE3, FINALS_TONE3,
-    STYLE_BOPOMOFO, BOPOMOFO, STYLE_BOPOMOFO_FIRST, BOPOMOFO_FIRST,
-    STYLE_CYRILLIC, CYRILLIC, STYLE_CYRILLIC_FIRST, CYRILLIC_FIRST
+from pypinyin.compat import PY2
+from pypinyin.constants import (  # noqa
+    STYLE_NORMAL, NORMAL,
+    STYLE_TONE, TONE,
+    STYLE_TONE2, TONE2,
+    STYLE_TONE3, TONE3,
+    STYLE_INITIALS, INITIALS,
+    STYLE_FIRST_LETTER, FIRST_LETTER,
+    STYLE_FINALS, FINALS,
+    STYLE_FINALS_TONE, FINALS_TONE,
+    STYLE_FINALS_TONE2, FINALS_TONE2,
+    STYLE_FINALS_TONE3, FINALS_TONE3,
+    STYLE_BOPOMOFO, BOPOMOFO,
+    STYLE_BOPOMOFO_FIRST, BOPOMOFO_FIRST,
+    STYLE_CYRILLIC, CYRILLIC,
+    STYLE_CYRILLIC_FIRST, CYRILLIC_FIRST
 )
-from .core import (     # noqa
+from pypinyin.core import (     # noqa
     pinyin, lazy_pinyin, slug, load_single_dict, load_phrases_dict
 )
 
 __title__ = 'pypinyin'
-__version__ = '0.18.1'
+__version__ = '0.19.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2016 mozillazg, 闲耘'
