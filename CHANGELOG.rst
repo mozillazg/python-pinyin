@@ -1,6 +1,26 @@
 Changelog
 ---------
 
+0.21.0 (2017-mm-dd)
++++++++++++++++++++++
+
+* **[New]** 重构各拼音风格实现，支持自定义拼音风格或覆盖已有拼音风格的实现.
+
+  .. code-block:: python
+
+      from pypinyin.style import register
+
+      @register('style1')
+      def func(pinyin, **kwargs):
+          # pinyin = xxx   # convert to style1
+          return pinyin
+
+      def func(pinyin, **kwargs):
+          # pinyin = xxx   # convert to style2
+          return pinyin
+      register('style2', func=func)
+
+
 0.20.0 (2017-mm-dd)
 +++++++++++++++++++++
 
