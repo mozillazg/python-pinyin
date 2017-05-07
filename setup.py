@@ -19,6 +19,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 
 packages = [
     'pypinyin',
+    'pypinyin.style',
 ]
 
 requirements = []
