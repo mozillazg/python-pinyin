@@ -5,7 +5,6 @@
 class Seg(object):
     def __init__(self, prefix_set):
         self.prefix_set = prefix_set
-        self.trie = prefix_set
 
     def cut(self, text):
         """分词
