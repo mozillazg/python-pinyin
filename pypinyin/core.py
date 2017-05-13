@@ -6,23 +6,16 @@ from __future__ import unicode_literals
 from copy import deepcopy
 from itertools import chain
 import os
-import re
-import warnings
 
 from pypinyin.compat import text_type, callable_check
 from pypinyin.constants import (
-    PHRASES_DICT, PINYIN_DICT, _INITIALS, _INITIALS_NOT_STRICT,
-    PHONETIC_SYMBOL, RE_PHONETIC_SYMBOL,
-    RE_TONE2, RE_TONE3, RE_HANS,
-    BOPOMOFO_REPLACE, BOPOMOFO_TABLE,
-    CYRILLIC_REPLACE, CYRILLIC_TABLE,
-    NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
-    FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST,
-    CYRILLIC, CYRILLIC_FIRST
+    PHRASES_DICT, PINYIN_DICT,
+    RE_HANS, TONE, NORMAL
 )
-from pypinyin.standard import convert_finals
 from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
+from pypinyin.style import auto_discover, convert
+
+auto_discover()
 
 
 def seg(hans):
@@ -86,42 +79,6 @@ def load_phrases_dict(phrases_dict, style='default'):
         PHRASES_DICT.update(phrases_dict)
 
 
-def initial(pinyin, strict=True):
-    """获取单个拼音中的声母.
-
-    :param pinyin: 单个拼音
-    :type pinyin: unicode
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
-    :return: 声母
-    :rtype: unicode
-    """
-    if strict:
-        _initials = _INITIALS
-    else:
-        _initials = _INITIALS_NOT_STRICT
-    for i in _initials:
-        if pinyin.startswith(i):
-            return i
-    return ''
-
-
-def final(pinyin, strict=True):
-    """获取单个拼音中的韵母.
-
-    :param pinyin: 单个拼音
-    :type pinyin: unicode
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
-    :return: 韵母
-    :rtype: unicode
-    """
-    initial_ = initial(pinyin, strict=strict) or ''
-    # 没有声母，整个都是韵母
-    if not initial_:
-        return pinyin
-    # 按声母分割，剩下的就是韵母
-    return ''.join(pinyin.split(initial_, 1))
-
-
 def to_fixed(pinyin, style, strict=True):
     """根据拼音风格格式化带声调的拼音.
 
@@ -131,76 +88,15 @@ def to_fixed(pinyin, style, strict=True):
     :return: 根据拼音风格格式化后的拼音字符串
     :rtype: unicode
     """
-    # 声母
-    if style == INITIALS:
-        return initial(pinyin, strict=strict)
-    if style == TONE:
-        return pinyin
+    return convert(pinyin, style=style, strict=strict, default=pinyin)
 
-    # 根据标准还原正确的韵母
-    if strict and style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
-        pinyin = convert_finals(pinyin)
-
-    def _replace(m):
-        symbol = m.group(0)  # 带声调的字符
-        # 不包含声调
-        if style in [NORMAL, FIRST_LETTER, FINALS]:
-            # 去掉声调: a1 -> a
-            # 鼻音: 'ḿ', 'ń', 'ň', 'ǹ '
-            if symbol in ['\u1e3f', '\u0144', '\u0148', '\u01f9']:
-                return re.sub(r'\d', r'', PHONETIC_SYMBOL[symbol])
-            else:
-                return re.sub(RE_TONE2, r'\1', PHONETIC_SYMBOL[symbol])
-        # 使用数字标识声调
-        elif style in [TONE2, TONE3, FINALS_TONE2, FINALS_TONE3,
-                       BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST]:
-            # 返回使用数字标识声调的字符
-            return PHONETIC_SYMBOL[symbol]
-        # 声调在头上
-        else:
-            return symbol
-
-    # 替换拼音中的带声调字符
-    py = re.sub(RE_PHONETIC_SYMBOL, _replace, pinyin)
-    # 将声调移动到最后
-    if style in [TONE3, FINALS_TONE3,
-                 BOPOMOFO, BOPOMOFO_FIRST,
-                 CYRILLIC, CYRILLIC_FIRST]:
-        py = RE_TONE3.sub(r'\1\3\2', py)
-
-    # 首字母
-    if style == FIRST_LETTER:
-        py = py[0]
-    # 韵母
-    elif style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
-        # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ'
-        if pinyin and pinyin[0] not in [
-            '\u1e3f', '\u0144', '\u0148', '\u01f9'
-        ]:
-            py = final(py, strict=strict)
-    # 声调在拼音之后、注音
-    elif style in [BOPOMOFO, BOPOMOFO_FIRST]:
-        # 查表替换成注音
-        for f, r in BOPOMOFO_REPLACE:
-            py = f.sub(r, py)
-        py = ''.join(BOPOMOFO_TABLE.get(x, x) for x in py)
-        if style == BOPOMOFO_FIRST:
-            py = py[0]
-    elif style in [CYRILLIC, CYRILLIC_FIRST]:
-        # 汉语拼音与俄语字母对照表
-        for f, r in CYRILLIC_REPLACE:
-            py = f.sub(r, py)
-        py = ''.join(CYRILLIC_TABLE.get(x, x) for x in py)
-        if style == CYRILLIC_FIRST:
-            py = py[0]
-    return py
-
-
-def toFixed(pinyin, style, strict=True):
-    warnings.warn(
-        DeprecationWarning('"toFixed" is deprecated. Use "to_fixed" instead')
-    )
-    return to_fixed(pinyin, style, strict=strict)
+    # # 韵母
+    # elif style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
+    #     # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ'
+    #     if pinyin and pinyin[0] not in [
+    #         '\u1e3f', '\u0144', '\u0148', '\u01f9'
+    #     ]:
+    #         py = final(py, strict=strict)
 
 
 def _handle_nopinyin_char(chars, errors='default'):
@@ -284,24 +180,6 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
             if single:
                 py.append(single)
     return py
-
-
-def phrases_pinyin(phrases, style, heteronym, errors='default', strict=False):
-    """词语拼音转换.
-
-    :param phrases: 词语
-    :param errors: 指定如何处理没有拼音的字符
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
-    :return: 拼音列表
-    :rtype: list
-    """
-    warnings.warn(
-        DeprecationWarning(
-            '"phrases_pinyin" is deprecated. Use "phrase_pinyin" instead'
-        )
-    )
-    return phrase_pinyin(phrases, style, heteronym, errors=errors,
-                         strict=strict)
 
 
 def _pinyin(words, style, heteronym, errors, strict=True):
