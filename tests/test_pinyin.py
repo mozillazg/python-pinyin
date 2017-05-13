@@ -20,37 +20,57 @@ def test_pinyin_initials():
     hans = '中心'
     # 默认风格，带声调
     assert pinyin(hans) == [['zh\u014dng'], ['x\u012bn']]
+    assert pinyin(hans, strict=False) == [['zh\u014dng'], ['x\u012bn']]
     # 普通风格，不带声调
     assert pinyin(hans, NORMAL) == [['zhong'], ['xin']]
+    assert pinyin(hans, NORMAL, strict=False) == [['zhong'], ['xin']]
     # 声调风格，拼音声调在韵母第一个字母上
     assert pinyin(hans, TONE) == [['zh\u014dng'], ['x\u012bn']]
+    assert pinyin(hans, TONE, strict=False) == [['zh\u014dng'], ['x\u012bn']]
     # 声调风格2，即拼音声调在各个声母之后，用数字 [1-4] 进行表示
     assert pinyin(hans, TONE2) == [['zho1ng'], ['xi1n']]
+    assert pinyin(hans, TONE2, strict=False) == [['zho1ng'], ['xi1n']]
     # 声调风格3，即拼音声调在各个拼音之后，用数字 [1-4] 进行表示
     assert pinyin(hans, TONE3) == [['zhong1'], ['xin1']]
+    assert pinyin(hans, TONE3, strict=False) == [['zhong1'], ['xin1']]
     # 声母风格，只返回各个拼音的声母部分
     assert pinyin(hans, INITIALS) == [['zh'], ['x']]
+    assert pinyin(hans, INITIALS, strict=False) == [['zh'], ['x']]
     # 首字母风格，只返回拼音的首字母部分
     assert pinyin(hans, FIRST_LETTER) == [['z'], ['x']]
+    assert pinyin(hans, FIRST_LETTER, strict=False) == [['z'], ['x']]
     # 注音风格，带声调
     assert pinyin(hans, BOPOMOFO) == [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+    assert pinyin(hans, BOPOMOFO, strict=False) == [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
     # 注音风格，首字母
     assert pinyin(hans, BOPOMOFO_FIRST) == [['ㄓ'], ['ㄒ']]
+    assert pinyin(hans, BOPOMOFO_FIRST, strict=False) == [['ㄓ'], ['ㄒ']]
     # test CYRILLIC style
     assert pinyin(hans, CYRILLIC) == [['чжун1'], ['синь1']]
+    assert pinyin(hans, CYRILLIC, strict=False) == [['чжун1'], ['синь1']]
     # CYRILLIC_FIRST style return only first letters
     assert pinyin(hans, CYRILLIC_FIRST) == [['ч'], ['с']]
+    assert pinyin(hans, CYRILLIC_FIRST, strict=False) == [['ч'], ['с']]
     # 启用多音字模式
     assert pinyin(hans, heteronym=True) == [['zh\u014dng', 'zh\xf2ng'],
                                             ['x\u012bn']]
+    assert pinyin(hans, heteronym=True, strict=False) == \
+        [['zh\u014dng', 'zh\xf2ng'], ['x\u012bn']]
     # 韵母风格1，只返回各个拼音的韵母部分，不带声调
     assert pinyin(hans, style=FINALS) == [['ong'], ['in']]
+    assert pinyin(hans, style=FINALS, strict=False) == [['ong'], ['in']]
     # 韵母风格2，带声调，声调在韵母第一个字母上
     assert pinyin(hans, style=FINALS_TONE) == [['\u014dng'], ['\u012bn']]
+    assert pinyin(hans, style=FINALS_TONE, strict=False) == \
+        [['\u014dng'], ['\u012bn']]
     # 韵母风格2，带声调，声调在各个声母之后，用数字 [1-4] 进行表示
     assert pinyin(hans, style=FINALS_TONE2) == [['o1ng'], ['i1n']]
+    assert pinyin(hans, style=FINALS_TONE2, strict=False) == \
+        [['o1ng'], ['i1n']]
     # 韵母风格3，带声调，声调在各个拼音之后，用数字 [1-4] 进行表示
     assert pinyin(hans, style=FINALS_TONE3) == [['ong1'], ['in1']]
+    assert pinyin(hans, style=FINALS_TONE3, strict=False) == \
+        [['ong1'], ['in1']]
 
 
 def test_pinyin_finals():
