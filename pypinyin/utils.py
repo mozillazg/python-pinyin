@@ -58,7 +58,7 @@ def simple_seg(hans):
 
 
 def _replace_tone2_style_dict_to_default(string):
-    regex = re.compile(RE_TONE2.replace('$', ''))
+    regex = re.compile(RE_TONE2.pattern.replace('$', ''))
     d = phonetic_symbol.phonetic_symbol_reverse
 
     def _replace(m):

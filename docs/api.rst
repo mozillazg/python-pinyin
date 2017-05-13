@@ -17,4 +17,9 @@ API
 
 .. autofunction:: pypinyin.slug
 
+.. autofunction:: pypinyin.style.register
+
+.. autofunction:: pypinyin.style.convert
+
+
 .. _#27: https://github.com/mozillazg/python-pinyin/issues/27
