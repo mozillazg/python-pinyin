@@ -1,6 +1,46 @@
 Changelog
 ---------
 
+0.21.0 (2017-mm-dd)
++++++++++++++++++++++
+
+* **[New]** 重构各拼音风格实现，支持自定义拼音风格或覆盖已有拼音风格的实现.
+
+  .. code-block:: python
+
+      from pypinyin.style import register
+
+      @register('style1')
+      def func(pinyin, **kwargs):
+          # pinyin = xxx   # convert to style1
+          return pinyin
+
+      def func(pinyin, **kwargs):
+          # pinyin = xxx   # convert to style2
+          return pinyin
+      register('style2', func=func)
+
+
+0.20.0 (2017-mm-dd)
++++++++++++++++++++++
+
+* **[New]** 增加 ``strict`` 参数来控制处理声母和韵母时是否严格遵循 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`_ 标准。
+
+  当 ``strict=True`` 时根据 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`_ 的如下规则处理声母、在韵母相关风格下还原正确的韵母：
+
+   * 21 个声母： ``b p m f d t n l g k h j q x zh ch sh r z c s`` （**y, w 不是声母**）
+   * i行的韵母，前面没有声母的时候，写成yi(衣)，ya(呀)，ye(耶)，yao(腰)，you(忧)，yan(烟)，yin(因)，yang(央)，ying(英)，yong(雍)。（**y 不是声母**）
+   * u行的韵母，前面没有声母的时候，写成wu(乌)，wa(蛙)，wo(窝)，wai(歪)，wei(威)，wan(弯)，wen(温)，wang(汪)，weng(翁)。（**w 不是声母**）
+   * ü行的韵母，前面没有声母的时候，写成yu(迂)，yue(约)，yuan(冤)，yun(晕)；ü上两点省略。（**韵母相关风格下还原正确的韵母 ü**）
+   * ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)，ü上两点也省略；
+     但是跟声母n，l拼的时候，仍然写成nü(女)，lü(吕)。（**韵母相关风格下还原正确的韵母 ü**）
+   * iou，uei，uen前面加声母的时候，写成iu，ui，un。例如niu(牛)，gui(归)，lun(论)。（**韵母相关风格下还原正确的韵母 iou，uei，uen**）
+
+  具体差异可以查看 tests/test_standard.py 中的对比结果测试用例
+
+* **[Changed]** 改为使用 enum 定义拼音风格（兼容旧版本）
+
+
 0.19.0 (2017-05-05)
 +++++++++++++++++++++
 
