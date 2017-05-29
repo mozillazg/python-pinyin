@@ -27,6 +27,10 @@ if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
 if sys.version_info[:2] < (3, 4):
     requirements.append('enum34')
+extras_require = {
+    ':python_version<"2.7"': ['argparse'],
+    ':python_version<"3.4"': ['enum34'],
+}
 
 
 def get_meta():
@@ -59,6 +63,7 @@ setup(
     package_dir={'pypinyin': 'pypinyin'},
     include_package_data=True,
     install_requires=requirements,
+    extras_require=extras_require,
     zip_safe=False,
     entry_points={
         'console_scripts': [
