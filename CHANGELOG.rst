@@ -1,10 +1,10 @@
 Changelog
 ---------
 
-0.22.0 (2017-mm-dd)
+0.22.0 (2017-06-14)
 +++++++++++++++++++++
 
-* **[New]** 支持 IronPython (via `#xx`_). Thanks `@LevyLession`_
+* **[New]** 支持 IronPython (via `#86`_). Thanks `@LevyLession`_
 
 
 0.21.1 (2017-05-29)
@@ -482,4 +482,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#72: https://github.com/mozillazg/python-pinyin/issues/72
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
 .. _@LevyLession: https://github.com/LevyLession
-.. _#xx: https://github.com/mozillazg/python-pinyin/issues/xx
+.. _#86: https://github.com/mozillazg/python-pinyin/issues/86
