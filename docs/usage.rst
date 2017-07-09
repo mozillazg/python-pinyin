@@ -133,3 +133,23 @@
     >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序
     >>> lazy_pinyin('还没', style=TONE2)
     ['ha2i', 'me2i']
+
+
+自定义拼音风格
+----------------
+
+可以通过 :py:func:`~pypinyin.style.register` 来实现自定义拼音风格的需求：
+
+.. code-block:: python
+
+    In [1]: from pypinyin import lazy_pinyin
+
+    In [2]: from pypinyin.style import register
+
+    In [3]: @register('kiss')
+       ...: def kiss(pinyin, **kwargs):
+       ...:     return '😘 {0}'.format(pinyin)
+       ...:
+
+    In [4]: lazy_pinyin('么么', style='kiss')
+    Out[4]: ['😘 me', '😘 me']
