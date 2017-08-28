@@ -45,19 +45,18 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
 .. code-block:: python
 
-    >>> from pypinyin import pinyin, lazy_pinyin
-    >>> import pypinyin
+    >>> from pypinyin import pinyin, lazy_pinyin, Style
     >>> pinyin('中心')
     [['zhōng'], ['xīn']]
     >>> pinyin('中心', heteronym=True)  # 启用多音字模式
     [['zhōng', 'zhòng'], ['xīn']]
-    >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+    >>> pinyin('中心', style=Style.FIRST_LETTER)  # 设置拼音风格
     [['z'], ['x']]
-    >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
+    >>> pinyin('中心', style=Style.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
-    >>> pinyin('中心', style=pypinyin.BOPOMOFO)  # 注音风格
+    >>> pinyin('中心', style=Style.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
-    >>> pinyin('中心', style=pypinyin.CYRILLIC)  # 俄语字母风格
+    >>> pinyin('中心', style=Style.CYRILLIC)  # 俄语字母风格
     [['чжун1'], ['синь1']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']

@@ -210,14 +210,15 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default', strict=False):
                  也可以使用自己喜爱的分词模块对字符串进行分词处理,
                  只需将经过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
-    :param style: 指定拼音风格，默认是 ``TONE`` 风格
+    :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
+                  更多拼音风格详见 :class:`~pypinyin.Style`
     :param errors: 指定如何处理没有拼音的字符
 
                    * ``'default'``: 保留原始字符
                    * ``'ignore'``: 忽略该字符
                    * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
                      (``'\\u90aa'`` => ``'90aa'``)
-                   * callable 对象: 回调函数之类的可调用对象。如果 ``erros``
+                   * callable 对象: 回调函数之类的可调用对象。如果 ``errors``
                      参数 的值是个可调用对象，那么程序会回调这个函数:
                      ``func(char)``::
 
@@ -260,7 +261,8 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-',
 
     :param hans: 汉字
     :type hans: unicode or list
-    :param style: 指定拼音风格，默认是 ``NORMAL`` 风格
+    :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
+                  更多拼音风格详见 :class:`~pypinyin.Style`
     :param heteronym: 是否启用多音字
     :param separstor: 两个拼音间的分隔符/连接符
     :param errors: 指定如何处理没有拼音的字符，详情请参考
@@ -293,7 +295,8 @@ def lazy_pinyin(hans, style=NORMAL, errors='default', strict=True):
 
     :param hans: 汉字
     :type hans: unicode or list
-    :param style: 指定拼音风格，默认是 ``NORMAL`` 风格
+    :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
+                  更多拼音风格详见 :class:`~pypinyin.Style`。
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
