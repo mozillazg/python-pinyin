@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+0.24.0 (2017-09-17)
++++++++++++++++++++++
+
+* **[New]** 支持类似 pyinstaller 的打包工具对使用 pypinyin 的程序进行打包，
+  不会出现跟打包前不一样的输出（比如： `#92`_ ）（via `#93`_ ）。
+
+
 0.23.0 (2017-07-09)
 +++++++++++++++++++++
 
@@ -489,3 +496,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
 .. _@LevyLession: https://github.com/LevyLession
 .. _#86: https://github.com/mozillazg/python-pinyin/issues/86
+.. _#92: https://github.com/mozillazg/python-pinyin/issues/92
+.. _#93: https://github.com/mozillazg/python-pinyin/issues/93
