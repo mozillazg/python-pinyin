@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from functools import wraps
-import glob
-import os
 
-current_dir = os.path.dirname(os.path.realpath(__file__))
 # 存储各拼音风格对应的实现
 _registry = {}
 
@@ -53,12 +50,12 @@ def register(style, func=None):
 
 
 def auto_discover():
-    """自动发现内置的拼音风格实现"""
-    for path in glob.glob(current_dir + os.path.sep + '*.py'):
-        filename = os.path.basename(path)
-        module_name = filename.split('.')[0]
-        if (not module_name) or module_name.startswith('_'):
-            continue
-
-        full_module_name = 'pypinyin.style.{0}'.format(module_name)
-        __import__(full_module_name)
+    """自动注册内置的拼音风格实现"""
+    from pypinyin.style import (  # noqa
+        initials,
+        tone,
+        finals,
+        bopomofo,
+        cyrillic,
+        others,
+    )
