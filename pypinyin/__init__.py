@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 
 from pypinyin.compat import PY2
 from pypinyin.constants import (  # noqa
+    Style,
     STYLE_NORMAL, NORMAL,
     STYLE_TONE, TONE,
     STYLE_TONE2, TONE2,
@@ -27,12 +28,14 @@ from pypinyin.core import (     # noqa
 )
 
 __title__ = 'pypinyin'
-__version__ = '0.19.0'
+__version__ = '0.24.0'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2016 mozillazg, 闲耘'
 __all__ = [
-    'pinyin', 'lazy_pinyin', 'slug', 'load_single_dict', 'load_phrases_dict',
+    'pinyin', 'lazy_pinyin', 'slug',
+    'load_single_dict', 'load_phrases_dict',
+    'Style',
     'STYLE_NORMAL', 'NORMAL',
     'STYLE_TONE', 'TONE',
     'STYLE_TONE2', 'TONE2',

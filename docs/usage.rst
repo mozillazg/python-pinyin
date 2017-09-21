@@ -7,15 +7,14 @@
 
 .. code-block:: python
 
-    >>> from pypinyin import pinyin, lazy_pinyin
-    >>> import pypinyin
+    >>> from pypinyin import pinyin, lazy_pinyin, Style
     >>> pinyin('中心')
     [['zhōng'], ['xīn']]
     >>> pinyin('中心', heteronym=True)  # 启用多音字模式
     [['zhōng', 'zhòng'], ['xīn']]
-    >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+    >>> pinyin('中心', style=Style.FIRST_LETTER)  # 设置拼音风格
     [['z'], ['x']]
-    >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
+    >>> pinyin('中心', style=Style.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
@@ -83,13 +82,13 @@
 
        .. code-block:: python
 
-           >> from pypinyin import lazy_pinyin, TONE2
+           >> from pypinyin import lazy_pinyin, Style
            >> from snownlp import SnowNLP
            >> hans = '音乐123'
            >> hans_seg = SnowNLP(hans).words  # 分词处理
            >> hans_seg
            ['音乐', '123']
-           >> lazy_pinyin(hans_seg, style=TONE2)
+           >> lazy_pinyin(hans_seg, style=Style.TONE2)
            ['yi1n', 'yue4', '123']
 
 
@@ -106,12 +105,12 @@
 
 .. code-block:: python
 
-    >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, Style
     >> hans = '桔子'
-    >> lazy_pinyin(hans, style=TONE2)
+    >> lazy_pinyin(hans, style=Style.TONE2)
     ['jie2', 'zi3']
     >> load_phrases_dict({'桔子': [['jú'], ['zǐ']]})
-    >> lazy_pinyin(hans, style=TONE2)
+    >> lazy_pinyin(hans, style=Style.TONE2)
     ['ju2', 'zi3']
 
 
@@ -119,17 +118,37 @@
 
 .. code-block:: python
 
-    >> from pypinyin import lazy_pinyin, load_phrases_dict, TONE2, load_single_dict
+    >> from pypinyin import lazy_pinyin, load_phrases_dict, Style, load_single_dict
     >> hans = '还没'
-    >> lazy_pinyin(hans, style=TONE2)
+    >> lazy_pinyin(hans, style=Style.TONE2)
     ['hua2n', 'me2i']
     >>>  # 第一种自定义词组的方法
     >> load_phrases_dict({'还没': [['hái'], ['méi']]})
-    >>> lazy_pinyin('还没', style=TONE2)})
+    >>> lazy_pinyin('还没', style=Style.TONE2)})
     ['hua2n', 'me2i']
-    >>> lazy_pinyin(['还没'], style=TONE2)  # 手动指定 "还没" 为一个词组
+    >>> lazy_pinyin(['还没'], style=Style.TONE2)  # 手动指定 "还没" 为一个词组
     ['ha2i', 'me2i']
     >>>  # 第二种自定义词组的方法
     >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序
-    >>> lazy_pinyin('还没', style=TONE2)
+    >>> lazy_pinyin('还没', style=Style.TONE2)
     ['ha2i', 'me2i']
+
+
+自定义拼音风格
+----------------
+
+可以通过 :py:func:`~pypinyin.style.register` 来实现自定义拼音风格的需求：
+
+.. code-block:: python
+
+    In [1]: from pypinyin import lazy_pinyin
+
+    In [2]: from pypinyin.style import register
+
+    In [3]: @register('kiss')
+       ...: def kiss(pinyin, **kwargs):
+       ...:     return '😘 {0}'.format(pinyin)
+       ...:
+
+    In [4]: lazy_pinyin('么么', style='kiss')
+    Out[4]: ['😘 me', '😘 me']

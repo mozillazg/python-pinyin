@@ -45,19 +45,18 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
 .. code-block:: python
 
-    >>> from pypinyin import pinyin, lazy_pinyin
-    >>> import pypinyin
+    >>> from pypinyin import pinyin, lazy_pinyin, Style
     >>> pinyin('中心')
     [['zhōng'], ['xīn']]
     >>> pinyin('中心', heteronym=True)  # 启用多音字模式
     [['zhōng', 'zhòng'], ['xīn']]
-    >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+    >>> pinyin('中心', style=Style.FIRST_LETTER)  # 设置拼音风格
     [['z'], ['x']]
-    >>> pinyin('中心', style=pypinyin.TONE2, heteronym=True)
+    >>> pinyin('中心', style=Style.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
-    >>> pinyin('中心', style=pypinyin.BOPOMOFO)  # 注音风格
+    >>> pinyin('中心', style=Style.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
-    >>> pinyin('中心', style=pypinyin.CYRILLIC)  # 俄语字母风格
+    >>> pinyin('中心', style=Style.CYRILLIC)  # 俄语字母风格
     [['чжун1'], ['синь1']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
@@ -77,7 +76,7 @@ FAQ
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
 
-    声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据 `《汉字拼音方案》 <http://www.edu.cn/20011114/3009777.shtml>`__ ， y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
+    声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ， y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
 
     如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。 这时候你也许需要的是首字母风格（FIRST_LETTER）。    —— @hotoo
 
