@@ -10,7 +10,7 @@ import os
 from pypinyin.compat import text_type, callable_check
 from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT,
-    RE_HANS, TONE, NORMAL
+    RE_HANS, Style
 )
 from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
 from pypinyin.style import auto_discover, convert
@@ -199,7 +199,8 @@ def _pinyin(words, style, heteronym, errors, strict=True):
     return pys
 
 
-def pinyin(hans, style=TONE, heteronym=False, errors='default', strict=False):
+def pinyin(hans, style=Style.TONE, heteronym=False,
+           errors='default', strict=False):
     """将汉字转换为拼音.
 
     :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
@@ -233,17 +234,17 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default', strict=False):
 
     Usage::
 
-      >>> from pypinyin import pinyin
+      >>> from pypinyin import pinyin, Style
       >>> import pypinyin
       >>> pinyin('中心')
       [['zhōng'], ['xīn']]
       >>> pinyin('中心', heteronym=True)  # 启用多音字模式
       [['zhōng', 'zhòng'], ['xīn']]
-      >>> pinyin('中心', style=pypinyin.FIRST_LETTER)  # 设置拼音风格
+      >>> pinyin('中心', style=Style.FIRST_LETTER)  # 设置拼音风格
       [['z'], ['x']]
-      >>> pinyin('中心', style=pypinyin.TONE2)
+      >>> pinyin('中心', style=Style.TONE2)
       [['zho1ng'], ['xi1n']]
-      >>> pinyin('中心', style=pypinyin.CYRILLIC)
+      >>> pinyin('中心', style=Style.CYRILLIC)
       [['чжун1'], ['синь1']]
     """
     # 对字符串进行分词处理
@@ -255,7 +256,7 @@ def pinyin(hans, style=TONE, heteronym=False, errors='default', strict=False):
     return pys
 
 
-def slug(hans, style=NORMAL, heteronym=False, separator='-',
+def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
          errors='default', strict=True):
     """生成 slug 字符串.
 
@@ -273,13 +274,14 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-',
     ::
 
       >>> import pypinyin
+      >>> from pypinyin import Style
       >>> pypinyin.slug('中国人')
       'zhong-guo-ren'
       >>> pypinyin.slug('中国人', separator=' ')
       'zhong guo ren'
-      >>> pypinyin.slug('中国人', style=pypinyin.FIRST_LETTER)
+      >>> pypinyin.slug('中国人', style=Style.FIRST_LETTER)
       'z-g-r'
-      >>> pypinyin.slug('中国人', style=pypinyin.CYRILLIC)
+      >>> pypinyin.slug('中国人', style=Style.CYRILLIC)
       'чжун1-го2-жэнь2'
     """
     return separator.join(chain(*pinyin(hans, style=style, heteronym=heteronym,
@@ -287,7 +289,7 @@ def slug(hans, style=NORMAL, heteronym=False, separator='-',
                                 ))
 
 
-def lazy_pinyin(hans, style=NORMAL, errors='default', strict=True):
+def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
     """不包含多音字的拼音列表.
 
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
@@ -305,17 +307,17 @@ def lazy_pinyin(hans, style=NORMAL, errors='default', strict=True):
 
     Usage::
 
-      >>> from pypinyin import lazy_pinyin
+      >>> from pypinyin import lazy_pinyin, Style
       >>> import pypinyin
       >>> lazy_pinyin('中心')
       ['zhong', 'xin']
-      >>> lazy_pinyin('中心', style=pypinyin.TONE)
+      >>> lazy_pinyin('中心', style=Style.TONE)
       ['zhōng', 'xīn']
-      >>> lazy_pinyin('中心', style=pypinyin.FIRST_LETTER)
+      >>> lazy_pinyin('中心', style=Style.FIRST_LETTER)
       ['z', 'x']
-      >>> lazy_pinyin('中心', style=pypinyin.TONE2)
+      >>> lazy_pinyin('中心', style=Style.TONE2)
       ['zho1ng', 'xi1n']
-      >>> lazy_pinyin('中心', style=pypinyin.CYRILLIC)
+      >>> lazy_pinyin('中心', style=Style.CYRILLIC)
       ['чжун1', 'синь1']
     """
     return list(chain(*pinyin(hans, style=style, heteronym=False,
