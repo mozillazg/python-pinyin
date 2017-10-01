@@ -88,7 +88,7 @@ p_set.train(PHRASES_DICT.keys())
 seg = Seg(p_set)
 
 
-def re_train(seg_instance):
+def retrain(seg_instance):
     """重新使用内置词典训练 seg_instance。
 
     比如在增加自定义词语信息后需要调用这个模块重新训练分词器

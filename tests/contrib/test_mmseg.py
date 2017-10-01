@@ -102,10 +102,10 @@ def test_mmseg_and_jieba_for_pinyin(input, jieba_ret, mmseg_ret):
     assert pinyin(mmseg.seg.cut(input)) == mmseg_ret
 
 
-def test_re_train():
+def test_retrain():
     seg = mmseg.seg
     assert list(seg.cut('啊啊啊')) == ['啊', '啊', '啊']
 
     load_phrases_dict({'啊啊啊': [['a'], ['a'], ['a']]})
-    mmseg.re_train(seg)
+    mmseg.retrain(seg)
     assert list(seg.cut('啊啊啊')) == ['啊啊啊']

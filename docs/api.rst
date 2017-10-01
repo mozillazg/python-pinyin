@@ -35,7 +35,7 @@ API
 
 .. autodata:: pypinyin.contrib.mmseg.seg
 
-.. autodata:: pypinyin.contrib.mmseg.re_train
+.. autodata:: pypinyin.contrib.mmseg.retrain
 
 .. autoclass:: pypinyin.contrib.mmseg.Seg
    :members:

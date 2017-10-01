@@ -21,8 +21,8 @@ Changelog
       Prefix dict has been built succesfully.
       [['le'], ['jú'], ['a']]
 
-      >>> from pypinyin.contrib.mmseg import seg, re_train
-      >>> re_train(seg)   # 没有使用 load_phrases_dict 时可以不调用这个函数
+      >>> from pypinyin.contrib.mmseg import seg, retrain
+      >>> retrain(seg)   # 没有使用 load_phrases_dict 时可以不调用这个函数
       >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
       [['liǎo'], ['jú'], ['a']]
       >>>
