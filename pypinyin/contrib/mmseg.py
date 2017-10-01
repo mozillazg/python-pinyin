@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """最大正向匹配分词"""
-from pypinyin import phrases_dict
+from pypinyin.core import PHRASES_DICT
 
 
 class Seg(object):
@@ -69,7 +69,7 @@ class PrefixSet(object):
 
 
 p_set = PrefixSet()
-p_set.train(phrases_dict.phrases_dict.keys())
+p_set.train(PHRASES_DICT.keys())
 
 #: 基于内置词库的最大正向匹配分词器。使用::
 #:
@@ -95,4 +95,4 @@ def re_train(seg_instance):
 
     :type seg_instance: Seg
     """
-    seg_instance.train(phrases_dict.phrases_dict.keys())
+    seg_instance.train(PHRASES_DICT.keys())
