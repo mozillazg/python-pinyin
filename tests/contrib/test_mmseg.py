@@ -9,7 +9,7 @@ from ..utils import has_module
 
 
 seg_test = mmseg.Seg(mmseg.PrefixSet())
-seg_test.prefix_set.train([
+seg_test._prefix_set.train([
     'a',
     'ab',
     'abc',

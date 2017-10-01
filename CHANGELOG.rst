@@ -7,6 +7,9 @@ Changelog
 * **[New]** 内置一个最大匹配分词模块，使用内置的词语拼音库来训练这个分词模块，
   解决自定义词语库有时可能不生效的问题（因为这个词语在 jieba 等分词模块中不是可用词）。(via `#81`_)
 
+
+  获取拼音或自定义词库后使用：
+
   .. code-block:: python
 
       >>> from pypinyin import pinyin, load_phrases_dict
@@ -18,10 +21,28 @@ Changelog
       Prefix dict has been built succesfully.
       [['le'], ['jú'], ['a']]
 
-      >>> from pypinyin.contrib.mmseg import seg
+      >>> from pypinyin.contrib.mmseg import seg, re_train
+      >>> re_train(seg)   # 没有使用 load_phrases_dict 时可以不调用这个函数
       >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
       [['liǎo'], ['jú'], ['a']]
       >>>
+
+  单独使用:
+
+  .. code-block:: python
+
+        >>> from pypinyin.contrib.mmseg import seg
+        >>> text = '你好，我是中国人，我爱我的祖国'
+        >>> seg.cut(text)
+        <generator object Seg.cut at 0x10b2df2b0>
+        >>> list(seg.cut(text))
+        ['你好', '，', '我', '是', '中国人', '，', '我', '爱',
+         '我的', '祖', '国']
+        >>> seg.train(['祖国', '我是'])
+        >>> list(seg.cut(text))
+        ['你好', '，', '我是', '中国人', '，', '我', '爱',
+         '我的', '祖国']
+        >>>
 
 
 0.24.0 (2017-09-17)
