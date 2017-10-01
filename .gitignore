@@ -44,3 +44,8 @@ venv
 .cache/
 2.7/
 .python-version
+venv2.7/
+venvPyInstaller/
+output.dat
+vocab.bin
+vocab.large.bin

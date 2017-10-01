@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 """最大正向匹配分词"""
+from pypinyin import phrases_dict
 
 
 class Seg(object):
+    """最大正向匹配分词
+
+    :type prefix_set: PrefixSet
+    """
     def __init__(self, prefix_set):
         self.prefix_set = prefix_set
 
@@ -38,7 +43,7 @@ class Seg(object):
 
 class PrefixSet(object):
     def __init__(self):
-        self._prefix_set = set()
+        self._set = set()
 
     def train(self, word_s):
         """更新 prefix set
@@ -50,7 +55,12 @@ class PrefixSet(object):
         for word in word_s:
             # 把词语的每个前缀更新到 prefix_set 中
             for index in range(len(word)):
-                self._prefix_set.add(word[:index + 1])
+                self._set.add(word[:index + 1])
 
     def __contains__(self, key):
-        return key in self._prefix_set
+        return key in self._set
+
+
+p_set = PrefixSet()
+p_set.train(phrases_dict.phrases_dict.keys())
+seg = Seg(p_set)
