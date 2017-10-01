@@ -72,6 +72,19 @@
 
   如果需要处理多音字问题，推荐同时安装其他分词模块。
 
+* 同时也内置了一个基于最大匹配分词的分词模块（使用内置的词语拼音库来训练该分词）。
+
+  .. code-block:: python
+
+    >>> from pypinyin import pinyin, load_phrases_dict
+    >>> load_phrases_dict({'了局': [['liǎo'], ['jú']]})
+    >>> pinyin('了局啊')
+    [['le'], ['jú'], ['a']]
+    >>>
+    >>> from pypinyin.contrib.mmseg import seg
+    >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
+    [['liǎo'], ['jú'], ['a']]
+
 * | 如果安装了 `jieba <https://github.com/fxsjy/jieba>`__ 分词模块，程序会自动调用，
   | 也可以使用经过 ``jieba`` 分词处理的 **字符串列表** 作参数。
 
@@ -132,6 +145,25 @@
     >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序
     >>> lazy_pinyin('还没', style=Style.TONE2)
     ['ha2i', 'me2i']
+
+
+**使用内置的最大匹配分词模块**
+
+.. code-block:: python
+
+    >>> from pypinyin import pinyin, load_phrases_dict
+    >>> load_phrases_dict({'了局': [['liǎo'], ['jú']]})
+    >>> pinyin('了局啊')   # 使用 jieba 分词
+    Building prefix dict from the default dictionary ...
+    Dumping model to file cache /var/folders/s6/z9r_07h53pj_d4x7qjszwmbw0000gn/T/jieba.cache
+    Loading model cost 1.175 seconds.
+    Prefix dict has been built succesfully.
+    [['le'], ['jú'], ['a']]
+
+    >>> from pypinyin.contrib.mmseg import seg
+    >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
+    [['liǎo'], ['jú'], ['a']]
+    >>>
 
 
 自定义拼音风格

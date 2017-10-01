@@ -1,6 +1,29 @@
 Changelog
 ---------
 
+0.25.0 (2017-mm-dd)
+++++++++++++++++++++
+
+* **[New]** 内置一个最大匹配分词模块，使用内置的词语拼音库来训练这个分词模块，
+  解决自定义词语库有时可能不生效的问题（因为这个词语在 jieba 等分词模块中不是可用词）。(via `#81`_)
+
+  .. code-block:: python
+
+      >>> from pypinyin import pinyin, load_phrases_dict
+      >>> load_phrases_dict({'了局': [['liǎo'], ['jú']]})
+      >>> pinyin('了局啊')   # 使用 jieba 分词
+      Building prefix dict from the default dictionary ...
+      Dumping model to file cache /var/folders/s6/z9r_07h53pj_d4x7qjszwmbw0000gn/T/jieba.cache
+      Loading model cost 1.175 seconds.
+      Prefix dict has been built succesfully.
+      [['le'], ['jú'], ['a']]
+
+      >>> from pypinyin.contrib.mmseg import seg
+      >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
+      [['liǎo'], ['jú'], ['a']]
+      >>>
+
+
 0.24.0 (2017-09-17)
 +++++++++++++++++++++
 
@@ -498,3 +521,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#86: https://github.com/mozillazg/python-pinyin/issues/86
 .. _#92: https://github.com/mozillazg/python-pinyin/issues/92
 .. _#93: https://github.com/mozillazg/python-pinyin/issues/93
+.. _#81: https://github.com/mozillazg/python-pinyin/issues/81
