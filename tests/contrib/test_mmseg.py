@@ -5,7 +5,6 @@ import pytest
 
 from pypinyin import pinyin, load_phrases_dict
 from pypinyin.contrib import mmseg
-from ..utils import has_module
 
 
 seg_test = mmseg.Seg(mmseg.PrefixSet())
@@ -35,9 +34,14 @@ seg_test._prefix_set.train([
 
 @pytest.mark.parametrize(
     'input, expect', [
+        ['', []],
+        ['a', ['a']],
+        ['abc', ['abc']],
         ['abcefg', ['abc', 'e', 'f', 'g']],
         ['bbcabce', ['bb', 'c', 'abc', 'e']],
         ['北京', ['北京']],
+        ['北京,', ['北京', ',']],
+        ['北京abc', ['北京', 'abc']],
         ['中国人民银行行长', ['中国人民银行', '行', '长']],
         ['中国人民银行员工', ['中国人民银行', '员工']],
         [
@@ -72,7 +76,6 @@ def test_mmseg(input, expect):
     assert list(seg_test.cut(input)) == expect
 
 
-@pytest.mark.skipif(has_module('jieba'), reason='has jieba')
 @pytest.mark.parametrize(
     'input, default_ret, mmseg_ret', [
         [
@@ -83,11 +86,10 @@ def test_mmseg(input, expect):
     ]
 )
 def test_mmseg_for_pinyin(input, default_ret, mmseg_ret):
-    assert pinyin(input) == default_ret
+    assert pinyin(input) == mmseg_ret
     assert pinyin(mmseg.seg.cut(input)) == mmseg_ret
 
 
-@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
 @pytest.mark.parametrize(
     'input, jieba_ret, mmseg_ret', [
         [
@@ -98,7 +100,7 @@ def test_mmseg_for_pinyin(input, default_ret, mmseg_ret):
     ]
 )
 def test_mmseg_and_jieba_for_pinyin(input, jieba_ret, mmseg_ret):
-    assert pinyin(input) == jieba_ret
+    assert pinyin(input) == mmseg_ret
     assert pinyin(mmseg.seg.cut(input)) == mmseg_ret
 
 

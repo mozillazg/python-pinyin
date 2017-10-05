@@ -1,6 +1,14 @@
 Changelog
 ---------
 
+
+0.26.0 (2017-mm-dd)
+++++++++++++++++++++
+
+* **[Changed]** 不再自动调用 jieba 分词模块，改为自动调用内置的最大匹配分词模块来分词。
+  (via `#102`_)
+
+
 0.25.0 (2017-10-01)
 ++++++++++++++++++++
 
@@ -543,3 +551,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#92: https://github.com/mozillazg/python-pinyin/issues/92
 .. _#93: https://github.com/mozillazg/python-pinyin/issues/93
 .. _#81: https://github.com/mozillazg/python-pinyin/issues/81
+.. _#102: https://github.com/mozillazg/python-pinyin/issues/102

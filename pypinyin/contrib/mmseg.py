@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """最大正向匹配分词"""
-from pypinyin.core import PHRASES_DICT
+from pypinyin.constants import PHRASES_DICT
 
 
 class Seg(object):
