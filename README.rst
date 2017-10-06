@@ -89,30 +89,6 @@ FAQ
     `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
 
 
-自定义了词典，但是结果没用使用自定义词典中的拼音信息？
-++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-自定义的词语在你使用的分词模块（比如：jieba）中没有被切分为一个词语，
-可以考虑使用内置的最大匹配分词器来分词或者训练使用的分词模块。
-
-.. code-block:: python
-
-    >>> from pypinyin import pinyin, load_phrases_dict
-    >>> load_phrases_dict({'了局': [['liǎo'], ['jú']]})
-    >>> pinyin('了局啊')   # 使用 jieba 分词
-    Building prefix dict from the default dictionary ...
-    Dumping model to file cache /var/folders/s6/z9r_07h53pj_d4x7qjszwmbw0000gn/T/jieba.cache
-    Loading model cost 1.175 seconds.
-    Prefix dict has been built succesfully.
-    [['le'], ['jú'], ['a']]
-
-    >>> from pypinyin.contrib.mmseg import seg, retrain
-    >>> retrain(seg)     # 没有使用 load_phrases_dict 时可以不调用这个函数
-    >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
-    [['liǎo'], ['jú'], ['a']]
-    >>>
-
-
 拼音数据
 ---------
 

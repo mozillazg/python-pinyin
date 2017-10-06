@@ -12,7 +12,7 @@ from pypinyin import (
     BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
 )
 from pypinyin.compat import SUPPORT_UCS4
-from .utils import has_module
+from pypinyin.core import seg
 
 
 def test_pinyin_initials():
@@ -142,11 +142,9 @@ def test_lazy_pinyin():
     assert lazy_pinyin('中心', style=CYRILLIC) == ['чжун1', 'синь1']
 
 
-@pytest.mark.skipif(not has_module('jieba'), reason='cant import jieba')
-def test_seg_jieba():
+def test_seg():
     hans = '音乐'
-    import jieba
-    hans_seg = list(jieba.cut(hans))
+    hans_seg = list(seg(hans))
     assert pinyin(hans_seg, style=TONE2) == [['yi1n'], ['yue4']]
     # 中英文混合的固定词组
     assert pinyin('黄山B股', style=TONE2) == \
@@ -158,14 +156,6 @@ def test_seg_jieba():
     assert pinyin('AB阿C', style=TONE2) == [['AB'], ['a1'], ['C']]
     assert pinyin('维生素C', style=TONE2) == \
         [['we2i'], ['she1ng'], ['su4'], ['C']]
-
-
-@pytest.mark.skipif(not has_module('snownlp'), reason='cant import snownlp')
-def test_other_seg_module():
-    from snownlp import SnowNLP
-    hans = '音乐123'
-    hans_seg = SnowNLP(hans).words
-    assert lazy_pinyin(hans_seg, style=TONE2) == ['yi1n', 'yue4', '123']
 
 
 def test_custom_pinyin_dict():
@@ -197,7 +187,7 @@ def test_custom_pinyin_dict_tone2():
 def test_custom_pinyin_dict2_tone2():
     load_phrases_dict({'同行': [['to4ng'], ['ku1']]}, style='tone2')
     assert lazy_pinyin(['同行'], style=TONE2) == ['to4ng', 'ku1']
-    assert pinyin(['同行']) == [['tòng'], ['kū']]
+    assert pinyin('同行') == [['tòng'], ['kū']]
 
 
 def test_errors():

@@ -16,8 +16,6 @@ env:
   - TOX_ENV=py35
   - TOX_ENV=py36
   - TOX_ENV=pypy
-  - TOX_ENV=py2_jieba
-  - TOX_ENV=py3_jieba
   - TOX_ENV=py3_env
 
 install:

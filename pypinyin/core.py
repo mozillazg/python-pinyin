@@ -5,13 +5,13 @@ from __future__ import unicode_literals
 
 from copy import deepcopy
 from itertools import chain
-import os
 
 from pypinyin.compat import text_type, callable_check
 from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT,
     RE_HANS, Style
 )
+from pypinyin.contrib import mmseg
 from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
 from pypinyin.style import auto_discover, convert
 
@@ -19,31 +19,16 @@ auto_discover()
 
 
 def seg(hans):
-    if getattr(seg, 'no_jieba', None):
-        ret = hans
-        return simple_seg(ret)
-
-    if seg.jieba is None:
-        try:
-            import jieba
-            seg.jieba = jieba
-        except ImportError:
-            seg.no_jieba = True
-        return seg(hans)
-    else:
-        hans = simple_seg(hans)
-        ret = []
-        for x in hans:
-            if not RE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
-                ret.append(x)
-            else:
-                ret.extend(list(seg.jieba.cut(x)))
-        return ret
-
-
-seg.jieba = None
-if os.environ.get('PYPINYIN_NO_JIEBA'):
-    seg.no_jieba = True
+    hans = simple_seg(hans)
+    ret = []
+    for x in hans:
+        if not RE_HANS.match(x):   # 没有拼音的字符，不再参与二次分词
+            ret.append(x)
+        elif PHRASES_DICT:
+            ret.extend(list(mmseg.seg.cut(x)))
+        else:   # 禁用了词语库，不分词
+            ret.append(x)
+    return ret
 
 
 def load_single_dict(pinyin_dict, style='default'):
@@ -59,6 +44,8 @@ def load_single_dict(pinyin_dict, style='default'):
             PINYIN_DICT[k] = v
     else:
         PINYIN_DICT.update(pinyin_dict)
+
+    mmseg.retrain(mmseg.seg)
 
 
 def load_phrases_dict(phrases_dict, style='default'):
@@ -77,6 +64,8 @@ def load_phrases_dict(phrases_dict, style='default'):
             PHRASES_DICT[k] = v
     else:
         PHRASES_DICT.update(phrases_dict)
+
+    mmseg.retrain(mmseg.seg)
 
 
 def to_fixed(pinyin, style, strict=True):
@@ -204,11 +193,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     """将汉字转换为拼音.
 
     :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
-
-                 如果用户安装了 ``jieba`` , 将使用 ``jieba`` 对字符串进行
-                 分词处理。可以通过传入列表的方式禁用这种行为。
-
-                 也可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
                  只需将经过分词处理的字符串列表传进来就可以了。
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
