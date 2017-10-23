@@ -14,6 +14,14 @@ from pypinyin import (                                    # noqa
 from pypinyin.compat import PY2
 
 
+_formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3', 'INITIALS', 'FIRST_LETTER',
+                  'FINALS', 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
+                  'BOPOMOFO', 'BOPOMOFO_FIRST', 'CYRILLIC', 'CYRILLIC_FIRST']
+_layman_styles = ['zhao', 'zh4ao', 'zha4o', 'zhao4', 'zh', 'z', 'ao', 'ào', 'a4o', 'ao4']
+_option_styles = _layman_styles + _formal_styles[len(_layman_styles) - len(_formal_styles):]
+_default_style = _layman_styles[1]
+
+
 class NullWriter(object):
     """数据流黑洞，类似 linux/unix 下 /dev/null 的效果。"""
     def write(self, string):
@@ -29,16 +37,12 @@ def get_parser():
                         choices=['pinyin', 'slug'],
                         default='pinyin')
     # 拼音风格
-    parser.add_argument('-s', '--style', help='pinyin style (default: "TONE")',
-                        choices=['NORMAL', 'TONE', 'TONE2', 'TONE3',
-                                 'INITIALS', 'FIRST_LETTER', 'FINALS',
-                                 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
-                                 'BOPOMOFO', 'BOPOMOFO_FIRST',
-                                 'CYRILLIC', 'CYRILLIC_FIRST'], default='TONE')
+    parser.add_argument('-s', '--style', help='pinyin style (default: "%s")' % _default_style,
+                        choices=_option_styles, default=_default_style)
     parser.add_argument('-p', '--separator', help='slug separator (default: "-")',
                         default='-')
     parser.add_argument('-e', '--errors', help=('how to handle none-pinyin string '
-                                          '(default: "default")'),
+                        '(default: "default")'),
                         choices=['default', 'ignore', 'replace'],
                         default='default')
     # 输出多音字
@@ -71,7 +75,7 @@ def main():
     else:
         hans = options.hans
     func = globals()[options.func]
-    style = globals()[options.style]
+    style = globals()[_formal_styles[_option_styles.index(options.style)]]
     heteronym = options.heteronym
     separator = options.separator
     errors = options.errors
