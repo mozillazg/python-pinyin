@@ -13,7 +13,6 @@ from pypinyin import (                                    # noqa
 )
 from pypinyin.compat import PY2
 
-
 _formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3', 'INITIALS', 'FIRST_LETTER',
                   'FINALS', 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
                   'BOPOMOFO', 'BOPOMOFO_FIRST', 'CYRILLIC', 'CYRILLIC_FIRST']
