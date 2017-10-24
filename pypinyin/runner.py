@@ -13,11 +13,14 @@ from pypinyin import (                                    # noqa
 )
 from pypinyin.compat import PY2
 
-_formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3', 'INITIALS', 'FIRST_LETTER',
-                  'FINALS', 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
+_formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3',
+                  'INITIALS', 'FIRST_LETTER', 'FINALS',
+                  'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
                   'BOPOMOFO', 'BOPOMOFO_FIRST', 'CYRILLIC', 'CYRILLIC_FIRST']
-_layman_styles = ['zhao', 'zh4ao', 'zha4o', 'zhao4', 'zh', 'z', 'ao', 'ào', 'a4o', 'ao4']
-_option_styles = _layman_styles + _formal_styles[len(_layman_styles) - len(_formal_styles):]
+_layman_styles = ['zhao', 'zh4ao', 'zha4o', 'zhao4', 'zh', 'z',
+                  'ao', 'ào', 'a4o', 'ao4']
+_option_styles = _layman_styles + \
+                 _formal_styles[len(_layman_styles) - len(_formal_styles):]
 _default_style = _layman_styles[1]
 
 
@@ -32,16 +35,20 @@ def get_parser():
     parser.add_argument('-V', '--version', action='version',
                         version='{0} {1}'.format(__title__, __version__))
     # 要执行的函数名称
-    parser.add_argument('-f', '--func', help='function name (default: "pinyin")',
+    parser.add_argument('-f', '--func',
+                        help='function name (default: "pinyin")',
                         choices=['pinyin', 'slug'],
                         default='pinyin')
     # 拼音风格
-    parser.add_argument('-s', '--style', help='pinyin style (default: "%s")' % _default_style,
+    parser.add_argument('-s', '--style',
+                        help='pinyin style (default: "%s")' % _default_style,
                         choices=_option_styles, default=_default_style)
-    parser.add_argument('-p', '--separator', help='slug separator (default: "-")',
+    parser.add_argument('-p', '--separator',
+                        help='slug separator (default: "-")',
                         default='-')
-    parser.add_argument('-e', '--errors', help=('how to handle none-pinyin string '
-                        '(default: "default")'),
+    parser.add_argument('-e', '--errors',
+                        help=('how to handle none-pinyin string'
+                              ' (default: "default")'),
                         choices=['default', 'ignore', 'replace'],
                         default='default')
     # 输出多音字
