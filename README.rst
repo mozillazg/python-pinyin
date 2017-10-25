@@ -108,9 +108,9 @@ __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 
 
-.. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg
+.. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg?branch=master
    :target: https://travis-ci.org/mozillazg/python-pinyin
-.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg
+.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg?branch=master
    :target: https://coveralls.io/r/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin
