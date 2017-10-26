@@ -18,7 +18,7 @@ _formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3',
                   'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
                   'BOPOMOFO', 'BOPOMOFO_FIRST', 'CYRILLIC', 'CYRILLIC_FIRST']
 _layman_styles = ['zhao', 'zh4ao', 'zha4o', 'zhao4', 'zh', 'z',
-                  'ao', 'ào', 'a4o', 'ao4']
+                  'ao', '4ao', 'a4o', 'ao4']
 _option_styles = _layman_styles + \
                  _formal_styles[len(_layman_styles) - len(_formal_styles):]
 _default_style = _layman_styles[1]
