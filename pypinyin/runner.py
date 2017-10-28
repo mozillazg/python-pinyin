@@ -61,7 +61,7 @@ def get_parser():
     # 拼音风格
     parser.add_argument(
         '-s', '--style',
-        help='pinyin style (default: "{}")'.format(default_style),
+        help='pinyin style (default: "{0}")'.format(default_style),
         choices=style_map.keys(), default=default_style
     )
     parser.add_argument('-p', '--separator',
