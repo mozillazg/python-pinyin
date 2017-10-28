@@ -5,23 +5,40 @@ from __future__ import unicode_literals
 from argparse import ArgumentParser
 import sys
 
-from pypinyin import (                                    # noqa
-    __title__, __version__, pinyin, slug,
-    NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
-    FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
-)
+import pypinyin
 from pypinyin.compat import PY2
 
-_formal_styles = ['NORMAL', 'TONE', 'TONE2', 'TONE3',
-                  'INITIALS', 'FIRST_LETTER', 'FINALS',
-                  'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
-                  'BOPOMOFO', 'BOPOMOFO_FIRST', 'CYRILLIC', 'CYRILLIC_FIRST']
-_layman_styles = ['zhao', 'zh4ao', 'zha4o', 'zhao4', 'zh', 'z',
-                  'ao', '4ao', 'a4o', 'ao4']
-_option_styles = _layman_styles + \
-                 _formal_styles[len(_layman_styles) - len(_formal_styles):]
-_default_style = _layman_styles[1]
+style_map = {
+    'NORMAL': pypinyin.Style.NORMAL,
+    'zhao': pypinyin.Style.NORMAL,
+    'TONE': pypinyin.Style.TONE,
+    'zh4ao': pypinyin.Style.TONE,
+    'TONE2': pypinyin.Style.TONE2,
+    'zha4o': pypinyin.Style.TONE2,
+    'TONE3': pypinyin.Style.TONE3,
+    'zhao4': pypinyin.Style.TONE3,
+    'INITIALS': pypinyin.Style.INITIALS,
+    'zh': pypinyin.Style.INITIALS,
+    'FIRST_LETTER': pypinyin.Style.FIRST_LETTER,
+    'z': pypinyin.Style.FIRST_LETTER,
+    'FINALS': pypinyin.Style.FINALS,
+    'ao': pypinyin.Style.FINALS,
+    'FINALS_TONE': pypinyin.Style.FINALS_TONE,
+    '4ao': pypinyin.Style.FINALS_TONE,
+    'FINALS_TONE2': pypinyin.Style.FINALS_TONE2,
+    'a4o': pypinyin.Style.FINALS_TONE2,
+    'FINALS_TONE3': pypinyin.Style.FINALS_TONE3,
+    'ao4': pypinyin.Style.FINALS_TONE3,
+    'BOPOMOFO': pypinyin.Style.BOPOMOFO,
+    'BOPOMOFO_FIRST': pypinyin.Style.BOPOMOFO_FIRST,
+    'CYRILLIC': pypinyin.Style.CYRILLIC,
+    'CYRILLIC_FIRST': pypinyin.Style.CYRILLIC_FIRST,
+}
+func_map = {
+    'pinyin': pypinyin.pinyin,
+    'slug': pypinyin.slug,
+}
+default_style = 'zh4ao'
 
 
 class NullWriter(object):
@@ -33,16 +50,20 @@ class NullWriter(object):
 def get_parser():
     parser = ArgumentParser(description='convert chinese to pinyin.')
     parser.add_argument('-V', '--version', action='version',
-                        version='{0} {1}'.format(__title__, __version__))
+                        version='{0} {1}'.format(
+                            pypinyin.__title__, pypinyin.__version__
+                        ))
     # 要执行的函数名称
     parser.add_argument('-f', '--func',
                         help='function name (default: "pinyin")',
                         choices=['pinyin', 'slug'],
                         default='pinyin')
     # 拼音风格
-    parser.add_argument('-s', '--style',
-                        help='pinyin style (default: "%s")' % _default_style,
-                        choices=_option_styles, default=_default_style)
+    parser.add_argument(
+        '-s', '--style',
+        help='pinyin style (default: "{}")'.format(default_style),
+        choices=style_map.keys(), default=default_style
+    )
     parser.add_argument('-p', '--separator',
                         help='slug separator (default: "-")',
                         default='-')
@@ -80,8 +101,8 @@ def main():
         hans = options.hans.decode(sys.stdin.encoding)
     else:
         hans = options.hans
-    func = globals()[options.func]
-    style = globals()[_formal_styles[_option_styles.index(options.style)]]
+    func = getattr(pypinyin, options.func)
+    style = style_map[options.style]
     heteronym = options.heteronym
     separator = options.separator
     errors = options.errors
