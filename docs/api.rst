@@ -1,14 +1,19 @@
 API
 ====
 
+.. _style:
 
-核心 API
--------------
+拼音风格
+-----------
 
 .. autoclass:: pypinyin.Style
    :members:
    :undoc-members:
    :member-order: bysource
+
+
+核心 API
+-------------
 
 .. autofunction:: pypinyin.pinyin
 

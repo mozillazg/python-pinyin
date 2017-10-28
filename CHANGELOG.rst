@@ -2,11 +2,18 @@ Changelog
 ---------
 
 
+0.27.0 (2017-10-28)
++++++++++++++++++++++
+
+* **[New]** 命令行工具支持通过更简便的方式指定参数及拼音风格。
+  (详见 `#105`_, Thanks `@wdscxsj`_ )
+* **[Improved]** 增加说明 ``strict`` 参数对结果有什么影响的文档。
+
+
 0.26.1 (2017-10-25)
 +++++++++++++++++++++
 
-* **[New]** 使用 `phrase-pinyin-data`_ v0.5.1 的词语拼音数据。
-
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.5.1 的词语拼音数据。fixed `#106`_
 
 
 0.26.0 (2017-10-12)
@@ -559,3 +566,6 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#93: https://github.com/mozillazg/python-pinyin/issues/93
 .. _#81: https://github.com/mozillazg/python-pinyin/issues/81
 .. _#102: https://github.com/mozillazg/python-pinyin/issues/102
+.. _#105: https://github.com/mozillazg/python-pinyin/issues/105
+.. _#106: https://github.com/mozillazg/python-pinyin/issues/106
+.. _@wdscxsj: https://github.com/wdscxsj

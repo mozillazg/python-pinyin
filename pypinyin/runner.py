@@ -5,13 +5,40 @@ from __future__ import unicode_literals
 from argparse import ArgumentParser
 import sys
 
-from pypinyin import (                                    # noqa
-    __title__, __version__, pinyin, slug,
-    NORMAL, TONE, TONE2, TONE3, INITIALS, FIRST_LETTER,
-    FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
-)
+import pypinyin
 from pypinyin.compat import PY2
+
+style_map = {
+    'NORMAL': pypinyin.Style.NORMAL,
+    'zhao': pypinyin.Style.NORMAL,
+    'TONE': pypinyin.Style.TONE,
+    'zh4ao': pypinyin.Style.TONE,
+    'TONE2': pypinyin.Style.TONE2,
+    'zha4o': pypinyin.Style.TONE2,
+    'TONE3': pypinyin.Style.TONE3,
+    'zhao4': pypinyin.Style.TONE3,
+    'INITIALS': pypinyin.Style.INITIALS,
+    'zh': pypinyin.Style.INITIALS,
+    'FIRST_LETTER': pypinyin.Style.FIRST_LETTER,
+    'z': pypinyin.Style.FIRST_LETTER,
+    'FINALS': pypinyin.Style.FINALS,
+    'ao': pypinyin.Style.FINALS,
+    'FINALS_TONE': pypinyin.Style.FINALS_TONE,
+    '4ao': pypinyin.Style.FINALS_TONE,
+    'FINALS_TONE2': pypinyin.Style.FINALS_TONE2,
+    'a4o': pypinyin.Style.FINALS_TONE2,
+    'FINALS_TONE3': pypinyin.Style.FINALS_TONE3,
+    'ao4': pypinyin.Style.FINALS_TONE3,
+    'BOPOMOFO': pypinyin.Style.BOPOMOFO,
+    'BOPOMOFO_FIRST': pypinyin.Style.BOPOMOFO_FIRST,
+    'CYRILLIC': pypinyin.Style.CYRILLIC,
+    'CYRILLIC_FIRST': pypinyin.Style.CYRILLIC_FIRST,
+}
+func_map = {
+    'pinyin': pypinyin.pinyin,
+    'slug': pypinyin.slug,
+}
+default_style = 'zh4ao'
 
 
 class NullWriter(object):
@@ -23,26 +50,30 @@ class NullWriter(object):
 def get_parser():
     parser = ArgumentParser(description='convert chinese to pinyin.')
     parser.add_argument('-V', '--version', action='version',
-                        version='{0} {1}'.format(__title__, __version__))
+                        version='{0} {1}'.format(
+                            pypinyin.__title__, pypinyin.__version__
+                        ))
     # 要执行的函数名称
-    parser.add_argument('--func', help='function name (default: "pinyin")',
+    parser.add_argument('-f', '--func',
+                        help='function name (default: "pinyin")',
                         choices=['pinyin', 'slug'],
                         default='pinyin')
     # 拼音风格
-    parser.add_argument('--style', help='pinyin style (default: "TONE")',
-                        choices=['NORMAL', 'TONE', 'TONE2', 'TONE3',
-                                 'INITIALS', 'FIRST_LETTER', 'FINALS',
-                                 'FINALS_TONE', 'FINALS_TONE2', 'FINALS_TONE3',
-                                 'BOPOMOFO', 'BOPOMOFO_FIRST',
-                                 'CYRILLIC', 'CYRILLIC_FIRST'], default='TONE')
-    parser.add_argument('--separator', help='slug separator (default: "-")',
+    parser.add_argument(
+        '-s', '--style',
+        help='pinyin style (default: "{0}")'.format(default_style),
+        choices=style_map.keys(), default=default_style
+    )
+    parser.add_argument('-p', '--separator',
+                        help='slug separator (default: "-")',
                         default='-')
-    parser.add_argument('--errors', help=('how to handle none-pinyin string '
-                                          '(default: "default")'),
+    parser.add_argument('-e', '--errors',
+                        help=('how to handle none-pinyin string'
+                              ' (default: "default")'),
                         choices=['default', 'ignore', 'replace'],
                         default='default')
     # 输出多音字
-    parser.add_argument('--heteronym', help='enable heteronym',
+    parser.add_argument('-m', '--heteronym', help='enable heteronym',
                         action='store_true')
     # 要查询的汉字
     parser.add_argument('hans', help='chinese string')
@@ -70,8 +101,8 @@ def main():
         hans = options.hans.decode(sys.stdin.encoding)
     else:
         hans = options.hans
-    func = globals()[options.func]
-    style = globals()[options.style]
+    func = getattr(pypinyin, options.func)
+    style = style_map[options.style]
     heteronym = options.heteronym
     separator = options.separator
     errors = options.errors
