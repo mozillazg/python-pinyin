@@ -20,16 +20,6 @@
     ['zhong', 'xin']
 
 
-命令行工具
-------------
-
-.. code-block:: console
-
-    $ pypinyin 音乐
-    yīn yuè
-    $ pypinyin -h
-
-
 处理不包含拼音的字符
 ---------------------
 
@@ -103,3 +93,77 @@
 
     In [4]: lazy_pinyin('么么', style='kiss')
     Out[4]: ['😘 me', '😘 me']
+
+
+
+命令行工具
+------------
+
+程序内置了一个命令行工具 ``pypinyin`` :
+
+.. code-block:: console
+
+    $ pypinyin 音乐
+    yīn yuè
+    $ pypinyin -h
+
+
+命令行工具支持如下参数：
+
+.. code-block:: console
+
+    $ pypinyin -h
+    usage: pypinyin [-h] [-V] [-f {pinyin,slug}]
+                    [-s {NORMAL,zhao,TONE,zh4ao,TONE2,zha4o,TONE3,zhao4,INITIALS,zh,FIRST_LETTER,z,FINALS,ao,FINALS_TONE,4ao,FINALS_TONE2,a4o,FINALS_TONE3,ao4,BOPOMOFO,BOPOMOFO_FIRST,CYRILLIC,CYRILLIC_FIRST}]
+                    [-p SEPARATOR] [-e {default,ignore,replace}] [-m]
+                    hans
+
+    convert chinese to pinyin.
+
+    positional arguments:
+      hans                  chinese string
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      -V, --version         show program's version number and exit
+      -f {pinyin,slug}, --func {pinyin,slug}
+                            function name (default: "pinyin")
+      -s {NORMAL,zhao,TONE,zh4ao,TONE2,zha4o,TONE3,zhao4,INITIALS,zh,FIRST_LETTER,z,FINALS,ao,FINALS_TONE,4ao,FINALS_TONE2,a4o,FINALS_TONE3,ao4,BOPOMOFO,BOPOMOFO_FIRST,CYRILLIC,CYRILLIC_FIRST}, --style {NORMAL,zhao,TONE,zh4ao,TONE2,zha4o,TONE3,zhao4,INITIALS,zh,FIRST_LETTER,z,FINALS,ao,FINALS_TONE,4ao,FINALS_TONE2,a4o,FINALS_TONE3,ao4,BOPOMOFO,BOPOMOFO_FIRST,CYRILLIC,CYRILLIC_FIRST}
+                            pinyin style (default: "zh4ao")
+      -p SEPARATOR, --separator SEPARATOR
+                            slug separator (default: "-")
+      -e {default,ignore,replace}, --errors {default,ignore,replace}
+                            how to handle none-pinyin string (default: "default")
+      -m, --heteronym       enable heteronym
+
+
+``-s``, ``--style`` 参数可以选值的含义如下：
+
+================== =========================================
+-s 或 --style 的值 对应的拼音风格
+================== =========================================
+zhao               :py:attr:`~pypinyin.Style.NORMAL`
+zh4ao              :py:attr:`~pypinyin.Style.TONE`
+zha4o              :py:attr:`~pypinyin.Style.TONE2`
+zhao4              :py:attr:`~pypinyin.Style.TONE3`
+zh                 :py:attr:`~pypinyin.Style.INITIALS`
+z                  :py:attr:`~pypinyin.Style.FIRST_LETTER`
+ao                 :py:attr:`~pypinyin.Style.FINALS`
+4ao                :py:attr:`~pypinyin.Style.FINALS_TONE`
+a4o                :py:attr:`~pypinyin.Style.FINALS_TONE2`
+ao4                :py:attr:`~pypinyin.Style.FINALS_TONE3`
+NORMAL             :py:attr:`~pypinyin.Style.NORMAL`
+TONE               :py:attr:`~pypinyin.Style.TONE`
+TONE2              :py:attr:`~pypinyin.Style.TONE2`
+TONE3              :py:attr:`~pypinyin.Style.TONE3`
+INITIALS           :py:attr:`~pypinyin.Style.INITIALS`
+FIRST_LETTER       :py:attr:`~pypinyin.Style.FIRST_LETTER`
+FINALS             :py:attr:`~pypinyin.Style.FINALS`
+FINALS_TONE        :py:attr:`~pypinyin.Style.FINALS_TONE`
+FINALS_TONE2       :py:attr:`~pypinyin.Style.FINALS_TONE2`
+FINALS_TONE3       :py:attr:`~pypinyin.Style.FINALS_TONE3`
+BOPOMOFO           :py:attr:`~pypinyin.Style.BOPOMOFO`
+BOPOMOFO_FIRST     :py:attr:`~pypinyin.Style.BOPOMOFO_FIRST`
+CYRILLIC           :py:attr:`~pypinyin.Style.CYRILLIC`
+CYRILLIC_FIRST     :py:attr:`~pypinyin.Style.CYRILLIC_FIRST`
+================== =========================================
