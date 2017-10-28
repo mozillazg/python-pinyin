@@ -213,7 +213,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
                          pinyin('あ', errors=foobar)
 
     :param heteronym: 是否启用多音字
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :return: 拼音列表
     :rtype: list
 
@@ -253,7 +253,7 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
     :param separstor: 两个拼音间的分隔符/连接符
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :return: slug 字符串.
 
     ::
@@ -286,7 +286,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
                   更多拼音风格详见 :class:`~pypinyin.Style`。
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 

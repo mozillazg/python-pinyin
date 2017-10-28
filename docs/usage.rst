@@ -95,6 +95,58 @@
     Out[4]: ['😘 me', '😘 me']
 
 
+.. _strict:
+
+``strict`` 参数的影响
+-------------------------------
+
+``strict`` 参数用于控制处理声母和韵母时是否严格遵循 `《汉语拼音方案》`_ 标准：
+
+.. code-block:: python
+
+    In [1]: from pypinyin import Style, lazy_pinyin
+
+    In [2]: lazy_pinyin('乌', style=Style.TONE)
+    Out[2]: ['wū']
+
+    In [3]: lazy_pinyin('乌', style=Style.INITIALS)
+    Out[3]: ['']
+
+    In [4]: lazy_pinyin('乌', style=Style.INITIALS, strict=False)
+    Out[4]: ['w']
+
+    In [5]: lazy_pinyin('迂', style=Style.FINALS_TONE, strict=False)
+    Out[5]: ['ū']
+
+    In [6]: lazy_pinyin('迂', style=Style.TONE)
+    Out[6]: ['yū']
+
+    In [7]: lazy_pinyin('迂', style=Style.FINALS_TONE)
+    Out[7]: ['ǖ']
+
+    In [8]: lazy_pinyin('迂', style=Style.FINALS_TONE, strict=False)
+    Out[8]: ['ū']
+
+
+当 ``strict=True`` 时根据 `《汉语拼音方案》`_ 的如下规则处理声母、在韵母相关风格下还原正确的韵母：
+
+* 21 个声母： ``b p m f d t n l g k h j q x zh ch sh r z c s`` （**y, w 不是声母**）
+* i行的韵母，前面没有声母的时候，写成yi(衣)，ya(呀)，ye(耶)，yao(腰)，you(忧)，yan(烟)，
+  yin(因)，yang(央)，ying(英)，yong(雍)。（**y 不是声母**）
+* u行的韵母，前面没有声母的时候，写成wu(乌)，wa(蛙)，wo(窝)，wai(歪)，wei(威)，wan(弯)，
+  wen(温)，wang(汪)，weng(翁)。（**w 不是声母**）
+* ü行的韵母，前面没有声母的时候，写成yu(迂)，yue(约)，yuan(冤)，yun(晕)；ü上两点省略。
+  （**韵母相关风格下还原正确的韵母 ü**）
+* ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)，ü上两点也省略；
+  但是跟声母n，l拼的时候，仍然写成nü(女)，lü(吕)。（**韵母相关风格下还原正确的韵母 ü**）
+* iou，uei，uen前面加声母的时候，写成iu，ui，un。例如niu(牛)，gui(归)，lun(论)。
+  （**韵母相关风格下还原正确的韵母 iou，uei，uen**）
+
+当 ``strict=False`` 时就是不遵守上面的规则来处理声母和韵母，
+比如：``y``, ``w`` 会被当做声母，yu(迂) 的韵母就是一般认为的 ``u`` 等。
+
+具体差异可以查看 `tests/test_standard.py <https://github.com/mozillazg/python-pinyin/blob/master/tests/test_standard.py>`_ 中的对比结果测试用例
+
 
 命令行工具
 ------------
@@ -167,3 +219,6 @@ BOPOMOFO_FIRST     :py:attr:`~pypinyin.Style.BOPOMOFO_FIRST`
 CYRILLIC           :py:attr:`~pypinyin.Style.CYRILLIC`
 CYRILLIC_FIRST     :py:attr:`~pypinyin.Style.CYRILLIC_FIRST`
 ================== =========================================
+
+
+.. _《汉语拼音方案》: http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html

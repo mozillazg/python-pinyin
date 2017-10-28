@@ -11,7 +11,7 @@ def convert(pinyin, style, strict, default=None, **kwargs):
     :param pinyin: 原始有声调的单个拼音
     :type pinyin: unicode
     :param style: 拼音风格
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :type strict: bool
     :param default: 拼音风格对应的实现不存在时返回的默认值
     :return: 按照拼音风格进行处理过后的拼音字符串
