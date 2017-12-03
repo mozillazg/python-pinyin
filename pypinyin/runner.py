@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 from argparse import ArgumentParser
+import logging
 import sys
 
 import pypinyin
@@ -81,7 +82,6 @@ def get_parser():
 
 
 def main():
-    import logging
     # 禁用除 CRITICAL 外的日志消息
     logging.disable(logging.CRITICAL)
 

@@ -28,3 +28,8 @@ def test_custom():
     assert options.errors == 'ignore'
     assert options.heteronym
     assert options.hans == '你好啊'
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()

@@ -1,5 +1,6 @@
 argparse
 bumpversion
+mypy
 pre-commit
 pytest
 pytest-cov

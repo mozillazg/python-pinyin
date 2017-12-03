@@ -398,3 +398,8 @@ data_for_uen = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_uen)
 def test_uen(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()
