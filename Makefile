@@ -7,6 +7,7 @@ help:
 	@echo "gen_data         gen pinyin data"
 	@echo "gen_pinyin_dict  gen single hanzi pinyin dict"
 	@echo "gen_phrases_dict gen phrase hanzi pinyin dict"
+	@echo "lint             run lint"
 
 .PHONY: test
 test:
@@ -43,3 +44,7 @@ gen_pinyin_dict:
 .PHONY: gen_phrases_dict
 gen_phrases_dict:
 	python gen_phrases_dict.py phrase-pinyin-data/pinyin.txt pypinyin/phrases_dict.py
+
+.PHONY: lint
+lint:
+	mypy pypinyin

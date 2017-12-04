@@ -25,6 +25,7 @@ install:
 
 script:
   - pre-commit run --all-files
+  - mypy pypinyin
   - tox -e $TOX_ENV
   - python setup.py install
   - pypinyin hello

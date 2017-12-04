@@ -395,3 +395,8 @@ def test_36():
     hans = '两年前七斤喝醉了酒'
     pys = ['liang', 'nian', 'qian', 'qi', 'jin', 'he', 'zui', 'le', 'jiu']
     assert lazy_pinyin(hans) == pys
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()

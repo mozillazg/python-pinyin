@@ -29,3 +29,8 @@ def test_simple_seg():
     assert simple_seg('啊 -- 你好那 ') == ['啊', ' -- ', '你好那', ' ']
     assert simple_seg('a 你好啊 -- 那 ') == ['a ', '你好啊', ' -- ', '那', ' ']
     assert simple_seg('a啊 -- 你好那 ') == ['a', '啊', ' -- ', '你好那', ' ']
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()

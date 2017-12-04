@@ -39,3 +39,8 @@ def test_custom_style_with_call():
             pinyin_s[index] = func(py)
 
     assert pinyin(hans, style=style_value) == expected_pinyin_s
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()
