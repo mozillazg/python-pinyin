@@ -1,10 +1,10 @@
 Changelog
 ---------
 
-0.28.0 (2017-mm-dd)
+0.28.0 (2017-12-08)
 +++++++++++++++++++++
 
-* **[New]** 增加类型注解。
+* **[New]** 给代码增加类型注解(via `#110`_)。
 
 
 0.27.0 (2017-10-28)
@@ -574,3 +574,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#105: https://github.com/mozillazg/python-pinyin/issues/105
 .. _#106: https://github.com/mozillazg/python-pinyin/issues/106
 .. _@wdscxsj: https://github.com/wdscxsj
+.. _#110: https://github.com/mozillazg/python-pinyin/pull/110
