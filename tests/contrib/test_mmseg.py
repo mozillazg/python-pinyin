@@ -111,3 +111,8 @@ def test_retrain():
     load_phrases_dict({'啊啊啊': [['a'], ['a'], ['a']]})
     mmseg.retrain(seg)
     assert list(seg.cut('啊啊啊')) == ['啊啊啊']
+
+
+if __name__ == '__main__':
+    import pytest
+    pytest.cmdline.main()
