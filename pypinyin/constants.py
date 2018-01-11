@@ -16,10 +16,16 @@ if os.environ.get('PYPINYIN_NO_PHRASES'):
     PHRASES_DICT = {}
 else:
     from pypinyin import phrases_dict
-    PHRASES_DICT = phrases_dict.phrases_dict.copy()
+    PHRASES_DICT = phrases_dict.phrases_dict
 
 # 单字拼音库
-PINYIN_DICT = pinyin_dict.pinyin_dict.copy()
+PINYIN_DICT = pinyin_dict.pinyin_dict
+
+# 利用环境变量控制不做copy操作(无自定义拼音库的情况), 以减少内存使用
+if not os.environ.get('PYPINYIN_NO_DICT_COPY'):
+    PINYIN_DICT = PINYIN_DICT.copy()
+    PHRASES_DICT = PHRASES_DICT.copy()
+
 # 匹配使用数字标识声调的字符的正则表达式
 RE_TONE2 = re.compile(r'([aeoiuvnm])([1-4])$')
 
