@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+0.29.0 (2018-01-14)
++++++++++++++++++++++
+
+* **[New]** 可以通过环境变量 ``PYPINYIN_NO_DICT_COPY`` 禁用代码内对 dict 的 copy 操作，节省内存(via `#115`_ thanks `@daya0576`_ )。
+
 0.28.0 (2017-12-08)
 +++++++++++++++++++++
 
@@ -575,3 +580,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#106: https://github.com/mozillazg/python-pinyin/issues/106
 .. _@wdscxsj: https://github.com/wdscxsj
 .. _#110: https://github.com/mozillazg/python-pinyin/pull/110
+.. _#115: https://github.com/mozillazg/python-pinyin/pull/115
+.. _@daya0576: https://github.com/daya0576
