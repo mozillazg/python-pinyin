@@ -49,3 +49,4 @@ venvPyInstaller/
 output.dat
 vocab.bin
 vocab.large.bin
+.mypy_cache/

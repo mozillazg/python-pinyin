@@ -9,12 +9,18 @@ FAQ
 
 
 如何禁用默认的“拼音库”copy 操作
-++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++
 
 设置环境变量 ``PYPINYIN_NO_DICT_COPY=true`` 即可.
 
-
 副作用: 用户的自定义拼音库出现问题时, 无法回退到自带的拼音库.
+
+
+如何减少内存占用
++++++++++++++++++++++
+
+如果对拼音正确性不在意的话，可以按照上面所说的设置环境变量 ``PYPINYIN_NO_PHRASES`` 和 ``PYPINYIN_NO_DICT_COPY`` 详见 `#13`_
+
 
 
 ``INITIALS`` 声母风格下，以 ``y``, ``w``, ``yu`` 开头的汉字返回空字符串
@@ -39,3 +45,9 @@ FAQ
   y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。
   如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。
   这时候你也许需要的是首字母风格（FIRST_LETTER）。    —— @hotoo
+
+如果觉得这个行为不是你想要的，就是想把 y 当成声母的话，可以指定 ``strict=False`` ， 这个可能会符合你的预期。详见 `strict 参数的影响`_
+
+
+.. _#13 : https://github.com/mozillazg/python-pinyin/issues/113
+.. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict

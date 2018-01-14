@@ -88,6 +88,14 @@ FAQ
     `#27 <https://github.com/mozillazg/python-pinyin/issues/27>`__,
     `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
 
+如果觉得这个行为不是你想要的，就是想把 y 当成声母的话，可以指定 ``strict=False`` ， 这个可能会符合你的预期。详见 `strict 参数的影响`_
+
+更多 FAQ 详见文档中的 `FAQ`_ 部分。
+
+
+.. _#13 : https://github.com/mozillazg/python-pinyin/issues/113
+.. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
+
 
 拼音数据
 ---------
@@ -117,3 +125,4 @@ __ https://github.com/mozillazg/rust-pinyin
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
+.. _FAQ: https://pypinyin.readthedocs.io/zh_CN/master/faq.html
