@@ -357,6 +357,7 @@ data_for_update = [
     ['侵略', {'style': FINALS_TONE3}, ['in1', 've4']],
     ['侵略', {'style': BOPOMOFO}, ['ㄑㄧㄣ', 'ㄌㄩㄝˋ']],
     ['侵略', {'style': CYRILLIC}, ['цинь1', 'люэ4']],
+    ['〇', {'style': TONE}, ['líng']],
 ]
 
 

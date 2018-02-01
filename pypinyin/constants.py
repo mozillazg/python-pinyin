@@ -33,6 +33,7 @@ RE_TONE2 = re.compile(r'([aeoiuvnm])([1-4])$')
 if SUPPORT_UCS4:
     RE_HANS = re.compile(
         r'^(?:['
+        r'\u3007'                  # 〇
         r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
         r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
         r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
@@ -45,6 +46,7 @@ if SUPPORT_UCS4:
 else:
     RE_HANS = re.compile(
         r'^(?:['
+        r'\u3007'                  # 〇
         r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
         r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
         r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]

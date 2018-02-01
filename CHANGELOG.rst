@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+0.30.0 (2018-mm-dd)
++++++++++++++++++++++
+
+* **[New]** 支持有拼音的非汉字字符 ``〇`` (via `#119`_)
+
+
 0.29.0 (2018-01-14)
 +++++++++++++++++++++
 
@@ -581,4 +587,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _@wdscxsj: https://github.com/wdscxsj
 .. _#110: https://github.com/mozillazg/python-pinyin/pull/110
 .. _#115: https://github.com/mozillazg/python-pinyin/pull/115
+.. _#119: https://github.com/mozillazg/python-pinyin/pull/119
 .. _@daya0576: https://github.com/daya0576
