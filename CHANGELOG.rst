@@ -1,12 +1,12 @@
 Changelog
 ---------
 
-0.30.0 (2018-mm-dd)
+0.30.0 (2018-02-03)
 +++++++++++++++++++++
 
-* **[New]** 支持有拼音的非汉字字符 ``〇`` (via `#119`_)
+* **[New]** 支持有拼音的非汉字字符 ``〇`` (via `#119`_)。
 * **[Changed]** 修复之前无意中把 ``pinyin`` 函数中的 ``strict`` 参数的默认值修改为了 ``False`` ，
-  现在把 ``strict`` 参数的默认值修改为预期的 ``True`` 。
+  现在把 ``strict`` 参数的默认值恢复为预期的 ``True`` (via `#121`_)。
 
 
 0.29.0 (2018-01-14)
@@ -591,3 +591,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#115: https://github.com/mozillazg/python-pinyin/pull/115
 .. _#119: https://github.com/mozillazg/python-pinyin/pull/119
 .. _@daya0576: https://github.com/daya0576
+.. _#121: https://github.com/mozillazg/python-pinyin/pull/121
