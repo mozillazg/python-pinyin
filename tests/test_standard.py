@@ -3,10 +3,12 @@
 
 from __future__ import unicode_literals
 
+from itertools import chain
+
 import pytest
 
 from pypinyin import (
-    lazy_pinyin, NORMAL, TONE, TONE2, TONE3, INITIALS,
+    lazy_pinyin, pinyin, NORMAL, TONE, TONE2, TONE3, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3
 )
 
@@ -191,6 +193,7 @@ data_for_zero_consonant = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_zero_consonant)
 def test_zero_consonant(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+    assert list(chain(*pinyin(hans, **kwargs))) == result
 
 
 data_for_uv = [
@@ -306,6 +309,7 @@ data_for_uv = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_uv)
 def test_uv(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+    assert list(chain(*pinyin(hans, **kwargs))) == result
 
 
 data_for_iou = [
@@ -337,6 +341,7 @@ data_for_iou = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_iou)
 def test_iou(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+    assert list(chain(*pinyin(hans, **kwargs))) == result
 
 
 data_for_uei = [
@@ -368,6 +373,7 @@ data_for_uei = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_uei)
 def test_uei(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+    assert list(chain(*pinyin(hans, **kwargs))) == result
 
 
 data_for_uen = [
@@ -398,6 +404,7 @@ data_for_uen = [
 @pytest.mark.parametrize('hans, kwargs, result', data_for_uen)
 def test_uen(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
+    assert list(chain(*pinyin(hans, **kwargs))) == result
 
 
 if __name__ == '__main__':

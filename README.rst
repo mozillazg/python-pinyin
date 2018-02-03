@@ -32,12 +32,6 @@
     $ pip install pypinyin
 
 
-文档
---------
-
-详细文档请访问：http://pypinyin.rtfd.io/
-
-
 使用示例
 --------
 
@@ -70,25 +64,76 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     $ pypinyin -h
 
 
+文档
+--------
+
+详细文档请访问：http://pypinyin.rtfd.io/ 。
+
+
 FAQ
 ---------
 
+词语中的多音字拼音有误？
++++++++++++++++++++++++++++++
+
+目前是通过词组拼音库的方式来解决多音字问题的。如果出现拼音有误的情况，
+可以自定义词组拼音来调整词语中的拼音：
+
+.. code-block:: python
+
+    >>> from pypinyin import Style, pinyin, load_phrases_dict
+    >>> pinyin('步履蹒跚')
+    [['bù'], ['lǚ'], ['mán'], ['shān']]
+    >>> load_phrases_dict({'步履蹒跚': [['bù'], ['lǚ'], ['pán'], ['shān']]})
+    >>> pinyin('步履蹒跚')
+    [['bù'], ['lǚ'], ['pán'], ['shān']]
+
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#id5>`_ 。
+
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: python
+
+    >>> from pypinyin import Style, pinyin
+    >>> pinyin('下雨天', style=Style.INITIALS)
+    [['x'], [''], ['t']]
+
+因为根据 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+y，w，ü (yu) 都不是声母。
 
     声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据
     `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
     y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
 
-    如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。
-    这时候你也许需要的是首字母风格（FIRST_LETTER）。    —— @hotoo
+    **如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。
+    这时候你也许需要的是首字母风格（FIRST_LETTER）**。    —— @hotoo
 
     参考: `hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__,
     `#22 <https://github.com/mozillazg/python-pinyin/pull/22>`__,
     `#27 <https://github.com/mozillazg/python-pinyin/issues/27>`__,
     `#44 <https://github.com/mozillazg/python-pinyin/issues/44>`__
 
-如果觉得这个行为不是你想要的，就是想把 y 当成声母的话，可以指定 ``strict=False`` ， 这个可能会符合你的预期。详见 `strict 参数的影响`_
+如果觉得这个行为不是你想要的，就是想把 y 当成声母的话，可以指定 ``strict=False`` ，
+这个可能会符合你的预期：
+
+.. code-block:: python
+
+    >>> from pypinyin import Style, pinyin
+    >>> pinyin('下雨天', style=Style.INITIALS)
+    [['x'], [''], ['t']]
+    >>> pinyin('下雨天', style=Style.INITIALS, strict=False)
+    [['x'], ['y'], ['t']]
+
+详见 `strict 参数的影响`_ 。
+
+如何减少内存占用
+++++++++++++++++++++
+
+如果对拼音的准确性不是特别在意的话，可以通过设置环境变量 ``PYPINYIN_NO_PHRASES``
+和 ``PYPINYIN_NO_DICT_COPY`` 来节省内存。
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/faq.html#id2>`_
+
 
 更多 FAQ 详见文档中的 `FAQ`_ 部分。
 

@@ -19,7 +19,8 @@ FAQ
 如何减少内存占用
 +++++++++++++++++++++
 
-如果对拼音正确性不在意的话，可以按照上面所说的设置环境变量 ``PYPINYIN_NO_PHRASES`` 和 ``PYPINYIN_NO_DICT_COPY`` 详见 `#13`_
+如果对拼音正确性不在意的话，可以按照上面所说的设置环境变量 ``PYPINYIN_NO_PHRASES``
+和 ``PYPINYIN_NO_DICT_COPY`` 详见 `#13`_
 
 
 
@@ -30,7 +31,7 @@ FAQ
 
   .. code:: python
 
-      pinyin('火影忍者', style=pypinyin.INITIALS)
+      pinyin('火影忍者', style=Style.INITIALS)
       [['h'], [''], ['r'], ['zh']]
 
 
@@ -49,5 +50,5 @@ FAQ
 如果觉得这个行为不是你想要的，就是想把 y 当成声母的话，可以指定 ``strict=False`` ， 这个可能会符合你的预期。详见 `strict 参数的影响`_
 
 
-.. _#13 : https://github.com/mozillazg/python-pinyin/issues/113
+.. _#13: https://github.com/mozillazg/python-pinyin/issues/113
 .. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
