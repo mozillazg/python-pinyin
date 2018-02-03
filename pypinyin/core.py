@@ -189,7 +189,7 @@ def _pinyin(words, style, heteronym, errors, strict=True):
 
 
 def pinyin(hans, style=Style.TONE, heteronym=False,
-           errors='default', strict=False):
+           errors='default', strict=True):
     """将汉字转换为拼音.
 
     :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
