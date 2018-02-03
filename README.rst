@@ -88,7 +88,7 @@ FAQ
     >>> pinyin('步履蹒跚')
     [['bù'], ['lǚ'], ['pán'], ['shān']]
 
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#id5>`_ 。
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#id5>`__ 。
 
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -132,10 +132,11 @@ y，w，ü (yu) 都不是声母。
 
 如果对拼音的准确性不是特别在意的话，可以通过设置环境变量 ``PYPINYIN_NO_PHRASES``
 和 ``PYPINYIN_NO_DICT_COPY`` 来节省内存。
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/faq.html#id2>`_
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/faq.html#id2>`__
 
 
-更多 FAQ 详见文档中的 `FAQ`_ 部分。
+更多 FAQ 详见文档中的
+`FAQ <https://pypinyin.readthedocs.io/zh_CN/master/faq.html>`__ 部分。
 
 
 .. _#13 : https://github.com/mozillazg/python-pinyin/issues/113
@@ -167,7 +168,7 @@ __ https://github.com/mozillazg/rust-pinyin
    :target: https://coveralls.io/r/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.python.org/pypi/pypinyin
+
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
-.. _FAQ: https://pypinyin.readthedocs.io/zh_CN/master/faq.html
