@@ -4,7 +4,7 @@ mypy
 pre-commit
 pytest
 pytest-cov
-pytest-random
+pytest-random-order
 Sphinx
 tox
 wheel>=0.21

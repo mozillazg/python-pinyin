@@ -50,3 +50,4 @@ output.dat
 vocab.bin
 vocab.large.bin
 .mypy_cache/
+.pytest_cache/
