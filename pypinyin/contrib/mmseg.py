@@ -77,6 +77,7 @@ p_set.train(PHRASES_DICT.keys())
 #:    >>> text = '你好，我是中国人，我爱我的祖国'
 #:    >>> seg.cut(text)
 #:    <generator object Seg.cut at 0x10b2df2b0>
+#:
 #:    >>> list(seg.cut(text))
 #:    ['你好', '，', '我', '是', '中国人', '，', '我', '爱',
 #:     '我的', '祖', '国']
