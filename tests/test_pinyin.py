@@ -358,6 +358,11 @@ data_for_update = [
     ['侵略', {'style': BOPOMOFO}, ['ㄑㄧㄣ', 'ㄌㄩㄝˋ']],
     ['侵略', {'style': CYRILLIC}, ['цинь1', 'люэ4']],
     ['〇', {'style': TONE}, ['líng']],
+    # 二次分词
+    ['你要重新考虑', {'style': TONE}, [
+        'nǐ', 'yào', 'zhòng', 'xīn', 'kǎo', 'lǜ']],
+    [['你要', '重新考虑'], {'style': TONE}, [
+        'nǐ', 'yào', 'chóng', 'xīn', 'kǎo', 'lǜ']],
 ]
 
 

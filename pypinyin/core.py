@@ -13,7 +13,7 @@ from pypinyin.constants import (
 )
 from pypinyin.contrib import mmseg
 from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
-from pypinyin.style import auto_discover, convert
+from pypinyin.style import auto_discover, convert as convert_style
 
 auto_discover()
 
@@ -77,15 +77,7 @@ def to_fixed(pinyin, style, strict=True):
     :return: 根据拼音风格格式化后的拼音字符串
     :rtype: unicode
     """
-    return convert(pinyin, style=style, strict=strict, default=pinyin)
-
-    # # 韵母
-    # elif style in [FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3]:
-    #     # 不处理鼻音: 'ḿ', 'ń', 'ň', 'ǹ'
-    #     if pinyin and pinyin[0] not in [
-    #         '\u1e3f', '\u0144', '\u0148', '\u01f9'
-    #     ]:
-    #         py = final(py, strict=strict)
+    return convert_style(pinyin, style=style, strict=strict, default=pinyin)
 
 
 def _handle_nopinyin_char(chars, errors='default'):
@@ -217,6 +209,8 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     :return: 拼音列表
     :rtype: list
 
+    :raise AssertionError: 当传入的字符串不是 unicode 字符时会抛出这个异常
+
     Usage::
 
       >>> from pypinyin import pinyin, Style
@@ -234,9 +228,11 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     """
     # 对字符串进行分词处理
     if isinstance(hans, text_type):
-        hans = seg(hans)
+        han_list = seg(hans)
+    else:
+        han_list = chain(*(seg(x) for x in hans))
     pys = []
-    for words in hans:
+    for words in han_list:
         pys.extend(_pinyin(words, style, heteronym, errors, strict=strict))
     return pys
 
@@ -255,6 +251,8 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
                    :py:func:`~pypinyin.pinyin`
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :return: slug 字符串.
+
+    :raise AssertionError: 当传入的字符串不是 unicode 字符时会抛出这个异常
 
     ::
 
@@ -289,6 +287,8 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
+
+    :raise AssertionError: 当传入的字符串不是 unicode 字符时会抛出这个异常
 
     Usage::
 

@@ -44,7 +44,7 @@ def _seg(chars):
 
 
 def simple_seg(hans):
-    """将传入的字符串按是否有拼音来分割"""
+    """将传入的字符串按是否是汉字来分割"""
     assert not isinstance(hans, bytes_type), \
         'must be unicode string or [unicode, ...] list'
 
