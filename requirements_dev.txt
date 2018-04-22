@@ -7,4 +7,5 @@ pytest-cov
 pytest-random-order
 Sphinx
 tox
+twine
 wheel>=0.21
