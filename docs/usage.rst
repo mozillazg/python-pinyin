@@ -2,6 +2,8 @@
 ======
 
 
+.. _example:
+
 示例
 -------
 
@@ -19,6 +21,8 @@
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
 
+
+.. _handle_no_pinyin:
 
 处理不包含拼音的字符
 ---------------------
@@ -49,6 +53,8 @@
 .. _单元测试代码: https://github.com/mozillazg/python-pinyin/blob/3d52fe821b7f55aecf5af9bad78380762484f4d9/tests/test_pinyin.py#L161-L166
 
 
+.. _custom_dict:
+
 自定义拼音库
 ------------
 
@@ -74,6 +80,8 @@
     >>> lazy_pinyin('还没', style=Style.TONE2)
     ['ha2i', 'me2i']
 
+
+.. _custom_style:
 
 自定义拼音风格
 ----------------
@@ -147,6 +155,8 @@
 
 具体差异可以查看 `tests/test_standard.py <https://github.com/mozillazg/python-pinyin/blob/master/tests/test_standard.py>`_ 中的对比结果测试用例
 
+
+.. _cli:
 
 命令行工具
 ------------

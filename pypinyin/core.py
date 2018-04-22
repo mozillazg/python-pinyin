@@ -164,6 +164,10 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
 
 
 def _pinyin(words, style, heteronym, errors, strict=True):
+    """
+    :param words: 经过分词处理后的字符串，只包含中文字符或只包含非中文字符，
+                  不存在混合的情况。
+    """
     pys = []
     # 初步过滤没有拼音的字符
     if RE_HANS.match(words):
@@ -171,12 +175,9 @@ def _pinyin(words, style, heteronym, errors, strict=True):
                             errors=errors, strict=strict)
         return pys
 
-    for word in simple_seg(words):
-        if not (RE_HANS.match(word)):
-            py = handle_nopinyin(word, errors=errors)
-            pys.append(py) if py else None
-        else:
-            pys.extend(_pinyin(word, style, heteronym, errors, strict=strict))
+    py = handle_nopinyin(words, errors=errors)
+    if py:
+        pys.append(py)
     return pys
 
 

@@ -44,7 +44,7 @@ if SUPPORT_UCS4:
         r'])+$'
     )
 else:
-    RE_HANS = re.compile(
+    RE_HANS = re.compile(  # pragma: no cover
         r'^(?:['
         r'\u3007'                  # 〇
         r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
