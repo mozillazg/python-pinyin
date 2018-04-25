@@ -8,8 +8,9 @@ Changelog
 `0.30.1`_ (2018-04-25)
 ++++++++++++++++++++++++
 
-* **[Improved]** 对用户传入的已进行分词处理的数据进行二次分词以便提高准确性。
-* **[Improved]** 使用 `pinyin-data`_ v0.5.1 的拼音数据。
+* **[Improved]** 更新文档和测试。(via `7fa0b87 <https://github.com/mozillazg/python-pinyin/commit/7fa0b879df47e8a7e5af5edb5f243dd4ea645410>`_)
+* **[Improved]** 对用户传入的已进行分词处理的数据进行二次分词以便提高准确性。(via `#126`_)
+* **[Improved]** 使用 `pinyin-data`_ v0.5.1 的拼音数据。(via `#125`_)
 
 
 `0.30.0`_ (2018-02-03)
@@ -604,6 +605,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#119: https://github.com/mozillazg/python-pinyin/pull/119
 .. _@daya0576: https://github.com/daya0576
 .. _#121: https://github.com/mozillazg/python-pinyin/pull/121
+.. _#125: https://github.com/mozillazg/python-pinyin/pull/125
+.. _#126: https://github.com/mozillazg/python-pinyin/pull/126
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
