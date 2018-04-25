@@ -88,7 +88,7 @@ FAQ
     >>> pinyin('步履蹒跚')
     [['bù'], ['lǚ'], ['pán'], ['shān']]
 
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#id5>`__ 。
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
@@ -132,7 +132,7 @@ y，w，ü (yu) 都不是声母。
 
 如果对拼音的准确性不是特别在意的话，可以通过设置环境变量 ``PYPINYIN_NO_PHRASES``
 和 ``PYPINYIN_NO_DICT_COPY`` 来节省内存。
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/faq.html#id2>`__
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/faq.html#no-phrases>`__
 
 
 更多 FAQ 详见文档中的

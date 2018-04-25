@@ -8,6 +8,10 @@ help:
 	@echo "gen_pinyin_dict  gen single hanzi pinyin dict"
 	@echo "gen_phrases_dict gen phrase hanzi pinyin dict"
 	@echo "lint             run lint"
+	@echo "clean - remove all build, test, coverage and Python artifacts"
+	@echo "clean-build - remove build artifacts"
+	@echo "clean-pyc - remove Python file artifacts"
+	@echo "clean-test - remove test and coverage artifacts"
 
 .PHONY: test
 test:
@@ -15,16 +19,18 @@ test:
 	py.test --cov pypinyin tests/ && py.test --cov pypinyin tests/_test_env.py
 
 .PHONY: publish
-publish:
+publish: clean
 	@echo "publish to pypi"
-	python setup.py register
-	python setup.py publish
+	python setup.py sdist
+	python setup.py bdist_wheel
+	twine upload dist/*
 
 .PHONY: publish_test
-publish_test:
-	python setup.py register -r test
-	python setup.py sdist upload -r test
-	python setup.py bdist_wheel upload -r test
+publish_test: clean
+	@echo "publish to test pypi"
+	python setup.py sdist
+	python setup.py bdist_wheel
+	twine upload --repository test dist/*
 
 .PHONY: docs_html
 docs_html:
@@ -48,3 +54,23 @@ gen_phrases_dict:
 .PHONY: lint
 lint:
 	mypy pypinyin
+
+clean: clean-build clean-pyc clean-test
+
+clean-build:
+	rm -fr build/
+	rm -fr dist/
+	rm -fr .eggs/
+	find . -name '*.egg-info' -exec rm -fr {} +
+	find . -name '*.egg' -exec rm -f {} +
+
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
+clean-test:
+	rm -fr .tox/
+	rm -f .coverage
+	rm -fr htmlcov/

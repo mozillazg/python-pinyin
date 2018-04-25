@@ -71,20 +71,22 @@ class PrefixSet(object):
 p_set = PrefixSet()
 p_set.train(PHRASES_DICT.keys())
 
-#: 基于内置词库的最大正向匹配分词器。使用::
+#: 基于内置词库的最大正向匹配分词器。使用:
 #:
-#:    >>> from pypinyin.contrib.mmseg import seg
-#:    >>> text = '你好，我是中国人，我爱我的祖国'
-#:    >>> seg.cut(text)
-#:    <generator object Seg.cut at 0x10b2df2b0>
-#:    >>> list(seg.cut(text))
-#:    ['你好', '，', '我', '是', '中国人', '，', '我', '爱',
-#:     '我的', '祖', '国']
-#:    >>> seg.train(['祖国', '我是'])
-#:    >>> list(seg.cut(text))
-#:    ['你好', '，', '我是', '中国人', '，', '我', '爱',
-#:     '我的', '祖国']
-#:    >>>
+#: .. code-block:: python
+#:
+#:     >>> from pypinyin.contrib.mmseg import seg
+#:     >>> text = '你好，我是中国人，我爱我的祖国'
+#:     >>> seg.cut(text)
+#:     <generator object Seg.cut at 0x10b2df2b0>
+#:     >>> list(seg.cut(text))
+#:     ['你好', '，', '我', '是', '中国人', '，', '我', '爱',
+#:      '我的', '祖', '国']
+#:     >>> seg.train(['祖国', '我是'])
+#:     >>> list(seg.cut(text))
+#:     ['你好', '，', '我是', '中国人', '，', '我', '爱',
+#:      '我的', '祖国']
+#:     >>>
 seg = Seg(p_set)
 
 

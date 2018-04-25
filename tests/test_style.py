@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 from copy import deepcopy
 
-from pypinyin import pinyin
-from pypinyin.style import register
+from pypinyin import pinyin, Style
+from pypinyin.style import register, convert
 
 
 def test_custom_style_with_decorator():
@@ -39,6 +39,10 @@ def test_custom_style_with_call():
             pinyin_s[index] = func(py)
 
     assert pinyin(hans, style=style_value) == expected_pinyin_s
+
+
+def test_finals_tone3_no_final():
+    assert convert('ń', Style.FINALS_TONE3, True, None) == 'n2'
 
 
 if __name__ == '__main__':

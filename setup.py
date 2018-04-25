@@ -10,11 +10,6 @@ try:
 except ImportError:
     from distutils.core import setup
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    os.system('python setup.py bdist_wheel upload')
-    sys.exit()
-
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
 packages = [
@@ -57,17 +52,25 @@ meta_d = get_meta()
 setup(
     name=meta_d['__title__'],
     version=meta_d['__version__'],
-    description='汉字拼音转换工具.',
+    description='汉字拼音转换模块/工具.',
     long_description=long_description(),
+    long_description_content_type='text/x-rst',
     url='https://github.com/mozillazg/python-pinyin',
     author=meta_d['__author__'],
     author_email='mozillazg101@gmail.com',
     license=meta_d['__license__'],
+    project_urls={
+        'Documentation': 'https://pypinyin.readthedocs.io/',
+        'Say Thanks!': 'https://saythanks.io/to/mozillazg',
+        'Source': 'https://github.com/mozillazg/python-pinyin',
+        'Tracker': 'https://github.com/mozillazg/python-pinyin/issues',
+    },
     packages=packages,
     package_dir={'pypinyin': 'pypinyin'},
     include_package_data=True,
     install_requires=requirements,
     extras_require=extras_require,
+    python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, <4',
     zip_safe=False,
     entry_points={
         'console_scripts': [
@@ -91,6 +94,7 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Utilities',
+        'Topic :: Text Processing',
     ],
     keywords='pinyin, 拼音',
 )

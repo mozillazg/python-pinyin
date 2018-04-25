@@ -358,6 +358,11 @@ data_for_update = [
     ['侵略', {'style': BOPOMOFO}, ['ㄑㄧㄣ', 'ㄌㄩㄝˋ']],
     ['侵略', {'style': CYRILLIC}, ['цинь1', 'люэ4']],
     ['〇', {'style': TONE}, ['líng']],
+    # 二次分词
+    ['你要重新考虑OK', {'style': TONE}, [
+        'nǐ', 'yào', 'zhòng', 'xīn', 'kǎo', 'lǜ', 'OK']],
+    [['你要', '重新考虑OK'], {'style': TONE}, [
+        'nǐ', 'yào', 'chóng', 'xīn', 'kǎo', 'lǜ', 'OK']],
 ]
 
 
@@ -396,6 +401,13 @@ def test_36():
     hans = '两年前七斤喝醉了酒'
     pys = ['liang', 'nian', 'qian', 'qi', 'jin', 'he', 'zui', 'le', 'jiu']
     assert lazy_pinyin(hans) == pys
+
+
+def test_with_unknown_style():
+    assert lazy_pinyin('中国') == ['zhong', 'guo']
+    assert lazy_pinyin('中国', style='unknown') == ['zhōng', 'guó']
+    assert pinyin('中国') == [['zhōng'], ['guó']]
+    assert pinyin('中国', style='unknown') == [['zhōng'], ['guó']]
 
 
 if __name__ == '__main__':

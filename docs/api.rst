@@ -12,6 +12,8 @@ API
    :member-order: bysource
 
 
+.. _core_api:
+
 核心 API
 -------------
 
@@ -26,6 +28,8 @@ API
 .. autofunction:: pypinyin.slug
 
 
+.. _convert_style:
+
 风格转换
 -----------
 
@@ -34,6 +38,7 @@ API
 .. autofunction:: pypinyin.style.convert
 
 
+.. _seg:
 
 分词
 -------
