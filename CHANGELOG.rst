@@ -1,6 +1,10 @@
 Changelog
 ---------
 
+`未发布`_
+++++++++++++++++++++++++
+
+
 `0.30.1`_ (2018-04-25)
 ++++++++++++++++++++++++
 
@@ -661,3 +665,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.29.0: https://github.com/mozillazg/python-pinyin/compare/v0.28.0...v0.29.0
 .. _0.30.0: https://github.com/mozillazg/python-pinyin/compare/v0.29.0...v0.30.0
 .. _0.30.1: https://github.com/mozillazg/python-pinyin/compare/v0.30.0...v0.30.1
+
+.. _未发布: https://github.com/mozillazg/python-pinyin/compare/v0.30.1...master
