@@ -1,11 +1,22 @@
 Changelog
 ---------
 
+`0.31.0`_
+++++++++++++++++++++++++
+
+* **[New]** 增加 py.typed 标记文件，支持 `PEP 561`_
+* **[Changed]** 使用 `phrase-pinyin-data`_ v0.7.3 的词语拼音数据。
+
+  * fixed `#112`_ `#117`_ `#122`_ `#131`_
+  * 精简词组拼音，删除部分数据有误的拼音数据
+
+
 `0.30.1`_ (2018-04-25)
 ++++++++++++++++++++++++
 
-* **[Improved]** 对用户传入的已进行分词处理的数据进行二次分词以便提高准确性。
-* **[Improved]** 使用 `pinyin-data`_ v0.5.1 的拼音数据。
+* **[Improved]** 更新文档和测试。(via `7fa0b87 <https://github.com/mozillazg/python-pinyin/commit/7fa0b879df47e8a7e5af5edb5f243dd4ea645410>`_)
+* **[Improved]** 对用户传入的已进行分词处理的数据进行二次分词以便提高准确性。(via `#126`_)
+* **[Improved]** 使用 `pinyin-data`_ v0.5.1 的拼音数据。(via `#125`_)
 
 
 `0.30.0`_ (2018-02-03)
@@ -600,6 +611,13 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#119: https://github.com/mozillazg/python-pinyin/pull/119
 .. _@daya0576: https://github.com/daya0576
 .. _#121: https://github.com/mozillazg/python-pinyin/pull/121
+.. _#125: https://github.com/mozillazg/python-pinyin/pull/125
+.. _#126: https://github.com/mozillazg/python-pinyin/pull/126
+.. _#112: https://github.com/mozillazg/python-pinyin/issues/112
+.. _#117: https://github.com/mozillazg/python-pinyin/issues/117
+.. _#122: https://github.com/mozillazg/python-pinyin/issues/122
+.. _#131: https://github.com/mozillazg/python-pinyin/issues/131
+.. _PEP 561: https://www.python.org/dev/peps/pep-0561/
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -661,3 +679,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.29.0: https://github.com/mozillazg/python-pinyin/compare/v0.28.0...v0.29.0
 .. _0.30.0: https://github.com/mozillazg/python-pinyin/compare/v0.29.0...v0.30.0
 .. _0.30.1: https://github.com/mozillazg/python-pinyin/compare/v0.30.0...v0.30.1
+.. _0.31.0: https://github.com/mozillazg/python-pinyin/compare/v0.30.1...v0.31.0
