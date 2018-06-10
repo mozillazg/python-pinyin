@@ -5,8 +5,9 @@ Changelog
 ++++++++++++++++++++++++
 
 
-* **[Changed]** 使用 `phrase-pinyin-data`_ v0.7.1 的词语拼音数据。
-  * fixed `#112`_ `#117`_ `#122`_
+* **[Changed]** 使用 `phrase-pinyin-data`_ v0.7.2 的词语拼音数据。
+
+  * fixed `#112`_ `#117`_ `#122`_ `#131`_
   * 精简词组拼音，删除部分数据有误的拼音数据
 
 
@@ -615,6 +616,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#112: https://github.com/mozillazg/python-pinyin/issues/112
 .. _#117: https://github.com/mozillazg/python-pinyin/issues/117
 .. _#122: https://github.com/mozillazg/python-pinyin/issues/122
+.. _#131: https://github.com/mozillazg/python-pinyin/issues/131
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
