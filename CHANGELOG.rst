@@ -1,10 +1,10 @@
 Changelog
 ---------
 
-`0.31.0`_
+`0.31.0`_ (2018-06-10)
 ++++++++++++++++++++++++
 
-* **[New]** 增加 py.typed 标记文件，支持 `PEP 561`_
+* **[New]** 增加 py.typed 标记文件，支持 `PEP 561`_ (via `#130`_)
 * **[Changed]** 使用 `phrase-pinyin-data`_ v0.7.3 的词语拼音数据。
 
   * fixed `#112`_ `#117`_ `#122`_ `#131`_
@@ -617,6 +617,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#117: https://github.com/mozillazg/python-pinyin/issues/117
 .. _#122: https://github.com/mozillazg/python-pinyin/issues/122
 .. _#131: https://github.com/mozillazg/python-pinyin/issues/131
+.. _#130: https://github.com/mozillazg/python-pinyin/pull/130
 .. _PEP 561: https://www.python.org/dev/peps/pep-0561/
 
 
