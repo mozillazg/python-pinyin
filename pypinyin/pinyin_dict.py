@@ -19669,7 +19669,7 @@ pinyin_dict = {
     0x8454: 'hóu',
     0x8455: 'yàn',
     0x8456: 'tū',
-    0x8457: 'zhe,zhù,chú,zhuó,zhāo,zháo',
+    0x8457: 'zhù,zhe,chú,zhuó,zhāo,zháo',
     0x8458: 'zī',
     0x8459: 'xiāng',
     0x845A: 'rèn,shèn',
