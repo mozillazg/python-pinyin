@@ -10,6 +10,7 @@ jobs:
 
     environment:
       TOX_ENV: py37
+      RUN_CHECK: 1
 
     working_directory: ~/repo
 
@@ -32,9 +33,8 @@ jobs:
             pip install coveralls codecov
             pip install tox
 
-            if [[ $(python -V |grep 3.7) ]]; then
+            if [[ $RUN_CHECK == 1 ]]; then
               pip install -r requirements_dev.txt
-              export RUN_CHECK=1
             fi
 
             if [[ $(python -c "import sys; print(sys.stdin.encoding)" |grep None) ]]; then
