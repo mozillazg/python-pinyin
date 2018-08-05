@@ -1,13 +1,17 @@
 Changelog
 ---------
 
-`0.32.1`_ (2018-08-04)
+`0.33.0`_ (2018-08-05)
 ++++++++++++++++++++++++
 
+* **[Bugfixed]** 修复命令行程序在 ``sys.stdin.encoding`` 为 ``None`` 时无法正常工作的问题。
 * **[Improved]** 使用 `pinyin-data`_ v0.6.1 的拼音数据。
 * **[Improved]** 使用 `phrase-pinyin-data`_ v0.8.3 的词语拼音数据。
 
   * Fixed `#137`_
+
+* **[Changed]** 不再测试 Python 2.6 和 Python 3.3，增加测试 Python 3.7 和 PyPy3
+  即不保证程序兼容 Python 2.6 和 Python 3.3。
 
 
 `0.32.0`_ (2018-07-28)
@@ -699,4 +703,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.30.1: https://github.com/mozillazg/python-pinyin/compare/v0.30.0...v0.30.1
 .. _0.31.0: https://github.com/mozillazg/python-pinyin/compare/v0.30.1...v0.31.0
 .. _0.32.0: https://github.com/mozillazg/python-pinyin/compare/v0.31.0...v0.32.0
-.. _0.32.1: https://github.com/mozillazg/python-pinyin/compare/v0.32.0...v0.32.1
+.. _0.33.0: https://github.com/mozillazg/python-pinyin/compare/v0.32.0...v0.33.0
