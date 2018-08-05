@@ -98,7 +98,7 @@ def main():
     parser = get_parser()
     options = parser.parse_args(args)
     if PY2:
-        hans = options.hans.decode(sys.stdin.encoding)
+        hans = options.hans.decode(sys.stdin.encoding or 'utf-8')
     else:
         hans = options.hans
     func = getattr(pypinyin, options.func)

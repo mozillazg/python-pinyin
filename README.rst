@@ -11,8 +11,8 @@
 * Documentation: http://pypinyin.rtfd.io/
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
-* PyPI: https://pypi.python.org/pypi/pypinyin
-* Python version: 2.6, 2.7, pypy, 3.3, 3.4, 3.5, 3.6
+* PyPI: https://pypi.org/project/pypinyin
+* Python version: 2.7, pypy, pypy3, 3.4, 3.5, 3.6, 3.7
 
 
 特性
@@ -162,8 +162,8 @@ __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 
 
-.. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg?branch=master
-   :target: https://travis-ci.org/mozillazg/python-pinyin
+.. |Build| image:: https://circleci.com/gh/mozillazg/python-pinyin/tree/master.svg?style=svg
+   :target: https://circleci.com/gh/mozillazg/python-pinyin
 .. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg?branch=master
    :target: https://coveralls.io/r/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
