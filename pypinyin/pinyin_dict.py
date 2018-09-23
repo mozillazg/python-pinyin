@@ -22224,7 +22224,7 @@ pinyin_dict = {
     0x8E4F: 'tí',
     0x8E50: 'jí',
     0x8E51: 'niè',
-    0x8E52: 'mán,pán',
+    0x8E52: 'pán,mán',
     0x8E53: 'liū,liù',
     0x8E54: 'zàn,cán',
     0x8E55: 'bì',
