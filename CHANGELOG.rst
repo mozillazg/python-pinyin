@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+`0.33.2`_ (not release yet)
+++++++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复 `struct=True` 时韵母相关风格下没有正确处理韵母 `üan`
+
+
+
 `0.33.1`_ (2018-09-23)
 ++++++++++++++++++++++++
 
@@ -712,3 +719,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.32.0: https://github.com/mozillazg/python-pinyin/compare/v0.31.0...v0.32.0
 .. _0.33.0: https://github.com/mozillazg/python-pinyin/compare/v0.32.0...v0.33.0
 .. _0.33.1: https://github.com/mozillazg/python-pinyin/compare/v0.33.0...v0.33.1
+.. _0.33.2: https://github.com/mozillazg/python-pinyin/compare/v0.33.1...v0.33.2

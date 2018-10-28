@@ -23,7 +23,9 @@ UV_MAP = {
 }
 U_TONES = set(UV_MAP.keys())
 # ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)
-UV_RE = re.compile(r'^(j|q|x)({tones})$'.format(tones='|'.join(UV_MAP.keys())))
+UV_RE = re.compile(
+    r'^(j|q|x)({tones})(.*)$'.format(
+        tones='|'.join(UV_MAP.keys())))
 I_TONES = set(['i', 'ī', 'í', 'ǐ', 'ì'])
 
 # iu -> iou
@@ -112,7 +114,9 @@ def convert_uv(pinyin):
     ü行的韵跟声母j，q，x拼的时候，写成ju(居)，qu(区)，xu(虚)，
     ü上两点也省略；但是跟声母n，l拼的时候，仍然写成nü(女)，lü(吕)。
     """
-    return UV_RE.sub(lambda m: m.group(1) + UV_MAP[m.group(2)], pinyin)
+    return UV_RE.sub(
+        lambda m: ''.join((m.group(1), UV_MAP[m.group(2)], m.group(3))),
+        pinyin)
 
 
 def convert_iou(pinyin):
