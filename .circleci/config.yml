@@ -35,7 +35,7 @@ jobs:
             pip install tox
 
             if [[ $RUN_CHECK == 1 ]]; then
-              pip install -r requirements_dev.txt
+              pip install -U -r requirements_dev.txt
             fi
 
             if [[ $(python -c "import sys; print(sys.stdin.encoding)" |grep None) ]]; then
