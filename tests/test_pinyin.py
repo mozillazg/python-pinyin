@@ -200,6 +200,7 @@ def test_errors():
         ('⺁⺁', {'style': TONE2, 'errors': 'replace'}, ['2e812e81']),
         ('鿅', {'style': TONE2}, ['\u9fc5']),
         ('鿅', {'style': TONE2, 'errors': 'ignore'}, []),
+        ('鿅', {'style': TONE2, 'errors': '233'}, []),
         ('鿅', {'style': TONE2, 'errors': 'replace'}, ['9fc5']),
         ('鿅', {'style': TONE2, 'errors': lambda x: ['a']}, ['a']),
     )

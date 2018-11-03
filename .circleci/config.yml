@@ -121,13 +121,6 @@ jobs:
     environment:
       TOX_ENV: pypy3
 
-  py3_env:
-    <<: *DEFAULT
-    docker:
-      - image: circleci/python:3.7
-    environment:
-      TOX_ENV: py3_env
-
 
 workflows:
   version: 2
@@ -140,4 +133,3 @@ workflows:
       - python2.7
       - pypy2
       - pypy3
-      - py3_env

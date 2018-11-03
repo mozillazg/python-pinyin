@@ -16,7 +16,7 @@ help:
 .PHONY: test
 test:
 	@echo "run test"
-	py.test --cov pypinyin tests/ && py.test --cov pypinyin tests/_test_env.py
+	py.test --cov pypinyin tests/
 
 .PHONY: publish
 publish: clean
