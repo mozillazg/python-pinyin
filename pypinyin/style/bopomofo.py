@@ -14,34 +14,34 @@ from pypinyin.style._utils import replace_symbol_to_number
 
 # 注音转换表
 BOPOMOFO_REPLACE = (
-    (re.compile('^m(\d)$'), 'mu\\1'),  # 呣
-    (re.compile('^n(\d)$'), 'N\\1'),  # 嗯
-    (re.compile('^r5$'), 'er5'),  # 〜兒
-    (re.compile('iu'), 'iou'),
-    (re.compile('ui'), 'uei'),
-    (re.compile('ong'), 'ung'),
-    (re.compile('^yi?'), 'i'),
-    (re.compile('^wu?'), 'u'),
-    (re.compile('iu'), 'v'),
-    (re.compile('^([jqx])u'), '\\1v'),
-    (re.compile('([iuv])n'), '\\1en'),
-    (re.compile('^zhi?'), 'Z'),
-    (re.compile('^chi?'), 'C'),
-    (re.compile('^shi?'), 'S'),
-    (re.compile('^([zcsr])i'), '\\1'),
-    (re.compile('ai'), 'A'),
-    (re.compile('ei'), 'I'),
-    (re.compile('ao'), 'O'),
-    (re.compile('ou'), 'U'),
-    (re.compile('ang'), 'K'),
-    (re.compile('eng'), 'G'),
-    (re.compile('an'), 'M'),
-    (re.compile('en'), 'N'),
-    (re.compile('er'), 'R'),
-    (re.compile('eh'), 'E'),
-    (re.compile('([iv])e'), '\\1E'),
-    (re.compile('([^0-4])$'), '\\g<1>0'),
-    (re.compile('1$'), ''),
+    (re.compile(r'^m(\d)$'), 'mu\\1'),  # 呣
+    (re.compile(r'^n(\d)$'), 'N\\1'),  # 嗯
+    (re.compile(r'^r5$'), 'er5'),  # 〜兒
+    (re.compile(r'iu'), 'iou'),
+    (re.compile(r'ui'), 'uei'),
+    (re.compile(r'ong'), 'ung'),
+    (re.compile(r'^yi?'), 'i'),
+    (re.compile(r'^wu?'), 'u'),
+    (re.compile(r'iu'), 'v'),
+    (re.compile(r'^([jqx])u'), '\\1v'),
+    (re.compile(r'([iuv])n'), '\\1en'),
+    (re.compile(r'^zhi?'), 'Z'),
+    (re.compile(r'^chi?'), 'C'),
+    (re.compile(r'^shi?'), 'S'),
+    (re.compile(r'^([zcsr])i'), '\\1'),
+    (re.compile(r'ai'), 'A'),
+    (re.compile(r'ei'), 'I'),
+    (re.compile(r'ao'), 'O'),
+    (re.compile(r'ou'), 'U'),
+    (re.compile(r'ang'), 'K'),
+    (re.compile(r'eng'), 'G'),
+    (re.compile(r'an'), 'M'),
+    (re.compile(r'en'), 'N'),
+    (re.compile(r'er'), 'R'),
+    (re.compile(r'eh'), 'E'),
+    (re.compile(r'([iv])e'), '\\1E'),
+    (re.compile(r'([^0-4])$'), '\\g<1>0'),
+    (re.compile(r'1$'), ''),
 )
 BOPOMOFO_TABLE = dict(zip(
     'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
