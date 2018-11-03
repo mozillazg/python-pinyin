@@ -55,6 +55,12 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
 
+
+**注意事项** ：
+
+* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识。
+* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` 。
+
 命令行工具：
 
 .. code-block:: console
@@ -162,12 +168,12 @@ __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 
 
-.. |Build| image:: https://circleci.com/gh/mozillazg/python-pinyin/tree/master.svg?style=svg
+.. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg
    :target: https://circleci.com/gh/mozillazg/python-pinyin
-.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg?branch=master
-   :target: https://coveralls.io/r/mozillazg/python-pinyin
+.. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
+   :target: https://codecov.io/gh/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
-   :target: https://pypi.python.org/pypi/pypinyin
+   :target: https://pypi.org/project/pypinyin/
 
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data

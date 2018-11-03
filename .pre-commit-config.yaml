@@ -1,13 +1,15 @@
-- repo: https://github.com/pre-commit/pre-commit-hooks.git
-  sha: v0.7.1
-  hooks:
-    - id: check-merge-conflict
-    - id: debug-statements
-      exclude: 'tools/|(pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py))'
-    - id: double-quote-string-fixer
-      exclude: 'pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)'
-    - id: end-of-file-fixer
-    - id: requirements-txt-fixer
-    - id: trailing-whitespace
-    - id: flake8
-      exclude: 'tools|pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)|(docs/conf.py)'
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks.git
+    rev: v2.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: debug-statements
+        exclude: 'tools/|(pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py))'
+      - id: double-quote-string-fixer
+        exclude: 'pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)'
+      - id: end-of-file-fixer
+        exclude: '.bumpversion.cfg'
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+      - id: flake8
+        exclude: 'tools|pypinyin/(phrases_dict.py|pinyin_dict.py|phonetic_symbol.py)|(docs/conf.py)'
