@@ -26,6 +26,7 @@ jobs:
           name: install dependencies
           command: |
             pip install -U pip virtualenv --user
+            export PATH="~/.local/bin:$PATH"
 
             virtualenv venv
             . venv/bin/activate
