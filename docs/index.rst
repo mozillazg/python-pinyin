@@ -29,14 +29,14 @@
 * 支持多种不同拼音风格。
 
 
-.. |Build| image:: https://circleci.com/gh/mozillazg/python-pinyin/tree/master.svg?style=svg
+.. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg
    :target: https://circleci.com/gh/mozillazg/python-pinyin
-.. |Coverage| image:: https://img.shields.io/coveralls/mozillazg/python-pinyin/master.svg?branch=master
-   :target: https://coveralls.io/r/mozillazg/python-pinyin
+.. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
+   :target: https://codecov.io/gh/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
-   :target: https://pypi.python.org/pypi/pypinyin
+   :target: https://pypi.org/project/pypinyin/
 .. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
-   :target: https://pypi.python.org/pypi/pypinyin
+   :target: https://pypi.org/project/pypinyin/
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 
 
