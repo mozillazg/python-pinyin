@@ -99,11 +99,11 @@ def _handle_nopinyin_char(chars, errors='default'):
 def handle_nopinyin(chars, errors='default'):
     py = _handle_nopinyin_char(chars, errors=errors)
     if not py:
-        return []
+        return [[]]
     if isinstance(py, list):
-        return py
+        return [[i] for i in py]
     else:
-        return [py]
+        return [[py]]
 
 
 def single_pinyin(han, style, heteronym, errors='default', strict=True):
@@ -177,7 +177,7 @@ def _pinyin(words, style, heteronym, errors, strict=True):
 
     py = handle_nopinyin(words, errors=errors)
     if py:
-        pys.append(py)
+        pys.extend(py)
     return pys
 
 
