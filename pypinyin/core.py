@@ -99,7 +99,7 @@ def _handle_nopinyin_char(chars, errors='default'):
 def handle_nopinyin(chars, errors='default'):
     py = _handle_nopinyin_char(chars, errors=errors)
     if not py:
-        return [[]]
+        return []
     if isinstance(py, list):
         return [[i] for i in py]
     else:
