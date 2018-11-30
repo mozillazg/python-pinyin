@@ -202,6 +202,7 @@ def test_errors():
         ('鿅', {'style': TONE2, 'errors': 'ignore'}, []),
         ('鿅', {'style': TONE2, 'errors': 'replace'}, ['9fc5']),
         ('鿅', {'style': TONE2, 'errors': lambda x: ['a']}, ['a']),
+        ('鿅鿅', {'style': TONE2, 'errors': lambda x: ['a' for _ in x]}, ['a', 'a']),
     )
     for han in hans:
         assert lazy_pinyin(han[0], **han[1]) == han[2]
