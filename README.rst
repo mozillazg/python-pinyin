@@ -180,4 +180,4 @@ __ https://github.com/mozillazg/rust-pinyin
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
-.. _开发文档: http://pypinyin.mozillazg.com/zh_CN/develop/develop.html
+.. _开发文档: https://pypinyin.readthedocs.io/zh_CN/develop/develop.html

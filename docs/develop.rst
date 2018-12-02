@@ -85,13 +85,16 @@ TODO: 把这个步骤放到一个 make 命令中。
 
 1. 对输入的字符串按是否是汉字进行分词（``seg``）
 2. 对分词结果的每个词条进行获取词条拼音的逻辑
+
    1. 检查词条是否是汉字，不是汉字则走处理没有拼音数据的逻辑（``handle_nopinyin``）
    2. 检查词条是否在 ``PHRASES_DICT`` 中，如果在直接取 ``PHRASES_DICT`` 中这个词条的拼音数据
    3. 如果词条不在 ``PHRASES_DICT`` 中，遍历词条包含的字符，每个字符进行 ``single_pinyin`` 逻辑处理
 3. ``single_pinyin`` 的逻辑：
+
    1. 检查字符是否在 ``PINYIN_DICT`` 中，如果在的话，取 ``PINYIN_DICT`` 中这个字符的拼音数据
    2. 如果不在的话，走 ``handle_nopinyin`` 逻辑
 4. ``handle_nopinyin`` 逻辑: 根据 ``errors`` 参数的值返回不同的结果。
+5. 对上面的步骤获得的拼音数据按指定的拼音风格进行转换。
 
 
 * ``PHRASES_DICT``：词组拼音数据
