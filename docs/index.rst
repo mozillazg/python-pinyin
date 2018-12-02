@@ -49,6 +49,7 @@ Contents
     installation
     usage
     api
+    develop
     faq
     related
     CHANGELOG
