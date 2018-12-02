@@ -191,19 +191,13 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`
-    :param errors: 指定如何处理没有拼音的字符
+    :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
 
                    * ``'default'``: 保留原始字符
                    * ``'ignore'``: 忽略该字符
                    * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
                      (``'\\u90aa'`` => ``'90aa'``)
-                   * callable 对象: 回调函数之类的可调用对象。如果 ``errors``
-                     参数 的值是个可调用对象，那么程序会回调这个函数:
-                     ``func(char)``::
-
-                         def foobar(char):
-                             return 'a'
-                         pinyin('あ', errors=foobar)
+                   * callable 对象: 回调函数之类的可调用对象。
 
     :param heteronym: 是否启用多音字
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
