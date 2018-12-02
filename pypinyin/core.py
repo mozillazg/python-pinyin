@@ -101,9 +101,9 @@ def handle_nopinyin(chars, errors='default'):
     if not py:
         return []
     if isinstance(py, list):
-        return py
+        return [[i] for i in py]
     else:
-        return [py]
+        return [[py]]
 
 
 def single_pinyin(han, style, heteronym, errors='default', strict=True):
@@ -123,7 +123,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
 
     pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
-        return [to_fixed(pys[0], style, strict=strict)]
+        return [[to_fixed(pys[0], style, strict=strict)]]
 
     # 输出多音字的多个读音
     # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
@@ -137,7 +137,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
             continue
         py_cached[py] = py
         pinyins.append(py)
-    return pinyins
+    return [pinyins]
 
 
 def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
@@ -159,7 +159,7 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
             single = single_pinyin(i, style=style, heteronym=heteronym,
                                    errors=errors, strict=strict)
             if single:
-                py.append(single)
+                py.extend(single)
     return py
 
 
@@ -177,7 +177,7 @@ def _pinyin(words, style, heteronym, errors, strict=True):
 
     py = handle_nopinyin(words, errors=errors)
     if py:
-        pys.append(py)
+        pys.extend(py)
     return pys
 
 
