@@ -56,6 +56,11 @@
       lazy_pinyin('你好☆☆', errors=lambda x: 'star')
       ['ni', 'hao', 'star']
 
+  返回值类型为 ``list`` 时，会自动 expend list ::
+
+      lazy_pinyin('你好☆☆', errors=lambda x: ['star' for _ in x])
+      ['ni', 'hao', 'star', 'star']
+
 .. _单元测试代码: https://github.com/mozillazg/python-pinyin/blob/3d52fe821b7f55aecf5af9bad78380762484f4d9/tests/test_pinyin.py#L161-L166
 
 
