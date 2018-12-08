@@ -1,6 +1,27 @@
 Changelog
 ---------
 
+`0.34.0`_
++++++++++++++++++++++++
+
+不兼容旧版的变更
+~~~~~~~~~~~~~~~~~~
+
+* **[Changed]** 当 ``errors`` 参数的值是个回调用对象并且返回值是个 ``list`` 时，
+  会使用这个 list 来 extend 结果 list (via `#147`_ . Thanks `@howl-anderson`_ ) ::
+
+    # 更新前
+    >>> pinyin('你好☆☆', errors=lambda x: ['star' for _ in x])
+    [['nǐ'], ['hǎo'], ['star', 'star']]
+
+    # 更新后
+    >>> pinyin('你好☆☆', errors=lambda x: ['star' for _ in x])
+    [['nǐ'], ['hǎo'], ['star'], ['star']]
+
+
+详见文档: https://pypinyin.readthedocs.io/zh_CN/develop/usage.html#handle-no-pinyin
+
+
 `0.33.2`_ (2018-11-03)
 ++++++++++++++++++++++++
 
@@ -653,6 +674,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#130: https://github.com/mozillazg/python-pinyin/pull/130
 .. _PEP 561: https://www.python.org/dev/peps/pep-0561/
 .. _#137: https://github.com/mozillazg/python-pinyin/issues/137
+.. _#147: https://github.com/mozillazg/python-pinyin/pull/147
+.. _@howl-anderson: https://github.com/howl-anderson
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -719,3 +742,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.33.0: https://github.com/mozillazg/python-pinyin/compare/v0.32.0...v0.33.0
 .. _0.33.1: https://github.com/mozillazg/python-pinyin/compare/v0.33.0...v0.33.1
 .. _0.33.2: https://github.com/mozillazg/python-pinyin/compare/v0.33.1...v0.33.2
+.. _0.34.0: https://github.com/mozillazg/python-pinyin/compare/v0.33.2...v0.34.0
