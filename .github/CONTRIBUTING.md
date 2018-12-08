@@ -13,4 +13,4 @@ Thanks for contributing! :heart:
 [phrase-pinyin-data]: https://github.com/mozillazg/phrase-pinyin-data
 [issue]: https://github.com/mozillazg/python-pinyin/issues
 [pr]: https://github.com/mozillazg/python-pinyin/pulls
-[开发文档]: http://pypinyin.mozillazg.com/zh_CN/develop/develop.html
+[开发文档]: https://pypinyin.readthedocs.io/zh_CN/develop/develop.html
