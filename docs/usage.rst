@@ -37,31 +37,34 @@
 
 * ``default`` (默认行为): 不做任何处理，原样返回::
 
-      lazy_pinyin('你好☆☆')
-      ['ni', 'hao', '☆☆']
+      pinyin('你好☆☆')
+      [['nǐ'], ['hǎo'], ['☆☆']]
 * ``ignore`` : 忽略该字符 ::
 
-      lazy_pinyin('你好☆☆', errors='ignore')
-      ['ni', 'hao']
+      pinyin('你好☆☆', errors='ignore')
+      [['nǐ'], ['hǎo']]
 * ``replace`` : 替换为去掉 ``\u`` 的 unicode 编码::
 
-      lazy_pinyin('你好☆☆', errors='replace')
-      ['ni', 'hao', '26062606']
+      pinyin('你好☆☆', errors='replace')
+      [['nǐ'], ['hǎo'], ['26062606']]
 
 * callable 对象 : 提供一个回调函数，接受无拼音字符(串)作为参数,
-  支持的返回值类型: ``unicode`` 或 ``list`` ([unicode, ...]) 或 ``None`` 。
+  支持的返回值类型: ``unicode`` 或 ``list`` 或 ``None`` 。::
 
-  可参考 `单元测试代码`_  ::
+      pinyin('你好☆☆', errors=lambda x: 'star')
+      [['nǐ'], ['hǎo'], ['star']]
 
-      lazy_pinyin('你好☆☆', errors=lambda x: 'star')
-      ['ni', 'hao', 'star']
+      pinyin('你好☆☆', errors=lambda x: None)
+      [['nǐ'], ['hǎo']]
 
   返回值类型为 ``list`` 时，会自动 expend list ::
 
-      lazy_pinyin('你好☆☆', errors=lambda x: ['star' for _ in x])
-      ['ni', 'hao', 'star', 'star']
+      pinyin('你好☆☆', errors=lambda x: ['star' for _ in x])
+      [['nǐ'], ['hǎo'], ['star'], ['star']]
 
-.. _单元测试代码: https://github.com/mozillazg/python-pinyin/blob/3d52fe821b7f55aecf5af9bad78380762484f4d9/tests/test_pinyin.py#L161-L166
+      # 指定多音字
+      pinyin('你好☆☆', heteronym=True, errors=lambda x: [['star', '☆'] for _ in x])
+      [['nǐ'], ['hǎo'], ['star', '☆'], ['star', '☆']]
 
 
 .. _custom_dict:

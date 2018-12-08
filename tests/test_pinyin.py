@@ -192,22 +192,37 @@ def test_custom_pinyin_dict2_tone2():
 
 def test_errors():
     hans = (
-        ('啊', {'style': TONE2}, ['a']),
-        ('啊a', {'style': TONE2}, ['a', 'a']),
-        ('⺁', {'style': TONE2}, ['\u2e81']),
+        ('啊', {'style': TONE2}, [['a']]),
+        ('啊a', {'style': TONE2}, [['a'], ['a']]),
+        # 非中文字符，没有拼音
+        ('⺁', {'style': TONE2}, [['\u2e81']]),
         ('⺁', {'style': TONE2, 'errors': 'ignore'}, []),
-        ('⺁', {'style': TONE2, 'errors': 'replace'}, ['2e81']),
-        ('⺁⺁', {'style': TONE2, 'errors': 'replace'}, ['2e812e81']),
-        ('鿅', {'style': TONE2}, ['\u9fc5']),
+        ('⺁', {'style': TONE2, 'errors': 'replace'}, [['2e81']]),
+        ('⺁⺁', {'style': TONE2, 'errors': 'replace'}, [['2e812e81']]),
+        ('⺁⺁', {'style': TONE2, 'errors': lambda x: ['a' for _ in x]},
+         [['a'], ['a']]),
+        ('⺁⺁', {'style': TONE2, 'errors': lambda x: [['a', 'b'], ['b', 'c']]},
+         [['a'], ['b']]),
+        ('⺁⺁', {'style': TONE2, 'heteronym': True,
+                'errors': lambda x: [['a', 'b'], ['b', 'c']]},
+         [['a', 'b'], ['b', 'c']]),
+        # 中文字符，没有拼音
+        ('鿅', {'style': TONE2}, [['\u9fc5']]),
         ('鿅', {'style': TONE2, 'errors': 'ignore'}, []),
         ('鿅', {'style': TONE2, 'errors': '233'}, []),
-        ('鿅', {'style': TONE2, 'errors': 'replace'}, ['9fc5']),
-        ('鿅', {'style': TONE2, 'errors': lambda x: ['a']}, ['a']),
+        ('鿅', {'style': TONE2, 'errors': 'replace'}, [['9fc5']]),
+        ('鿅', {'style': TONE2, 'errors': lambda x: ['a']}, [['a']]),
+        ('鿅', {'style': TONE2, 'errors': lambda x: None}, []),
         ('鿅鿅', {'style': TONE2, 'errors': lambda x: ['a' for _ in x]},
-         ['a', 'a']),
+         [['a'], ['a']]),
+        ('鿅鿅', {'style': TONE2, 'errors': lambda x: [['a', 'b']]},
+         [['a'], ['a']]),
+        ('鿅鿅', {'style': TONE2, 'heteronym': True,
+                'errors': lambda x: [['a', 'b']]},
+         [['a', 'b'], ['a', 'b']]),
     )
     for han in hans:
-        assert lazy_pinyin(han[0], **han[1]) == han[2]
+        assert pinyin(han[0], **han[1]) == han[2]
 
 
 def test_errors_callable():
@@ -219,8 +234,8 @@ def test_errors_callable():
             return 'a' * len(chars)
 
     n = 5
-    assert lazy_pinyin('あ' * n, errors=foobar) == ['a' * n]
-    assert lazy_pinyin('あ' * n, errors=Foobar()) == ['a' * n]
+    assert pinyin('あ' * n, errors=foobar) == [['a' * n]]
+    assert pinyin('あ' * n, errors=Foobar()) == [['a' * n]]
 
 
 def test_simple_seg():

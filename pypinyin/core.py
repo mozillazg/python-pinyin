@@ -96,11 +96,19 @@ def _handle_nopinyin_char(chars, errors='default'):
             return text_type('%x' % ord(chars))
 
 
-def handle_nopinyin(chars, errors='default'):
+def handle_nopinyin(chars, errors='default', heteronym=True):
     py = _handle_nopinyin_char(chars, errors=errors)
     if not py:
         return []
     if isinstance(py, list):
+        # 包含多音字信息
+        if isinstance(py[0], list):
+            if heteronym:
+                return py
+            # [[a, b], [c, d]]
+            # [[a], [c]]
+            return [[x[0]] for x in py]
+
         return [[i] for i in py]
     else:
         return [[py]]
@@ -119,7 +127,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
     num = ord(han)
     # 处理没有拼音的字符
     if num not in PINYIN_DICT:
-        return handle_nopinyin(han, errors=errors)
+        return handle_nopinyin(han, errors=errors, heteronym=heteronym)
 
     pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
@@ -175,7 +183,7 @@ def _pinyin(words, style, heteronym, errors, strict=True):
                             errors=errors, strict=strict)
         return pys
 
-    py = handle_nopinyin(words, errors=errors)
+    py = handle_nopinyin(words, errors=errors, heteronym=heteronym)
     if py:
         pys.extend(py)
     return pys
