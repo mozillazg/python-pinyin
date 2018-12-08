@@ -75,6 +75,8 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
 详细文档请访问：http://pypinyin.rtfd.io/ 。
 
+项目代码开发方面的问题可以看看 `开发文档`_ 。
+
 
 FAQ
 ---------
@@ -178,3 +180,4 @@ __ https://github.com/mozillazg/rust-pinyin
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
+.. _开发文档: https://pypinyin.readthedocs.io/zh_CN/develop/develop.html

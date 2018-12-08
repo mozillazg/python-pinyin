@@ -96,14 +96,22 @@ def _handle_nopinyin_char(chars, errors='default'):
             return text_type('%x' % ord(chars))
 
 
-def handle_nopinyin(chars, errors='default'):
+def handle_nopinyin(chars, errors='default', heteronym=True):
     py = _handle_nopinyin_char(chars, errors=errors)
     if not py:
         return []
     if isinstance(py, list):
-        return py
+        # 包含多音字信息
+        if isinstance(py[0], list):
+            if heteronym:
+                return py
+            # [[a, b], [c, d]]
+            # [[a], [c]]
+            return [[x[0]] for x in py]
+
+        return [[i] for i in py]
     else:
-        return [py]
+        return [[py]]
 
 
 def single_pinyin(han, style, heteronym, errors='default', strict=True):
@@ -119,11 +127,11 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
     num = ord(han)
     # 处理没有拼音的字符
     if num not in PINYIN_DICT:
-        return handle_nopinyin(han, errors=errors)
+        return handle_nopinyin(han, errors=errors, heteronym=heteronym)
 
     pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
-        return [to_fixed(pys[0], style, strict=strict)]
+        return [[to_fixed(pys[0], style, strict=strict)]]
 
     # 输出多音字的多个读音
     # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
@@ -137,7 +145,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
             continue
         py_cached[py] = py
         pinyins.append(py)
-    return pinyins
+    return [pinyins]
 
 
 def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
@@ -159,7 +167,7 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
             single = single_pinyin(i, style=style, heteronym=heteronym,
                                    errors=errors, strict=strict)
             if single:
-                py.append(single)
+                py.extend(single)
     return py
 
 
@@ -175,9 +183,9 @@ def _pinyin(words, style, heteronym, errors, strict=True):
                             errors=errors, strict=strict)
         return pys
 
-    py = handle_nopinyin(words, errors=errors)
+    py = handle_nopinyin(words, errors=errors, heteronym=heteronym)
     if py:
-        pys.append(py)
+        pys.extend(py)
     return pys
 
 
@@ -191,19 +199,13 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`
-    :param errors: 指定如何处理没有拼音的字符
+    :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
 
                    * ``'default'``: 保留原始字符
                    * ``'ignore'``: 忽略该字符
                    * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
                      (``'\\u90aa'`` => ``'90aa'``)
-                   * callable 对象: 回调函数之类的可调用对象。如果 ``errors``
-                     参数 的值是个可调用对象，那么程序会回调这个函数:
-                     ``func(char)``::
-
-                         def foobar(char):
-                             return 'a'
-                         pinyin('あ', errors=foobar)
+                   * callable 对象: 回调函数之类的可调用对象。
 
     :param heteronym: 是否启用多音字
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`

@@ -14,9 +14,9 @@ help:
 	@echo "clean-test - remove test and coverage artifacts"
 
 .PHONY: test
-test:
+test: lint
 	@echo "run test"
-	py.test --cov pypinyin tests/ && py.test --cov pypinyin tests/_test_env.py
+	py.test --cov pypinyin tests/
 
 .PHONY: publish
 publish: clean
@@ -75,3 +75,18 @@ clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+
+rebase_master:
+	git fetch origin && git rebase origin/master
+
+merge_dev:
+	git merge --no-ff origin/develop
+
+bump_patch:
+	bumpversion --verbose patch
+
+bump_minor:
+	bumpversion --verbose minor
+
+start_next:
+	git push && git push --tags && git checkout develop && git rebase master && git push

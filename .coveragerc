@@ -1,4 +1,5 @@
 [run]
+branch = True
 omit =
     # pypinyin/runner.py
     pypinyin/__main__.py
