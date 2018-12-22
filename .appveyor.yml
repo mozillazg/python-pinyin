@@ -1,0 +1,26 @@
+version: '{branch}-{build}'
+build: off
+cache:
+  - 'C:\\tmp'
+environment:
+  matrix:
+    - PYTHON: 'C:\\Python27'
+      TOXENV: 'py27'
+    - PYTHON: 'C:\\Python34'
+      TOXENV: 'py34'
+    - PYTHON: 'C:\\Python35'
+      TOXENV: 'py35'
+    - PYTHON: 'C:\\Python36'
+      TOXENV: 'py36'
+    - PYTHON: 'C:\\Python37'
+      TOXENV: 'py37'
+
+install:
+  - 'C:\\Python37\\python -m pip install tox'
+
+test_script:
+  - 'C:\\Python37\\Scripts\\tox'
+
+on_failure:
+  - ps: dir 'env:'
+  - ps: get-content .tox\*\log\*

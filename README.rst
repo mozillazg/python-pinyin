@@ -1,7 +1,7 @@
 汉字拼音转换工具（Python 版）
 =============================
 
-|Build| |Coverage| |Pypi version|
+|Build| |appveyor| |Coverage| |Pypi version|
 
 
 将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
@@ -172,6 +172,8 @@ __ https://github.com/mozillazg/rust-pinyin
 
 .. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg
    :target: https://circleci.com/gh/mozillazg/python-pinyin
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/ni8gdyextfa85yqo/branch/master?svg=true
+   :target: https://ci.appveyor.com/project/mozillazg/python-pinyin
 .. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
    :target: https://codecov.io/gh/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
