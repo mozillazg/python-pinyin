@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+`0.35.0`_ (2019-02-24)
++++++++++++++++++++++++
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.9.0 的词语拼音数据。 Fixed `#154`_ `#149`_
+* **[New]** 支持 ``朝阳`` 这种一个词多个音（ ``'朝阳': [['zhāo', 'cháo'], ['yáng']]`` ）在多音字模式下输出多个音。 Fixed `#154`_
+
+
 `0.34.1`_ (2018-12-30)
 +++++++++++++++++++++++
 
@@ -683,6 +690,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#147: https://github.com/mozillazg/python-pinyin/pull/147
 .. _@howl-anderson: https://github.com/howl-anderson
 .. _#151: https://github.com/mozillazg/python-pinyin/issues/151
+.. _#154: https://github.com/mozillazg/python-pinyin/issues/154
+.. _#149: https://github.com/mozillazg/python-pinyin/issues/149
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -751,3 +760,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.33.2: https://github.com/mozillazg/python-pinyin/compare/v0.33.1...v0.33.2
 .. _0.34.0: https://github.com/mozillazg/python-pinyin/compare/v0.33.2...v0.34.0
 .. _0.34.1: https://github.com/mozillazg/python-pinyin/compare/v0.34.0...v0.34.1
+.. _0.35.0: https://github.com/mozillazg/python-pinyin/compare/v0.34.1...v0.35.0

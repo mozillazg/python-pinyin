@@ -426,6 +426,68 @@ def test_with_unknown_style():
     assert pinyin('中国', style='unknown') == [['zhōng'], ['guó']]
 
 
+@pytest.mark.parametrize('kwargs,result', [
+    [{}, [['zh\u014dng', 'zh\xf2ng'], ['x\u012bn']]],
+    [dict(strict=False), [['zh\u014dng', 'zh\xf2ng'], ['x\u012bn']]],
+    [dict(style=NORMAL), [['zhong'], ['xin']]],
+    [dict(style=NORMAL, strict=False), [['zhong'], ['xin']]],
+    [dict(style=TONE), [['zh\u014dng', 'zh\xf2ng'], ['x\u012bn']]],
+    [dict(style=TONE, strict=False), [
+        ['zh\u014dng', 'zh\xf2ng'], ['x\u012bn']]],
+    [dict(style=TONE2), [['zho1ng', 'zho4ng'], ['xi1n']]],
+    [dict(style=TONE2, strict=False), [['zho1ng', 'zho4ng'], ['xi1n']]],
+    [dict(style=TONE3), [['zhong1', 'zhong4'], ['xin1']]],
+    [dict(style=TONE3, strict=False), [['zhong1', 'zhong4'], ['xin1']]],
+    [dict(style=INITIALS), [['zh'], ['x']]],
+    [dict(style=INITIALS, strict=False), [['zh'], ['x']]],
+    [dict(style=FIRST_LETTER), [['z'], ['x']]],
+    [dict(style=FIRST_LETTER, strict=False), [['z'], ['x']]],
+    [dict(style=FINALS), [['ong'], ['in']]],
+    [dict(style=FINALS, strict=False), [['ong'], ['in']]],
+    [dict(style=FINALS_TONE), [['\u014dng', '\xf2ng'], ['\u012bn']]],
+    [dict(style=FINALS_TONE, strict=False),  [
+        ['\u014dng', '\xf2ng'], ['\u012bn']]],
+    [dict(style=FINALS_TONE2), [['o1ng', 'o4ng'], ['i1n']]],
+    [dict(style=FINALS_TONE2, strict=False),  [['o1ng', 'o4ng'], ['i1n']]],
+    [dict(style=FINALS_TONE3), [['ong1', 'ong4'], ['in1']]],
+    [dict(style=FINALS_TONE3, strict=False), [['ong1', 'ong4'], ['in1']]],
+])
+def test_heteronym_and_style(kwargs, result):
+    hans = '中心'
+    kwargs['heteronym'] = True
+    assert pinyin(hans, **kwargs) == result
+
+
+@pytest.mark.parametrize('kwargs,result', [
+    [{}, [['zhāo', 'cháo'], ['yáng']]],
+    [dict(strict=False), [['zhāo', 'cháo'], ['yáng']]],
+    [dict(style=NORMAL), [['zhao', 'chao'], ['yang']]],
+    [dict(style=NORMAL, strict=False), [['zhao', 'chao'], ['yang']]],
+    [dict(style=TONE), [['zhāo', 'cháo'], ['yáng']]],
+    [dict(style=TONE, strict=False), [['zhāo', 'cháo'], ['yáng']]],
+    [dict(style=TONE2), [['zha1o', 'cha2o'], ['ya2ng']]],
+    [dict(style=TONE2, strict=False), [['zha1o', 'cha2o'], ['ya2ng']]],
+    [dict(style=TONE3), [['zhao1', 'chao2'], ['yang2']]],
+    [dict(style=TONE3, strict=False), [['zhao1', 'chao2'], ['yang2']]],
+    [dict(style=INITIALS), [['zh', 'ch'], ['']]],
+    [dict(style=INITIALS, strict=False), [['zh', 'ch'], ['y']]],
+    [dict(style=FIRST_LETTER), [['z', 'c'], ['y']]],
+    [dict(style=FIRST_LETTER, strict=False), [['z', 'c'], ['y']]],
+    [dict(style=FINALS), [['ao'], ['iang']]],
+    [dict(style=FINALS, strict=False), [['ao'], ['ang']]],
+    [dict(style=FINALS_TONE), [['āo', 'áo'], ['iáng']]],
+    [dict(style=FINALS_TONE, strict=False),  [['āo', 'áo'], ['áng']]],
+    [dict(style=FINALS_TONE2), [['a1o', 'a2o'], ['ia2ng']]],
+    [dict(style=FINALS_TONE2, strict=False),  [['a1o', 'a2o'], ['a2ng']]],
+    [dict(style=FINALS_TONE3), [['ao1', 'ao2'], ['iang2']]],
+    [dict(style=FINALS_TONE3, strict=False), [['ao1', 'ao2'], ['ang2']]],
+])
+def test_heteronym_and_style_phrase(kwargs, result):
+    hans = '朝阳'
+    kwargs['heteronym'] = True
+    assert pinyin(hans, **kwargs) == result
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
