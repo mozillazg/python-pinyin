@@ -35,4 +35,4 @@ if __name__ == '__main__':
     out_f = sys.argv[2]
 
     with open(in_f) as in_fp, open(out_f, 'w') as out_fp:
-            main(in_fp, out_fp)
+        main(in_fp, out_fp)
