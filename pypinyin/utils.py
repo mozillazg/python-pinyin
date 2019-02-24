@@ -66,3 +66,11 @@ def _replace_tone2_style_dict_to_default(string):
         return d.get(s) or s
 
     return regex.sub(_replace, string)
+
+
+def _remove_dup_items(lst):
+    new_lst = []
+    for item in lst:
+        if item not in new_lst:
+            new_lst.append(item)
+    return new_lst

@@ -12,7 +12,8 @@ from pypinyin.constants import (
     RE_HANS, Style
 )
 from pypinyin.contrib import mmseg
-from pypinyin.utils import simple_seg, _replace_tone2_style_dict_to_default
+from pypinyin.utils import (
+    simple_seg, _replace_tone2_style_dict_to_default, _remove_dup_items)
 from pypinyin.style import auto_discover, convert as convert_style
 
 auto_discover()
@@ -80,6 +81,9 @@ def to_fixed(pinyin, style, strict=True):
     return convert_style(pinyin, style=style, strict=strict, default=pinyin)
 
 
+_to_fixed = to_fixed
+
+
 def _handle_nopinyin_char(chars, errors='default'):
     """处理没有拼音的字符"""
     if callable_check(errors):
@@ -131,7 +135,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
 
     pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
     if not heteronym:
-        return [[to_fixed(pys[0], style, strict=strict)]]
+        return [[_to_fixed(pys[0], style, strict=strict)]]
 
     # 输出多音字的多个读音
     # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
@@ -140,7 +144,7 @@ def single_pinyin(han, style, heteronym, errors='default', strict=True):
     py_cached = {}
     pinyins = []
     for i in pys:
-        py = to_fixed(i, style, strict=strict)
+        py = _to_fixed(i, style, strict=strict)
         if py in py_cached:
             continue
         py_cached[py] = py
@@ -161,7 +165,8 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
     if phrase in PHRASES_DICT:
         py = deepcopy(PHRASES_DICT[phrase])
         for idx, item in enumerate(py):
-            py[idx] = [to_fixed(item[0], style=style, strict=strict)]
+            py[idx] = _remove_dup_items([
+                _to_fixed(x, style=style, strict=strict) for x in item])
     else:
         for i in phrase:
             single = single_pinyin(i, style=style, heteronym=heteronym,
