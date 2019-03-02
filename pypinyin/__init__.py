@@ -28,7 +28,7 @@ from pypinyin.core import (     # noqa
 )
 
 __title__ = 'pypinyin'
-__version__ = '0.35.0'
+__version__ = '0.35.1'
 __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2016 mozillazg, 闲耘'
