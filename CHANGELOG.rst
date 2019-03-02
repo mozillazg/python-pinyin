@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+`0.35.1`_ (2019-03-02)
++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复 ``朝阳`` 在 ``heteronym=False`` 时输出了多个音的情况。
+
+
 `0.35.0`_ (2019-02-24)
 +++++++++++++++++++++++
 
@@ -761,3 +767,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.34.0: https://github.com/mozillazg/python-pinyin/compare/v0.33.2...v0.34.0
 .. _0.34.1: https://github.com/mozillazg/python-pinyin/compare/v0.34.0...v0.34.1
 .. _0.35.0: https://github.com/mozillazg/python-pinyin/compare/v0.34.1...v0.35.0
+.. _0.35.1: https://github.com/mozillazg/python-pinyin/compare/v0.35.0...v0.35.1

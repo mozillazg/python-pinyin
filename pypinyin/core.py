@@ -165,8 +165,11 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
     if phrase in PHRASES_DICT:
         py = deepcopy(PHRASES_DICT[phrase])
         for idx, item in enumerate(py):
-            py[idx] = _remove_dup_items([
-                _to_fixed(x, style=style, strict=strict) for x in item])
+            if heteronym:
+                py[idx] = _remove_dup_items([
+                    _to_fixed(x, style=style, strict=strict) for x in item])
+            else:
+                py[idx] = [_to_fixed(item[0], style=style, strict=strict)]
     else:
         for i in phrase:
             single = single_pinyin(i, style=style, heteronym=heteronym,
