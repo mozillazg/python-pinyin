@@ -137,17 +137,14 @@
     In [4]: lazy_pinyin('乌', style=Style.INITIALS, strict=False)
     Out[4]: ['w']
 
-    In [5]: lazy_pinyin('迂', style=Style.FINALS_TONE, strict=False)
-    Out[5]: ['ū']
+    In [5]: lazy_pinyin('迂', style=Style.TONE)
+    Out[5]: ['yū']
 
-    In [6]: lazy_pinyin('迂', style=Style.TONE)
-    Out[6]: ['yū']
+    In [6]: lazy_pinyin('迂', style=Style.FINALS_TONE)
+    Out[6]: ['ǖ']
 
-    In [7]: lazy_pinyin('迂', style=Style.FINALS_TONE)
-    Out[7]: ['ǖ']
-
-    In [8]: lazy_pinyin('迂', style=Style.FINALS_TONE, strict=False)
-    Out[8]: ['ū']
+    In [7]: lazy_pinyin('迂', style=Style.FINALS_TONE, strict=False)
+    Out[7]: ['ū']
 
 
 当 ``strict=True`` 时根据 `《汉语拼音方案》`_ 的如下规则处理声母、在韵母相关风格下还原正确的韵母：
