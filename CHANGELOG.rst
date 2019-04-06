@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+`0.35.2`_ (2019-xx-yy)
++++++++++++++++++++++++
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.9.2 的词语拼音数据。 Fixed `#159`_ `#160`_
+* **[Improved]** 使用 `pinyin-data`_ v0.7.0 的拼音数据。
+
+
 `0.35.1`_ (2019-03-02)
 +++++++++++++++++++++++
 
@@ -44,7 +51,7 @@ Changelog
 `0.33.2`_ (2018-11-03)
 ++++++++++++++++++++++++
 
-* **[Bugfixed]** 修复 ``struct=True`` 时韵母相关风格下没有正确处理韵母 ``üan`` 的问题。
+* **[Bugfixed]** 修复 ``strict=True`` 时韵母相关风格下没有正确处理韵母 ``üan`` 的问题。
 
 
 `0.33.1`_ (2018-09-23)
@@ -97,7 +104,7 @@ Changelog
 
 * **[New]** 支持有拼音的非汉字字符 ``〇`` (via `#119`_)。
 * **[Changed]** 修复之前无意中把 ``pinyin`` 函数中的 ``strict`` 参数的默认值修改为了 ``False`` ，
-  现在把 ``strict`` 参数的默认值恢复为预期的 ``True`` (via `#121`_)。
+  现在把 ``strict`` 参数的默认值恢复为预期的 ``True`` (via `#121`_)。关于 ``strict`` 参数的影响详见文档： `strict 参数的影响`_
 
 
 `0.29.0`_ (2018-01-14)
@@ -698,6 +705,9 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#151: https://github.com/mozillazg/python-pinyin/issues/151
 .. _#154: https://github.com/mozillazg/python-pinyin/issues/154
 .. _#149: https://github.com/mozillazg/python-pinyin/issues/149
+.. _#159: https://github.com/mozillazg/python-pinyin/issues/159
+.. _#160: https://github.com/mozillazg/python-pinyin/issues/160
+.. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -768,3 +778,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.34.1: https://github.com/mozillazg/python-pinyin/compare/v0.34.0...v0.34.1
 .. _0.35.0: https://github.com/mozillazg/python-pinyin/compare/v0.34.1...v0.35.0
 .. _0.35.1: https://github.com/mozillazg/python-pinyin/compare/v0.35.0...v0.35.1
+.. _0.35.2: https://github.com/mozillazg/python-pinyin/compare/v0.35.1...v0.35.2
