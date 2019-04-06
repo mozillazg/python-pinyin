@@ -4,7 +4,7 @@ Changelog
 `0.35.2`_ (2019-xx-yy)
 +++++++++++++++++++++++
 
-* **[Improved]** 使用 `phrase-pinyin-data`_ v0.9.1 的词语拼音数据。 Fixed `#159`_
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.9.2 的词语拼音数据。 Fixed `#159`_ `#160`_
 * **[Improved]** 使用 `pinyin-data`_ v0.7.0 的拼音数据。
 
 
@@ -706,6 +706,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#154: https://github.com/mozillazg/python-pinyin/issues/154
 .. _#149: https://github.com/mozillazg/python-pinyin/issues/149
 .. _#159: https://github.com/mozillazg/python-pinyin/issues/159
+.. _#160: https://github.com/mozillazg/python-pinyin/issues/160
 .. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
 
 
