@@ -1,21 +1,33 @@
-version: '{branch}-{build}'
+version: "{branch}-{build}"
+image: Visual Studio 2017
 build: off
 cache:
   - 'C:\\tmp'
 environment:
   matrix:
     - PYTHON: 'C:\\Python27'
-      TOXENV: 'py27'
+      TOXENV: "py27"
+    - PYTHON: 'C:\\Python27-x64'
+      TOXENV: "py27"
     - PYTHON: 'C:\\Python34'
-      TOXENV: 'py34'
+      TOXENV: "py34"
+    - PYTHON: 'C:\\Python34-x64'
+      TOXENV: "py34"
     - PYTHON: 'C:\\Python35'
-      TOXENV: 'py35'
+      TOXENV: "py35"
+    - PYTHON: 'C:\\Python35-x64'
+      TOXENV: "py35"
     - PYTHON: 'C:\\Python36'
-      TOXENV: 'py36'
+      TOXENV: "py36"
+    - PYTHON: 'C:\\Python36-x64'
+      TOXENV: "py36"
     - PYTHON: 'C:\\Python37'
-      TOXENV: 'py37'
+      TOXENV: "py37"
+    - PYTHON: 'C:\\Python37-x64'
+      TOXENV: "py37"
 
 install:
+  - 'C:\\Python37\\python -V'
   - 'C:\\Python37\\python -m pip install tox'
 
 test_script:
