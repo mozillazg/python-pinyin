@@ -12,7 +12,10 @@ from __future__ import unicode_literals
 from pypinyin.constants import Style
 from pypinyin.style import register
 from pypinyin.style._constants import RE_TONE3
-from pypinyin.style._utils import replace_symbol_to_number, get_initials, get_finals
+from pypinyin.style._utils import (
+    replace_symbol_to_number,
+    get_initials,
+    get_finals)
 
 
 class ToneConverter(object):
