@@ -8,5 +8,7 @@ class ToneConverter(object):
 
     def to_tone3(self, pinyin: Text, **kwargs: Any) -> Text: ...
 
+    def to_tone4(self, pinyin: Text, **kwargs: Any) -> Text: ...
+
 
 converter = ...  # type: ToneConverter

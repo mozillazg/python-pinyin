@@ -21,6 +21,8 @@ class Style(IntEnum):
 
     TONE3 = ...
 
+    TONE4 = ...
+
     INITIALS = ...
 
     FIRST_LETTER = ...
@@ -46,17 +48,17 @@ NORMAL = ...  # type: Style
 STYLE_NORMAL = ...  # type: Style
 TONE = ...  # type: Style
 STYLE_TONE = ...  # type: Style
-TONE2  = ...  # type: Style
+TONE2 = ...  # type: Style
 STYLE_TONE2 = ...  # type: Style
 TONE3 = ...  # type: Style
 STYLE_TONE3 = ...  # type: Style
 INITIALS = ...  # type: Style
 STYLE_INITIALS = ...  # type: Style
-FIRST_LETTER  = ...  # type: Style
+FIRST_LETTER = ...  # type: Style
 STYLE_FIRST_LETTER = ...  # type: Style
 FINALS = ...  # type: Style
 STYLE_FINALS = ...  # type: Style
-FINALS_TONE  = ...  # type: Style
+FINALS_TONE = ...  # type: Style
 STYLE_FINALS_TONE = ...  # type: Style
 FINALS_TONE2 = ...  # type: Style
 STYLE_FINALS_TONE2 = ...  # type: Style

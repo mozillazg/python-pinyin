@@ -66,10 +66,12 @@ class Style(IntEnum):
     TONE2 = 2
     #: 声调风格3，即拼音声调在各个拼音之后，用数字 [1-4] 进行表示。如： 中国 -> ``zhong1 guo2``
     TONE3 = 8
+    #: 声调风格4，即拼音声调在各个拼音之后，声母韵母空格分隔，用数字 [1-4] 进行表示。如： 中国 -> ``zh ong1 g uo2``
+    TONE4 = 16
     #: 声母风格，只返回各个拼音的声母部分（注：有的拼音没有声母，详见 `#27`_）。如： 中国 -> ``zh g``
     INITIALS = 3
     #: 首字母风格，只返回拼音的首字母部分。如： 中国 -> ``z g``
-    FIRST_LETTER = 4
+    FIRST_LETTER = 1 << 2
     #: 韵母风格，只返回各个拼音的韵母部分，不带声调。如： 中国 -> ``ong uo``
     FINALS = 5
     #: 标准韵母风格，带声调，声调在韵母第一个字母上。如：中国 -> ``ōng uó``
@@ -92,6 +94,7 @@ NORMAL = STYLE_NORMAL = Style.NORMAL
 TONE = STYLE_TONE = Style.TONE
 TONE2 = STYLE_TONE2 = Style.TONE2
 TONE3 = STYLE_TONE3 = Style.TONE3
+TONE4 = STYLE_TONE4 = Style.TONE4
 INITIALS = STYLE_INITIALS = Style.INITIALS
 FIRST_LETTER = STYLE_FIRST_LETTER = Style.FIRST_LETTER
 FINALS = STYLE_FINALS = Style.FINALS
