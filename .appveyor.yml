@@ -27,11 +27,14 @@ environment:
       TOXENV: "py37"
 
 install:
-  - 'C:\\Python37\\python -V'
-  - 'C:\\Python37\\python -m pip install tox'
+  - '%PYTHON%\\python -V'
+  - "%PYTHON%\\python -m pip install tox"
 
 test_script:
-  - 'C:\\Python37\\Scripts\\tox'
+  - '%PYTHON%\\Scripts\\tox'
+
+pull_requests:
+  do_not_increment_build_number: true
 
 on_failure:
   - ps: dir 'env:'
