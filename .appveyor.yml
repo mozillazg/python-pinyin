@@ -2,7 +2,7 @@ version: "{branch}-{build}"
 image: Visual Studio 2017
 build: off
 cache:
-  - 'C:\\tmp'
+  - '%userprofile%\\AppData\\Local\\pip'
 environment:
   matrix:
     - PYTHON: 'C:\\Python27'
