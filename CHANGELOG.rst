@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+`0.35.3`_ (2019-xx-yy)
+++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复鼻音 ``m̀`` 无法转换为不含声调结果的问题。
+
+
 `0.35.2`_ (2019-04-06)
 +++++++++++++++++++++++
 
@@ -779,3 +785,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.35.0: https://github.com/mozillazg/python-pinyin/compare/v0.34.1...v0.35.0
 .. _0.35.1: https://github.com/mozillazg/python-pinyin/compare/v0.35.0...v0.35.1
 .. _0.35.2: https://github.com/mozillazg/python-pinyin/compare/v0.35.1...v0.35.2
+.. _0.35.3: https://github.com/mozillazg/python-pinyin/compare/v0.35.2...v0.35.3

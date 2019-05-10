@@ -14,7 +14,7 @@ PHONETIC_SYMBOL_DICT = phonetic_symbol.phonetic_symbol.copy()
 # 匹配带声调字符的正则表达式
 RE_PHONETIC_SYMBOL = re.compile(
     r'[{0}]'.format(
-        re.escape(''.join(PHONETIC_SYMBOL_DICT.keys()))
+        re.escape(''.join(x for x in PHONETIC_SYMBOL_DICT if len(x) == 1))
     )
 )
 
