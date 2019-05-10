@@ -5,6 +5,8 @@ Changelog
 ++++++++++++++++++++++++
 
 * **[Bugfixed]** 修复鼻音 ``m̀`` 无法转换为不含声调结果的问题。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.0 的词语拼音数据。
+  Fixed `#166`_ `#167`_ `#169`_ `#170`_
 
 
 `0.35.2`_ (2019-04-06)
@@ -714,6 +716,10 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#159: https://github.com/mozillazg/python-pinyin/issues/159
 .. _#160: https://github.com/mozillazg/python-pinyin/issues/160
 .. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
+.. _#166: https://github.com/mozillazg/python-pinyin/issues/166
+.. _#167: https://github.com/mozillazg/python-pinyin/issues/167
+.. _#169: https://github.com/mozillazg/python-pinyin/issues/169
+.. _#170: https://github.com/mozillazg/python-pinyin/issues/170
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
