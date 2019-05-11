@@ -57,7 +57,7 @@ def replace_symbol_to_number(pinyin):
         return PHONETIC_SYMBOL_DICT[symbol]
 
     # 替换拼音中的带声调字符
-    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin)
+    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin).replace('m̀', 'm4')
 
 
 def replace_symbol_to_no_symbol(pinyin):
@@ -68,13 +68,13 @@ def replace_symbol_to_no_symbol(pinyin):
         return RE_NUMBER.sub(r'', PHONETIC_SYMBOL_DICT[symbol])
 
     # 替换拼音中的带声调字符
-    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin)
+    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin).replace('m̀', 'm')
 
 
 def has_finals(pinyin):
     """判断是否有韵母"""
-    # 鼻音: 'ḿ', 'ń', 'ň', 'ǹ ' 没有韵母
-    for symbol in ['\u1e3f', '\u0144', '\u0148', '\u01f9']:
+    # 鼻音: 'ḿ', 'm̀', 'ń', 'ň', 'ǹ ' 没有韵母
+    for symbol in ['ḿ', 'm̀', 'ń', 'ň', 'ǹ']:
         if symbol in pinyin:
             return False
 

@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+`0.35.3`_ (2019-xx-yy)
+++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复鼻音 ``m̀`` 无法转换为不含声调结果的问题。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.0 的词语拼音数据。
+  Fixed `#166`_ `#167`_ `#169`_ `#170`_
+* **[Improved]** Windows CI 增加在 x64 下跑测试 (via `#164`_ Thanks `@hanabi1224`_)
+
+
 `0.35.2`_ (2019-04-06)
 +++++++++++++++++++++++
 
@@ -708,6 +717,12 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#159: https://github.com/mozillazg/python-pinyin/issues/159
 .. _#160: https://github.com/mozillazg/python-pinyin/issues/160
 .. _strict 参数的影响: https://pypinyin.readthedocs.io/zh_CN/master/usage.html#strict
+.. _#166: https://github.com/mozillazg/python-pinyin/issues/166
+.. _#167: https://github.com/mozillazg/python-pinyin/issues/167
+.. _#169: https://github.com/mozillazg/python-pinyin/issues/169
+.. _#170: https://github.com/mozillazg/python-pinyin/issues/170
+.. _#164: https://github.com/mozillazg/python-pinyin/pull/164
+.. _@hanabi1224: https://github.com/hanabi1224
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -779,3 +794,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.35.0: https://github.com/mozillazg/python-pinyin/compare/v0.34.1...v0.35.0
 .. _0.35.1: https://github.com/mozillazg/python-pinyin/compare/v0.35.0...v0.35.1
 .. _0.35.2: https://github.com/mozillazg/python-pinyin/compare/v0.35.1...v0.35.2
+.. _0.35.3: https://github.com/mozillazg/python-pinyin/compare/v0.35.2...v0.35.3

@@ -518,6 +518,33 @@ def test_heteronym_and_style_phrase(kwargs, result):
     assert pinyin(hans, **kwargs) == result
 
 
+def test_m4():
+    # U+5463: ḿ,móu,m̀  # 呣
+    han = '呣'
+    assert pinyin(han) == [['ḿ']]
+    assert pinyin(han, heteronym=True) == [['ḿ', 'móu', 'm̀']]
+    assert pinyin(
+        han, heteronym=True, style=NORMAL) == [['m', 'mou']]
+    assert pinyin(
+        han, heteronym=True, style=TONE) == [['ḿ', 'móu', 'm̀']]
+    assert pinyin(
+        han, heteronym=True, style=TONE2) == [['m2', 'mo2u', 'm4']]
+    assert pinyin(
+        han, heteronym=True, style=TONE3) == [['m2', 'mou2', 'm4']]
+    assert pinyin(
+        han, heteronym=True, style=INITIALS) == [['', 'm']]  # TODO: fix ''
+    assert pinyin(
+        han, heteronym=True, style=FIRST_LETTER) == [['m']]
+    assert pinyin(
+        han, heteronym=True, style=FINALS) == [['m', 'ou']]
+    assert pinyin(
+        han, heteronym=True, style=FINALS_TONE) == [['ḿ', 'óu', 'm̀']]
+    assert pinyin(
+        han, heteronym=True, style=FINALS_TONE2) == [['m2', 'o2u', 'm4']]
+    assert pinyin(
+        han, heteronym=True, style=FINALS_TONE3) == [['m2', 'ou2', 'm4']]
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
