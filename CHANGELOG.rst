@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+`0.35.4`_ (2019-07-13)
++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复 ``m̄`` ``ê̄``  ``ế`` ``ê̌`` ``ề`` 这几个音无法转换为不含声调结果的问题。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.1 的词语拼音数据。 Fixed `#174`_
+* **[Improved]** 使用 `pinyin-data`_ v0.8.0 的拼音数据。
+* **[Improved]** 修复一处参数注释错误。(via `#176`_ Thanks `@yangwe1`_)
+
+
 `0.35.3`_ (2019-05-11)
 ++++++++++++++++++++++++
 
@@ -721,8 +730,11 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#167: https://github.com/mozillazg/python-pinyin/issues/167
 .. _#169: https://github.com/mozillazg/python-pinyin/issues/169
 .. _#170: https://github.com/mozillazg/python-pinyin/issues/170
+.. _#174: https://github.com/mozillazg/python-pinyin/issues/174
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
+.. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224
+.. _@yangwe1: https://github.com/yangwe1
 
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -795,3 +807,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.35.1: https://github.com/mozillazg/python-pinyin/compare/v0.35.0...v0.35.1
 .. _0.35.2: https://github.com/mozillazg/python-pinyin/compare/v0.35.1...v0.35.2
 .. _0.35.3: https://github.com/mozillazg/python-pinyin/compare/v0.35.2...v0.35.3
+.. _0.35.4: https://github.com/mozillazg/python-pinyin/compare/v0.35.3...v0.35.4

@@ -7,6 +7,7 @@ _INITIALS_NOT_STRICT = ...  # type: List[Text]
 
 
 PHONETIC_SYMBOL_DICT = ...  # type: Dict[Text, Text]
+PHONETIC_SYMBOL_DICT_KEY_LENGTH_NOT_ONE = ...  # type: Dict[Text, Text]
 
 RE_PHONETIC_SYMBOL = ...  # type : Any
 

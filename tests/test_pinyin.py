@@ -9,7 +9,7 @@ from pypinyin import (
     pinyin, slug, lazy_pinyin, load_single_dict,
     load_phrases_dict, NORMAL, TONE, TONE2, TONE3, INITIALS,
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
-    BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST
+    BOPOMOFO, BOPOMOFO_FIRST, CYRILLIC, CYRILLIC_FIRST, Style
 )
 from pypinyin.compat import SUPPORT_UCS4
 from pypinyin.core import seg
@@ -543,6 +543,20 @@ def test_m4():
         han, heteronym=True, style=FINALS_TONE2) == [['m2', 'o2u', 'm4']]
     assert pinyin(
         han, heteronym=True, style=FINALS_TONE3) == [['m2', 'ou2', 'm4']]
+
+
+@pytest.mark.parametrize('han,style,expect', [
+    ['呣', Style.TONE, ['ḿ', 'm̀']],
+    ['呣', Style.TONE2, ['m2', 'm4']],
+    ['嘸', Style.TONE, ['m̄', 'ḿ']],
+    ['嘸', Style.TONE2, ['m1', 'm2']],
+    ['誒', Style.TONE, ['ê̄', 'ế', 'ê̌', 'ề']],
+    ['誒', Style.TONE2, ['ê1', 'ê2', 'ê3', 'ê4']],
+])
+def test_m_e(han, style, expect):
+    result = pinyin(han, style=style, heteronym=True)
+    assert len(result) == 1
+    assert (set(result[0]) & set(expect)) == set(expect)
 
 
 if __name__ == '__main__':
