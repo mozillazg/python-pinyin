@@ -41,7 +41,13 @@ phonetic_symbol = {
     "ň": "n3",
     "ǹ": "n4",
 
+    "m̄": "m1",  # len('m̄') == 2
     "ḿ": "m2",
     "m̀": "m4",  # len("m̀") == 2
+
+    "ê̄": "ê1",  # len('ê̄') == 2
+    "ế": "ê2",
+    "ê̌": "ê3",  # len('ê̌') == 2
+    "ề": "ê4",
 }
 phonetic_symbol_reverse = dict((v, k) for k, v in phonetic_symbol.items())

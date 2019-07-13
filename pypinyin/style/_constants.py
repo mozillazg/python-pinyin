@@ -11,6 +11,11 @@ _INITIALS_NOT_STRICT = _INITIALS + ['y', 'w']
 
 # 带声调字符与数字表示声调的对应关系
 PHONETIC_SYMBOL_DICT = phonetic_symbol.phonetic_symbol.copy()
+PHONETIC_SYMBOL_DICT_KEY_LENGTH_NOT_ONE = dict(
+    (k, v)
+    for k, v in PHONETIC_SYMBOL_DICT.items()
+    if len(k) > 1
+)
 # 匹配带声调字符的正则表达式
 RE_PHONETIC_SYMBOL = re.compile(
     r'[{0}]'.format(

@@ -5,6 +5,7 @@ from pypinyin.standard import convert_finals
 from pypinyin.style._constants import (
     _INITIALS, _INITIALS_NOT_STRICT,
     RE_PHONETIC_SYMBOL, PHONETIC_SYMBOL_DICT,
+    PHONETIC_SYMBOL_DICT_KEY_LENGTH_NOT_ONE,
     RE_NUMBER
 )
 
@@ -57,24 +58,23 @@ def replace_symbol_to_number(pinyin):
         return PHONETIC_SYMBOL_DICT[symbol]
 
     # 替换拼音中的带声调字符
-    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin).replace('m̀', 'm4')
+    value = RE_PHONETIC_SYMBOL.sub(_replace, pinyin)
+    for symbol, to in PHONETIC_SYMBOL_DICT_KEY_LENGTH_NOT_ONE.items():
+        value = value.replace(symbol, to)
+
+    return value
 
 
 def replace_symbol_to_no_symbol(pinyin):
     """把带声调字符替换为没有声调的字符"""
-    def _replace(match):
-        symbol = match.group(0)  # 带声调的字符
-        # 去掉声调: a1 -> a
-        return RE_NUMBER.sub(r'', PHONETIC_SYMBOL_DICT[symbol])
-
-    # 替换拼音中的带声调字符
-    return RE_PHONETIC_SYMBOL.sub(_replace, pinyin).replace('m̀', 'm')
+    value = replace_symbol_to_number(pinyin)
+    return RE_NUMBER.sub('', value)
 
 
 def has_finals(pinyin):
     """判断是否有韵母"""
-    # 鼻音: 'ḿ', 'm̀', 'ń', 'ň', 'ǹ ' 没有韵母
-    for symbol in ['ḿ', 'm̀', 'ń', 'ň', 'ǹ']:
+    # 鼻音: 'm̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ ' 没有韵母
+    for symbol in ['m̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ', 'ê̄', 'ế', 'ê̌', 'ề']:
         if symbol in pinyin:
             return False
 
