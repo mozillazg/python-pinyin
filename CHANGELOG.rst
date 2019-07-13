@@ -5,6 +5,8 @@ Changelog
 +++++++++++++++++++++++
 
 * **[Bugfixed]** 修复 ``m̄`` ``ê̄``  ``ế`` ``ê̌`` ``ề`` 这几个音无法转换为不含声调结果的问题。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.1 的词语拼音数据。 Fixed `#174`_
+* **[Improved]** 使用 `pinyin-data`_ v0.8.0 的拼音数据。
 
 
 `0.35.3`_ (2019-05-11)
@@ -727,6 +729,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#167: https://github.com/mozillazg/python-pinyin/issues/167
 .. _#169: https://github.com/mozillazg/python-pinyin/issues/169
 .. _#170: https://github.com/mozillazg/python-pinyin/issues/170
+.. _#174: https://github.com/mozillazg/python-pinyin/issues/174
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _@hanabi1224: https://github.com/hanabi1224
 
