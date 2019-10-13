@@ -1,8 +1,8 @@
 from typing import Any, Dict, Tuple, Text
 
 # 俄语转换表
-CYRILLIC_REPLACE = ...  # type: Tuple
-CYRILLIC_TABLE = ...  # type: Dict
+CYRILLIC_REPLACE = ...  # type: Tuple[Tuple[Any]]
+CYRILLIC_TABLE = ...  # type: Dict[Text, Text]
 
 
 class CyrillicfoConverter(object):
