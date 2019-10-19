@@ -60,8 +60,8 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
 **注意事项** ：
 
-* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识。
-* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` 。
+* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（使用 ``5`` 标识轻声的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ ）。
+* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （使用 ``ü`` 代替 ``v`` 的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__ ）。
 
 命令行工具：
 
