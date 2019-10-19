@@ -1,8 +1,8 @@
 from typing import Any, Dict, Tuple, Text
 
 # 注音转换表
-BOPOMOFO_REPLACE = ...  # type: Tuple
-BOPOMOFO_TABLE = ...  # type: Dict
+BOPOMOFO_REPLACE = ...  # type: Tuple[Tuple[Any]]
+BOPOMOFO_TABLE = ...  # type: Dict[Text, Text]
 
 
 class BopomofoConverter(object):
