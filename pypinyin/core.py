@@ -196,7 +196,7 @@ _to_fixed = to_fixed
 def handle_nopinyin(chars, errors='default', heteronym=True):
     # 用于向后兼容，TODO: 废弃
     return _default_convert.handle_nopinyin(
-        chars, errors=errors, heteronym=heteronym)
+        chars, style=None, errors=errors, heteronym=heteronym, strict=True)
 
 
 def single_pinyin(han, style, heteronym, errors='default', strict=True):

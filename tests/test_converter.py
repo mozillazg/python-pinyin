@@ -32,7 +32,8 @@ def test_post_convert_style_return_value():
 
 def test_pre_handle_nopinyin_return_value():
     class A(DefaultConverter):
-        def pre_handle_nopinyin(self, chars, errors, heteronym, **kwargs):
+        def pre_handle_nopinyin(self, chars, style, heteronym, errors,
+                                strict, **kwargs):
             return 'abc'
 
     han = 'test'
@@ -44,8 +45,8 @@ def test_pre_handle_nopinyin_return_value():
 
 def test_post_handle_nopinyin_return_value():
     class A(DefaultConverter):
-        def post_handle_nopinyin(self, chars, errors, heteronym,
-                                 pinyin, **kwargs):
+        def post_handle_nopinyin(self, chars, style, heteronym, errors,
+                                 strict, pinyin, **kwargs):
             return 'abc'
 
     han = 'test'

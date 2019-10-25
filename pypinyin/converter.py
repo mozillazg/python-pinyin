@@ -44,7 +44,8 @@ class DefaultConverter(Converter):
                                       errors=errors, strict=strict)
             return pys
 
-        py = self.handle_nopinyin(words, errors=errors, heteronym=heteronym)
+        py = self.handle_nopinyin(words, style=style, errors=errors,
+                                  heteronym=heteronym, strict=strict)
         if py:
             pys.extend(py)
         return pys
@@ -79,17 +80,18 @@ class DefaultConverter(Converter):
         :return: 按拼音风格转换处理后的拼音
 
         """
-        pre_data = self.pre_convert_style(han, orig_pinyin, style, strict)
+        pre_data = self.pre_convert_style(
+            han, orig_pinyin, style=style, strict=strict)
         if pre_data is not None:
             pinyin = pre_data
         else:
             pinyin = orig_pinyin
 
         converted_pinyin = self._convert_style(
-            han, pinyin, style, strict, default=pinyin)
+            han, pinyin, style=style, strict=strict, default=pinyin)
 
         post_data = self.post_convert_style(
-            han, pinyin, converted_pinyin, style, strict)
+            han, pinyin, converted_pinyin, style=style, strict=strict)
         if post_data is None:
             post_data = converted_pinyin
 
@@ -113,7 +115,8 @@ class DefaultConverter(Converter):
         """
         pass
 
-    def pre_handle_nopinyin(self, chars, errors, heteronym, **kwargs):
+    def pre_handle_nopinyin(self, chars, style, heteronym, errors,
+                            strict, **kwargs):
         """处理没有拼音的字符串前会调用 ``pre_handle_nopinyin`` 方法。
 
         如果返回值不为 ``None`` 会使用返回的结果作为处理没有拼音字符串的结果，
@@ -129,28 +132,35 @@ class DefaultConverter(Converter):
         """
         pass
 
-    def handle_nopinyin(self, chars, errors='default',
-                        heteronym=True, **kwargs):
+    def handle_nopinyin(self, chars, style, heteronym, errors,
+                        strict, **kwargs):
         """处理没有拼音的字符串。
 
         处理前会调用 ``pre_handle_nopinyin`` 方法，
         处理后会调用 ``post_handle_nopinyin`` 方法。
 
         :param chars: 待处理的没有拼音的字符串
+        :param style: 拼音风格
         :param errors: 如何处理
         :param heteronym: 是否需要处理多音字
+        :param strict: 是否需要处理多音字
         :return: 处理后的拼音结果，如果为 ``None`` 或空 list 表示忽略这个字符串.
         :rtype: list
         """
-        pre_data = self.pre_handle_nopinyin(chars, errors, heteronym)
+        pre_data = self.pre_handle_nopinyin(
+            chars, style, errors=errors, heteronym=heteronym, strict=strict)
 
         if pre_data is not None:
             py = pre_data
         else:
             pre_data = chars
-            py = self._convert_nopinyin_chars(pre_data, errors=errors)
+            py = self._convert_nopinyin_chars(
+                pre_data, style, errors=errors,
+                heteronym=heteronym, strict=strict)
 
-        post_data = self.post_handle_nopinyin(chars, errors, heteronym, py)
+        post_data = self.post_handle_nopinyin(
+            chars, style, errors=errors, heteronym=heteronym, strict=strict,
+            pinyin=py)
         if post_data is not None:
             py = post_data
 
@@ -169,7 +179,9 @@ class DefaultConverter(Converter):
         else:
             return [[py]]
 
-    def post_handle_nopinyin(self, chars, errors, heteronym, pinyin, **kwargs):
+    def post_handle_nopinyin(self, chars, style, heteronym,
+                             errors, strict,
+                             pinyin, **kwargs):
         """处理完没有拼音的字符串后会调用 ``post_handle_nopinyin`` 方法。
 
         如果返回值不为 ``None`` 会使用返回的结果作为处理没有拼音的字符串的结果。
@@ -199,8 +211,7 @@ class DefaultConverter(Converter):
         """
         pass
 
-    def _phrase_pinyin(self, phrase, style, heteronym,
-                       errors='default', strict=True):
+    def _phrase_pinyin(self, phrase, style, heteronym, errors, strict):
         """词语拼音转换.
 
         :param phrase: 词语
@@ -223,7 +234,7 @@ class DefaultConverter(Converter):
                     py[idx] = _remove_dup_items(
                         [
                             self.convert_style(
-                                han, x, style=style, strict=strict)
+                                han, orig_pinyin=x, style=style, strict=strict)
                             for x in item
                         ]
                     )
@@ -231,7 +242,7 @@ class DefaultConverter(Converter):
                     orig_pinyin = item[0]
                     py[idx] = [
                         self.convert_style(
-                            han, orig_pinyin, style=style,
+                            han, orig_pinyin=orig_pinyin, style=style,
                             strict=strict)]
         else:
             for i in phrase:
@@ -242,8 +253,7 @@ class DefaultConverter(Converter):
                     py.extend(single)
         return py
 
-    def _single_pinyin(self, han, style, heteronym,
-                       errors='default', strict=True):
+    def _single_pinyin(self, han, style, heteronym, errors, strict):
         """单字拼音转换.
 
         :param han: 单个汉字
@@ -257,7 +267,8 @@ class DefaultConverter(Converter):
         # 处理没有拼音的字符
         if num not in PINYIN_DICT:
             return self.handle_nopinyin(
-                han, errors=errors, heteronym=heteronym)
+                han, style=style, errors=errors,
+                heteronym=heteronym, strict=strict)
 
         pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
 
@@ -268,7 +279,7 @@ class DefaultConverter(Converter):
         if not heteronym:
             orig_pinyin = pys[0]
             return [[self.convert_style(
-                han, orig_pinyin, style, strict=strict)]]
+                han, orig_pinyin, style=style, strict=strict)]]
 
         # 输出多音字的多个读音
         # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
@@ -277,7 +288,7 @@ class DefaultConverter(Converter):
         py_cached = {}
         pinyins = []
         for orig_pinyin in pys:
-            py = self.convert_style(han, orig_pinyin, style,
+            py = self.convert_style(han, orig_pinyin, style=style,
                                     strict=strict)
             if py in py_cached:
                 continue
@@ -289,7 +300,7 @@ class DefaultConverter(Converter):
                        **kwargs):
         return convert_style(pinyin, style, strict, default=default, **kwargs)
 
-    def _convert_nopinyin_chars(self, chars, errors='default'):
+    def _convert_nopinyin_chars(self, chars, style, heteronym, errors, strict):
         """转换没有拼音的字符。
 
         """
