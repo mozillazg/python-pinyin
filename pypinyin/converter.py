@@ -10,7 +10,10 @@ from pypinyin.constants import (
     RE_HANS
 )
 from pypinyin.utils import _remove_dup_items
+from pypinyin.style import auto_discover
 from pypinyin.style import convert as convert_style
+
+auto_discover()
 
 
 class Converter(object):

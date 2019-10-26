@@ -14,9 +14,6 @@ from pypinyin.seg import mmseg
 from pypinyin.seg.simpleseg import seg
 from pypinyin.utils import (
     _replace_tone2_style_dict_to_default)
-from pypinyin.style import auto_discover
-
-auto_discover()
 
 
 def load_single_dict(pinyin_dict, style='default'):
