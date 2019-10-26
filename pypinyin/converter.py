@@ -21,6 +21,8 @@ class Converter(object):
 
 
 class DefaultConverter(Converter):
+    def __init__(self, **kwargs):
+        pass
 
     def convert(self, words, style, heteronym, errors, strict, **kwargs):
         """根据参数把汉字转成相应风格的拼音结果。

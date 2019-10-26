@@ -22,6 +22,7 @@ class Converter(object):
 
 
 class DefaultConverter(Converter):
+    def __init__(self, **kwargs: Any) -> None: ...
 
     def convert(self, words: Text, style: TStyle, heteronym: bool,
                 errors: TErrors, strict: bool = ...,

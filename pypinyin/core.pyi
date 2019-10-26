@@ -84,20 +84,22 @@ def lazy_pinyin(hans: Union[List[Text], Text],
 
 class Pinyin(object):
 
-    def __init__(self, converter: Converter = ...) -> None:
+    def __init__(self, converter: Converter = ..., **kwargs: Any) -> None:
         self._converter = ...  # type: Converter
 
     def pinyin(self, hans: Union[List[Text], Text],
                style: TStyle = ...,
                heteronym: bool = ...,
                errors: TErrors = ...,
-               strict: bool = ...
+               strict: bool = ...,
+               **kwargs: Any
                ) -> TPinyinResult: ...
 
     def lazy_pinyin(self, hans: Union[List[Text], Text],
                     style: TStyle = ...,
                     errors: TErrors = ...,
-                    strict: bool = ...
+                    strict: bool = ...,
+                    **kwargs: Any
                     ) -> List[Text]: ...
 
     def pre_seg(self, hans: Text,
@@ -106,6 +108,6 @@ class Pinyin(object):
     def post_seg(self, hans: Text, seg_data: List[Text],
                  **kwargs: Any) -> Optional[List[Text]]: ...
 
-    def seg(self, hans: Text) -> List[Text]: ...
+    def seg(self, hans: Text, **kwargs: Any) -> List[Text]: ...
 
-    def get_seg(self) -> Callable[[Text], List[Text]]: ...
+    def get_seg(self, **kwargs: Any) -> Callable[[Text], List[Text]]: ...

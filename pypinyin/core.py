@@ -58,11 +58,11 @@ def load_phrases_dict(phrases_dict, style='default'):
 
 class Pinyin(object):
 
-    def __init__(self, converter=None):
+    def __init__(self, converter=None, **kwargs):
         self._converter = converter or DefaultConverter()
 
     def pinyin(self, hans, style=Style.TONE, heteronym=False,
-               errors='default', strict=True):
+               errors='default', strict=True, **kwargs):
         """将汉字转换为拼音，返回汉字的拼音列表。
 
         :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
@@ -100,7 +100,7 @@ class Pinyin(object):
         return pys
 
     def lazy_pinyin(self, hans, style=Style.NORMAL,
-                    errors='default', strict=True):
+                    errors='default', strict=True, **kwargs):
         """将汉字转换为拼音，返回不包含多音字结果的拼音列表.
 
         与 :py:func:`~pypinyin.pinyin` 的区别是每个汉字的拼音是个字符串，
@@ -137,7 +137,7 @@ class Pinyin(object):
         """
         pass
 
-    def seg(self, hans):
+    def seg(self, hans, **kwargs):
         """对汉字进行分词。
 
         分词前会调用 ``pre_seg`` 方法，分词后会调用 ``post_seg`` 方法。
@@ -157,7 +157,7 @@ class Pinyin(object):
 
         return seg_data
 
-    def get_seg(self):
+    def get_seg(self, **kwargs):
         """获取分词函数。
 
         :return: 分词函数
