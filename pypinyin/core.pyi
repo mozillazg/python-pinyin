@@ -1,3 +1,4 @@
+from typing import Any
 from typing import List
 from typing import Dict
 from typing import Union
@@ -6,14 +7,12 @@ from typing import Optional
 from typing import Text
 
 from pypinyin.constants import Style
+from pypinyin.converter import Converter
 
 
 TStyle = Style
 TErrors = Union[Callable[[Text], Text], Text]
 TPinyinResult = List[List[Text]]
-
-
-def seg(hans: Text) -> List[Text]: ...
 
 
 def load_single_dict(pinyin_dict: Dict[int, Text],
@@ -33,7 +32,7 @@ def _handle_nopinyin_char(chars: Text, errors: TErrors = ...
                           ) -> Optional[Text]: ...
 
 
-def handle_nopinyin(chars: Text, errors: TErrors, heteronym: bool = ...
+def handle_nopinyin(chars: Text, errors: TErrors = ..., heteronym: bool = ...
                     ) -> List[List[Text]]: ...
 
 
@@ -81,3 +80,34 @@ def lazy_pinyin(hans: Union[List[Text], Text],
                 errors: TErrors = ...,
                 strict: bool = ...
                 ) -> List[Text]: ...
+
+
+class Pinyin(object):
+
+    def __init__(self, converter: Converter = ..., **kwargs: Any) -> None:
+        self._converter = ...  # type: Converter
+
+    def pinyin(self, hans: Union[List[Text], Text],
+               style: TStyle = ...,
+               heteronym: bool = ...,
+               errors: TErrors = ...,
+               strict: bool = ...,
+               **kwargs: Any
+               ) -> TPinyinResult: ...
+
+    def lazy_pinyin(self, hans: Union[List[Text], Text],
+                    style: TStyle = ...,
+                    errors: TErrors = ...,
+                    strict: bool = ...,
+                    **kwargs: Any
+                    ) -> List[Text]: ...
+
+    def pre_seg(self, hans: Text,
+                **kwargs: Any) -> Optional[List[Text]]: ...
+
+    def post_seg(self, hans: Text, seg_data: List[Text],
+                 **kwargs: Any) -> Optional[List[Text]]: ...
+
+    def seg(self, hans: Text, **kwargs: Any) -> List[Text]: ...
+
+    def get_seg(self, **kwargs: Any) -> Callable[[Text], List[Text]]: ...

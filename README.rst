@@ -50,18 +50,18 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['z'], ['x']]
     >>> pinyin('中心', style=Style.TONE2, heteronym=True)
     [['zho1ng', 'zho4ng'], ['xi1n']]
+    >>> pinyin('中心', style=Style.TONE3, heteronym=True)
+    [['zhong1', 'zhong4'], ['xin1']]
     >>> pinyin('中心', style=Style.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
-    >>> pinyin('中心', style=Style.CYRILLIC)  # 俄语字母风格
-    [['чжун1'], ['синь1']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
 
 
 **注意事项** ：
 
-* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识。
-* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` 。
+* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（使用 ``5`` 标识轻声的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ ）。
+* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （使用 ``ü`` 代替 ``v`` 的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__ ）。
 
 命令行工具：
 
@@ -167,6 +167,7 @@ Related Projects
 * `mozillazg/go-pinyin`__: 汉字拼音转换工具 Go 版。
 * `mozillazg/rust-pinyin`__: 汉字拼音转换工具 Rust 版。
 
+
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
@@ -182,6 +183,8 @@ __ https://github.com/mozillazg/rust-pinyin
    :target: https://pypi.org/project/pypinyin/
 .. |DOI| image:: https://zenodo.org/badge/12830126.svg
    :target: https://zenodo.org/badge/latestdoi/12830126
+
+
 
 .. _Russian translation: https://github.com/mozillazg/python-pinyin/blob/master/README_ru.rst
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data

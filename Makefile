@@ -54,7 +54,7 @@ gen_phrases_dict:
 .PHONY: lint
 lint:
 	pre-commit run --all-files
-	mypy pypinyin
+	mypy --strict pypinyin
 
 clean: clean-build clean-pyc clean-test
 

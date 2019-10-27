@@ -49,6 +49,7 @@ Contents
     installation
     usage
     api
+    contrib
     develop
     faq
     related
