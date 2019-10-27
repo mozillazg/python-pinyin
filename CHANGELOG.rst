@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-`0.36.0`_ (2019-mm-dd)
+`0.36.0`_ (2019-10-27)
 +++++++++++++++++++++++
 
 * **[New]** 增加 ``V2UMixin`` 用于支持无声调相关拼音风格下的结果使用 ``ü`` 代替原来的 ``v`` 。
@@ -10,6 +10,8 @@ Changelog
   详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ 。
 * **[New]** 增加 ``Pinyin`` 和 ``DefaultConverter`` 类用于实现自定义处理过程和结果
   （实验性功能，绝大部分用户无需关心新增的这两个类）。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.2 的词语拼音数据。
+* **[Improved]** 使用 `pinyin-data`_ v0.8.1 的拼音数据。
 
 
 `0.35.4`_ (2019-07-13)
