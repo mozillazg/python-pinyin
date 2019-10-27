@@ -30,26 +30,14 @@ API
 
 .. _convert_style:
 
-风格转换
------------
+
+注册新的拼音风格
+-----------------
 
 .. autofunction:: pypinyin.style.register
 
-.. autofunction:: pypinyin.style.convert
-
 
 .. _seg:
-
-分词
--------
-
-.. autodata:: pypinyin.contrib.mmseg.seg
-
-.. autodata:: pypinyin.contrib.mmseg.retrain
-
-.. autoclass:: pypinyin.contrib.mmseg.Seg
-   :members:
-   :member-order: bysource
 
 
 .. _#27: https://github.com/mozillazg/python-pinyin/issues/27
