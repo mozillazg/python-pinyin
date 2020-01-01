@@ -4,12 +4,12 @@
 #
 version: 2
 jobs:
-  python3.7: &DEFAULT
+  python3.8: &DEFAULT
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
 
     environment:
-      TOX_ENV: py37
+      TOX_ENV: py38
       RUN_CHECK: 1
 
     working_directory: ~/repo
@@ -71,6 +71,13 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  python3.7:
+    <<: *DEFAULT
+    docker:
+      - image: circleci/python:3.7
+    environment:
+      TOX_ENV: py37
+
   python3.6:
     <<: *DEFAULT
     docker:
@@ -125,6 +132,7 @@ workflows:
   version: 2
   testing:
     jobs:
+      - python3.8
       - python3.7
       - python3.6
       - python3.5
