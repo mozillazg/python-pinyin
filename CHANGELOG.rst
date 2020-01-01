@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+`0.37.0`_ (2020-xx-yy)
+++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复 ``NeutralToneWith5Mixin`` 在 ``TONE3`` 相关风格未把 5 标在预期的拼音末尾位置。
+
+
 `0.36.0`_ (2019-10-27)
 +++++++++++++++++++++++
 
@@ -822,3 +828,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.35.3: https://github.com/mozillazg/python-pinyin/compare/v0.35.2...v0.35.3
 .. _0.35.4: https://github.com/mozillazg/python-pinyin/compare/v0.35.3...v0.35.4
 .. _0.36.0: https://github.com/mozillazg/python-pinyin/compare/v0.35.4...v0.36.0
+.. _0.37.0: https://github.com/mozillazg/python-pinyin/compare/v0.36.0...v0.37.0

@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-# 带音标字符。
+# 带声调字符。
 phonetic_symbol = {
     "ā": "a1",
     "á": "a2",

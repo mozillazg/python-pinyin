@@ -287,7 +287,7 @@ class DefaultConverter(Converter):
                 han, orig_pinyin, style=style, strict=strict)]]
 
         # 输出多音字的多个读音
-        # 临时存储已存在的拼音，避免多音字拼音转换为非音标风格出现重复。
+        # 临时存储已存在的拼音，避免多音字拼音转换为非声调风格出现重复。
         # TODO: change to use set
         # TODO: add test for cache
         py_cached = {}
