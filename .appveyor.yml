@@ -9,10 +9,10 @@ environment:
       TOXENV: "py27"
     - PYTHON: 'C:\\Python27-x64'
       TOXENV: "py27"
-    - PYTHON: 'C:\\Python34'
-      TOXENV: "py34"
-    - PYTHON: 'C:\\Python34-x64'
-      TOXENV: "py34"
+    # - PYTHON: 'C:\\Python34'
+    #   TOXENV: "py34"
+    # - PYTHON: 'C:\\Python34-x64'
+    #   TOXENV: "py34"
     - PYTHON: 'C:\\Python35'
       TOXENV: "py35"
     - PYTHON: 'C:\\Python35-x64'
