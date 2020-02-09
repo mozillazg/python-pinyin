@@ -6,8 +6,6 @@ import re
 from pypinyin import Style
 from pypinyin.contrib._tone_rule import right_mark_index
 
-_NUMBER_TONE = (Style.TONE2, Style.TONE3, Style.FINALS_TONE2,
-                Style.FINALS_TONE3)
 
 _re_number = re.compile(r'\d')
 
@@ -44,20 +42,30 @@ class NeutralToneWith5Mixin(object):
 
     """
 
+    NUMBER_TONE = (Style.TONE2, Style.TONE3, Style.FINALS_TONE2,
+                   Style.FINALS_TONE3)
+    NUMBER_AT_END = (Style.TONE3, Style.FINALS_TONE3)
+
     def post_convert_style(self, han, orig_pinyin, converted_pinyin,
                            style, strict, **kwargs):
-        data = super(NeutralToneWith5Mixin, self).post_convert_style(
+        pre_data = super(NeutralToneWith5Mixin, self).post_convert_style(
             han, orig_pinyin, converted_pinyin, style, strict, **kwargs)
 
-        if style not in _NUMBER_TONE:
-            return data
+        if style not in self.NUMBER_TONE:
+            return pre_data
 
-        converted_pinyin = data or converted_pinyin
+        if pre_data is not None:
+            converted_pinyin = pre_data
+        # 有声调，跳过
         if _re_number.search(converted_pinyin):
-            if data is None:
-                return data
             return converted_pinyin
 
+        if style in self.NUMBER_AT_END:
+            return '{}5'.format(converted_pinyin)
+
+        # 找到应该在哪个字母上标声调
         mark_index = right_mark_index(converted_pinyin)
-        return '{}5{}'.format(converted_pinyin[:mark_index + 1],
-                              converted_pinyin[mark_index + 1:])
+        before = converted_pinyin[:mark_index + 1]
+        after = converted_pinyin[mark_index + 1:]
+
+        return '{}5{}'.format(before, after)
