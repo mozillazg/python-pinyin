@@ -109,7 +109,7 @@ FAQ
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-因为根据 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
 y，w，ü (yu) 都不是声母。
 
     声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据
