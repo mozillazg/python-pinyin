@@ -4,9 +4,9 @@ A tool for converting Chinese characters to pinyin (Python version)
 |Build| |appveyor| |Coverage| |Pypi version| |DOI|
 
 
-Takes Chinese characters and converts them to pinyin, zhuyin, and Cyrillic. 
+Takes Chinese characters and converts them to pinyin, zhuyin, and Cyrillic.
 
-Based on `hotoo/pinyin <https://github.com/hotoo/pinyin>`
+Based on `hotoo/pinyin <https://github.com/hotoo/pinyin>`__
 
 * Documentation: http://pypinyin.rtfd.io/
 * GitHub: https://github.com/mozillazg/python-pinyin
@@ -60,9 +60,9 @@ Python 3 (For below Python 2, change '中心' to u'中心'):
 
 **Please take note** ：
 
-* Pinyin results will have no indicators for syllables with a neutral tone, 
+* Pinyin results will have no indicators for syllables with a neutral tone,
 neither diacritics or numbers. (For the use of '5' for neutral tones, see `article <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__).
-* Lazy pinyin results will use 'v' for 'ü' 
+* Lazy pinyin results will use 'v' for 'ü'
 (for using 'ü', see `article <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__).
 
 Command line tools:
@@ -79,7 +79,7 @@ Documentation
 
 For more details, see `article <http://pypinyin.rtfd.io/>`__
 
-For project development related question, please refer to 'development documents'_.
+For project development related question, please refer to `development documents`_.
 
 
 FAQ
@@ -88,7 +88,7 @@ FAQ
 Are there any mistakes in the heteronyms?
 +++++++++++++++++++++++++++++
 
-A database of pinyin phrases are used to solve the heteronym problem. 
+A database of pinyin phrases are used to solve the heteronym problem.
 If there turns out to be a mistake, you can use custom pinyin phrases to adapt the database:
 
 .. code-block:: python
@@ -111,11 +111,11 @@ Why are there no y, w, yu as syllable initials?
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-Because according to the standard pinyin rules (`《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__), 
+Because according to the standard pinyin rules (`《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__),
 'y', 'w', and 'ü' ('yu') are not counted as syllable initials.
 
-    ** If this causes you inconvenience, please also be aware of characters without an initial 
-    like '啊' ('a'), '饿' ('e'), '按' ('an'), '昂' ('ang'), etc. In this case you might need 'FIRST_LETTER' mode. 
+    ** If this causes you inconvenience, please also be aware of characters without an initial
+    like '啊' ('a'), '饿' ('e'), '按' ('an'), '昂' ('ang'), etc. In this case you might need 'FIRST_LETTER' mode.
 	 —— @hotoo
 
     reference: `hotoo/pinyin#57 <https://github.com/hotoo/pinyin/issues/57>`__,
