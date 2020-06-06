@@ -1,6 +1,13 @@
 Changelog
 ---------
 
+
+`0.38.0`_ (2020-xx-yy)
+++++++++++++++++++++++++
+
+* **[Improved]** 优化内置分词，严格按照是否是词语来分词。 Fixed `#139`_
+
+
 `0.37.0`_ (2020-02-09)
 ++++++++++++++++++++++++
 
@@ -751,6 +758,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#169: https://github.com/mozillazg/python-pinyin/issues/169
 .. _#170: https://github.com/mozillazg/python-pinyin/issues/170
 .. _#174: https://github.com/mozillazg/python-pinyin/issues/174
+.. _#139: https://github.com/mozillazg/python-pinyin/issues/139
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224

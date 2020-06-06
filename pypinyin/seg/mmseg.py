@@ -8,8 +8,11 @@ class Seg(object):
 
     :type prefix_set: PrefixSet
     """
+
     def __init__(self, prefix_set):
         self._prefix_set = prefix_set
+        # 是否严格按照词语分词，不允许把非词语的词当做词语进行分词
+        self._no_non_phrases = False
 
     def cut(self, text):
         """分词
@@ -27,12 +30,21 @@ class Seg(object):
                     matched = word
                 else:
                     # 前面的字符串是个词语
-                    if matched:
+                    if (matched and (
+                        (not self._no_non_phrases) or
+                        matched in PHRASES_DICT
+                    )
+                    ):
                         yield matched
                         matched = ''
                         remain = remain[index:]
                     else:  # 前面为空
-                        yield word
+                        # 严格按照词语分词的情况下，不是词语的词拆分为单个汉字
+                        if self._no_non_phrases:
+                            for x in word:
+                                yield x
+                        else:
+                            yield word
                         remain = remain[index + 1:]
                     # 有结果了，剩余的重新开始匹配
                     break
@@ -88,6 +100,7 @@ p_set.train(PHRASES_DICT.keys())
 #:      '我的', '祖国']
 #:     >>>
 seg = Seg(p_set)
+seg._no_non_phrases = True
 
 
 def retrain(seg_instance):
