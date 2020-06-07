@@ -119,6 +119,7 @@ def test_no_non_phrases():
     seg = mmseg.seg
     assert list(seg.cut('你要重新考虑这条建议')) == \
            ['你', '要', '重新', '考', '虑', '这', '条', '建', '议']
+    load_phrases_dict({'在一起': [['zài'], ['yì'], ['qǐ']]})
     assert list(seg.cut('在一片')) == ['在', '一', '片']
 
 
