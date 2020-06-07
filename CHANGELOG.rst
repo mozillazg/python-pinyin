@@ -2,10 +2,11 @@ Changelog
 ---------
 
 
-`0.38.0`_ (2020-xx-yy)
+`0.38.0`_ (2020-06-07)
 ++++++++++++++++++++++++
 
 * **[Improved]** 优化内置分词，严格按照是否是词语来分词。 Fixed `#139`_
+* **[Improved]** 使用 `pinyin-data`_ v0.9.0 的拼音数据。
 
 
 `0.37.0`_ (2020-02-09)
@@ -838,3 +839,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.35.4: https://github.com/mozillazg/python-pinyin/compare/v0.35.3...v0.35.4
 .. _0.36.0: https://github.com/mozillazg/python-pinyin/compare/v0.35.4...v0.36.0
 .. _0.37.0: https://github.com/mozillazg/python-pinyin/compare/v0.36.0...v0.37.0
+.. _0.38.0: https://github.com/mozillazg/python-pinyin/compare/v0.37.0...v0.38.0
