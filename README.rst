@@ -62,6 +62,7 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
 * 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（使用 ``5`` 标识轻声的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ ）。
 * 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （使用 ``ü`` 代替 ``v`` 的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__ ）。
+* 默认情况下会原样输出没有拼音的字符（自定义处理没有拼音的字符的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#handle-no-pinyin>`__ ）。
 
 命令行工具：
 
@@ -109,7 +110,7 @@ FAQ
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-因为根据 `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
 y，w，ü (yu) 都不是声母。
 
     声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据
@@ -158,6 +159,7 @@ y，w，ü (yu) 都不是声母。
 
 * 单个汉字的拼音使用 `pinyin-data`_ 的数据
 * 词组的拼音使用 `phrase-pinyin-data`_ 的数据
+* 声母和韵母使用 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ 的数据
 
 
 Related Projects

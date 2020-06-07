@@ -1,5 +1,6 @@
 from typing import Iterator
 from typing import Text
+from typing import Set
 
 
 class Seg(object):
@@ -7,7 +8,10 @@ class Seg(object):
 
     :type prefix_set: PrefixSet
     """
-    def __init__(self, prefix_set: PrefixSet) -> None: ...
+    def __init__(self, prefix_set: PrefixSet) -> None:
+        self._no_non_phrases = ...  # type: bool
+        self._prefix_set = ...  # type: PrefixSet
+        ...
 
     def cut(self, text: Text) -> Iterator[Text]: ...
 
@@ -15,7 +19,9 @@ class Seg(object):
 
 
 class PrefixSet(object):
-    def __init__(self) -> None: ...
+    def __init__(self) -> None:
+        self._set = ...  # type: Set[Text]
+        ...
 
     def train(self, word_s: Iterator[Text]) -> None: ...
 
