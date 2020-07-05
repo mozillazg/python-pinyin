@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+`0.38.1`_ (2020-07-05)
+++++++++++++++++++++++++
+
+* **[Improved]** 优化内置分词，处理前缀匹配导致无法正确识别尾部词语的问题。 Fixed `#205`_
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.3 的词语拼音数据。
+
 
 `0.38.0`_ (2020-06-07)
 ++++++++++++++++++++++++
@@ -181,14 +187,14 @@ Changelog
 `0.26.0`_ (2017-10-12)
 +++++++++++++++++++++++
 
-* **[Changed]** 不再自动调用 jieba 分词模块，改为自动调用内置的最大匹配分词模块来分词。
+* **[Changed]** 不再自动调用 jieba 分词模块，改为自动调用内置的正向最大匹配分词模块来分词。
   (via `#102`_)
 
 
 `0.25.0`_ (2017-10-01)
 +++++++++++++++++++++++
 
-* **[New]** 内置一个最大匹配分词模块，使用内置的词语拼音库来训练这个分词模块，
+* **[New]** 内置一个正向最大匹配分词模块，使用内置的词语拼音库来训练这个分词模块，
   解决自定义词语库有时可能不生效的问题（因为这个词语在 jieba 等分词模块中不是可用词）。(via `#81`_)
 
 
@@ -207,7 +213,7 @@ Changelog
 
       >>> from pypinyin.contrib.mmseg import seg, retrain
       >>> retrain(seg)   # 没有使用 load_phrases_dict 时可以不调用这个函数
-      >>> pinyin(seg.cut('了局啊'))  # 使用内置的最大匹配分词
+      >>> pinyin(seg.cut('了局啊'))  # 使用内置的正向最大匹配分词
       [['liǎo'], ['jú'], ['a']]
       >>>
 
@@ -760,6 +766,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#170: https://github.com/mozillazg/python-pinyin/issues/170
 .. _#174: https://github.com/mozillazg/python-pinyin/issues/174
 .. _#139: https://github.com/mozillazg/python-pinyin/issues/139
+.. _#205: https://github.com/mozillazg/python-pinyin/issues/205
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224
@@ -840,3 +847,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.36.0: https://github.com/mozillazg/python-pinyin/compare/v0.35.4...v0.36.0
 .. _0.37.0: https://github.com/mozillazg/python-pinyin/compare/v0.36.0...v0.37.0
 .. _0.38.0: https://github.com/mozillazg/python-pinyin/compare/v0.37.0...v0.38.0
+.. _0.38.1: https://github.com/mozillazg/python-pinyin/compare/v0.38.0...v0.38.1

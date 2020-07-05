@@ -4,15 +4,16 @@ from pypinyin.constants import PHRASES_DICT
 
 
 class Seg(object):
-    """最大正向匹配分词
+    """正向最大匹配分词
 
     :type prefix_set: PrefixSet
+    :param no_non_phrases: 是否严格按照词语分词，不允许把非词语的词当做词语进行分词
+    :type no_non_phrases: bool
     """
 
-    def __init__(self, prefix_set):
+    def __init__(self, prefix_set, no_non_phrases=False):
         self._prefix_set = prefix_set
-        # 是否严格按照词语分词，不允许把非词语的词当做词语进行分词
-        self._no_non_phrases = False
+        self._no_non_phrases = no_non_phrases
 
     def cut(self, text):
         """分词
@@ -38,18 +39,29 @@ class Seg(object):
                         yield matched
                         matched = ''
                         remain = remain[index:]
-                    else:  # 前面为空
+                    else:  # 前面为空或不是真正的词语
                         # 严格按照词语分词的情况下，不是词语的词拆分为单个汉字
+                        # 先返回第一个字，后面的重新参与分词，
+                        # 处理前缀匹配导致无法识别输入尾部的词语，
+                        # 支持简单的逆向匹配分词:
+                        #   已有词语：金融寡头 行业
+                        #   输入：金融行业
+                        #   输出：金 融 行业
                         if self._no_non_phrases:
-                            for x in word:
-                                yield x
+                            yield word[0]
+                            remain = remain[index + 2 - len(word):]
                         else:
                             yield word
-                        remain = remain[index + 1:]
+                            remain = remain[index + 1:]
                     # 有结果了，剩余的重新开始匹配
+                    matched = ''
                     break
-            else:  # 整个文本就是一个词语
-                yield remain
+            else:  # 整个文本就是一个词语，或者不包含任何词语
+                if self._no_non_phrases and remain not in PHRASES_DICT:
+                    for x in remain:
+                        yield x
+                else:
+                    yield remain
                 break
 
     def train(self, words):
@@ -99,8 +111,7 @@ p_set.train(PHRASES_DICT.keys())
 #:     ['你好', '，', '我是', '中国人', '，', '我', '爱',
 #:      '我的', '祖国']
 #:     >>>
-seg = Seg(p_set)
-seg._no_non_phrases = True
+seg = Seg(p_set, no_non_phrases=True)
 
 
 def retrain(seg_instance):

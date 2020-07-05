@@ -18,14 +18,17 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ .Environment.TOX_ENV }}-{{ checksum "requirements_dev.txt" }}
+#      - restore_cache:
+#          keys:
+#          - v1-dependencies-{{ .Environment.TOX_ENV }}-{{ checksum "requirements_dev.txt" }}
 
       - run:
           name: install dependencies
           command: |
-            pip install -U pip virtualenv --user
+            # pip install -U pip virtualenv --user
+            if ! which virtualenv; then
+              pip install 'virtualenv<=20.0.21' --user
+            fi
             export PATH="~/.local/bin:$PATH"
 
             virtualenv venv
@@ -41,11 +44,11 @@ jobs:
             if [[ $(python -c "import sys; print(sys.stdin.encoding)" |grep None) ]]; then
               export PYTHONIOENCODING=utf-8
             fi
-
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ .Environment.TOX_ENV }}-{{ checksum "requirements_dev.txt" }}
+#
+#      - save_cache:
+#          paths:
+#            - ./venv
+#          key: v1-dependencies-{{ .Environment.TOX_ENV }}-{{ checksum "requirements_dev.txt" }}
 
       - run:
           name: run tests
