@@ -1,7 +1,7 @@
 A tool for converting Chinese characters to pinyin (Python version)
-=============================
+=====================================================================
 
-|Build| |appveyor| |Coverage| |Pypi version| |DOI|
+|Build| |GitHubAction| |Coverage| |Pypi version| |DOI|
 
 
 Takes Chinese characters and converts them to pinyin, zhuyin, and Cyrillic.
@@ -174,8 +174,8 @@ __ https://github.com/mozillazg/rust-pinyin
 
 .. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg
    :target: https://circleci.com/gh/mozillazg/python-pinyin
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/ni8gdyextfa85yqo/branch/master?svg=true
-   :target: https://ci.appveyor.com/project/mozillazg/python-pinyin
+.. |GitHubAction| image:: https://github.com/mozillazg/python-pinyin/workflows/CI/badge.svg
+   :target: https://github.com/mozillazg/python-pinyin/actions
 .. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
    :target: https://codecov.io/gh/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
