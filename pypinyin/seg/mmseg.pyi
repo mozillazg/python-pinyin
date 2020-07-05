@@ -7,8 +7,9 @@ class Seg(object):
     """最大正向匹配分词
 
     :type prefix_set: PrefixSet
+    :type no_non_phrases: bool
     """
-    def __init__(self, prefix_set: PrefixSet) -> None:
+    def __init__(self, prefix_set: PrefixSet, no_non_phrases: bool) -> None:
         self._no_non_phrases = ...  # type: bool
         self._prefix_set = ...  # type: PrefixSet
         ...
