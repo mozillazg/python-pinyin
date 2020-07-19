@@ -243,4 +243,4 @@ CYRILLIC_FIRST     :py:attr:`~pypinyin.Style.CYRILLIC_FIRST`
 ================== =========================================
 
 
-.. _《汉语拼音方案》: http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html
+.. _《汉语拼音方案》: http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html
