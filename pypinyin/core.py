@@ -255,7 +255,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
       [['чжун1'], ['синь1']]
       >>> pinyin('战略', v_to_u=True, style=Style.NORMAL)
       [['zhan'], ['lüe']]
-      >>> pinyin('衣裳', neutral_tone_with_five=True, style=Style.TONE3)
+      >>> pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
       [['yi1'], ['shang5']]
     """
     _pinyin = Pinyin(_mixConverter(
@@ -344,7 +344,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
       ['чжун1', 'синь1']
       >>> lazy_pinyin('战略', v_to_u=True)
       ['zhan', 'lüe']
-      >>> lazy_pinyin('衣裳', neutral_tone_with_five=True, style=Style.TONE3)
+      >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
       ['yi1', 'shang5']
     """
     _pinyin = Pinyin(_mixConverter(

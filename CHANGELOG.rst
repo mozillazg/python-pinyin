@@ -1,6 +1,32 @@
 Changelog
 ---------
 
+
+`0.39.0`_ (xx)
+++++++++++++++++++++++++
+
+* **[New]** ``pinyin`` 和 ``lazy_pinyin`` 函数增加参数 ``v_to_u`` 和 ``neutral_tone_with_five``:
+
+  * ``v_to_u=True`` 时在数字标识声调相关风格下使用 ``5`` 标识轻声
+
+  .. code-block:: python
+
+      >>> lazy_pinyin('衣裳', style=Style.TONE3)
+      ['yi1', 'shang']
+      >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
+      ['yi1', 'shang5']
+
+  * ``neutral_tone_with_five=True`` 时在无声调相关拼音风格下使用 ``ü`` 代替原来的 ``v``
+
+  .. code-block:: python
+
+      >>> lazy_pinyin('战略')
+      ['zhan', 'lve']
+      >>> lazy_pinyin('战略', v_to_u=True)
+      ['zhan', 'lüe']
+
+
+
 `0.38.1`_ (2020-07-05)
 ++++++++++++++++++++++++
 
@@ -848,3 +874,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.37.0: https://github.com/mozillazg/python-pinyin/compare/v0.36.0...v0.37.0
 .. _0.38.0: https://github.com/mozillazg/python-pinyin/compare/v0.37.0...v0.38.0
 .. _0.38.1: https://github.com/mozillazg/python-pinyin/compare/v0.38.0...v0.38.1
+.. _0.39.0: https://github.com/mozillazg/python-pinyin/compare/v0.38.1...v0.39.0
