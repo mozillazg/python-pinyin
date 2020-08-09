@@ -62,7 +62,9 @@ def pinyin(hans: Union[List[Text], Text],
            style: TStyle = ...,
            heteronym: bool = ...,
            errors: TErrors = ...,
-           strict: bool = ...
+           strict: bool = ...,
+           v_to_u: bool = ...,
+           neutral_tone_with_five: bool = ...
            ) -> List[List[Text]]: ...
 
 
@@ -78,7 +80,9 @@ def slug(hans: Union[List[Text], Text],
 def lazy_pinyin(hans: Union[List[Text], Text],
                 style: TStyle = ...,
                 errors: TErrors = ...,
-                strict: bool = ...
+                strict: bool = ...,
+                v_to_u: bool = ...,
+                neutral_tone_with_five: bool = ...
                 ) -> List[Text]: ...
 
 

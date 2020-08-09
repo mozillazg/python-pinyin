@@ -9,7 +9,7 @@ from pypinyin.compat import text_type
 from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT, Style
 )
-from pypinyin.converter import DefaultConverter
+from pypinyin.converter import DefaultConverter, _mixConverter
 from pypinyin.seg import mmseg
 from pypinyin.seg.simpleseg import seg
 from pypinyin.utils import (
@@ -209,7 +209,8 @@ def phrase_pinyin(phrase, style, heteronym, errors='default', strict=True):
 
 
 def pinyin(hans, style=Style.TONE, heteronym=False,
-           errors='default', strict=True):
+           errors='default', strict=True,
+           v_to_u=False, neutral_tone_with_five=False):
     """将汉字转换为拼音，返回汉字的拼音列表。
 
     :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
@@ -228,6 +229,11 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
 
     :param heteronym: 是否启用多音字
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
+    :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+    :type v_to_u: bool
+    :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
+                                   使用 5 标识轻声
+    :param neutral_tone_with_five: bool
     :return: 拼音列表
     :rtype: list
 
@@ -247,8 +253,14 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
       [['zho1ng'], ['xi1n']]
       >>> pinyin('中心', style=Style.CYRILLIC)
       [['чжун1'], ['синь1']]
+      >>> pinyin('战略', v_to_u=True, style=Style.NORMAL)
+      [['zhan'], ['lüe']]
+      >>> pinyin('衣裳', neutral_tone_with_five=True, style=Style.TONE3)
+      [['yi1'], ['shang5']]
     """
-    return _default_pinyin.pinyin(
+    _pinyin = Pinyin(_mixConverter(
+        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
+    return _pinyin.pinyin(
         hans, style=style, heteronym=heteronym, errors=errors, strict=strict)
 
 
@@ -292,7 +304,8 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
     )
 
 
-def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
+def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
+                v_to_u=False, neutral_tone_with_five=False):
     """将汉字转换为拼音，返回不包含多音字结果的拼音列表.
 
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
@@ -305,6 +318,11 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
     :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
+    :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+    :type v_to_u: bool
+    :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
+                                   使用 5 标识轻声
+    :param neutral_tone_with_five: bool
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 
@@ -324,6 +342,12 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True):
       ['zho1ng', 'xi1n']
       >>> lazy_pinyin('中心', style=Style.CYRILLIC)
       ['чжун1', 'синь1']
+      >>> lazy_pinyin('战略', v_to_u=True)
+      ['zhan', 'lüe']
+      >>> lazy_pinyin('衣裳', neutral_tone_with_five=True, style=Style.TONE3)
+      ['yi1', 'shang5']
     """
-    return _default_pinyin.lazy_pinyin(
+    _pinyin = Pinyin(_mixConverter(
+        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
+    return _pinyin.lazy_pinyin(
         hans, style=style, errors=errors, strict=strict)
