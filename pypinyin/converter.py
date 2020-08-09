@@ -340,7 +340,7 @@ class _neutralToneWith5AndV2UConverter(
 
 class _mixConverter(DefaultConverter):
     def __init__(self, v_to_u=False, neutral_tone_with_five=False, **kwargs):
-        super(_mixConverter).__init__(**kwargs)
+        super(_mixConverter, self).__init__(**kwargs)
         self._v_to_u = v_to_u
         self._neutral_tone_with_five = neutral_tone_with_five
 
