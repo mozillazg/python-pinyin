@@ -24,8 +24,8 @@
 
 **注意事项** ：
 
-* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（使用 ``5`` 标识轻声的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ ）。
-* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （使用 ``ü`` 代替 ``v`` 的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__ ）。
+* 默认情况下拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（可以通过参数 ``neutral_tone_with_five=True`` 开启使用 ``5`` 标识轻声 ）。
+* 默认情况下无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （可以通过参数 ``v_to_u=True`` 开启使用 ``ü`` 代替 ``v`` ）。
 * 默认情况下会原样输出没有拼音的字符（自定义处理没有拼音的字符的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#handle-no-pinyin>`__ ）。
 
 

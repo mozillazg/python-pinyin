@@ -9,6 +9,8 @@ from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT,
     RE_HANS
 )
+from pypinyin.contrib.uv import V2UMixin
+from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
 from pypinyin.utils import _remove_dup_items
 from pypinyin.style import auto_discover
 from pypinyin.style import convert as convert_style
@@ -321,3 +323,49 @@ class DefaultConverter(Converter):
                 return ''.join(text_type('%x' % ord(x)) for x in chars)
             else:
                 return text_type('%x' % ord(chars))
+
+
+class _v2UConverter(V2UMixin, DefaultConverter):
+    pass
+
+
+class _neutralToneWith5Converter(NeutralToneWith5Mixin, DefaultConverter):
+    pass
+
+
+class _neutralToneWith5AndV2UConverter(
+        NeutralToneWith5Mixin, V2UMixin, DefaultConverter):
+    pass
+
+
+class _mixConverter(DefaultConverter):
+    def __init__(self, v_to_u=False, neutral_tone_with_five=False, **kwargs):
+        super(_mixConverter, self).__init__(**kwargs)
+        self._v_to_u = v_to_u
+        self._neutral_tone_with_five = neutral_tone_with_five
+
+        self._v2uconverter = _v2UConverter()
+        self._neutraltonewith5converter = _neutralToneWith5Converter()
+        self._neutraltonewith5andv2uconverter = \
+            _neutralToneWith5AndV2UConverter()
+
+    def post_convert_style(self, han, orig_pinyin, converted_pinyin,
+                           style, strict, **kwargs):
+        if self._v_to_u and not self._neutral_tone_with_five:
+            return self._v2uconverter.post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict,
+                **kwargs)
+
+        if self._neutral_tone_with_five and not self._v_to_u:
+            return self._neutraltonewith5converter.post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict,
+                **kwargs)
+
+        if self._neutral_tone_with_five and self._v_to_u:
+            return self._neutraltonewith5andv2uconverter.post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict,
+                **kwargs)
+
+        return super(_mixConverter, self).post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict,
+                **kwargs)
