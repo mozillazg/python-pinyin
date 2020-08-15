@@ -56,6 +56,11 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
+    >>> lazy_pinyin('战略', v_to_u=True)  # 不使用 v 表示 ü
+    ['zhan', 'lüe']
+    # 使用 5 标识轻声
+    >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
+    ['yi1', 'shang5']
 
 
 **注意事项** ：
