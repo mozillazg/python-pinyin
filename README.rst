@@ -56,12 +56,17 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
+    >>> lazy_pinyin('战略', v_to_u=True)  # 不使用 v 表示 ü
+    ['zhan', 'lüe']
+    # 使用 5 标识轻声
+    >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
+    ['yi1', 'shang5']
 
 
 **注意事项** ：
 
-* 拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（使用 ``5`` 标识轻声的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#neutraltonewith5mixin>`__ ）。
-* 无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （使用 ``ü`` 代替 ``v`` 的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#v2umixin>`__ ）。
+* 默认情况下拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（可以通过参数 ``neutral_tone_with_five=True`` 开启使用 ``5`` 标识轻声 ）。
+* 默认情况下无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （可以通过参数 ``v_to_u=True`` 开启使用 ``ü`` 代替 ``v`` ）。
 * 默认情况下会原样输出没有拼音的字符（自定义处理没有拼音的字符的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#handle-no-pinyin>`__ ）。
 
 命令行工具：

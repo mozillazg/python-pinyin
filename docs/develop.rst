@@ -115,7 +115,7 @@ TODO: 画流程图
 6. 提交代码
 7. 检查 develop 分支的 CI 结果
 8. 切换到 master 分支
-9. 合并 develop 分支代码: ``git merge_dev``
+9. 合并 develop 分支代码: ``make merge_dev``
 10. 更新版本号:
 
     * 大改动(1.1.x -> 1.2.x)：``make bump_minor``

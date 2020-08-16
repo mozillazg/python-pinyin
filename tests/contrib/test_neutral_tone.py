@@ -30,13 +30,32 @@ they_pinyin = Pinyin(TheyConverter())
 def test_neutral_tone_with_5():
     assert lazy_pinyin('好了', style=Style.TONE2) == ['ha3o', 'le']
     assert my_pinyin.lazy_pinyin('好了', style=Style.TONE2) == ['ha3o', 'le5']
+    assert lazy_pinyin(
+        '好了', style=Style.TONE2, neutral_tone_with_five=True
+    ) == ['ha3o', 'le5']
     assert her_pinyin.lazy_pinyin('好了', style=Style.TONE2) == ['ha3o', 'le5']
+    assert lazy_pinyin(
+        '好了', style=Style.TONE2, neutral_tone_with_five=True,
+        v_to_u=True) == ['ha3o', 'le5']
     assert they_pinyin.lazy_pinyin('好了', style=Style.TONE2) == ['ha3o', 'le5']
+    assert lazy_pinyin(
+        '好了', style=Style.TONE2, v_to_u=True,
+        neutral_tone_with_five=True) == ['ha3o', 'le5']
+
+    assert lazy_pinyin('好了绿', style=Style.TONE2) == ['ha3o', 'le', 'lv4']
+    assert lazy_pinyin(
+        '好了绿', style=Style.TONE2, v_to_u=True,
+        neutral_tone_with_five=True) == ['ha3o', 'le5', 'lü4']
 
     assert lazy_pinyin('好了') == ['hao', 'le']
     assert my_pinyin.lazy_pinyin('好了') == ['hao', 'le']
+    assert lazy_pinyin('好了', neutral_tone_with_five=True) == ['hao', 'le']
     assert her_pinyin.lazy_pinyin('好了') == ['hao', 'le']
-    assert they_pinyin.lazy_pinyin('好了') == ['hao', 'le']
+    assert lazy_pinyin(
+        '好了', neutral_tone_with_five=True, v_to_u=True) == ['hao', 'le']
+    assert lazy_pinyin(
+        '好了绿', v_to_u=True, neutral_tone_with_five=True) == [
+        'hao', 'le', 'lü']
 
 
 @mark.parametrize('input,style,expected_old, expected_new', [
@@ -69,3 +88,8 @@ def test_neutral_tone_with_5_many_cases(
         input, style, expected_old, expected_new):
     assert lazy_pinyin(input, style=style) == expected_old
     assert my_pinyin.lazy_pinyin(input, style=style) == expected_new
+    assert lazy_pinyin(
+        input, style=style, neutral_tone_with_five=True) == expected_new
+    assert lazy_pinyin(
+        input, style=style, neutral_tone_with_five=True,
+        v_to_u=True) == expected_new

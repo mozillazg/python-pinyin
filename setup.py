@@ -51,7 +51,7 @@ def long_description():
 
 meta_d = get_meta()
 setup(
-    name=meta_d['__title__'],
+    name='pypinyin',
     version=meta_d['__version__'],
     description='汉字拼音转换模块/工具.',
     long_description=long_description(),
@@ -62,7 +62,6 @@ setup(
     license=meta_d['__license__'],
     project_urls={
         'Documentation': 'https://pypinyin.readthedocs.io/',
-        'Say Thanks!': 'https://saythanks.io/to/mozillazg',
         'Source': 'https://github.com/mozillazg/python-pinyin',
         'Tracker': 'https://github.com/mozillazg/python-pinyin/issues',
     },
