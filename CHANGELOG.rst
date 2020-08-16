@@ -2,7 +2,7 @@ Changelog
 ---------
 
 
-`0.39.0`_ (xx)
+`0.39.0`_ (2020-08-16)
 ++++++++++++++++++++++++
 
 * **[New]** ``pinyin`` 和 ``lazy_pinyin`` 函数增加参数 ``v_to_u`` 和 ``neutral_tone_with_five``:
