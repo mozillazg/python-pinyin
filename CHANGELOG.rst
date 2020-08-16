@@ -7,7 +7,7 @@ Changelog
 
 * **[New]** ``pinyin`` 和 ``lazy_pinyin`` 函数增加参数 ``v_to_u`` 和 ``neutral_tone_with_five``:
 
-  * ``v_to_u=True`` 时在数字标识声调相关风格下使用 ``5`` 标识轻声
+  * ``v_to_u=True`` 时在无声调相关拼音风格下使用 ``ü`` 代替原来的 ``v``
 
   .. code-block:: python
 
@@ -16,7 +16,7 @@ Changelog
       >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
       ['yi1', 'shang5']
 
-  * ``neutral_tone_with_five=True`` 时在无声调相关拼音风格下使用 ``ü`` 代替原来的 ``v``
+  * ``neutral_tone_with_five=True`` 时在数字标识声调相关风格下使用 ``5`` 标识轻声
 
   .. code-block:: python
 

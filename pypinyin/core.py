@@ -233,7 +233,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
                                    使用 5 标识轻声
-    :param neutral_tone_with_five: bool
+    :type neutral_tone_with_five: bool
     :return: 拼音列表
     :rtype: list
 
@@ -322,7 +322,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
                                    使用 5 标识轻声
-    :param neutral_tone_with_five: bool
+    :type neutral_tone_with_five: bool
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 
