@@ -90,7 +90,7 @@ def test_pinyin_finals():
     assert pinyin(hans, CYRILLIC_FIRST) == [['а'], ['а']]
     assert pinyin(hans, heteronym=True) == [['\xe1o'], ['\xe1o']]
     assert pinyin('啊', heteronym=True) == \
-        [['a', 'è', 'ā', 'á', 'ǎ', 'à']]
+        [['a', 'ā', 'á', 'ǎ', 'à', 'è']]
     assert pinyin(hans, style=FINALS) == [['ao'], ['ao']]
     assert pinyin(hans, style=FINALS_TONE) == [['\xe1o'], ['\xe1o']]
     assert pinyin(hans, style=FINALS_TONE2) == [['a2o'], ['a2o']]
@@ -362,13 +362,13 @@ data_for_update = [
     ['彷徨', {}, ['pang', 'huang']],
     ['彷徨', {'style': CYRILLIC}, ['пан2', 'хуан2']],
     # 注音
-    ['打量', {'style': BOPOMOFO}, ['ㄉㄚˇ', 'ㄌㄧㄤ˙']],
+    ['打量', {'style': BOPOMOFO}, ['ㄉㄚˇ', 'ㄌㄧㄤˋ']],
     ['黄山b股', {'style': BOPOMOFO}, ['ㄏㄨㄤˊ', 'ㄕㄢ', 'b', 'ㄍㄨˇ']],
-    ['打量', {'style': CYRILLIC}, ['да3', 'лян']],
+    ['打量', {'style': CYRILLIC}, ['да3', 'лян4']],
     ['黄山b股', {'style': CYRILLIC}, ['хуан2', 'шань1', 'b', 'гу3']],
     # 50
-    ['打量', {'style': TONE2}, ['da3', 'liang']],
-    ['打量', {'style': TONE3}, ['da3', 'liang']],
+    ['打量', {'style': TONE2}, ['da3', 'lia4ng']],
+    ['打量', {'style': TONE3}, ['da3', 'liang4']],
     ['侵略', {'style': TONE2}, ['qi1n', 'lve4']],
     ['侵略', {'style': TONE3}, ['qin1', 'lve4']],
     ['侵略', {'style': FINALS_TONE2}, ['i1n', 've4']],
@@ -522,15 +522,15 @@ def test_m4():
     # U+5463: ḿ,móu,m̀  # 呣
     han = '呣'
     assert pinyin(han) == [['ḿ']]
-    assert pinyin(han, heteronym=True) == [['ḿ', 'móu', 'm̀']]
+    assert pinyin(han, heteronym=True) == [['ḿ', 'm̀', 'móu']]
     assert pinyin(
         han, heteronym=True, style=NORMAL) == [['m', 'mou']]
     assert pinyin(
-        han, heteronym=True, style=TONE) == [['ḿ', 'móu', 'm̀']]
+        han, heteronym=True, style=TONE) == [['ḿ', 'm̀', 'móu']]
     assert pinyin(
-        han, heteronym=True, style=TONE2) == [['m2', 'mo2u', 'm4']]
+        han, heteronym=True, style=TONE2) == [['m2', 'm4', 'mo2u']]
     assert pinyin(
-        han, heteronym=True, style=TONE3) == [['m2', 'mou2', 'm4']]
+        han, heteronym=True, style=TONE3) == [['m2', 'm4', 'mou2']]
     assert pinyin(
         han, heteronym=True, style=INITIALS) == [['', 'm']]  # TODO: fix ''
     assert pinyin(
@@ -538,11 +538,11 @@ def test_m4():
     assert pinyin(
         han, heteronym=True, style=FINALS) == [['m', 'ou']]
     assert pinyin(
-        han, heteronym=True, style=FINALS_TONE) == [['ḿ', 'óu', 'm̀']]
+        han, heteronym=True, style=FINALS_TONE) == [['ḿ', 'm̀', 'óu']]
     assert pinyin(
-        han, heteronym=True, style=FINALS_TONE2) == [['m2', 'o2u', 'm4']]
+        han, heteronym=True, style=FINALS_TONE2) == [['m2', 'm4', 'o2u']]
     assert pinyin(
-        han, heteronym=True, style=FINALS_TONE3) == [['m2', 'ou2', 'm4']]
+        han, heteronym=True, style=FINALS_TONE3) == [['m2', 'm4', 'ou2']]
 
 
 @pytest.mark.parametrize('han,style,expect', [
