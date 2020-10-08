@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+`0.39.1`_ (xxx)
+++++++++++++++++++++++++
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.4 的词语拼音数据。
+* **[Improved]** 使用 `pinyin-data`_ v0.10.0 的拼音数据。
+
 
 `0.39.0`_ (2020-08-16)
 ++++++++++++++++++++++++
@@ -11,19 +17,19 @@ Changelog
 
   .. code-block:: python
 
-      >>> lazy_pinyin('衣裳', style=Style.TONE3)
-      ['yi1', 'shang']
-      >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
-      ['yi1', 'shang5']
+      >>> lazy_pinyin('战略')
+      ['zhan', 'lve']
+      >>> lazy_pinyin('战略', v_to_u=True)
+      ['zhan', 'lüe']
 
   * ``neutral_tone_with_five=True`` 时在数字标识声调相关风格下使用 ``5`` 标识轻声
 
   .. code-block:: python
 
-      >>> lazy_pinyin('战略')
-      ['zhan', 'lve']
-      >>> lazy_pinyin('战略', v_to_u=True)
-      ['zhan', 'lüe']
+      >>> lazy_pinyin('衣裳', style=Style.TONE3)
+      ['yi1', 'shang']
+      >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
+      ['yi1', 'shang5']
 
 
 
@@ -875,3 +881,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.38.0: https://github.com/mozillazg/python-pinyin/compare/v0.37.0...v0.38.0
 .. _0.38.1: https://github.com/mozillazg/python-pinyin/compare/v0.38.0...v0.38.1
 .. _0.39.0: https://github.com/mozillazg/python-pinyin/compare/v0.38.1...v0.39.0
+.. _0.39.1: https://github.com/mozillazg/python-pinyin/compare/v0.39.0...v0.39.1
