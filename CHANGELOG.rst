@@ -5,6 +5,8 @@ Changelog
 ++++++++++++++++++++++++
 
 * **[Improved]** 精简 phrases_dict, 删除 phrases_dict 中凡是能通过 pinyin_dict 得到相同结果的数据。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.10.5 的词语拼音数据。
+* **[Improved]** 使用 `pinyin-data`_ v0.10.1 的拼音数据。
 
 
 `0.39.1`_ (2020-10-08)
@@ -888,3 +890,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.38.1: https://github.com/mozillazg/python-pinyin/compare/v0.38.0...v0.38.1
 .. _0.39.0: https://github.com/mozillazg/python-pinyin/compare/v0.38.1...v0.39.0
 .. _0.39.1: https://github.com/mozillazg/python-pinyin/compare/v0.39.0...v0.39.1
+.. _0.40.0: https://github.com/mozillazg/python-pinyin/compare/v0.39.1...v0.40.0
