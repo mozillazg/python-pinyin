@@ -49,7 +49,8 @@ gen_pinyin_dict:
 
 .PHONY: gen_phrases_dict
 gen_phrases_dict:
-	python gen_phrases_dict.py phrase-pinyin-data/pinyin.txt pypinyin/phrases_dict.py
+	python gen_phrases_dict.py phrase-pinyin-data/pinyin.txt pypinyin/phrases_dict_large.py
+	python tidy_phrases_dict.py
 
 .PHONY: lint
 lint:
