@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-`0.40.0`_ (2020-xx-yy)
+`0.40.0`_ (2020-11-22)
 ++++++++++++++++++++++++
 
 * **[Improved]** 精简 phrases_dict, 删除 phrases_dict 中凡是能通过 pinyin_dict 得到相同结果的数据。
