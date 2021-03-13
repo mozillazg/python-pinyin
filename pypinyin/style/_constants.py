@@ -24,9 +24,9 @@ RE_PHONETIC_SYMBOL = re.compile(
 )
 
 # 匹配使用数字标识声调的字符的正则表达式
-RE_TONE2 = re.compile(r'([aeoiuvnm])([1-4])$')
+RE_TONE2 = re.compile(r'([aeoiuvnm])([1-5])$')
 # 匹配 TONE2 中标识韵母声调的正则表达式
-RE_TONE3 = re.compile(r'^([a-z]+)([1-4])([a-z]*)$')
+RE_TONE3 = re.compile(r'^([a-z]+)([1-5])([a-z]*)$')
 
 # 匹配单个数字
 RE_NUMBER = re.compile(r'\d')
