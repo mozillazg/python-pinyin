@@ -9900,7 +9900,7 @@ pinyin_dict = {
     0x5E24: 'rú',
     0x5E25: 'shuài',
     0x5E26: 'dài',
-    0x5E27: 'zhèng,zhēn',
+    0x5E27: 'zhēn,zhèng',
     0x5E28: 'shuì',
     0x5E29: 'qiào',
     0x5E2A: 'zhēn',

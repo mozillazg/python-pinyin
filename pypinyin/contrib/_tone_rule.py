@@ -23,23 +23,23 @@ http://www.pinyin.info/rules/where.html
 """
 
 
-def right_mark_index(pinyin_no_number):
+def right_mark_index(pinyin_no_tone):
     # 有 ɑ 不放过, 没 ɑ 找 o、e
     for c in ['a', 'o', 'e']:
-        if c in pinyin_no_number:
-            return pinyin_no_number.index(c)
+        if c in pinyin_no_tone:
+            return pinyin_no_tone.index(c)
 
     # i、u 若是连在一起，谁在后面就标谁
     for c in ['iu', 'ui']:
-        if c in pinyin_no_number:
-            return pinyin_no_number.index(c) + 1
+        if c in pinyin_no_tone:
+            return pinyin_no_tone.index(c) + 1
 
     # ɑ、o、e、i、u、ü
     for c in ['i', 'u', 'v', 'ü']:
-        if c in pinyin_no_number:
-            return pinyin_no_number.index(c)
+        if c in pinyin_no_tone:
+            return pinyin_no_tone.index(c)
 
     # n, m, ê
     for c in ['n', 'm', 'ê']:
-        if c in pinyin_no_number:
-            return pinyin_no_number.index(c)
+        if c in pinyin_no_tone:
+            return pinyin_no_tone.index(c)

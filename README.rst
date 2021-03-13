@@ -106,6 +106,17 @@ FAQ
 
 详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
+如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
+然后将分词后的词组结果列表作为函数的参数即可:
+
+.. code-block:: python
+
+    >>> # 使用其他分词模块分词，比如 jieba 之类，
+    >>> #或者基于 phrases_dict.py 里的词语数据使用其他分词算法分词
+    >>> words = list(jieba.cut('每股24.67美元的确定性协议'))
+    >>> pinyin(words)
+
+
 为什么没有 y, w, yu 几个声母？
 ++++++++++++++++++++++++++++++++++++++++++++
 

@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+`0.41.0`_ (2021-03-13)
+++++++++++++++++++++++++
+
+* **[New]** 新增 ``pypinyin.contrib.tone_convert`` 模块，用于
+  ``Style.TONE`` 、 ``Style.TONE2`` 、 ``Style.TONE3`` 、 ``Style.NORMAL`` 风格的拼音之间互相转换。
+  详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/develop/contrib.html#tone-convert>`__
+* **[Improved]** 使用 `pinyin-data`_ v0.10.2 的拼音数据。
+
+
 `0.40.0`_ (2020-11-22)
 ++++++++++++++++++++++++
 
@@ -891,3 +900,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.39.0: https://github.com/mozillazg/python-pinyin/compare/v0.38.1...v0.39.0
 .. _0.39.1: https://github.com/mozillazg/python-pinyin/compare/v0.39.0...v0.39.1
 .. _0.40.0: https://github.com/mozillazg/python-pinyin/compare/v0.39.1...v0.40.0
+.. _0.41.0: https://github.com/mozillazg/python-pinyin/compare/v0.40.0...v0.41.0
