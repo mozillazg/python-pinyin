@@ -16,7 +16,11 @@ help:
 .PHONY: test
 test: lint
 	@echo "run test"
-	py.test --cov pypinyin tests/
+	make testonly
+
+.PHONY: testonly
+testonly:
+	py.test --random-order --cov pypinyin tests/ pypinyin/
 
 .PHONY: publish
 publish: clean
