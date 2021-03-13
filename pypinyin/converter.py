@@ -38,7 +38,9 @@ class DefaultConverter(Converter):
         :param heteronym: 是否启用多音字
         :type heteronym: bool
         :param errors: 如果处理没有拼音的字符
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :type strict: bool
         :return: 按风格转换后的拼音结果
         :rtype: list
@@ -66,7 +68,9 @@ class DefaultConverter(Converter):
         :param han: 要处理的汉字
         :param orig_pinyin: 汉字对应的原始带声调拼音
         :param style: 要转换的拼音风格
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :param kwargs: 其他关键字参数，暂时无用，用于以后扩展新的参数。
         :return: ``None`` 或代替 ``orig_pinyin`` 参与拼音风格转换的拼音字符串。
 
@@ -82,7 +86,9 @@ class DefaultConverter(Converter):
         :param han: 要处理的汉字
         :param orig_pinyin: 汉字对应的原始带声调拼音
         :param style: 拼音风格
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :param kwargs: 其他关键字参数，暂时无用，用于以后扩展新的参数。
         :return: 按拼音风格转换处理后的拼音
 
@@ -115,7 +121,9 @@ class DefaultConverter(Converter):
         :param orig_pinyin: 汉字对应的原始带声调拼音
         :param converted_pinyin: 按拼音风格转换处理后的拼音
         :param style: 要转换的拼音风格
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :param kwargs: 其他关键字参数，暂时无用，用于以后扩展新的参数。
         :return: ``None`` 或代替 ``converted_pinyin`` 作为拼音风格转换后的拼音结果。
 
@@ -150,7 +158,9 @@ class DefaultConverter(Converter):
         :param style: 拼音风格
         :param errors: 如何处理
         :param heteronym: 是否需要处理多音字
-        :param strict: 是否需要处理多音字
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :return: 处理后的拼音结果，如果为 ``None`` 或空 list 表示忽略这个字符串.
         :rtype: list
         """
@@ -196,6 +206,9 @@ class DefaultConverter(Converter):
         :param chars: 待处理的没有拼音的字符串
         :param errors: 如何处理
         :param heteronym: 是否需要处理多音字
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :param pinyin: 处理后的拼音信息，值为空 list 或包含拼音信息的 list
         :param kwargs: 其他关键字参数，暂时无用，用于以后扩展新的参数。
         :return: ``None`` 或代替 ``pinyin`` 做为处理结果。
@@ -223,7 +236,9 @@ class DefaultConverter(Converter):
 
         :param phrase: 词语
         :param errors: 指定如何处理没有拼音的字符
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :return: 拼音列表
         :rtype: list
         """
@@ -266,7 +281,9 @@ class DefaultConverter(Converter):
         :param han: 单个汉字
         :param errors: 指定如何处理没有拼音的字符，详情请参考
                        :py:func:`~pypinyin.pinyin`
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
         :return: 返回拼音列表，多音字会有多个拼音项
         :rtype: list
         """

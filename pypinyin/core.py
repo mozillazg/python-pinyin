@@ -77,7 +77,8 @@ class Pinyin(object):
                        * callable 对象: 回调函数之类的可调用对象。
 
         :param heteronym: 是否启用多音字
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
                        详见 :ref:`strict`
         :return: 拼音列表
         :rtype: list
@@ -109,7 +110,8 @@ class Pinyin(object):
                       更多拼音风格详见 :class:`~pypinyin.Style`。
         :param errors: 指定如何处理没有拼音的字符，详情请参考
                        :py:func:`~pypinyin.pinyin`
-        :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
                        详见 :ref:`strict`
         :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
         :rtype: list
@@ -228,7 +230,9 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
                    * callable 对象: 回调函数之类的可调用对象。
 
     :param heteronym: 是否启用多音字
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
+    :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                   是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
     :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
@@ -276,7 +280,9 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
     :param separator: 两个拼音间的分隔符/连接符
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
+    :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                   是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
     :return: slug 字符串.
 
     :raise AssertionError: 当传入的字符串不是 unicode 字符时会抛出这个异常
@@ -317,7 +323,9 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
                   更多拼音风格详见 :class:`~pypinyin.Style`。
     :param errors: 指定如何处理没有拼音的字符，详情请参考
                    :py:func:`~pypinyin.pinyin`
-    :param strict: 是否严格遵照《汉语拼音方案》来处理声母和韵母，详见 :ref:`strict`
+    :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                   是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
     :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
