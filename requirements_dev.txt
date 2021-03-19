@@ -9,3 +9,4 @@ Sphinx
 tox
 twine
 wheel>=0.21
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
