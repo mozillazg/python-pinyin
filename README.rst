@@ -126,11 +126,11 @@ FAQ
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ ，
 y，w，ü (yu) 都不是声母。
 
     声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据
-    `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+    `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ ，
     y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
 
     **如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。
@@ -175,7 +175,7 @@ y，w，ü (yu) 都不是声母。
 
 * 单个汉字的拼音使用 `pinyin-data`_ 的数据
 * 词组的拼音使用 `phrase-pinyin-data`_ 的数据
-* 声母和韵母使用 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ 的数据
+* 声母和韵母使用 `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ 的数据
 
 
 Related Projects
