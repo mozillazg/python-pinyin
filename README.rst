@@ -195,8 +195,8 @@ __ https://github.com/mozillazg/rust-pinyin
    :target: https://circleci.com/gh/mozillazg/python-pinyin
 .. |GitHubAction| image:: https://github.com/mozillazg/python-pinyin/workflows/CI/badge.svg
    :target: https://github.com/mozillazg/python-pinyin/actions
-.. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
-   :target: https://codecov.io/gh/mozillazg/python-pinyin
+.. |Coverage| image:: https://img.shields.io/coveralls/github/mozillazg/python-pinyin/master.svg
+   :target: https://coveralls.io/github/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.org/project/pypinyin/
 .. |DOI| image:: https://zenodo.org/badge/12830126.svg

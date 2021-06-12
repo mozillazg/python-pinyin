@@ -6,7 +6,7 @@
 汉字拼音转换工具（Python 版）
 =============================
 
-|Build| |Coverage| |Pypi version|
+|Build| |Coverage| |Pypi version| |PyPI downloads|
 
 
 将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
@@ -31,8 +31,8 @@
 
 .. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg
    :target: https://circleci.com/gh/mozillazg/python-pinyin
-.. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
-   :target: https://codecov.io/gh/mozillazg/python-pinyin
+.. |Coverage| image:: https://img.shields.io/coveralls/github/mozillazg/python-pinyin/master.svg
+   :target: https://coveralls.io/github/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.org/project/pypinyin/
 .. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
