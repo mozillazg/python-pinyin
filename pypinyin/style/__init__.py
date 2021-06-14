@@ -59,5 +59,6 @@ def auto_discover():
         finals,
         bopomofo,
         cyrillic,
+        wadegiles,
         others,
     )
