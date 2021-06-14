@@ -34,7 +34,7 @@ jobs:
             virtualenv venv
             . venv/bin/activate
 
-            pip install codecov
+            pip install coveralls
             pip install tox
 
             if [[ $RUN_CHECK == 1 ]]; then
@@ -68,7 +68,7 @@ jobs:
             echo hello | pypinyin
             pypinyin < setup.cfg
 
-            codecov
+            coveralls
 
       - store_artifacts:
           path: test-reports

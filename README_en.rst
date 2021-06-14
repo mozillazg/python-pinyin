@@ -111,7 +111,7 @@ Why are there no y, w, yu as syllable initials?
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-Because according to the standard pinyin rules (`《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__),
+Because according to the standard pinyin rules (`《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__),
 'y', 'w', and 'ü' ('yu') are not counted as syllable initials.
 
     ** If this causes you inconvenience, please also be aware of characters without an initial

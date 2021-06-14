@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
 env = {}
-with open('./pypinyin/pinyin_dict.py') as fp:
-    exec(fp.read(), env, env)
-with open('./pypinyin/phrases_dict_large.py') as fp:
-    exec(fp.read(), env, env)
 
 
 def get_pinyins_via_pinyin_dict(phrases):
@@ -56,6 +52,11 @@ def tidy():
 
 
 def main():
+    with open('./pypinyin/pinyin_dict.py') as fp:
+        exec(fp.read(), env, env)
+    with open('./pypinyin/phrases_dict_large.py') as fp:
+        exec(fp.read(), env, env)
+
     output = 'pypinyin/phrases_dict.py'
     new_dict = tidy()
     save(new_dict, output)

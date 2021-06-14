@@ -22,7 +22,7 @@
 
 * 根据词组智能匹配最正确的拼音。
 * 支持多音字。
-* 简单的繁体支持, 注音支持。
+* 简单的繁体支持，注音支持，威妥玛拼音支持。
 * 支持多种不同拼音/注音风格。
 
 
@@ -54,6 +54,8 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['zhong1', 'zhong4'], ['xin1']]
     >>> pinyin('中心', style=Style.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+    >>> lazy_pinyin('威妥玛拼音', style=Style.WADEGILES)
+    ['wei', "t'o", 'ma', "p'in", 'yin']
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
     >>> lazy_pinyin('战略', v_to_u=True)  # 不使用 v 表示 ü
@@ -126,11 +128,11 @@ FAQ
     >>> pinyin('下雨天', style=Style.INITIALS)
     [['x'], [''], ['t']]
 
-因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+因为根据 `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ ，
 y，w，ü (yu) 都不是声母。
 
     声母风格（INITIALS）下，“雨”、“我”、“圆”等汉字返回空字符串，因为根据
-    `《汉语拼音方案》 <http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ ，
+    `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ ，
     y，w，ü (yu) 都不是声母，在某些特定韵母无声母时，才加上 y 或 w，而 ü 也有其特定规则。    —— @hotoo
 
     **如果你觉得这个给你带来了麻烦，那么也请小心一些无声母的汉字（如“啊”、“饿”、“按”、“昂”等）。
@@ -175,7 +177,7 @@ y，w，ü (yu) 都不是声母。
 
 * 单个汉字的拼音使用 `pinyin-data`_ 的数据
 * 词组的拼音使用 `phrase-pinyin-data`_ 的数据
-* 声母和韵母使用 `《汉语拼音方案》 <http://www.moe.gov.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html>`__ 的数据
+* 声母和韵母使用 `《汉语拼音方案》 <http://www.moe.gov.cn/jyb_sjzl/ziliao/A19/195802/t19580201_186000.html>`__ 的数据
 
 
 Related Projects
@@ -195,8 +197,8 @@ __ https://github.com/mozillazg/rust-pinyin
    :target: https://circleci.com/gh/mozillazg/python-pinyin
 .. |GitHubAction| image:: https://github.com/mozillazg/python-pinyin/workflows/CI/badge.svg
    :target: https://github.com/mozillazg/python-pinyin/actions
-.. |Coverage| image:: https://img.shields.io/codecov/c/github/mozillazg/python-pinyin/master.svg
-   :target: https://codecov.io/gh/mozillazg/python-pinyin
+.. |Coverage| image:: https://img.shields.io/coveralls/github/mozillazg/python-pinyin/master.svg
+   :target: https://coveralls.io/github/mozillazg/python-pinyin
 .. |PyPI version| image:: https://img.shields.io/pypi/v/pypinyin.svg
    :target: https://pypi.org/project/pypinyin/
 .. |DOI| image:: https://zenodo.org/badge/12830126.svg

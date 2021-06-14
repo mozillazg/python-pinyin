@@ -41,6 +41,8 @@ class Style(IntEnum):
 
     CYRILLIC_FIRST = ...
 
+    WADEGILES = ...
+
 
 NORMAL = ...  # type: Style
 STYLE_NORMAL = ...  # type: Style

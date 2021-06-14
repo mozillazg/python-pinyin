@@ -86,6 +86,8 @@ class Style(IntEnum):
     CYRILLIC = 12
     #: 汉语拼音与俄语字母对照风格，仅首字母。如： 中国 -> ``ч г``
     CYRILLIC_FIRST = 13
+    #: 威妥玛拼音/韦氏拼音/威式拼音风格，无声调
+    WADEGILES = 14
 
 
 NORMAL = STYLE_NORMAL = Style.NORMAL
