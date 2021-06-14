@@ -54,6 +54,8 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     [['zhong1', 'zhong4'], ['xin1']]
     >>> pinyin('中心', style=Style.BOPOMOFO)  # 注音风格
     [['ㄓㄨㄥ'], ['ㄒㄧㄣ']]
+    >>> lazy_pinyin('威妥玛拼音', style=Style.WADEGILES)
+    ['wei', "t'o", 'ma', "p'in", 'yin']
     >>> lazy_pinyin('中心')  # 不考虑多音字的情况
     ['zhong', 'xin']
     >>> lazy_pinyin('战略', v_to_u=True)  # 不使用 v 表示 ü

@@ -1,6 +1,17 @@
 Changelog
 ---------
 
+`0.42.0`_ (2021-06-14)
+++++++++++++++++++++++++
+
+* **[New]** 新增 ``Style.WADEGILES`` ：威妥玛拼音/韦氏拼音/威式拼音风格，无声调
+
+  .. code-block:: python
+
+      >>> lazy_pinyin('威妥玛拼音', style=Style.WADEGILES)
+      ['wei', "t'o", 'ma', "p'in", 'yin']
+
+
 `0.41.0`_ (2021-03-13)
 ++++++++++++++++++++++++
 
@@ -901,3 +912,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.39.1: https://github.com/mozillazg/python-pinyin/compare/v0.39.0...v0.39.1
 .. _0.40.0: https://github.com/mozillazg/python-pinyin/compare/v0.39.1...v0.40.0
 .. _0.41.0: https://github.com/mozillazg/python-pinyin/compare/v0.40.0...v0.41.0
+.. _0.42.0: https://github.com/mozillazg/python-pinyin/compare/v0.41.0...v0.42.0

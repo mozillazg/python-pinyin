@@ -559,6 +559,28 @@ def test_m_e(han, style, expect):
     assert (set(result[0]) & set(expect)) == set(expect)
 
 
+@pytest.mark.parametrize('han,expect', [
+    ['北京', ['pei', 'ching']],
+    ['台北', ["t'ai", 'pei']],
+    ['太极', ["t'ai", 'chi']],
+    ['只', ['chih']],
+    ['韦氏拼音', ['wei', 'shih', "p'in", 'yin']],
+    ['威妥玛拼音', ['wei', "t'o", 'ma', "p'in", 'yin']],
+])
+def test_wadegiles(han, expect):
+    got = lazy_pinyin(han, style=Style.WADEGILES)
+    assert got == expect
+
+
+@pytest.mark.parametrize('han,v_to_u,expect', [
+    ['句', False, ['chv']],
+    ['句', True, ['chü']],
+])
+def test_wadegiles_v_u(han, v_to_u, expect):
+    got = lazy_pinyin(han, v_to_u=v_to_u, style=Style.WADEGILES)
+    assert got == expect
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
