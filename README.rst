@@ -106,6 +106,7 @@ FAQ
     >>> pinyin('步履蹒跚')
     [['bù'], ['lǚ'], ['pán'], ['shān']]
 
+或者使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
 详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
 如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，

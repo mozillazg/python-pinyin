@@ -95,6 +95,21 @@
     >>> lazy_pinyin('还没', style=Style.TONE2)
     ['ha2i', 'me2i']
 
+或者使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果:
+
+.. code-block:: python
+
+    >>> from pypinyin import pinyin
+    >>> pinyin('枯萎')
+    [['kū'], ['wēi']]
+
+    # 使用 phrase-pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
+    >>> cc_cedict.load()
+
+    >>> pinyin('枯萎')
+    [['kū'], ['wěi']]
+
 
 .. _custom_style:
 
