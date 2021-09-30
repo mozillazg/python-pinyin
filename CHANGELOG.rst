@@ -920,5 +920,5 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.40.0: https://github.com/mozillazg/python-pinyin/compare/v0.39.1...v0.40.0
 .. _0.41.0: https://github.com/mozillazg/python-pinyin/compare/v0.40.0...v0.41.0
 .. _0.42.0: https://github.com/mozillazg/python-pinyin/compare/v0.41.0...v0.42.0
-.. _0.42.1: https://github.com/mozillazg/python-pinyin/compare/v0.41.0...v0.42.1
+.. _0.42.1: https://github.com/mozillazg/python-pinyin/compare/v0.42.0...v0.42.1
 .. _0.43.0: https://github.com/mozillazg/python-pinyin/compare/v0.42.1...v0.43.0
