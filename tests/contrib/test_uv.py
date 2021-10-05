@@ -18,3 +18,6 @@ def test_v2u():
     assert lazy_pinyin('战略') == ['zhan', 'lve']
     assert my_pinyin.lazy_pinyin('战略') == ['zhan', 'lüe']
     assert lazy_pinyin('战略', v_to_u=True) == ['zhan', 'lüe']
+
+    assert lazy_pinyin('战略', v_to_u=True, neutral_tone_with_five=True,
+                       tone_sandhi=True) == ['zhan', 'lüe']
