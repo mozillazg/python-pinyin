@@ -36,3 +36,9 @@ NeutralToneWith5Mixin
 -----------------------
 
 .. autoclass:: pypinyin.contrib.neutral_tone.NeutralToneWith5Mixin
+
+
+ToneSandhiMixin
+----------------
+
+.. autoclass:: pypinyin.contrib.tone_sandhi.ToneSandhiMixin

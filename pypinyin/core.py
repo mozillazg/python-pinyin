@@ -113,8 +113,10 @@ class Pinyin(object):
         与 :py:func:`~pypinyin.pinyin` 的区别是每个汉字的拼音是个字符串，
         并且每个字只包含一个读音.
 
-        :param hans: 汉字
-        :type hans: unicode or list
+        :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+        :type hans: unicode 字符串或字符串列表
         :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                       更多拼音风格详见 :class:`~pypinyin.Style`。
         :param errors: 指定如何处理没有拼音的字符，详情请参考
@@ -281,8 +283,10 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
          errors='default', strict=True):
     """将汉字转换为拼音，然后生成 slug 字符串.
 
-    :param hans: 汉字
-    :type hans: unicode or list
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`
     :param heteronym: 是否启用多音字
@@ -326,8 +330,10 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
     并且每个字只包含一个读音.
 
-    :param hans: 汉字
-    :type hans: unicode or list
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`。
     :param errors: 指定如何处理没有拼音的字符，详情请参考
@@ -343,7 +349,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
     :param tone_sandhi: 是否按照声调 `变调规则 <https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi>`__
                         对拼音进行处理
                         （使用预先通过分词库进行过分词后的结果作为 ``hans``
-                         参数的值效果会更好，因为变调效果依赖分词效果）
+                        参数的值效果会更好，因为变调效果依赖分词效果）
     :type tone_sandhi: bool
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
