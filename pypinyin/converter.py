@@ -326,7 +326,7 @@ class _neutralToneWith5Converter(NeutralToneWith5Mixin, DefaultConverter):
     pass
 
 
-class _ToneSandhiConverter(ToneSandhiMixin, DefaultConverter):
+class _toneSandhiConverter(ToneSandhiMixin, DefaultConverter):
     pass
 
 
@@ -366,7 +366,7 @@ class _mixConverter(DefaultConverter):
             pinyin = post_data
 
         if self._tone_sandhi:
-            post_data = _ToneSandhiConverter().post_pinyin(
+            post_data = _toneSandhiConverter().post_pinyin(
                 han, heteronym, pinyin, **kwargs)
             if post_data is not None:
                 pinyin = post_data
