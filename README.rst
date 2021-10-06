@@ -109,6 +109,17 @@ FAQ
     [['bù'], ['lǚ'], ['pán'], ['shān']]
 
 或者使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
+
+.. code-block:: python
+
+    >>> pinyin('枯萎')
+    [['kū'], ['wēi']]
+    # 使用 phrase-pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
+    >>> cc_cedict.load()
+    >>> pinyin('枯萎')
+    [['kū'], ['wěi']]
+
 详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
 如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
