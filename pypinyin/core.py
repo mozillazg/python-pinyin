@@ -7,13 +7,13 @@ from itertools import chain
 
 from pypinyin.compat import text_type
 from pypinyin.constants import (
-    PHRASES_DICT, PINYIN_DICT, Style
+    PHRASES_DICT, PINYIN_DICT, Style, RE_HANS
 )
 from pypinyin.converter import DefaultConverter, _mixConverter
+from pypinyin.contrib.tone_sandhi import ToneSandhiMixin
 from pypinyin.seg import mmseg
 from pypinyin.seg.simpleseg import seg
-from pypinyin.utils import (
-    _replace_tone2_style_dict_to_default)
+from pypinyin.utils import _replace_tone2_style_dict_to_default
 
 
 def load_single_dict(pinyin_dict, style='default'):
@@ -88,7 +88,16 @@ class Pinyin(object):
         if isinstance(hans, text_type):
             han_list = self.seg(hans)
         else:
-            han_list = chain(*(self.seg(x) for x in hans))
+            if isinstance(self._converter, _mixConverter) or \
+                    isinstance(self._converter, ToneSandhiMixin):
+                han_list = []
+                for h in hans:
+                    if not RE_HANS.match(h):
+                        han_list.extend(self.seg(h))
+                    else:
+                        han_list.append(h)
+            else:
+                han_list = chain(*(self.seg(x) for x in hans))
 
         pys = []
         for words in han_list:
@@ -104,8 +113,10 @@ class Pinyin(object):
         与 :py:func:`~pypinyin.pinyin` 的区别是每个汉字的拼音是个字符串，
         并且每个字只包含一个读音.
 
-        :param hans: 汉字
-        :type hans: unicode or list
+        :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+        :type hans: unicode 字符串或字符串列表
         :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                       更多拼音风格详见 :class:`~pypinyin.Style`。
         :param errors: 指定如何处理没有拼音的字符，详情请参考
@@ -272,8 +283,10 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
          errors='default', strict=True):
     """将汉字转换为拼音，然后生成 slug 字符串.
 
-    :param hans: 汉字
-    :type hans: unicode or list
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`
     :param heteronym: 是否启用多音字
@@ -311,14 +324,16 @@ def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',
 
 
 def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
-                v_to_u=False, neutral_tone_with_five=False):
+                v_to_u=False, neutral_tone_with_five=False, tone_sandhi=False):
     """将汉字转换为拼音，返回不包含多音字结果的拼音列表.
 
     与 :py:func:`~pypinyin.pinyin` 的区别是返回的拼音是个字符串，
     并且每个字只包含一个读音.
 
-    :param hans: 汉字
-    :type hans: unicode or list
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`。
     :param errors: 指定如何处理没有拼音的字符，详情请参考
@@ -331,6 +346,11 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
                                    使用 5 标识轻声
     :type neutral_tone_with_five: bool
+    :param tone_sandhi: 是否按照声调 `变调规则 <https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi>`__
+                        对拼音进行处理
+                        （使用预先通过分词库进行过分词后的结果作为 ``hans``
+                        参数的值效果会更好，因为变调效果依赖分词效果）
+    :type tone_sandhi: bool
     :return: 拼音列表(e.g. ``['zhong', 'guo', 'ren']``)
     :rtype: list
 
@@ -354,8 +374,11 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
       ['zhan', 'lüe']
       >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
       ['yi1', 'shang5']
-    """
+      >>> lazy_pinyin('你好', style=Style.TONE2, tone_sandhi=True)
+      ['ni2', 'ha3o']
+    """  # noqa
     _pinyin = Pinyin(_mixConverter(
-        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
+        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five,
+        tone_sandhi=tone_sandhi))
     return _pinyin.lazy_pinyin(
         hans, style=style, errors=errors, strict=strict)

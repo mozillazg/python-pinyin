@@ -11,6 +11,7 @@ from pypinyin.constants import (
 )
 from pypinyin.contrib.uv import V2UMixin
 from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
+from pypinyin.contrib.tone_sandhi import ToneSandhiMixin
 from pypinyin.utils import _remove_dup_items
 from pypinyin.style import auto_discover
 from pypinyin.style import convert as convert_style
@@ -242,38 +243,36 @@ class DefaultConverter(Converter):
         :return: 拼音列表
         :rtype: list
         """
-        py = []
+        pinyin_list = []
         if phrase in PHRASES_DICT:
-            py = deepcopy(PHRASES_DICT[phrase])
-
-            post_data = self.post_pinyin(phrase, heteronym, py)
-            if post_data is not None:
-                py = post_data
-
-            for idx, item in enumerate(py):
-                han = phrase[idx]
-                if heteronym:
-                    py[idx] = _remove_dup_items(
-                        [
-                            self.convert_style(
-                                han, orig_pinyin=x, style=style, strict=strict)
-                            for x in item
-                        ]
-                    )
-                else:
-                    orig_pinyin = item[0]
-                    py[idx] = [
-                        self.convert_style(
-                            han, orig_pinyin=orig_pinyin, style=style,
-                            strict=strict)]
+            pinyin_list = deepcopy(PHRASES_DICT[phrase])
         else:
-            for i in phrase:
-                single = self._single_pinyin(
-                    i, style=style, heteronym=heteronym,
-                    errors=errors, strict=strict)
-                if single:
-                    py.extend(single)
-        return py
+            for han in phrase:
+                py = self._single_pinyin(han, style, heteronym, errors, strict)
+                pinyin_list.extend(py)
+
+        post_data = self.post_pinyin(phrase, heteronym, pinyin_list)
+        if post_data is not None:
+            pinyin_list = post_data
+
+        for idx, item in enumerate(pinyin_list):
+            han = phrase[idx]
+            if heteronym:
+                pinyin_list[idx] = _remove_dup_items(
+                    [
+                        self.convert_style(
+                            han, orig_pinyin=x, style=style, strict=strict)
+                        for x in item
+                    ]
+                )
+            else:
+                orig_pinyin = item[0]
+                pinyin_list[idx] = [
+                    self.convert_style(
+                        han, orig_pinyin=orig_pinyin, style=style,
+                        strict=strict)]
+
+        return pinyin_list
 
     def _single_pinyin(self, han, style, heteronym, errors, strict):
         """单字拼音转换.
@@ -295,30 +294,7 @@ class DefaultConverter(Converter):
                 heteronym=heteronym, strict=strict)
 
         pys = PINYIN_DICT[num].split(',')  # 字的拼音列表
-
-        post_data = self.post_pinyin(han, heteronym, [pys])
-        if post_data is not None:
-            pys = post_data[0]
-
-        if not heteronym:
-            orig_pinyin = pys[0]
-            return [[self.convert_style(
-                han, orig_pinyin, style=style, strict=strict)]]
-
-        # 输出多音字的多个读音
-        # 临时存储已存在的拼音，避免多音字拼音转换为非声调风格出现重复。
-        # TODO: change to use set
-        # TODO: add test for cache
-        py_cached = {}
-        pinyins = []
-        for orig_pinyin in pys:
-            py = self.convert_style(han, orig_pinyin, style=style,
-                                    strict=strict)
-            if py in py_cached:
-                continue
-            py_cached[py] = py
-            pinyins.append(py)
-        return [pinyins]
+        return [pys]
 
     def _convert_style(self, han, pinyin, style, strict, default,
                        **kwargs):
@@ -350,40 +326,49 @@ class _neutralToneWith5Converter(NeutralToneWith5Mixin, DefaultConverter):
     pass
 
 
-class _neutralToneWith5AndV2UConverter(
-        NeutralToneWith5Mixin, V2UMixin, DefaultConverter):
+class _toneSandhiConverter(ToneSandhiMixin, DefaultConverter):
     pass
 
 
-# TODO: refactor
 class _mixConverter(DefaultConverter):
-    def __init__(self, v_to_u=False, neutral_tone_with_five=False, **kwargs):
+    def __init__(self, v_to_u=False, neutral_tone_with_five=False,
+                 tone_sandhi=False, **kwargs):
         super(_mixConverter, self).__init__(**kwargs)
         self._v_to_u = v_to_u
         self._neutral_tone_with_five = neutral_tone_with_five
-
-        self._v2uconverter = _v2UConverter()
-        self._neutraltonewith5converter = _neutralToneWith5Converter()
-        self._neutraltonewith5andv2uconverter = \
-            _neutralToneWith5AndV2UConverter()
+        self._tone_sandhi = tone_sandhi
 
     def post_convert_style(self, han, orig_pinyin, converted_pinyin,
                            style, strict, **kwargs):
-        if self._v_to_u and not self._neutral_tone_with_five:
-            return self._v2uconverter.post_convert_style(
-                han, orig_pinyin, converted_pinyin, style, strict,
-                **kwargs)
+        post_data = super(_mixConverter, self).post_convert_style(
+            han, orig_pinyin, converted_pinyin, style, strict, **kwargs)
+        if post_data is not None:
+            converted_pinyin = post_data
 
-        if self._neutral_tone_with_five and not self._v_to_u:
-            return self._neutraltonewith5converter.post_convert_style(
-                han, orig_pinyin, converted_pinyin, style, strict,
-                **kwargs)
+        if self._v_to_u:
+            post_data = _v2UConverter().post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict, **kwargs)
+            if post_data is not None:
+                converted_pinyin = post_data
 
-        if self._neutral_tone_with_five and self._v_to_u:
-            return self._neutraltonewith5andv2uconverter.post_convert_style(
-                han, orig_pinyin, converted_pinyin, style, strict,
-                **kwargs)
+        if self._neutral_tone_with_five:
+            post_data = _neutralToneWith5Converter().post_convert_style(
+                han, orig_pinyin, converted_pinyin, style, strict, **kwargs)
+            if post_data is not None:
+                converted_pinyin = post_data
 
-        return super(_mixConverter, self).post_convert_style(
-                han, orig_pinyin, converted_pinyin, style, strict,
-                **kwargs)
+        return converted_pinyin
+
+    def post_pinyin(self, han, heteronym, pinyin, **kwargs):
+        post_data = super(_mixConverter, self).post_pinyin(
+            han, heteronym, pinyin, **kwargs)
+        if post_data is not None:
+            pinyin = post_data
+
+        if self._tone_sandhi:
+            post_data = _toneSandhiConverter().post_pinyin(
+                han, heteronym, pinyin, **kwargs)
+            if post_data is not None:
+                pinyin = post_data
+
+        return pinyin

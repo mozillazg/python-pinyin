@@ -26,13 +26,19 @@ contrib
 .. autofunction:: pypinyin.contrib.tone_convert.tone3_to_tone2
 
 
-V2UMixin
----------
+.. V2UMixin
+.. ---------
 
-.. autoclass:: pypinyin.contrib.uv.V2UMixin
+.. .. autoclass:: pypinyin.contrib.uv.V2UMixin
 
 
-NeutralToneWith5Mixin
------------------------
+.. NeutralToneWith5Mixin
+.. -----------------------
 
-.. autoclass:: pypinyin.contrib.neutral_tone.NeutralToneWith5Mixin
+.. .. autoclass:: pypinyin.contrib.neutral_tone.NeutralToneWith5Mixin
+
+
+.. ToneSandhiMixin
+.. ----------------
+
+.. .. autoclass:: pypinyin.contrib.tone_sandhi.ToneSandhiMixin

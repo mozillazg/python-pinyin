@@ -1,6 +1,20 @@
 Changelog
 ---------
 
+
+`0.43.0`_ (2021-10-06)
+++++++++++++++++++++++++
+
+* **[New]** ``lazy_pinyin`` 函数增加参数 ``tone_sandhi`` 用于控制是否对拼音结果按 `变调规则`_ 进行处理:
+
+  .. code-block:: python
+
+      >>> lazy_pinyin('你好', style=Style.TONE2)
+      ['ni3', 'ha3o']
+      >>> lazy_pinyin('你好', style=Style.TONE2, tone_sandhi=True)
+      ['ni2', 'ha3o']
+
+
 `0.42.1`_ (2021-09-30)
 ++++++++++++++++++++++++
 
@@ -838,7 +852,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
-
+.. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
 .. _0.3.0: https://github.com/mozillazg/python-pinyin/compare/v0.2.0...v0.3.0

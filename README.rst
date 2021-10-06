@@ -42,7 +42,7 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 .. code-block:: python
 
     >>> from pypinyin import pinyin, lazy_pinyin, Style
-    >>> pinyin('中心')
+    >>> pinyin('中心')  # or pinyin(['中心'])，参数值为列表时表示输入的是已分词后的数据
     [['zhōng'], ['xīn']]
     >>> pinyin('中心', heteronym=True)  # 启用多音字模式
     [['zhōng', 'zhòng'], ['xīn']]
@@ -63,7 +63,9 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
     # 使用 5 标识轻声
     >>> lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
     ['yi1', 'shang5']
-
+    # 变调  nǐ hǎo -> ní hǎo
+    >>> lazy_pinyin('你好', style=Style.TONE2, tone_sandhi=True)
+    ['ni2', 'ha3o']
 
 **注意事项** ：
 
@@ -107,6 +109,17 @@ FAQ
     [['bù'], ['lǚ'], ['pán'], ['shān']]
 
 或者使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
+
+.. code-block:: python
+
+    >>> pinyin('枯萎')
+    [['kū'], ['wēi']]
+    # 使用 phrase-pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
+    >>> cc_cedict.load()
+    >>> pinyin('枯萎')
+    [['kū'], ['wěi']]
+
 详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
 如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
