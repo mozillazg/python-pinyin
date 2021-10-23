@@ -1,7 +1,7 @@
 汉字拼音转换工具（Python 版）
 =============================
 
-|Build| |GitHubAction| |Coverage| |Pypi version| |DOI|
+|Build| |GitHubAction| |Coverage| |Pypi version| |PyPI downloads| |DOI|
 
 
 将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
@@ -217,6 +217,8 @@ __ https://github.com/mozillazg/rust-pinyin
    :target: https://pypi.org/project/pypinyin/
 .. |DOI| image:: https://zenodo.org/badge/12830126.svg
    :target: https://zenodo.org/badge/latestdoi/12830126
+.. |PyPI downloads| image:: https://img.shields.io/pypi/dm/pypinyin.svg
+   :target: https://pypi.org/project/pypinyin/
 
 
 

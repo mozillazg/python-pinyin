@@ -245,6 +245,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
                    是否严格遵照《汉语拼音方案》来处理声母和韵母，
                    详见 :ref:`strict`
     :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
                                    使用 5 标识轻声
@@ -342,6 +343,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
                    是否严格遵照《汉语拼音方案》来处理声母和韵母，
                    详见 :ref:`strict`
     :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
     :type v_to_u: bool
     :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
                                    使用 5 标识轻声
