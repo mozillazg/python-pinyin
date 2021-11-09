@@ -58,8 +58,6 @@ class ToneSandhiMixin(object):
         for pinyin in tone2_pinyin_list:
             if '3' in pinyin:
                 third_num += 1
-            else:
-                third_num = 0
 
         if third_num == 2:
             for i, v in enumerate(tone2_pinyin_list):
