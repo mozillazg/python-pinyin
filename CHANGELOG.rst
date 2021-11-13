@@ -2,6 +2,13 @@ Changelog
 ---------
 
 
+`0.44.0`_ (2021-11-xx)
++++++++++++++++++++++++++
+
+* **[New]** ``tone2_to_tone3`` 、``tone3_to_tone2`` 新增 ``v_to_u=False`` 参数
+* **[Fixed]** 修复 ``pypinyin.contrib.tone_convert`` 中无声调相关风格转换没有正确处理 ``v_to_u`` 参数的问题 （Fixes `#251`_）
+
+
 `0.43.0`_ (2021-10-06)
 ++++++++++++++++++++++++
 
@@ -848,6 +855,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#174: https://github.com/mozillazg/python-pinyin/issues/174
 .. _#139: https://github.com/mozillazg/python-pinyin/issues/139
 .. _#205: https://github.com/mozillazg/python-pinyin/issues/205
+.. _#251: https://github.com/mozillazg/python-pinyin/issues/251
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224
@@ -936,3 +944,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.42.0: https://github.com/mozillazg/python-pinyin/compare/v0.41.0...v0.42.0
 .. _0.42.1: https://github.com/mozillazg/python-pinyin/compare/v0.42.0...v0.42.1
 .. _0.43.0: https://github.com/mozillazg/python-pinyin/compare/v0.42.1...v0.43.0
+.. _0.44.0: https://github.com/mozillazg/python-pinyin/compare/v0.43.0...v0.44.0

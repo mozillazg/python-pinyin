@@ -19,8 +19,12 @@ test: lint
 	make testonly
 
 .PHONY: testonly
-testonly:
+testonly: doctest
 	py.test --random-order --cov pypinyin tests/ pypinyin/
+
+.PHONY: doctest
+doctest:
+	for f in $(shell find pypinyin -name '*.py' |grep -v __ ); do python -m doctest $$f; done
 
 .PHONY: publish
 publish: clean

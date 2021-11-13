@@ -101,11 +101,11 @@
     >> load_phrases_dict({'桔子': [['jú'], ['zǐ']]})  # 增加 "桔子" 词组
     >> lazy_pinyin(hans, style=Style.TONE2)
     ['ju2', 'zi3']
-    >>
+
     >> hans = '还没'
     >> lazy_pinyin(hans, style=Style.TONE2)
     ['hua2n', 'me2i']
-    >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序
+    >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序或覆盖默认拼音
     >>> lazy_pinyin('还没', style=Style.TONE2)
     ['ha2i', 'me2i']
 
@@ -124,6 +124,16 @@
     >>> pinyin('枯萎')
     [['kū'], ['wěi']]
 
+
+    >>> pinyin('扔', heteronym=True)
+    [['rēng', 'rèng']]
+
+    # 使用 pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    >>> from pypinyin_dict.pinyin_data import kxhc1983
+    >>> kxhc1983.load()
+
+    >>> pinyin('扔', heteronym=True)
+    [['rēng']]
 
 .. _custom_style:
 
