@@ -74,6 +74,13 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  python3.10:
+    <<: *DEFAULT
+    docker:
+      - image: circleci/python:3.10
+    environment:
+      TOX_ENV: py310
+
   python3.9:
     <<: *DEFAULT
     docker:
@@ -142,6 +149,7 @@ workflows:
   version: 2
   testing:
     jobs:
+      - python3.10
       - python3.9
       - python3.8
       - python3.7
