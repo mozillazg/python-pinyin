@@ -93,34 +93,30 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 FAQ
 ---------
 
-词语中的多音字拼音有误？
+拼音有误？
 +++++++++++++++++++++++++++++
 
-目前是通过词组拼音库的方式来解决多音字问题的。如果出现拼音有误的情况，
-可以自定义词组拼音来调整词语中的拼音：
+可以通过自定义词组拼音库或者单字拼音库的方式修正拼音结果，
+也可以使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
+详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
+
 
 .. code-block:: python
 
-    >>> from pypinyin import Style, pinyin, load_phrases_dict
-    >>> pinyin('步履蹒跚')
-    [['bù'], ['lǚ'], ['mán'], ['shān']]
-    >>> load_phrases_dict({'步履蹒跚': [['bù'], ['lǚ'], ['pán'], ['shān']]})
-    >>> pinyin('步履蹒跚')
-    [['bù'], ['lǚ'], ['pán'], ['shān']]
+    >> from pypinyin import load_phrases_dict, load_single_dict
 
-或者使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
+    >> load_phrases_dict({'桔子': [['jú'], ['zǐ']]})  # 增加 "桔子" 词组
 
-.. code-block:: python
+    >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序或覆盖默认拼音
 
-    >>> pinyin('枯萎')
-    [['kū'], ['wēi']]
     # 使用 phrase-pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
     >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
     >>> cc_cedict.load()
-    >>> pinyin('枯萎')
-    [['kū'], ['wěi']]
 
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
+    # 使用 pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    >>> from pypinyin_dict.pinyin_data import kxhc1983
+    >>> kxhc1983.load()
+
 
 如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
 然后将分词后的词组结果列表作为函数的参数即可:
