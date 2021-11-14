@@ -5,6 +5,7 @@ Changelog
 `0.44.0`_ (2021-11-xx)
 +++++++++++++++++++++++++
 
+* **[New]** 增加 Python 3.10 下的测试，正式支持 Python 3.10 。
 * **[New]** ``tone2_to_tone3`` 、``tone3_to_tone2`` 新增 ``v_to_u=False`` 参数
 * **[Fixed]** 修复 ``pypinyin.contrib.tone_convert`` 中无声调相关风格转换没有正确处理 ``v_to_u`` 参数的问题 （Fixes `#251`_ ）
 * **[Improved]** 使用 `phrase-pinyin-data`_ v0.12.0 的词语拼音数据。
