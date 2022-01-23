@@ -12,7 +12,7 @@ from pypinyin import (
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
     pinyin_dict, Style
 )
-from pypinyin.compat import SUPPORT_UCS4
+from pypinyin.compat import SUPPORT_UCS4, PY2
 from pypinyin.style._constants import _FINALS
 
 # test data from http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html  # noqa
@@ -595,7 +595,10 @@ def test_uen(hans, kwargs, result):
 @pytest.mark.skipif(not SUPPORT_UCS4, reason='dont support ucs4')
 def test_ensure_finails_in_strict_mode():
     for c in pinyin_dict.pinyin_dict:
-        han = chr(c)
+        if PY2:
+            han = unichr(c)  # noqa
+        else:
+            han = chr(c)
         raw_pinyin = pinyin(han, heteronym=True)
         pinyin_list = pinyin(han, style=Style.FINALS, strict=True,
                              heteronym=True, v_to_u=True)[0]
