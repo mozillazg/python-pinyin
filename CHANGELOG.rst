@@ -2,6 +2,15 @@ Changelog
 ---------
 
 
+`0.45.0`_ (2022-01-23)
++++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复韵母相关拼音风格在 ``strict=True`` 时未按预期只返回拼音标准中定义过的韵母。
+  (Fixes `#266`_, Closes `#80`_)
+* **[New]** ``pypinyin.contrib.tone_convert`` 模块新增 ``to_initials`` 和 ``to_finals`` 函数，
+  用于将拼音转换为 ``Style.INITIALS`` 和 ``Style.FINALS`` 风格的结果。
+
+
 `0.44.0`_ (2021-11-14)
 +++++++++++++++++++++++++
 
@@ -859,6 +868,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#139: https://github.com/mozillazg/python-pinyin/issues/139
 .. _#205: https://github.com/mozillazg/python-pinyin/issues/205
 .. _#251: https://github.com/mozillazg/python-pinyin/issues/251
+.. _#266: https://github.com/mozillazg/python-pinyin/issues/266
+.. _#80: https://github.com/mozillazg/python-pinyin/issues/80
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _@hanabi1224: https://github.com/hanabi1224
@@ -948,3 +959,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.42.1: https://github.com/mozillazg/python-pinyin/compare/v0.42.0...v0.42.1
 .. _0.43.0: https://github.com/mozillazg/python-pinyin/compare/v0.42.1...v0.43.0
 .. _0.44.0: https://github.com/mozillazg/python-pinyin/compare/v0.43.0...v0.44.0
+.. _0.45.0: https://github.com/mozillazg/python-pinyin/compare/v0.44.0...v0.45.0

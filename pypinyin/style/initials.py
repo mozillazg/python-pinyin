@@ -9,5 +9,5 @@ from pypinyin.style._utils import get_initials
 
 @register(Style.INITIALS)
 def convert(pinyin, **kwargs):
-    strict = kwargs.get('strict')
+    strict = kwargs.get('strict', True)
     return get_initials(pinyin, strict)

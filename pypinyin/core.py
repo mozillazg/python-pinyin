@@ -9,11 +9,11 @@ from pypinyin.compat import text_type
 from pypinyin.constants import (
     PHRASES_DICT, PINYIN_DICT, Style, RE_HANS
 )
-from pypinyin.converter import DefaultConverter, _mixConverter
+from pypinyin.converter import DefaultConverter, UltimateConverter
 from pypinyin.contrib.tone_sandhi import ToneSandhiMixin
+from pypinyin.contrib.tone_convert import tone2_to_tone
 from pypinyin.seg import mmseg
 from pypinyin.seg.simpleseg import seg
-from pypinyin.utils import _replace_tone2_style_dict_to_default
 
 
 def load_single_dict(pinyin_dict, style='default'):
@@ -25,7 +25,7 @@ def load_single_dict(pinyin_dict, style='default'):
     """
     if style == 'tone2':
         for k, v in pinyin_dict.items():
-            v = _replace_tone2_style_dict_to_default(v)
+            v = tone2_to_tone(v)
             PINYIN_DICT[k] = v
     else:
         PINYIN_DICT.update(pinyin_dict)
@@ -43,7 +43,7 @@ def load_phrases_dict(phrases_dict, style='default'):
     if style == 'tone2':
         for k, value in phrases_dict.items():
             v = [
-                list(map(_replace_tone2_style_dict_to_default, pys))
+                list(map(tone2_to_tone, pys))
                 for pys in value
             ]
             PHRASES_DICT[k] = v
@@ -88,7 +88,7 @@ class Pinyin(object):
         if isinstance(hans, text_type):
             han_list = self.seg(hans)
         else:
-            if isinstance(self._converter, _mixConverter) or \
+            if isinstance(self._converter, UltimateConverter) or \
                     isinstance(self._converter, ToneSandhiMixin):
                 han_list = []
                 for h in hans:
@@ -274,7 +274,7 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
       >>> pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
       [['yi1'], ['shang5']]
     """
-    _pinyin = Pinyin(_mixConverter(
+    _pinyin = Pinyin(UltimateConverter(
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
     return _pinyin.pinyin(
         hans, style=style, heteronym=heteronym, errors=errors, strict=strict)
@@ -379,7 +379,7 @@ def lazy_pinyin(hans, style=Style.NORMAL, errors='default', strict=True,
       >>> lazy_pinyin('你好', style=Style.TONE2, tone_sandhi=True)
       ['ni2', 'ha3o']
     """  # noqa
-    _pinyin = Pinyin(_mixConverter(
+    _pinyin = Pinyin(UltimateConverter(
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five,
         tone_sandhi=tone_sandhi))
     return _pinyin.lazy_pinyin(

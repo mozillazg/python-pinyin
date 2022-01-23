@@ -10,60 +10,48 @@ from __future__ import unicode_literals
 
 from pypinyin.constants import Style
 from pypinyin.style import register
-from pypinyin.style._constants import RE_TONE3
-from pypinyin.standard import convert_finals
-from pypinyin.style._utils import (
-    get_finals, has_finals,
-    replace_symbol_to_number, replace_symbol_to_no_symbol
+from pypinyin.style._constants import RE_NUMBER
+from pypinyin.style._tone_convert import (
+    tone3_to_tone2, tone2_to_tone, to_finals
 )
+from pypinyin.style._utils import replace_symbol_to_number
 
 
 class FinalsConverter(object):
     def to_finals(self, pinyin, **kwargs):
-        if kwargs.get('strict'):
-            pinyin = convert_finals(pinyin)
-        has_fi = has_finals(pinyin)
-
-        # 替换声调字符为无声调字符
-        pinyin = replace_symbol_to_no_symbol(pinyin)
-        if not has_fi:
-            return pinyin
-        # 获取韵母部分
-        return get_finals(pinyin, strict=False)
+        """无声调韵母"""
+        return to_finals(pinyin, strict=kwargs.get('strict', True))
 
     def to_finals_tone(self, pinyin, **kwargs):
-        if not has_finals(pinyin):
-            return pinyin
+        """声调在韵母头上"""
+        finals = self.to_finals_tone2(pinyin, **kwargs)
 
-        # 获取韵母部分
-        return get_finals(pinyin, strict=kwargs.get('strict'))
+        finals = tone2_to_tone(finals)
+
+        return finals
 
     def to_finals_tone2(self, pinyin, **kwargs):
-        if kwargs.get('strict'):
-            pinyin = convert_finals(pinyin)
-        has_fi = has_finals(pinyin)
+        """数字声调"""
+        finals = self.to_finals_tone3(pinyin, **kwargs)
 
-        # 用数字表示声调
-        pinyin = replace_symbol_to_number(pinyin)
-        if not has_fi:
-            return pinyin
-        # 获取韵母部分
-        return get_finals(pinyin, strict=False)
+        finals = tone3_to_tone2(finals)
+
+        return finals
 
     def to_finals_tone3(self, pinyin, **kwargs):
-        if kwargs.get('strict'):
-            pinyin = convert_finals(pinyin)
-        has_fi = has_finals(pinyin)
+        """数字声调"""
+        finals = self.to_finals(pinyin, **kwargs)
+        if not finals:
+            return finals
 
-        # 用数字表示声调
-        pinyin = replace_symbol_to_number(pinyin)
-        # 将声调数字移动到最后
-        pinyin = RE_TONE3.sub(r'\1\3\2', pinyin)
+        numbers = RE_NUMBER.findall(replace_symbol_to_number(pinyin))
+        if not numbers:
+            return finals
 
-        if not has_fi:
-            return pinyin
-        # 获取韵母部分
-        return get_finals(pinyin, strict=False)
+        number = numbers[0]
+        finals = finals + number
+
+        return finals
 
 
 converter = FinalsConverter()

@@ -42,7 +42,8 @@ def test_custom_style_with_call():
 
 
 def test_finals_tone3_no_final():
-    assert convert('ń', Style.FINALS_TONE3, True, None) == 'n2'
+    assert convert('ń', Style.FINALS_TONE3, True, None) == ''
+    assert convert('ń', Style.FINALS_TONE3, False, None) == 'n2'
 
 
 if __name__ == '__main__':
