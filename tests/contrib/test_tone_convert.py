@@ -17,6 +17,8 @@ from pypinyin.contrib.tone_convert import (
     to_tone,
     to_tone2,
     to_tone3,
+    to_initials,
+    to_finals
 )
 
 
@@ -229,6 +231,53 @@ def test_tone3_to_tone2(pinyin, result):
 ])
 def test_tone3_to_tone2_with_v_to_u(pinyin, v_to_u, result):
     assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
+
+
+@mark.parametrize('pinyin,strict,result', [
+    ['zhōng', True, 'zh'],
+    ['zhōng', False, 'zh'],
+
+    ['zho1ng', True, 'zh'],
+    ['zho1ng', False, 'zh'],
+
+    ['zhong1', True, 'zh'],
+    ['zhong1', False, 'zh'],
+
+    ['zhong', True, 'zh'],
+    ['zhong', False, 'zh'],
+
+    ['yu', True, ''],
+    ['yu', False, 'y'],
+])
+def test_to_initials(pinyin, strict, result):
+    assert to_initials(pinyin, strict=strict) == result
+
+
+@mark.parametrize('pinyin,strict,v_to_u,result', [
+    ['zhōng', True, False, 'ong'],
+    ['zhōng', False, False, 'ong'],
+
+    ['zho1ng', True, False, 'ong'],
+    ['zho1ng', False, False, 'ong'],
+
+    ['zhong1', True, False, 'ong'],
+    ['zhong1', False, False, 'ong'],
+
+    ['zhong', True, False, 'ong'],
+    ['zhong', False, False, 'ong'],
+
+    ['nǚ', True, False, 'v'],
+    ['nv', True, False, 'v'],
+    ['nü', True, False, 'v'],
+    ['nǚ', True, True, 'ü'],
+    ['nü', True, True, 'ü'],
+    ['nv', True, True, 'ü'],
+
+    ['gui', True, False, 'uei'],
+    ['gui', False, False, 'ui'],
+])
+def test_to_finals(pinyin, strict, v_to_u, result):
+    assert to_finals(pinyin, strict=strict, v_to_u=v_to_u) == result
 
 
 # 所有拼音转换为 tone2 或 tone3 风格后，都可以再转换回原始的拼音

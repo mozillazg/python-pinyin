@@ -6,6 +6,10 @@ from pypinyin import phonetic_symbol
 from pypinyin.style._tone_rule import right_mark_index
 from pypinyin.style._constants import RE_TONE3, RE_TONE2
 from pypinyin.style.tone import converter
+from pypinyin.style._utils import (
+    get_initials, replace_symbol_to_no_symbol,
+    get_finals
+)
 
 _re_number = re.compile(r'\d')
 
@@ -133,6 +137,61 @@ def to_tone3(pinyin, v_to_u=False, neutral_tone_with_5=False):
         pinyin, v_to_u=True, neutral_tone_with_5=neutral_tone_with_5)
     s = tone2_to_tone3(s)
     return _fix_v_u(pinyin, s, v_to_u)
+
+
+def to_initials(pinyin, strict=True):
+    """将 :py:attr:`~pypinyin.Style.TONE`、
+    :py:attr:`~pypinyin.Style.TONE2` 、
+    :py:attr:`~pypinyin.Style.TONE3` 或
+    :py:attr:`~pypinyin.Style.NORMAL` 风格的拼音转换为
+    :py:attr:`~pypinyin.Style.INITIALS` 风格的拼音
+
+    :param pinyin: :py:attr:`~pypinyin.Style.TONE`、
+                   :py:attr:`~pypinyin.Style.TONE2` 、
+                   :py:attr:`~pypinyin.Style.TONE3` 或
+                   :py:attr:`~pypinyin.Style.NORMAL` 风格的拼音
+    :param strict: 返回结果是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :return: :py:attr:`~pypinyin.Style.INITIALS` 风格的拼音
+
+    Usage::
+
+      >>> from pypinyin.contrib.tone_convert import to_initials
+      >>> to_initials('zhōng')
+      'zh'
+
+    """
+    return get_initials(pinyin, strict=strict)
+
+
+def to_finals(pinyin, strict=True, v_to_u=False):
+    """将 :py:attr:`~pypinyin.Style.TONE`、
+    :py:attr:`~pypinyin.Style.TONE2` 、
+    :py:attr:`~pypinyin.Style.TONE3` 或
+    :py:attr:`~pypinyin.Style.NORMAL` 风格的拼音转换为
+    :py:attr:`~pypinyin.Style.FINALS` 风格的拼音
+
+    :param pinyin: :py:attr:`~pypinyin.Style.TONE`、
+                   :py:attr:`~pypinyin.Style.TONE2` 、
+                   :py:attr:`~pypinyin.Style.TONE3` 或
+                   :py:attr:`~pypinyin.Style.NORMAL` 风格的拼音
+    :param strict: 返回结果是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
+    :return: :py:attr:`~pypinyin.Style.FINALS` 风格的拼音
+
+    Usage::
+
+      >>> from pypinyin.contrib.tone_convert import to_finals
+      >>> to_finals('zhōng')
+      'ong'
+
+    """
+    new_pinyin = replace_symbol_to_no_symbol(pinyin).replace('v', 'ü')
+    finals = get_finals(new_pinyin, strict=strict)
+    finals = _fix_v_u(finals, finals, v_to_u)
+    return finals
 
 
 def tone_to_normal(tone, v_to_u=False):

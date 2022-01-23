@@ -14,6 +14,7 @@ from pypinyin import (
 )
 from pypinyin.compat import SUPPORT_UCS4, PY2
 from pypinyin.style._constants import _FINALS
+from pypinyin.contrib.tone_convert import to_initials, to_finals
 
 # test data from http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html  # noqa
 # 声母表
@@ -46,6 +47,7 @@ data_for_initials = [
 def test_initials(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
     assert list(chain(*pinyin(hans, **kwargs))) == result
+    assert to_initials(lazy_pinyin(hans)[0]) == result[0]
 
 
 # 韵母表
@@ -95,6 +97,7 @@ data_for_finals = [
 def test_finals(hans, kwargs, result):
     if not kwargs.get('heteronym'):
         assert lazy_pinyin(hans, **kwargs) == result
+        assert to_finals(lazy_pinyin(hans)[0]) == result[0]
     assert pinyin(hans, **kwargs) == [result]
 
 

@@ -12,6 +12,8 @@ contrib
 .. autofunction:: pypinyin.contrib.tone_convert.to_tone
 .. autofunction:: pypinyin.contrib.tone_convert.to_tone2
 .. autofunction:: pypinyin.contrib.tone_convert.to_tone3
+.. autofunction:: pypinyin.contrib.tone_convert.to_initials
+.. autofunction:: pypinyin.contrib.tone_convert.to_finals
 
 .. autofunction:: pypinyin.contrib.tone_convert.tone_to_normal
 .. autofunction:: pypinyin.contrib.tone_convert.tone_to_tone2

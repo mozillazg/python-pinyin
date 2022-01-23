@@ -7,6 +7,8 @@ from pypinyin.style._tone_convert import (  # noqa
     to_tone,
     to_tone2,
     to_tone3,
+    to_initials,
+    to_finals,
     tone_to_normal,
     tone_to_tone2,
     tone_to_tone3,

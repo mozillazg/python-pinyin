@@ -11,21 +11,16 @@ from __future__ import unicode_literals
 from pypinyin.constants import Style
 from pypinyin.style import register
 from pypinyin.style._constants import RE_NUMBER
-from pypinyin.style._tone_convert import tone3_to_tone2, tone2_to_tone
-from pypinyin.style._utils import (
-    get_finals, replace_symbol_to_number, replace_symbol_to_no_symbol
+from pypinyin.style._tone_convert import (
+    tone3_to_tone2, tone2_to_tone, to_finals
 )
+from pypinyin.style._utils import replace_symbol_to_number
 
 
 class FinalsConverter(object):
     def to_finals(self, pinyin, **kwargs):
         """无声调韵母"""
-        # 替换声调字符为无声调字符
-        pinyin = replace_symbol_to_no_symbol(pinyin).replace('v', 'ü')
-
-        # 获取韵母部分
-        return get_finals(pinyin, strict=kwargs.get('strict')
-                          ).replace('ü', 'v')
+        return to_finals(pinyin, strict=kwargs.get('strict', True))
 
     def to_finals_tone(self, pinyin, **kwargs):
         """声调在韵母头上"""
