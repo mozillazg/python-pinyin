@@ -12,6 +12,7 @@ from pypinyin import (
     FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
     pinyin_dict, Style
 )
+from pypinyin.compat import SUPPORT_UCS4
 from pypinyin.style._constants import _FINALS
 
 # test data from http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html  # noqa
@@ -591,6 +592,7 @@ def test_uen(hans, kwargs, result):
 
 
 # 所有汉字的韵母结果都是汉语拼音方案中的韵母
+@pytest.mark.skipif(not SUPPORT_UCS4, reason='dont support ucs4')
 def test_ensure_finails_in_strict_mode():
     for c in pinyin_dict.pinyin_dict:
         han = chr(c)
