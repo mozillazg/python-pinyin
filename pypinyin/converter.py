@@ -12,7 +12,7 @@ from pypinyin.constants import (
 from pypinyin.contrib.uv import V2UMixin
 from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
 from pypinyin.contrib.tone_sandhi import ToneSandhiMixin
-from pypinyin.utils import _remove_dup_items
+from pypinyin.utils import _remove_dup_and_empty
 from pypinyin.style import auto_discover
 from pypinyin.style import convert as convert_style
 
@@ -52,13 +52,13 @@ class DefaultConverter(Converter):
         if RE_HANS.match(words):
             pys = self._phrase_pinyin(words, style=style, heteronym=heteronym,
                                       errors=errors, strict=strict)
-            return pys
+            return _remove_dup_and_empty(pys)
 
         py = self.handle_nopinyin(words, style=style, errors=errors,
                                   heteronym=heteronym, strict=strict)
         if py:
             pys.extend(py)
-        return pys
+        return _remove_dup_and_empty(pys)
 
     def pre_convert_style(self, han, orig_pinyin, style, strict, **kwargs):
         """在把原始带声调的拼音按拼音风格转换前会调用 ``pre_convert_style`` 方法。
@@ -258,13 +258,11 @@ class DefaultConverter(Converter):
         for idx, item in enumerate(pinyin_list):
             han = phrase[idx]
             if heteronym:
-                pinyin_list[idx] = _remove_dup_items(
-                    [
+                pinyin_list[idx] = [
                         self.convert_style(
                             han, orig_pinyin=x, style=style, strict=strict)
                         for x in item
                     ]
-                )
             else:
                 orig_pinyin = item[0]
                 pinyin_list[idx] = [
@@ -330,17 +328,17 @@ class _toneSandhiConverter(ToneSandhiMixin, DefaultConverter):
     pass
 
 
-class _mixConverter(DefaultConverter):
+class UltimateConverter(DefaultConverter):
     def __init__(self, v_to_u=False, neutral_tone_with_five=False,
                  tone_sandhi=False, **kwargs):
-        super(_mixConverter, self).__init__(**kwargs)
+        super(UltimateConverter, self).__init__(**kwargs)
         self._v_to_u = v_to_u
         self._neutral_tone_with_five = neutral_tone_with_five
         self._tone_sandhi = tone_sandhi
 
     def post_convert_style(self, han, orig_pinyin, converted_pinyin,
                            style, strict, **kwargs):
-        post_data = super(_mixConverter, self).post_convert_style(
+        post_data = super(UltimateConverter, self).post_convert_style(
             han, orig_pinyin, converted_pinyin, style, strict, **kwargs)
         if post_data is not None:
             converted_pinyin = post_data
@@ -360,7 +358,7 @@ class _mixConverter(DefaultConverter):
         return converted_pinyin
 
     def post_pinyin(self, han, heteronym, pinyin, **kwargs):
-        post_data = super(_mixConverter, self).post_pinyin(
+        post_data = super(UltimateConverter, self).post_pinyin(
             han, heteronym, pinyin, **kwargs)
         if post_data is not None:
             pinyin = post_data
@@ -372,3 +370,6 @@ class _mixConverter(DefaultConverter):
                 pinyin = post_data
 
         return pinyin
+
+
+_mixConverter = UltimateConverter

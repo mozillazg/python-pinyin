@@ -38,6 +38,17 @@ def test_issue_205():
     assert pinyin('交通银行', Style.FIRST_LETTER)[3] == ['h']
 
 
+def test_issue_266():
+    assert lazy_pinyin('哟', style=Style.FINALS) == ['o']
+    assert lazy_pinyin('哟', style=Style.FINALS, strict=False) == ['o']
+
+    assert lazy_pinyin('嗯', style=Style.FINALS) == ['']
+    assert lazy_pinyin('嗯', style=Style.FINALS, strict=False) == ['n']
+
+    assert lazy_pinyin('呣', style=Style.FINALS) == ['']
+    assert lazy_pinyin('呣', style=Style.FINALS, strict=False) == ['m']
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()

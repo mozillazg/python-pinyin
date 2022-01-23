@@ -9,8 +9,10 @@ import pytest
 
 from pypinyin import (
     lazy_pinyin, pinyin, NORMAL, TONE, TONE2, TONE3, INITIALS,
-    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3
+    FIRST_LETTER, FINALS, FINALS_TONE, FINALS_TONE2, FINALS_TONE3,
+    pinyin_dict, Style
 )
+from pypinyin.style._constants import _FINALS
 
 # test data from http://www.moe.edu.cn/s78/A19/yxs_left/moe_810/s230/195802/t19580201_186000.html  # noqa
 # 声母表
@@ -84,12 +86,14 @@ data_for_finals = [
     ['轰', dict(style=FINALS), ['ong']],
     ['雍', dict(style=FINALS), ['iong']],
     ['儿', dict(style=FINALS), ['er']],
+    ['欸', dict(style=FINALS, heteronym=True), ['ai', 'ê', 'ie', 'ei']],
 ]
 
 
 @pytest.mark.parametrize('hans, kwargs, result', data_for_finals)
 def test_finals(hans, kwargs, result):
-    assert lazy_pinyin(hans, **kwargs) == result
+    if not kwargs.get('heteronym'):
+        assert lazy_pinyin(hans, **kwargs) == result
     assert pinyin(hans, **kwargs) == [result]
 
 
@@ -584,6 +588,18 @@ data_for_uen = [
 def test_uen(hans, kwargs, result):
     assert lazy_pinyin(hans, **kwargs) == result
     assert pinyin(hans, **kwargs) == [result]
+
+
+# 所有汉字的韵母结果都是汉语拼音方案中的韵母
+def test_ensure_finails_in_strict_mode():
+    for c in pinyin_dict.pinyin_dict:
+        han = chr(c)
+        raw_pinyin = pinyin(han, heteronym=True)
+        pinyin_list = pinyin(han, style=Style.FINALS, strict=True,
+                             heteronym=True, v_to_u=True)[0]
+        for i, ret in enumerate(pinyin_list):
+            if ret:
+                assert ret in _FINALS, (han, raw_pinyin[i], ret)
 
 
 if __name__ == '__main__':
