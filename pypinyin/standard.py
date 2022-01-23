@@ -13,6 +13,8 @@ from __future__ import unicode_literals
 
 import re
 
+from pypinyin.style._constants import _FINALS
+
 # u -> ü
 UV_MAP = {
     'u': 'ü',
@@ -74,8 +76,9 @@ def convert_zero_consonant(pinyin):
     ü行的韵母，前面没有声母的时候，写成yu(迂)，yue(约)，yuan(冤)，
     yun(晕)；ü上两点省略。
     """
+    raw_pinyin = pinyin
     # y: yu -> v, yi -> i, y -> i
-    if pinyin.startswith('y'):
+    if raw_pinyin.startswith('y'):
         # 去除 y 后的拼音
         no_y_py = pinyin[1:]
         first_char = no_y_py[0] if len(no_y_py) > 0 else None
@@ -89,10 +92,9 @@ def convert_zero_consonant(pinyin):
         # y -> i: ya -> ia
         else:
             pinyin = 'i' + no_y_py
-        return pinyin
 
     # w: wu -> u, w -> u
-    if pinyin.startswith('w'):
+    if raw_pinyin.startswith('w'):
         # 去除 w 后的拼音
         no_w_py = pinyin[1:]
         first_char = no_w_py[0] if len(no_w_py) > 0 else None
@@ -103,7 +105,10 @@ def convert_zero_consonant(pinyin):
         # w -> u: wa -> ua
         else:
             pinyin = 'u' + pinyin[1:]
-        return pinyin
+
+    # 确保不会出现韵母表中不存在的韵母
+    if pinyin not in _FINALS:
+        return raw_pinyin
 
     return pinyin
 

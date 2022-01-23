@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from pytest import mark
 
+from pypinyin import pinyin_dict
 from pypinyin.contrib.tone_convert import (
     tone_to_normal,
     tone_to_tone2,
@@ -62,12 +63,6 @@ def test_tone_tone2(pinyin, result):
     assert tone_to_tone2(pinyin) == result
     assert to_tone2(pinyin) == result
 
-    assert tone2_to_tone(result) == pinyin
-
-    assert to_tone(result) == pinyin
-    assert to_tone(pinyin) == pinyin
-    assert to_tone2(result) == result
-
 
 @mark.parametrize('pinyin,neutral_tone_with_5,result', [
     ['shang', False, 'shang'],
@@ -93,10 +88,6 @@ def test_tone_tone2_with_v_to_u(pinyin, v_to_u, result):
     assert tone_to_tone2(pinyin, v_to_u=v_to_u) == result
     assert to_tone2(pinyin, v_to_u=v_to_u) == result
 
-    assert tone2_to_tone(result) == pinyin
-    if 'v' not in pinyin:
-        assert to_tone(result) == pinyin
-
 
 @mark.parametrize('pinyin,result', [
     ['zhōng', 'zhong1'],
@@ -112,12 +103,6 @@ def test_tone_tone2_with_v_to_u(pinyin, v_to_u, result):
 def test_tone_tone3(pinyin, result):
     assert tone_to_tone3(pinyin) == result
     assert to_tone3(pinyin) == result
-
-    assert tone3_to_tone(result) == pinyin
-
-    assert to_tone(result) == pinyin
-    assert to_tone(pinyin) == pinyin
-    assert to_tone3(result) == result
 
 
 @mark.parametrize('pinyin,neutral_tone_with_5,result', [
@@ -143,10 +128,6 @@ def test_tone_tone3_with_neutral_tone_with_5(
 def test_tone_tone3_with_v_to_u(pinyin, v_to_u, result):
     assert tone_to_tone3(pinyin, v_to_u=v_to_u) == result
     assert to_tone3(pinyin, v_to_u=v_to_u) == result
-
-    assert tone3_to_tone(result) == pinyin
-    if 'v' not in pinyin:
-        assert to_tone(result) == pinyin
 
 
 @mark.parametrize('pinyin,result', [
@@ -248,3 +229,28 @@ def test_tone3_to_tone2(pinyin, result):
 ])
 def test_tone3_to_tone2_with_v_to_u(pinyin, v_to_u, result):
     assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
+
+
+# 所有拼音转换为 tone2 或 tone3 风格后，都可以再转换回原始的拼音
+def test_tone_to_tone2_tone3_to_tone():
+    pinyin_set = set()
+    for py in pinyin_dict.pinyin_dict.values():
+        pinyin_set.update(py.split(','))
+
+    for py in pinyin_set:
+        tone2 = tone_to_tone2(py)
+        assert tone2_to_tone(tone2) == py
+        assert to_tone(tone2) == py
+
+        tone2_3 = tone2_to_tone3(tone2)
+        assert tone3_to_tone(tone2_3) == py
+        assert to_tone(tone2_3) == py
+
+        #
+        tone3 = tone_to_tone3(py)
+        assert tone3_to_tone(tone3) == py
+        assert to_tone(tone3) == py
+
+        tone3_2 = tone3_to_tone2(tone3)
+        assert tone2_to_tone(tone3_2) == py
+        assert to_tone(tone3_2) == py

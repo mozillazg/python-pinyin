@@ -34,19 +34,28 @@ if SUPPORT_UCS4:
     RE_HANS = re.compile(
         r'^(?:['
         r'\u3007'                  # 〇
+        r'\ue815-\ue864'
+        r'\ufa18'
         r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
         r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
         r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
         r'\U00020000-\U0002A6DF'   # CJK扩展B:[20000-2A6DF]
         r'\U0002A703-\U0002B73F'   # CJK扩展C:[2A700-2B73F]
         r'\U0002B740-\U0002B81D'   # CJK扩展D:[2B740-2B81D]
+        r'\U0002B825-\U0002BF6E'
+        r'\U0002C029-\U0002CE93'
+        r'\U0002D016'
         r'\U0002F80A-\U0002FA1F'   # CJK兼容扩展:[2F800-2FA1F]
+        r'\U00030EDD'
+        r'\U00030EDE'
         r'])+$'
     )
 else:
-    RE_HANS = re.compile(  # pragma: no cover
+    RE_HANS = re.compile(
         r'^(?:['
         r'\u3007'                  # 〇
+        r'\ue815-\ue864'
+        r'\ufa18'
         r'\u3400-\u4dbf'           # CJK扩展A:[3400-4DBF]
         r'\u4e00-\u9fff'           # CJK基本:[4E00-9FFF]
         r'\uf900-\ufaff'           # CJK兼容:[F900-FAFF]
