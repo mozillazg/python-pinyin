@@ -71,7 +71,7 @@ def to_tone(pinyin):
     return s
 
 
-def to_tone2(pinyin, v_to_u=False, neutral_tone_with_5=False):
+def to_tone2(pinyin, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """将 :py:attr:`~pypinyin.Style.TONE` 或
     :py:attr:`~pypinyin.Style.TONE3` 风格的拼音转换为
     :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
@@ -80,7 +80,10 @@ def to_tone2(pinyin, v_to_u=False, neutral_tone_with_5=False):
                    :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
     :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
                    当为 False 时结果中将使用 ``v`` 表示 ``ü``
-    :param neutral_tone_with_5: 是否使用 ``5`` 标识轻声
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :param kwargs: 用于兼容老版本的 ``neutral_tone_with_5`` 参数，当传入
+                   ``neutral_tone_with_5`` 参数时，
+                   将覆盖 ``neutral_tone_with_five`` 的值。
     :return: :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
 
     Usage::
@@ -92,21 +95,22 @@ def to_tone2(pinyin, v_to_u=False, neutral_tone_with_5=False):
       'zho1ng'
       >>> to_tone2('shang')
       'shang'
-      >>> to_tone2('shang', neutral_tone_with_5=True)
+      >>> to_tone2('shang', neutral_tone_with_five=True)
       'sha5ng'
       >>> to_tone2('lüè')
       'lve4'
       >>> to_tone2('lüè', v_to_u=True)
       'lüe4'
     """
-    # TODO: 将 neutral_tone_with_5 统一为 neutral_tone_with_five
+    if kwargs.get('neutral_tone_with_5', None) is not None:
+        neutral_tone_with_five = kwargs['neutral_tone_with_5']
     s = tone_to_tone3(
-        pinyin, v_to_u=True, neutral_tone_with_5=neutral_tone_with_5)
+        pinyin, v_to_u=True, neutral_tone_with_five=neutral_tone_with_five)
     s = tone3_to_tone2(s)
     return _fix_v_u(pinyin, s, v_to_u)
 
 
-def to_tone3(pinyin, v_to_u=False, neutral_tone_with_5=False):
+def to_tone3(pinyin, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """将 :py:attr:`~pypinyin.Style.TONE` 或
     :py:attr:`~pypinyin.Style.TONE2` 风格的拼音转换为
     :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
@@ -115,7 +119,10 @@ def to_tone3(pinyin, v_to_u=False, neutral_tone_with_5=False):
                    :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
     :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
                    当为 False 时结果中将使用 ``v`` 表示 ``ü``
-    :param neutral_tone_with_5: 是否使用 ``5`` 标识轻声
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :param kwargs: 用于兼容老版本的 ``neutral_tone_with_5`` 参数，当传入
+                   ``neutral_tone_with_5`` 参数时，
+                   将覆盖 ``neutral_tone_with_five`` 的值。
     :return: :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
 
     Usage::
@@ -127,16 +134,17 @@ def to_tone3(pinyin, v_to_u=False, neutral_tone_with_5=False):
       'zhong1'
       >>> to_tone3('shang')
       'shang'
-      >>> to_tone3('shang', neutral_tone_with_5=True)
+      >>> to_tone3('shang', neutral_tone_with_five=True)
       'shang5'
       >>> to_tone3('lüè')
       'lve4'
       >>> to_tone3('lüè', v_to_u=True)
       'lüe4'
     """
-    # TODO: 将 neutral_tone_with_5 统一为 neutral_tone_with_five
+    if kwargs.get('neutral_tone_with_5', None) is not None:
+        neutral_tone_with_five = kwargs['neutral_tone_with_5']
     s = tone_to_tone2(
-        pinyin, v_to_u=True, neutral_tone_with_5=neutral_tone_with_5)
+        pinyin, v_to_u=True, neutral_tone_with_five=neutral_tone_with_five)
     s = tone2_to_tone3(s)
     return _fix_v_u(pinyin, s, v_to_u)
 
@@ -320,14 +328,17 @@ def tone_to_normal(tone, v_to_u=False):
     return _v_to_u(s, v_to_u)
 
 
-def tone_to_tone2(tone, v_to_u=False, neutral_tone_with_5=False):
+def tone_to_tone2(tone, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """将 :py:attr:`~pypinyin.Style.TONE` 风格的拼音转换为
     :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
 
     :param tone: :py:attr:`~pypinyin.Style.TONE` 风格的拼音
     :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
                    当为 False 时结果中将使用 ``v`` 表示 ``ü``
-    :param neutral_tone_with_5: 是否使用 ``5`` 标识轻声
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :param kwargs: 用于兼容老版本的 ``neutral_tone_with_5`` 参数，当传入
+                   ``neutral_tone_with_5`` 参数时，
+                   将覆盖 ``neutral_tone_with_five`` 的值。
     :return: :py:attr:`~pypinyin.Style.TONE2` 风格的拼音
 
     Usage::
@@ -344,20 +355,25 @@ def tone_to_tone2(tone, v_to_u=False, neutral_tone_with_5=False):
       >>> tone_to_tone2('lüè', v_to_u=True)
       'lüe4'
     """
+    if kwargs.get('neutral_tone_with_5', None) is not None:
+        neutral_tone_with_five = kwargs['neutral_tone_with_5']
     tone3 = tone_to_tone3(
-        tone, v_to_u=v_to_u, neutral_tone_with_5=neutral_tone_with_5)
+        tone, v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five)
     s = tone3_to_tone2(tone3)
     return _v_to_u(s, v_to_u)
 
 
-def tone_to_tone3(tone, v_to_u=False, neutral_tone_with_5=False):
+def tone_to_tone3(tone, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """将 :py:attr:`~pypinyin.Style.TONE` 风格的拼音转换为
     :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
 
     :param tone: :py:attr:`~pypinyin.Style.TONE` 风格的拼音
     :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
                    当为 False 时结果中将使用 ``v`` 表示 ``ü``
-    :param neutral_tone_with_5: 是否使用 ``5`` 标识轻声
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :param kwargs: 用于兼容老版本的 ``neutral_tone_with_5`` 参数，当传入
+                   ``neutral_tone_with_5`` 参数时，
+                   将覆盖 ``neutral_tone_with_five`` 的值。
     :return: :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
 
     Usage::
@@ -367,15 +383,17 @@ def tone_to_tone3(tone, v_to_u=False, neutral_tone_with_5=False):
       'zhong1'
       >>> tone_to_tone3('shang')
       'shang'
-      >>> tone_to_tone3('shang', neutral_tone_with_5=True)
+      >>> tone_to_tone3('shang', neutral_tone_with_five=True)
       'shang5'
       >>> tone_to_tone3('lüè')
       'lve4'
       >>> tone_to_tone3('lüè', v_to_u=True)
       'lüe4'
     """
+    if kwargs.get('neutral_tone_with_5', None) is not None:
+        neutral_tone_with_five = kwargs['neutral_tone_with_5']
     tone3 = converter.to_tone3(tone)
-    s = _improve_tone3(tone3, neutral_tone_with_5=neutral_tone_with_5)
+    s = _improve_tone3(tone3, neutral_tone_with_five=neutral_tone_with_five)
     return _v_to_u(s, v_to_u)
 
 
@@ -525,9 +543,9 @@ def tone3_to_tone2(tone3, v_to_u=False):
     return _fix_v_u(tone3, s, v_to_u=v_to_u)
 
 
-def _improve_tone3(tone3, neutral_tone_with_5=False):
+def _improve_tone3(tone3, neutral_tone_with_five=False):
     number = _get_number_from_pinyin(tone3)
-    if number is None and neutral_tone_with_5:
+    if number is None and neutral_tone_with_five:
         tone3 = '{}5'.format(tone3)
     return tone3
 

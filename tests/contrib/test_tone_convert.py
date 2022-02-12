@@ -69,15 +69,20 @@ def test_tone_tone2(pinyin, result):
     assert to_tone2(pinyin) == result
 
 
-@mark.parametrize('pinyin,neutral_tone_with_5,result', [
+@mark.parametrize('pinyin,neutral_tone_with_five,result', [
     ['shang', False, 'shang'],
     ['shang', True, 'sha5ng'],
 ])
-def test_tone_tone2_with_neutral_tone_with_5(
-        pinyin, neutral_tone_with_5, result):
+def test_tone_tone2_with_neutral_tone_with_five(
+        pinyin, neutral_tone_with_five, result):
     assert tone_to_tone2(
-        pinyin, neutral_tone_with_5=neutral_tone_with_5) == result
-    assert to_tone2(pinyin, neutral_tone_with_5=neutral_tone_with_5) == result
+        pinyin, neutral_tone_with_five=neutral_tone_with_five) == result
+    assert tone_to_tone2(
+        pinyin, neutral_tone_with_5=neutral_tone_with_five) == result
+    assert to_tone2(pinyin,
+                    neutral_tone_with_five=neutral_tone_with_five) == result
+    assert to_tone2(pinyin,
+                    neutral_tone_with_5=neutral_tone_with_five) == result
 
     assert tone2_to_tone(result) == pinyin
     assert to_tone(result) == pinyin
@@ -110,16 +115,20 @@ def test_tone_tone3(pinyin, result):
     assert to_tone3(pinyin) == result
 
 
-@mark.parametrize('pinyin,neutral_tone_with_5,result', [
+@mark.parametrize('pinyin,neutral_tone_with_five,result', [
     ['shang', False, 'shang'],
     ['shang', True, 'shang5'],
 ])
-def test_tone_tone3_with_neutral_tone_with_5(
-        pinyin, neutral_tone_with_5, result):
+def test_tone_tone3_with_neutral_tone_with_five(
+        pinyin, neutral_tone_with_five, result):
     assert tone_to_tone3(
-        pinyin, neutral_tone_with_5=neutral_tone_with_5) == result
+        pinyin, neutral_tone_with_five=neutral_tone_with_five) == result
+    assert tone_to_tone3(
+        pinyin, neutral_tone_with_5=neutral_tone_with_five) == result
     assert to_tone3(
-        pinyin, neutral_tone_with_5=neutral_tone_with_5) == result
+        pinyin, neutral_tone_with_five=neutral_tone_with_five) == result
+    assert to_tone3(
+        pinyin, neutral_tone_with_5=neutral_tone_with_five) == result
 
     assert tone3_to_tone(result) == pinyin
     assert to_tone(result) == pinyin
