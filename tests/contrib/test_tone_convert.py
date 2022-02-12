@@ -294,8 +294,11 @@ def test_to_finals(pinyin, strict, v_to_u, result):
 
 @mark.parametrize('pinyin,strict,result', [
     ['zhōng', True, 'ōng'],
+    ['zho1ng', True, 'ōng'],
+    ['zhong1', True, 'ōng'],
     ['zhōng', False, 'ōng'],
     ['yū', True, 'ǖ'],
+    ['yu1', True, 'ǖ'],
     ['yū', False, 'ū'],
 ])
 def test_to_finals_tone(pinyin, strict, result):
@@ -304,9 +307,12 @@ def test_to_finals_tone(pinyin, strict, result):
 
 @mark.parametrize('pinyin,strict,v_to_u,neutral_tone_with_five,result', [
     ['zhōng', True, False, False, 'o1ng'],
+    ['zhong1', True, False, False, 'o1ng'],
+    ['zho1ng', True, False, False, 'o1ng'],
     ['zhōng', False, False, False, 'o1ng'],
     ['zhong', False, False, True, 'o5ng'],
     ['yū', True, False, False, 'v1'],
+    ['yu1', True, False, False, 'v1'],
     ['yū', True, True, False, 'ü1'],
     ['yū', False, False, False, 'u1'],
     ['yū', False, True, False, 'u1'],
@@ -320,9 +326,12 @@ def test_to_finals_tone2(pinyin, strict, v_to_u,
 
 @mark.parametrize('pinyin,strict,v_to_u,neutral_tone_with_five,result', [
     ['zhōng', True, False, False, 'ong1'],
+    ['zhong1', True, False, False, 'ong1'],
+    ['zho1ng', True, False, False, 'ong1'],
     ['zhōng', False, False, False, 'ong1'],
     ['zhong', False, False, True, 'ong5'],
     ['yū', True, False, False, 'v1'],
+    ['yu1', True, False, False, 'v1'],
     ['yū', True, True, False, 'ü1'],
     ['yū', False, False, False, 'u1'],
     ['yū', False, True, False, 'u1'],
