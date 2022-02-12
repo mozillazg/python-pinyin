@@ -25,7 +25,11 @@ def convert(pinyin, style, strict, default=None, **kwargs):
 
 
 def register(style, func=None):
-    """注册一个拼音风格实现
+    """注册一个拼音风格实现。
+    自定义的函数应当使用 ``**kwargs`` 来兼容后续可能会新增的关键字参数，
+    当前默认会传递如下参数：
+
+    * ``strict``
 
     ::
 
