@@ -2,6 +2,14 @@ Changelog
 ---------
 
 
+`0.46.0`_ (2022-02-12)
++++++++++++++++++++++++++
+
+* **[New]** ``pypinyin.contrib.tone_convert`` 模块新增 ``to_finals_tone``、``to_finals_tone2``
+  以及 ``to_finals_tone3`` 函数，用于将拼音转换为 ``Style.FINALS_TONE`` 、 ``Style.FINALS_TONE2``
+  以及 ``Style.FINALS_TONE3`` 风格的结果。
+
+
 `0.45.0`_ (2022-01-23)
 +++++++++++++++++++++++++
 
@@ -960,3 +968,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.43.0: https://github.com/mozillazg/python-pinyin/compare/v0.42.1...v0.43.0
 .. _0.44.0: https://github.com/mozillazg/python-pinyin/compare/v0.43.0...v0.44.0
 .. _0.45.0: https://github.com/mozillazg/python-pinyin/compare/v0.44.0...v0.45.0
+.. _0.46.0: https://github.com/mozillazg/python-pinyin/compare/v0.45.0...v0.46.0

@@ -18,7 +18,10 @@ from pypinyin.contrib.tone_convert import (
     to_tone2,
     to_tone3,
     to_initials,
-    to_finals
+    to_finals,
+    to_finals_tone,
+    to_finals_tone2,
+    to_finals_tone3,
 )
 
 
@@ -278,6 +281,48 @@ def test_to_initials(pinyin, strict, result):
 ])
 def test_to_finals(pinyin, strict, v_to_u, result):
     assert to_finals(pinyin, strict=strict, v_to_u=v_to_u) == result
+
+
+@mark.parametrize('pinyin,strict,result', [
+    ['zhōng', True, 'ōng'],
+    ['zhōng', False, 'ōng'],
+    ['yū', True, 'ǖ'],
+    ['yū', False, 'ū'],
+])
+def test_to_finals_tone(pinyin, strict, result):
+    assert to_finals_tone(pinyin, strict=strict) == result
+
+
+@mark.parametrize('pinyin,strict,v_to_u,neutral_tone_with_five,result', [
+    ['zhōng', True, False, False, 'o1ng'],
+    ['zhōng', False, False, False, 'o1ng'],
+    ['zhong', False, False, True, 'o5ng'],
+    ['yū', True, False, False, 'v1'],
+    ['yū', True, True, False, 'ü1'],
+    ['yū', False, False, False, 'u1'],
+    ['yū', False, True, False, 'u1'],
+])
+def test_to_finals_tone2(pinyin, strict, v_to_u,
+                         neutral_tone_with_five, result):
+    assert to_finals_tone2(pinyin, strict=strict, v_to_u=v_to_u,
+                           neutral_tone_with_five=neutral_tone_with_five
+                           ) == result
+
+
+@mark.parametrize('pinyin,strict,v_to_u,neutral_tone_with_five,result', [
+    ['zhōng', True, False, False, 'ong1'],
+    ['zhōng', False, False, False, 'ong1'],
+    ['zhong', False, False, True, 'ong5'],
+    ['yū', True, False, False, 'v1'],
+    ['yū', True, True, False, 'ü1'],
+    ['yū', False, False, False, 'u1'],
+    ['yū', False, True, False, 'u1'],
+])
+def test_to_finals_tone3(pinyin, strict, v_to_u, neutral_tone_with_five,
+                         result):
+    assert to_finals_tone3(pinyin, strict=strict, v_to_u=v_to_u,
+                           neutral_tone_with_five=neutral_tone_with_five
+                           ) == result
 
 
 # 所有拼音转换为 tone2 或 tone3 风格后，都可以再转换回原始的拼音

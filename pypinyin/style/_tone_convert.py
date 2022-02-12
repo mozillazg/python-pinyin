@@ -8,7 +8,7 @@ from pypinyin.style._constants import RE_TONE3, RE_TONE2
 from pypinyin.style.tone import converter
 from pypinyin.style._utils import (
     get_initials, replace_symbol_to_no_symbol,
-    get_finals
+    get_finals, replace_symbol_to_number
 )
 
 _re_number = re.compile(r'\d')
@@ -99,6 +99,7 @@ def to_tone2(pinyin, v_to_u=False, neutral_tone_with_5=False):
       >>> to_tone2('lüè', v_to_u=True)
       'lüe4'
     """
+    # TODO: 将 neutral_tone_with_5 统一为 neutral_tone_with_five
     s = tone_to_tone3(
         pinyin, v_to_u=True, neutral_tone_with_5=neutral_tone_with_5)
     s = tone3_to_tone2(s)
@@ -133,6 +134,7 @@ def to_tone3(pinyin, v_to_u=False, neutral_tone_with_5=False):
       >>> to_tone3('lüè', v_to_u=True)
       'lüe4'
     """
+    # TODO: 将 neutral_tone_with_5 统一为 neutral_tone_with_five
     s = tone_to_tone2(
         pinyin, v_to_u=True, neutral_tone_with_5=neutral_tone_with_5)
     s = tone2_to_tone3(s)
@@ -191,6 +193,106 @@ def to_finals(pinyin, strict=True, v_to_u=False):
     new_pinyin = replace_symbol_to_no_symbol(pinyin).replace('v', 'ü')
     finals = get_finals(new_pinyin, strict=strict)
     finals = _fix_v_u(finals, finals, v_to_u)
+    return finals
+
+
+def to_finals_tone(pinyin, strict=True):
+    """将 :py:attr:`~pypinyin.Style.TONE`、
+    :py:attr:`~pypinyin.Style.TONE2` 或
+    :py:attr:`~pypinyin.Style.TONE3` 风格的拼音转换为
+    :py:attr:`~pypinyin.Style.FINALS_TONE` 风格的拼音
+
+    :param pinyin: :py:attr:`~pypinyin.Style.TONE`、
+                   :py:attr:`~pypinyin.Style.TONE2` 或
+                   :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
+    :param strict: 返回结果是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :return: :py:attr:`~pypinyin.Style.FINALS_TONE` 风格的拼音
+
+    Usage::
+
+      >>> from pypinyin.contrib.tone_convert import to_finals_tone
+      >>> to_finals_tone('zhōng')
+      'ōng'
+
+    """
+    finals = to_finals_tone2(pinyin, strict=strict)
+
+    finals = tone2_to_tone(finals)
+
+    return finals
+
+
+def to_finals_tone2(pinyin, strict=True, v_to_u=False,
+                    neutral_tone_with_five=False):
+    """将 :py:attr:`~pypinyin.Style.TONE`、
+    :py:attr:`~pypinyin.Style.TONE2` 或
+    :py:attr:`~pypinyin.Style.TONE3` 风格的拼音转换为
+    :py:attr:`~pypinyin.Style.FINALS_TONE2` 风格的拼音
+
+    :param pinyin: :py:attr:`~pypinyin.Style.TONE`、
+                   :py:attr:`~pypinyin.Style.TONE2` 或
+                   :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
+    :param strict: 返回结果是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :return: :py:attr:`~pypinyin.Style.FINALS_TONE2` 风格的拼音
+
+    Usage::
+
+      >>> from pypinyin.contrib.tone_convert import to_finals_tone2
+      >>> to_finals_tone2('zhōng')
+      'o1ng'
+
+    """
+    finals = to_finals_tone3(pinyin, strict=strict, v_to_u=v_to_u,
+                             neutral_tone_with_five=neutral_tone_with_five)
+
+    finals = tone3_to_tone2(finals, v_to_u=v_to_u)
+
+    return finals
+
+
+def to_finals_tone3(pinyin, strict=True, v_to_u=False,
+                    neutral_tone_with_five=False):
+    """将 :py:attr:`~pypinyin.Style.TONE`、
+    :py:attr:`~pypinyin.Style.TONE2` 或
+    :py:attr:`~pypinyin.Style.TONE3` 风格的拼音转换为
+    :py:attr:`~pypinyin.Style.FINALS_TONE3` 风格的拼音
+
+    :param pinyin: :py:attr:`~pypinyin.Style.TONE`、
+                   :py:attr:`~pypinyin.Style.TONE2` 或
+                   :py:attr:`~pypinyin.Style.TONE3` 风格的拼音
+    :param strict: 返回结果是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :param v_to_u: 是否使用 ``ü`` 代替原来的 ``v``，
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
+    :param neutral_tone_with_five: 是否使用 ``5`` 标识轻声
+    :return: :py:attr:`~pypinyin.Style.FINALS_TONE3` 风格的拼音
+
+    Usage::
+
+      >>> from pypinyin.contrib.tone_convert import to_finals_tone3
+      >>> to_finals_tone3('zhōng')
+      'ong1'
+
+    """
+    finals = to_finals(pinyin, strict=strict, v_to_u=v_to_u)
+    if not finals:
+        return finals
+
+    numbers = _re_number.findall(replace_symbol_to_number(pinyin))
+    if not numbers:
+        if neutral_tone_with_five:
+            numbers = ['5']
+        else:
+            return finals
+
+    number = numbers[0]
+    finals = finals + number
+
     return finals
 
 

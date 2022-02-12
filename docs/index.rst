@@ -11,7 +11,7 @@
 
 将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
 
-基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
+最初版本的代码参考了 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 的实现。
 
 * Documentation: http://pypinyin.rtfd.io
 * GitHub: https://github.com/mozillazg/python-pinyin

@@ -6,7 +6,7 @@
 
 将汉字转为拼音。可以用于汉字注音、排序、检索(`Russian translation`_) 。
 
-基于 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 开发。
+最初版本的代码参考了 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 的实现。
 
 * Documentation: http://pypinyin.rtfd.io/
 * GitHub: https://github.com/mozillazg/python-pinyin
@@ -165,6 +165,29 @@ y，w，ü (yu) 都不是声母。
     [['x'], ['y'], ['t']]
 
 详见 `strict 参数的影响`_ 。
+
+
+如何将某一风格的拼音转换为其他风格的拼音
+++++++++++++++++++++++++++++++++++++++++++++
+
+可以通过 ``pypinyin.contrib.tone_convert`` 模块对标准拼音进行转换，得到不同风格的拼音。
+比如将 ``zhōng`` 转换为 ``zhong``，或者获取拼音中的声母或韵母数据：
+
+.. code-block:: python
+
+    >>> from pypinyin.contrib.tone_convert import to_normal, to_tone, to_initials, to_finals
+    >>> to_normal('zhōng')
+    'zhong'
+    >>> to_tone('zhong1')
+    'zhōng'
+    >>> to_initials('zhōng')
+    'zh'
+    >>> to_finals('zhōng')
+    'ong'
+
+更多拼音转换的辅助函数，详见 ``pypinyin.contrib.tone_convert`` 模块的
+`文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#tone-convert>`__ 。
+
 
 如何减少内存占用
 ++++++++++++++++++++
