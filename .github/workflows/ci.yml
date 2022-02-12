@@ -14,7 +14,7 @@ jobs:
         os: [windows-latest]
         # python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
         python-version: [3.9]
-        tox-env: [py27, py35, py36, py37, py38, py39, py310]
+        tox-env: [py27, py36, py37, py38, py39, py310]
 
     steps:
     - uses: actions/checkout@v2
