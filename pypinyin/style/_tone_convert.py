@@ -545,7 +545,7 @@ def tone3_to_tone2(tone3, v_to_u=False):
 
 def _improve_tone3(tone3, neutral_tone_with_five=False):
     number = _get_number_from_pinyin(tone3)
-    if number is None and neutral_tone_with_five:
+    if number is None and neutral_tone_with_five and tone3 != '':
         tone3 = '{}5'.format(tone3)
     return tone3
 
