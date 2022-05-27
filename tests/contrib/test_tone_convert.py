@@ -118,6 +118,8 @@ def test_tone_tone3(pinyin, result):
 @mark.parametrize('pinyin,neutral_tone_with_five,result', [
     ['shang', False, 'shang'],
     ['shang', True, 'shang5'],
+    ['', False, ''],
+    ['', True, '']
 ])
 def test_tone_tone3_with_neutral_tone_with_five(
         pinyin, neutral_tone_with_five, result):
