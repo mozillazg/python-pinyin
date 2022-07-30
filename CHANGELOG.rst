@@ -17,6 +17,7 @@ Changelog
 
 * **[Improved]** 使用 `phrase-pinyin-data`_ v0.13.0 的词语拼音数据。
 * **[Improved]** 使用 `pinyin-data`_ v0.13.0 的拼音数据。
+* **[Bugfixed]** 修复 ``tone_to_tone3`` 函数对空字符串的处理 via `#279`_
 
 
 `0.46.0`_ (2022-02-12)
@@ -901,6 +902,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#80: https://github.com/mozillazg/python-pinyin/issues/80
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
+.. _#279: https://github.com/mozillazg/python-pinyin/pull/279
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
