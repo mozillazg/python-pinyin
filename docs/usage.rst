@@ -149,7 +149,7 @@
     In [2]: from pypinyin.style import register
 
     In [3]: @register('kiss')
-       ...: def kiss(pinyin, **kwargs):
+       ...: def kiss(pinyin, **kwargs):     # 必须包含 **kwargs 用于接收未来新增的关键字参数
        ...:     return '😘 {0}'.format(pinyin)
        ...:
 

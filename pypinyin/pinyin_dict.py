@@ -15779,7 +15779,7 @@ pinyin_dict = {
     0x7517: 'yǎn',
     0x7518: 'gān,hān',
     0x7519: 'dài',
-    0x751A: 'shén,shèn',
+    0x751A: 'shèn,shén',
     0x751B: 'tián',
     0x751C: 'tián',
     0x751D: 'hán',

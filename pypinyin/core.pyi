@@ -10,7 +10,7 @@ from pypinyin.constants import Style
 from pypinyin.converter import Converter
 
 
-TStyle = Style
+TStyle = Union[Style, Text]
 TErrors = Union[Callable[[Text], Text], Text]
 TPinyinResult = List[List[Text]]
 

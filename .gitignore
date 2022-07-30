@@ -52,3 +52,4 @@ vocab.large.bin
 .mypy_cache/
 .pytest_cache/
 /pypinyin/phrases_dict_large.py
+/docs/CHANGELOG.html

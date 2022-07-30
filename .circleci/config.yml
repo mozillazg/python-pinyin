@@ -40,6 +40,9 @@ jobs:
             if [[ $RUN_CHECK == 1 ]]; then
               pip install -U -r requirements_dev.txt
             fi
+            if [[ $(echo $TOX_ENV | grep pypy3) ]]; then
+              pip install setuptools==60.10.0
+            fi
 
             if [[ $(python -c "import sys; print(sys.stdin.encoding)" |grep None) ]]; then
               export PYTHONIOENCODING=utf-8

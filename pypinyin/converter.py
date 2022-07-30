@@ -296,6 +296,10 @@ class DefaultConverter(Converter):
 
     def _convert_style(self, han, pinyin, style, strict, default,
                        **kwargs):
+        if not kwargs:
+            kwargs = {}
+        kwargs['han'] = han
+
         return convert_style(pinyin, style, strict, default=default, **kwargs)
 
     def _convert_nopinyin_chars(self, chars, style, heteronym, errors, strict):
