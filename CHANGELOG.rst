@@ -2,6 +2,23 @@ Changelog
 ---------
 
 
+`0.47.0`_ (2022-07-30)
++++++++++++++++++++++++++
+
+* **[New]** **[Changed]** 自定义拼音风格的回调函数新增关键字参数 ``han`` ，用于接收对应的原始汉字:
+
+  .. code-block:: python
+
+        @register('new_style')
+        def new_style_func(pinyin, **kwargs):
+            return kwargs.get('han', '') + pinyin
+
+        pinyin('北京', style='new_style')  # output: [['北běi'], ['京jīng']]
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.13.0 的词语拼音数据。
+* **[Improved]** 使用 `pinyin-data`_ v0.13.0 的拼音数据。
+
+
 `0.46.0`_ (2022-02-12)
 +++++++++++++++++++++++++
 
@@ -973,3 +990,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.44.0: https://github.com/mozillazg/python-pinyin/compare/v0.43.0...v0.44.0
 .. _0.45.0: https://github.com/mozillazg/python-pinyin/compare/v0.44.0...v0.45.0
 .. _0.46.0: https://github.com/mozillazg/python-pinyin/compare/v0.45.0...v0.46.0
+.. _0.47.0: https://github.com/mozillazg/python-pinyin/compare/v0.46.0...v0.47.0
