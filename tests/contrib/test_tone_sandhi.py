@@ -50,10 +50,16 @@ my_pinyin = Pinyin(MyConverter())
     # 不满足变调条件
     [['之一'], ['zhi1', 'yi1'], ['zhi1', 'yi1']],
     [['一'], ['yi1'], ['yi1']],
+
+    # #270
+    [['永远'], ['yo3ng', 'yua3n'], ['yo2ng', 'yua3n']],
+    [['两手'], ['lia3ng', 'sho3u'], ['lia2ng', 'sho3u']],
+    [['辗转反侧'], ['zha3n', 'zhua3n', 'fa3n', 'ce4'],
+     ['zha3n', 'zhua3n', 'fa3n', 'ce4']],
 ])
 def test_tone_sandhi(han, normal_output, sandhi_output):
     assert lazy_pinyin(han, style=Style.TONE2) == normal_output or \
-           lazy_pinyin(han, style=Style.TONE2) == sandhi_output
+            lazy_pinyin(han, style=Style.TONE2) == sandhi_output
 
     assert my_pinyin.lazy_pinyin(han, style=Style.TONE2) == sandhi_output
     # 测试关键字参数

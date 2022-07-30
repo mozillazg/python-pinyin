@@ -20,7 +20,7 @@ Based on `hotoo/pinyin <https://github.com/hotoo/pinyin>`__
 Characteristics
 ----
 
-* Finds the most fitting pinyin based on phrase occurrences.
+* Finds the most fitting pinyin based on phrase occurences.
 * Has support for characters with two or more readings (heteronyms).
 * Has support for simplified, traditional characters, and zhuyin (also known als bopomofo).
 * Has support for multiple styles of pinyin and zhuyin (e.g. tone conventions).
@@ -155,7 +155,7 @@ For more FAQ:
 Pinyin data
 ---------
 
-* Single character pinyin usage `pinyin-data`_ data
+* Single charachter pinyin usage `pinyin-data`_ data
 * Pinyin usage in phrases `phrase-pinyin-data`_ data
 
 
