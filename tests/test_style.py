@@ -41,6 +41,19 @@ def test_custom_style_with_call():
     assert pinyin(hans, style=style_value) == expected_pinyin_s
 
 
+def test_custom_style_with_han():
+    style_value = 'test_custom_style_with_han'
+
+    @register(style_value)
+    def func(pinyin, **kwargs):
+        return kwargs.get('han', '') + pinyin
+
+    hans = '北京'
+    expected_pinyin_s = [['北běi'], ['京jīng']]
+
+    assert pinyin(hans, style=style_value) == expected_pinyin_s
+
+
 def test_finals_tone3_no_final():
     assert convert('ń', Style.FINALS_TONE3, True, None) == ''
     assert convert('ń', Style.FINALS_TONE3, False, None) == 'n2'
