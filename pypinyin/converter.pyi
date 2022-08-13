@@ -55,6 +55,11 @@ class DefaultConverter(Converter):
                     pinyin: TPinyinResult,
                     **kwargs: Any) -> Union[TPinyinResult, None]: ...
 
+    def convert_styles(self, pinyin_list: TPinyinResult,
+                       phrase: Text, style: TStyle, heteronym: bool,
+                       errors: TErrors, strict: bool, **kwargs: Any,
+                       ) -> TPinyinResult: ...
+
     def _phrase_pinyin(self, phrase: Text, style: TStyle, heteronym: bool,
                        errors: TErrors, strict: bool
                        ) -> TPinyinResult: ...
