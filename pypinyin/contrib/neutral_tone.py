@@ -56,6 +56,8 @@ class NeutralToneWith5Mixin(object):
 
         if pre_data is not None:
             converted_pinyin = pre_data
+        if not converted_pinyin:    # 空字符串
+            return converted_pinyin
         # 有声调，跳过
         if _re_number.search(converted_pinyin):
             return converted_pinyin

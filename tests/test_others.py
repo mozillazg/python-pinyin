@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from pytest import mark
+
 from pypinyin import pinyin, Style, lazy_pinyin, slug
 from pypinyin.seg.simpleseg import simple_seg
 
@@ -47,6 +49,14 @@ def test_issue_266():
 
     assert lazy_pinyin('呣', style=Style.FINALS) == ['']
     assert lazy_pinyin('呣', style=Style.FINALS, strict=False) == ['m']
+
+
+@mark.parametrize('neutral_tone_with_five', [True, False])
+def test_issue_284(neutral_tone_with_five):
+    assert lazy_pinyin('嗯', style=Style.FINALS_TONE3,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
+    assert lazy_pinyin('呣', style=Style.FINALS_TONE3,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
 
 
 if __name__ == '__main__':
