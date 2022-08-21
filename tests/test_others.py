@@ -57,6 +57,14 @@ def test_issue_284(neutral_tone_with_five):
                        neutral_tone_with_five=neutral_tone_with_five) == ['']
     assert lazy_pinyin('呣', style=Style.FINALS_TONE3,
                        neutral_tone_with_five=neutral_tone_with_five) == ['']
+    assert lazy_pinyin('嗯', style=Style.FINALS,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
+    assert lazy_pinyin('呣', style=Style.FINALS,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
+    assert lazy_pinyin('嗯', style=Style.INITIALS,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
+    assert lazy_pinyin('呣', style=Style.INITIALS,
+                       neutral_tone_with_five=neutral_tone_with_five) == ['']
 
 
 if __name__ == '__main__':
