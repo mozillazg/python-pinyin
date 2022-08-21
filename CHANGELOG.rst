@@ -2,6 +2,21 @@ Changelog
 ---------
 
 
+`0.47.1`_ (2022-08-21)
++++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复无声母和韵母的场景下指定 neutral_tone_with_five=True 会返回 ``5`` 作为拼音的问题:
+
+  .. code-block:: python
+
+      # 修复前
+      >>> lazy_pinyin('嗯', style=Style.FINALS_TONE3, neutral_tone_with_five=True)
+      ['5']
+      # 修复后
+      >>> lazy_pinyin('嗯', style=Style.FINALS_TONE3, neutral_tone_with_five=True)
+      ['']
+
+
 `0.47.0`_ (2022-07-30)
 +++++++++++++++++++++++++
 
@@ -993,3 +1008,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.45.0: https://github.com/mozillazg/python-pinyin/compare/v0.44.0...v0.45.0
 .. _0.46.0: https://github.com/mozillazg/python-pinyin/compare/v0.45.0...v0.46.0
 .. _0.47.0: https://github.com/mozillazg/python-pinyin/compare/v0.46.0...v0.47.0
+.. _0.47.1: https://github.com/mozillazg/python-pinyin/compare/v0.47.0...v0.47.1
