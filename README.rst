@@ -31,7 +31,7 @@
 
 .. code-block:: bash
 
-    $ pip install pypinyin
+    pip install pypinyin
 
 
 使用示例
