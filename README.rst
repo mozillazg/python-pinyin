@@ -96,10 +96,10 @@ FAQ
 拼音有误？
 +++++++++++++++++++++++++++++
 
-可以通过自定义词组拼音库或者单字拼音库的方式修正拼音结果，
-也可以使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
-详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
+可以通过下面的方法提高拼音准确性：
 
+* 可以通过自定义词组拼音库或者单字拼音库的方式修正拼音结果，
+  详见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#custom-dict>`__ 。
 
 .. code-block:: python
 
@@ -109,6 +109,10 @@ FAQ
 
     >> load_single_dict({ord('还'): 'hái,huán'})  # 调整 "还" 字的拼音顺序或覆盖默认拼音
 
+* 也可以使用 `pypinyin-dict <https://github.com/mozillazg/pypinyin-dict>`__ 项目提供的自定义拼音库来纠正结果。
+
+.. code-block:: python
+
     # 使用 phrase-pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
     >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
     >>> cc_cedict.load()
@@ -117,9 +121,8 @@ FAQ
     >>> from pypinyin_dict.pinyin_data import kxhc1983
     >>> kxhc1983.load()
 
-
-如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
-然后将分词后的词组结果列表作为函数的参数即可:
+* 如果是分词导致的拼音有误的话，可以先使用其他的分词模块对数据进行分词处理，
+  然后将分词后的词组结果列表作为函数的参数即可:
 
 .. code-block:: python
 
@@ -127,6 +130,8 @@ FAQ
     >>> #或者基于 phrases_dict.py 里的词语数据使用其他分词算法分词
     >>> words = list(jieba.cut('每股24.67美元的确定性协议'))
     >>> pinyin(words)
+
+* 如果你希望能通过训练模型的方式提高拼音准确性的话，可以看一下 `pypinyin-g2pW <https://github.com/mozillazg/pypinyin-g2pW>`__ 这个项目。
 
 
 为什么没有 y, w, yu 几个声母？
