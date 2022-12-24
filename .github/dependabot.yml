@@ -3,6 +3,9 @@ updates:
 - package-ecosystem: pip
   directory: "/"
   schedule:
-    interval: daily
-    time: "21:00"
-  open-pull-requests-limit: 10
+    interval: "weekly"
+
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"

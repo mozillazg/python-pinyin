@@ -35,7 +35,7 @@ jobs:
             . venv/bin/activate
 
             pip install coveralls
-            pip install tox
+            pip install 'tox<4.0.0'
 
             if [[ $RUN_CHECK == 1 ]]; then
               pip install -U -r requirements_dev.txt
@@ -159,14 +159,8 @@ workflows:
   version: 2
   testing:
     jobs:
-      - python3.11
-      - python3.10
-      - python3.9
-      - python3.8
-      - python3.7
       - python3.6
       - python3.5
       - python3.4
       - python2.7
       - pypy2
-      - pypy3
