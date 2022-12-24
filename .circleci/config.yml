@@ -6,7 +6,7 @@ version: 2
 jobs:
   python3.8: &DEFAULT
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
 
     environment:
       TOX_ENV: py38
@@ -77,52 +77,59 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  python3.11:
+    <<: *DEFAULT
+    docker:
+      - image: cimg/python:3.11
+    environment:
+      TOX_ENV: py311
+
   python3.10:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.10
+      - image: cimg/python:3.10
     environment:
       TOX_ENV: py310
 
   python3.9:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/python:3.9
     environment:
       TOX_ENV: py39
 
   python3.7:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.7
+      - image: cimg/python:3.7
     environment:
       TOX_ENV: py37
 
   python3.6:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.6
+      - image: cimg/python:3.6
     environment:
       TOX_ENV: py36
 
   python3.5:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.5
+      - image: cimg/python:3.5
     environment:
       TOX_ENV: py35
 
   python3.4:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:3.4
+      - image: python:3.4
     environment:
       TOX_ENV: py34
 
   python2.7:
     <<: *DEFAULT
     docker:
-      - image: circleci/python:2.7
+      - image: cimg/python:2.7
     environment:
       TOX_ENV: py27
 
@@ -152,6 +159,7 @@ workflows:
   version: 2
   testing:
     jobs:
+      - python3.11
       - python3.10
       - python3.9
       - python3.8
