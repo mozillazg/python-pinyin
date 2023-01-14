@@ -559,10 +559,16 @@ def test_m4():
 @pytest.mark.parametrize('han,style,expect', [
     ['呣', Style.TONE, ['ḿ', 'm̀']],
     ['呣', Style.TONE2, ['m2', 'm4']],
+    ['呣', Style.BOPOMOFO, ['ㄇㄨˊ', 'ㄇㄨˋ', 'ㄇㄡˊ']],
+
     ['嘸', Style.TONE, ['m̄', 'ḿ']],
     ['嘸', Style.TONE2, ['m1', 'm2']],
+    ['嘸', Style.BOPOMOFO, ['ㄈㄨˇ', 'ㄨˇ', 'ㄇㄨ', 'ㄇㄨˊ']],
+
     ['誒', Style.TONE, ['ê̄', 'ế', 'ê̌', 'ề']],
     ['誒', Style.TONE2, ['ê1', 'ê2', 'ê3', 'ê4']],
+    ['誒', Style.BOPOMOFO, ['ㄟˊ', 'ㄒㄧ', 'ㄧˋ', 'ㄝ', 'ㄝˊ',
+                           'ㄝˇ', 'ㄟˇ', 'ㄝˋ', 'ㄟˋ', 'ㄟ']],
 ])
 def test_m_e(han, style, expect):
     result = pinyin(han, style=style, heteronym=True)

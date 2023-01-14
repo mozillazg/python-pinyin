@@ -44,11 +44,14 @@ Changelog
       >>> to_tone3('lvn', neutral_tone_with_five=True)
       'lvn5'
 
+* **[Bugfixed]** 修复 ``Style.BOPOMOFO`` 风格下未处理 ``ê`` 的问题。Fixed `#291`_
+
+
 
 `0.47.1`_ (2022-08-21)
 +++++++++++++++++++++++++
 
-* **[Bugfixed]** 修复无声母和韵母的场景下指定 neutral_tone_with_five=True 会返回
+* **[Bugfixed]** 修复在处理既没有声母也没有韵母的拼音时，指定 neutral_tone_with_five=True 会返回
   ``5`` 作为拼音的问题（`#284`_）:
 
   .. code-block:: python
@@ -961,6 +964,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#80: https://github.com/mozillazg/python-pinyin/issues/80
 .. _#284: https://github.com/mozillazg/python-pinyin/issues/284
 .. _#290: https://github.com/mozillazg/python-pinyin/issues/290
+.. _#291: https://github.com/mozillazg/python-pinyin/issues/291
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
