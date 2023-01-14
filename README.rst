@@ -8,7 +8,7 @@
 
 最初版本的代码参考了 `hotoo/pinyin <https://github.com/hotoo/pinyin>`__ 的实现。
 
-* Documentation: http://pypinyin.rtfd.io/
+* Documentation: https://pypinyin.readthedocs.io/
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.org/project/pypinyin
@@ -72,6 +72,7 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 * 默认情况下拼音结果不会标明哪个韵母是轻声，轻声的韵母没有声调或数字标识（可以通过参数 ``neutral_tone_with_five=True`` 开启使用 ``5`` 标识轻声 ）。
 * 默认情况下无声调相关拼音风格下的结果会使用 ``v`` 表示 ``ü`` （可以通过参数 ``v_to_u=True`` 开启使用 ``ü`` 代替 ``v`` ）。
 * 默认情况下会原样输出没有拼音的字符（自定义处理没有拼音的字符的方法见 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/usage.html#handle-no-pinyin>`__ ）。
+* ``嗯`` 的拼音并不是大部分人以为的 ``en`` 以及存在既没有声母也没有韵母的拼音，详见下方 FAQ 中的说明。
 
 命令行工具：
 
@@ -85,7 +86,7 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 文档
 --------
 
-详细文档请访问：http://pypinyin.rtfd.io/ 。
+详细文档请访问：https://pypinyin.readthedocs.io/。
 
 项目代码开发方面的问题可以看看 `开发文档`_ 。
 
@@ -171,11 +172,22 @@ y，w，ü (yu) 都不是声母。
 
 详见 `strict 参数的影响`_ 。
 
+存在既没有声母也没有韵母的拼音？
++++++++++++++++++++++++++++++++++
 
-如何将某一风格的拼音转换为其他风格的拼音
+是的，``strict=True`` 模式下存在极少数既没有声母也没有韵母的拼音。
+比如下面这些拼音（来自汉字 ``嗯``、``呒``、``呣``、``唔``）::
+
+    ń ńg ňg ǹg ň ǹ m̄ ḿ m̀
+
+尤其需要注意的是 ``嗯`` 的所有拼音都既没有声母也没有韵母，``呣`` 的默认拼音既没有声母也没有韵母。
+详见 `#109`_ `#259`_ `#284`_ 。
+
+
+如何将某一风格的拼音转换为其他风格的拼音？
 ++++++++++++++++++++++++++++++++++++++++++++
 
-可以通过 ``pypinyin.contrib.tone_convert`` 模块对标准拼音进行转换，得到不同风格的拼音。
+可以通过 ``pypinyin.contrib.tone_convert`` 模块提供的辅助函数对标准拼音进行转换，得到不同风格的拼音。
 比如将 ``zhōng`` 转换为 ``zhong``，或者获取拼音中的声母或韵母数据：
 
 .. code-block:: python
@@ -194,7 +206,7 @@ y，w，ü (yu) 都不是声母。
 `文档 <https://pypinyin.readthedocs.io/zh_CN/master/contrib.html#tone-convert>`__ 。
 
 
-如何减少内存占用
+如何减少内存占用？
 ++++++++++++++++++++
 
 如果对拼音的准确性不是特别在意的话，可以通过设置环境变量 ``PYPINYIN_NO_PHRASES``
@@ -250,3 +262,6 @@ __ https://github.com/mozillazg/rust-pinyin
 .. _pinyin-data: https://github.com/mozillazg/pinyin-data
 .. _phrase-pinyin-data: https://github.com/mozillazg/phrase-pinyin-data
 .. _开发文档: https://pypinyin.readthedocs.io/zh_CN/develop/develop.html
+.. _#109: https://github.com/mozillazg/python-pinyin/issues/109
+.. _#259: https://github.com/mozillazg/python-pinyin/issues/259
+.. _#284: https://github.com/mozillazg/python-pinyin/issues/284
