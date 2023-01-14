@@ -156,7 +156,6 @@ def test_tone_tone3_with_v_to_u(pinyin, v_to_u, result):
     ['a1', 'a1'],
     ['a', 'a'],
     ['shang', 'shang'],
-    ['sha5ng', 'shang5'],
 ])
 def test_tone2_tone3(pinyin, result):
     assert tone2_to_tone3(pinyin) == result
@@ -368,3 +367,148 @@ def test_tone_to_tone2_tone3_to_tone():
         tone3_2 = tone3_to_tone2(tone3)
         assert tone2_to_tone(tone3_2) == py
         assert to_tone(tone3_2) == py
+
+
+@mark.parametrize('input', [
+    'lün',
+    'lvn',
+
+    'lü5n',
+    'lün5',
+
+    'lv5n',
+    'lvn5',
+])
+def test_issue_290_1(input):
+    assert to_normal(input) == 'lvn'
+    assert to_normal(input, v_to_u=True) == 'lün'
+
+    assert to_tone(input) == 'lün'
+
+    assert to_tone2(input) == 'lvn'
+    assert to_tone2(input, neutral_tone_with_five=True) == 'lv5n'
+    assert to_tone2(input, v_to_u=True) == 'lün'
+    assert to_tone2(input, v_to_u=True, neutral_tone_with_five=True) == 'lü5n'
+
+    assert to_tone3(input) == 'lvn'
+    assert to_tone3(input, neutral_tone_with_five=True) == 'lvn5'
+    assert to_tone3(input, v_to_u=True) == 'lün'
+    assert to_tone3(input, v_to_u=True, neutral_tone_with_five=True) == 'lün5'
+
+    assert to_finals(input) == 'vn'
+    assert to_finals(input, v_to_u=True) == 'ün'
+
+    assert to_finals_tone(input) == 'ün'
+
+    assert to_finals_tone2(input) == 'vn'
+    assert to_finals_tone2(input, neutral_tone_with_five=True) == 'v5n'
+    assert to_finals_tone2(input, v_to_u=True) == 'ün'
+    assert to_finals_tone2(input, v_to_u=True,
+                           neutral_tone_with_five=True) == 'ü5n'
+
+    assert to_finals_tone3(input) == 'vn'
+    assert to_finals_tone3(input, neutral_tone_with_five=True) == 'vn5'
+    assert to_finals_tone3(input, v_to_u=True) == 'ün'
+    assert to_finals_tone3(input, v_to_u=True,
+                           neutral_tone_with_five=True) == 'ün5'
+
+
+@mark.parametrize('input', [
+    'lǘ',
+    'lü2',
+    'lv2',
+])
+def test_issue_290_2(input):
+    assert to_normal(input) == 'lv'
+    assert to_normal(input, v_to_u=True) == 'lü'
+
+    assert to_tone(input) == 'lǘ'
+
+    assert to_tone2(input) == 'lv2'
+    assert to_tone2(input, v_to_u=True) == 'lü2'
+
+    assert to_tone3(input) == 'lv2'
+    assert to_tone3(input, v_to_u=True) == 'lü2'
+
+    assert to_finals(input) == 'v'
+    assert to_finals(input, v_to_u=True) == 'ü'
+
+    assert to_finals_tone(input) == 'ǘ'
+
+    assert to_finals_tone2(input) == 'v2'
+    assert to_finals_tone2(input, v_to_u=True) == 'ü2'
+
+    assert to_finals_tone3(input) == 'v2'
+    assert to_finals_tone3(input, v_to_u=True) == 'ü2'
+
+
+@mark.parametrize('input', [
+    'lǘn',
+    'lü2n',
+    'lün2',
+    'lv2n',
+    'lvn2',
+])
+def test_issue_290_3(input):
+    assert to_normal(input) == 'lvn'
+    assert to_normal(input, v_to_u=True) == 'lün'
+
+    assert to_tone(input) == 'lǘn'
+
+    assert to_tone2(input) == 'lv2n'
+    assert to_tone2(input, v_to_u=True) == 'lü2n'
+
+    assert to_tone3(input) == 'lvn2'
+    assert to_tone3(input, v_to_u=True) == 'lün2'
+
+    assert to_finals(input) == 'vn'
+    assert to_finals(input, v_to_u=True) == 'ün'
+
+    assert to_finals_tone(input) == 'ǘn'
+
+    assert to_finals_tone2(input) == 'v2n'
+    assert to_finals_tone2(input, v_to_u=True) == 'ü2n'
+
+    assert to_finals_tone3(input) == 'vn2'
+    assert to_finals_tone3(input, v_to_u=True) == 'ün2'
+
+
+@mark.parametrize('input', [
+    'shang',
+    'sha5ng',
+    'shang5',
+])
+def test_issue_290_4(input):
+    assert to_normal(input) == 'shang'
+    assert to_normal(input, v_to_u=True) == 'shang'
+
+    assert to_tone(input) == 'shang'
+
+    assert to_tone2(input) == 'shang'
+    assert to_tone2(input, neutral_tone_with_five=True) == 'sha5ng'
+    assert to_tone2(input, v_to_u=True) == 'shang'
+    assert to_tone2(input, v_to_u=True,
+                    neutral_tone_with_five=True) == 'sha5ng'
+
+    assert to_tone3(input) == 'shang'
+    assert to_tone3(input, neutral_tone_with_five=True) == 'shang5'
+    assert to_tone3(input, v_to_u=True) == 'shang'
+    assert to_tone3(input, v_to_u=True,
+                    neutral_tone_with_five=True) == 'shang5'
+
+    assert to_finals(input) == 'ang'
+    assert to_finals(input, v_to_u=True) == 'ang'
+
+    assert to_finals_tone(input) == 'ang'
+
+    assert to_finals_tone2(input) == 'ang'
+    assert to_finals_tone2(input, neutral_tone_with_five=True) == 'a5ng'
+    assert to_finals_tone2(input, v_to_u=True) == 'ang'
+    assert to_finals_tone2(input, v_to_u=True,
+                           neutral_tone_with_five=True) == 'a5ng'
+
+    assert to_finals_tone3(input) == 'ang'
+    assert to_finals_tone3(input, neutral_tone_with_five=True) == 'ang5'
+    assert to_finals_tone3(input, v_to_u=True) == 'ang'
+    assert to_finals_tone3(input, v_to_u=True,
+                           neutral_tone_with_five=True) == 'ang5'

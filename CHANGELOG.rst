@@ -2,10 +2,54 @@ Changelog
 ---------
 
 
+`0.48.0`_ (2023-mm-dd)
++++++++++++++++++++++++++
+
+* **[Bugfixed]** 修复 ``pypinyin.contrib.tone_convert`` 中 ``to_`` 开头的转换函数
+  没有正确处理输入的拼音包含 ``5`` 的场景（当包含 ``5`` 时会导致返回的格式不符合函数预期的返回格式）
+  以及修复没有正确处理部分拼音中的 ``ü`` 或 ``v`` 的问题
+  （当 ``v_to_u=False`` 时返回结果需要将 ``ü`` 替换为 ``v``） Fixed `#290`_ :
+
+  .. code-block:: python
+
+      # 修复前
+      >>> to_tone('lve')
+      'lve'
+      >>> to_tone2('lün5')
+      'lv5n'
+      >>> to_tone3('lün5')
+      'lv5n'
+      >>> to_tone2('lvn5')
+      'lv5n'
+      >>> to_tone3('lvn5')
+      'lv5n'
+
+      # 修复后
+      >>> to_tone('lve')
+      'lüe'
+      >>> to_tone2('lün5')
+      'lvn'
+      >>> to_tone3('lün5')
+      'lvn'
+      >>> to_tone2('lvn5')
+      'lvn'
+      >>> to_tone3('lvn5')
+      'lvn'
+      >>> to_tone2('lvn5', v_to_u=True)
+      'lün'
+      >>> to_tone3('lvn5', v_to_u=True)
+      'lün'
+      >>> to_tone2('lvn', neutral_tone_with_five=True)
+      'lv5n'
+      >>> to_tone3('lvn', neutral_tone_with_five=True)
+      'lvn5'
+
+
 `0.47.1`_ (2022-08-21)
 +++++++++++++++++++++++++
 
-* **[Bugfixed]** 修复无声母和韵母的场景下指定 neutral_tone_with_five=True 会返回 ``5`` 作为拼音的问题:
+* **[Bugfixed]** 修复无声母和韵母的场景下指定 neutral_tone_with_five=True 会返回
+  ``5`` 作为拼音的问题（`#284`_）:
 
   .. code-block:: python
 
@@ -915,6 +959,8 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#251: https://github.com/mozillazg/python-pinyin/issues/251
 .. _#266: https://github.com/mozillazg/python-pinyin/issues/266
 .. _#80: https://github.com/mozillazg/python-pinyin/issues/80
+.. _#284: https://github.com/mozillazg/python-pinyin/issues/284
+.. _#290: https://github.com/mozillazg/python-pinyin/issues/290
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
@@ -1009,3 +1055,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.46.0: https://github.com/mozillazg/python-pinyin/compare/v0.45.0...v0.46.0
 .. _0.47.0: https://github.com/mozillazg/python-pinyin/compare/v0.46.0...v0.47.0
 .. _0.47.1: https://github.com/mozillazg/python-pinyin/compare/v0.47.0...v0.47.1
+.. _0.48.0: https://github.com/mozillazg/python-pinyin/compare/v0.47.1...v0.48.0
