@@ -45,7 +45,7 @@ Changelog
       'lvn5'
 
 * **[Bugfixed]** 修复 ``Style.BOPOMOFO`` 风格下未处理 ``ê`` 的问题。Fixed `#291`_
-
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.14.0 的词语拼音数据。
 
 
 `0.47.1`_ (2022-08-21)
