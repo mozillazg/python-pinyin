@@ -254,7 +254,7 @@ def test_simple_seg():
 data_for_update = [
     # 便宜的发音
     [
-        ['便宜'], {'style': TONE2}, ['pia2n', 'yi2']
+        ['便宜'], {'style': TONE2}, ['pia2n', 'yi']
     ],
     [
         ['便宜从事'], {'style': TONE2}, ['bia4n', 'yi2', 'co2ng', 'shi4']
