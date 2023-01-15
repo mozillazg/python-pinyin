@@ -44,8 +44,8 @@ BOPOMOFO_REPLACE = (
     (re.compile(r'1$'), ''),
 )
 BOPOMOFO_TABLE = dict(zip(
-    'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340',
-    'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙'
+    'bpmfdtnlgkhjqxZCSrzcsiuvaoeEAIOUMNKGR2340ê',
+    'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙㄧㄨㄩㄚㄛㄜㄝㄞㄟㄠㄡㄢㄣㄤㄥㄦˊˇˋ˙ㄝ'
 ))
 
 

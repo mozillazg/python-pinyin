@@ -254,7 +254,7 @@ def test_simple_seg():
 data_for_update = [
     # 便宜的发音
     [
-        ['便宜'], {'style': TONE2}, ['pia2n', 'yi2']
+        ['便宜'], {'style': TONE2}, ['pia2n', 'yi']
     ],
     [
         ['便宜从事'], {'style': TONE2}, ['bia4n', 'yi2', 'co2ng', 'shi4']
@@ -559,10 +559,16 @@ def test_m4():
 @pytest.mark.parametrize('han,style,expect', [
     ['呣', Style.TONE, ['ḿ', 'm̀']],
     ['呣', Style.TONE2, ['m2', 'm4']],
+    ['呣', Style.BOPOMOFO, ['ㄇㄨˊ', 'ㄇㄨˋ', 'ㄇㄡˊ']],
+
     ['嘸', Style.TONE, ['m̄', 'ḿ']],
     ['嘸', Style.TONE2, ['m1', 'm2']],
+    ['嘸', Style.BOPOMOFO, ['ㄈㄨˇ', 'ㄨˇ', 'ㄇㄨ', 'ㄇㄨˊ']],
+
     ['誒', Style.TONE, ['ê̄', 'ế', 'ê̌', 'ề']],
     ['誒', Style.TONE2, ['ê1', 'ê2', 'ê3', 'ê4']],
+    ['誒', Style.BOPOMOFO, ['ㄟˊ', 'ㄒㄧ', 'ㄧˋ', 'ㄝ', 'ㄝˊ',
+                           'ㄝˇ', 'ㄟˇ', 'ㄝˋ', 'ㄟˋ', 'ㄟ']],
 ])
 def test_m_e(han, style, expect):
     result = pinyin(han, style=style, heteronym=True)

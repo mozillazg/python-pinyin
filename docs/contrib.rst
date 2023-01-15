@@ -17,33 +17,3 @@ contrib
 .. autofunction:: pypinyin.contrib.tone_convert.to_finals_tone
 .. autofunction:: pypinyin.contrib.tone_convert.to_finals_tone2
 .. autofunction:: pypinyin.contrib.tone_convert.to_finals_tone3
-
-.. autofunction:: pypinyin.contrib.tone_convert.tone_to_normal
-.. autofunction:: pypinyin.contrib.tone_convert.tone_to_tone2
-.. autofunction:: pypinyin.contrib.tone_convert.tone_to_tone3
-
-.. autofunction:: pypinyin.contrib.tone_convert.tone2_to_normal
-.. autofunction:: pypinyin.contrib.tone_convert.tone2_to_tone
-.. autofunction:: pypinyin.contrib.tone_convert.tone2_to_tone3
-
-.. autofunction:: pypinyin.contrib.tone_convert.tone3_to_normal
-.. autofunction:: pypinyin.contrib.tone_convert.tone3_to_tone
-.. autofunction:: pypinyin.contrib.tone_convert.tone3_to_tone2
-
-
-.. V2UMixin
-.. ---------
-
-.. .. autoclass:: pypinyin.contrib.uv.V2UMixin
-
-
-.. NeutralToneWith5Mixin
-.. -----------------------
-
-.. .. autoclass:: pypinyin.contrib.neutral_tone.NeutralToneWith5Mixin
-
-
-.. ToneSandhiMixin
-.. ----------------
-
-.. .. autoclass:: pypinyin.contrib.tone_sandhi.ToneSandhiMixin

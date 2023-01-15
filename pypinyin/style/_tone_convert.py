@@ -63,6 +63,7 @@ def to_tone(pinyin):
       >>> to_tone('zhong1')
       'zhōng'
     """
+    pinyin = pinyin.replace('v', 'ü')
     if not _re_number.search(pinyin):
         return pinyin
 
@@ -104,6 +105,7 @@ def to_tone2(pinyin, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """
     if kwargs.get('neutral_tone_with_5', None) is not None:
         neutral_tone_with_five = kwargs['neutral_tone_with_5']
+    pinyin = pinyin.replace('5', '')
     s = tone_to_tone3(
         pinyin, v_to_u=True, neutral_tone_with_five=neutral_tone_with_five)
     s = tone3_to_tone2(s)
@@ -143,6 +145,7 @@ def to_tone3(pinyin, v_to_u=False, neutral_tone_with_five=False, **kwargs):
     """
     if kwargs.get('neutral_tone_with_5', None) is not None:
         neutral_tone_with_five = kwargs['neutral_tone_with_5']
+    pinyin = pinyin.replace('5', '')
     s = tone_to_tone2(
         pinyin, v_to_u=True, neutral_tone_with_five=neutral_tone_with_five)
     s = tone2_to_tone3(s)
@@ -255,6 +258,7 @@ def to_finals_tone2(pinyin, strict=True, v_to_u=False,
       'o1ng'
 
     """
+    pinyin = pinyin.replace('5', '')
     finals = to_finals_tone3(pinyin, strict=strict, v_to_u=v_to_u,
                              neutral_tone_with_five=neutral_tone_with_five)
 
@@ -287,6 +291,7 @@ def to_finals_tone3(pinyin, strict=True, v_to_u=False,
       'ong1'
 
     """
+    pinyin = pinyin.replace('5', '')
     finals = to_finals(pinyin, strict=strict, v_to_u=v_to_u)
     if not finals:
         return finals
