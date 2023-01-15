@@ -118,7 +118,7 @@ FAQ
     >>> from pypinyin_dict.phrase_pinyin_data import cc_cedict
     >>> cc_cedict.load()
 
-    # 使用 pinyin-data 项目中 cc_cedict.txt 文件中的拼音数据优化结果
+    # 使用 pinyin-data 项目中 kXHC1983.txt 文件中的拼音数据优化结果
     >>> from pypinyin_dict.pinyin_data import kxhc1983
     >>> kxhc1983.load()
 
