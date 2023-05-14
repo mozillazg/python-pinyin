@@ -2,6 +2,12 @@ Changelog
 ---------
 
 
+`0.49.0`_ (2023-05-14)
++++++++++++++++++++++++++
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.15.0 的词语拼音数据。
+
+
 `0.48.0`_ (2023-01-15)
 +++++++++++++++++++++++++
 
@@ -1060,3 +1066,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.47.0: https://github.com/mozillazg/python-pinyin/compare/v0.46.0...v0.47.0
 .. _0.47.1: https://github.com/mozillazg/python-pinyin/compare/v0.47.0...v0.47.1
 .. _0.48.0: https://github.com/mozillazg/python-pinyin/compare/v0.47.1...v0.48.0
+.. _0.49.0: https://github.com/mozillazg/python-pinyin/compare/v0.48.0...v0.49.0
