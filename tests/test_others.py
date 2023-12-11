@@ -51,6 +51,12 @@ def test_issue_266():
     assert lazy_pinyin('呣', style=Style.FINALS, strict=False) == ['m']
 
 
+def test_issue_311():
+    assert lazy_pinyin('大城', style=Style.TONE2) == ['da4', 'che2ng']
+    assert lazy_pinyin('大城市', style=Style.TONE2) == ['da4', 'che2ng', 'shi4']
+    assert lazy_pinyin('大城区', style=Style.TONE2) == ['da4', 'che2ng', 'qu1']
+
+
 @mark.parametrize('neutral_tone_with_five', [True, False])
 def test_issue_284(neutral_tone_with_five):
     assert lazy_pinyin('嗯', style=Style.FINALS_TONE3,
