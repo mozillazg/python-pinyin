@@ -12,7 +12,7 @@ def test_default():
     assert options.style == 'zh4ao'
     assert options.separator == '-'
     assert not options.heteronym
-    assert options.hans == '你好'
+    assert options.hans == ['你好']
     assert options.errors == 'default'
 
 
@@ -27,7 +27,7 @@ def test_custom():
     assert options.separator == ' '
     assert options.errors == 'ignore'
     assert options.heteronym
-    assert options.hans == '你好啊'
+    assert options.hans == ['你好啊']
 
 
 if __name__ == '__main__':
