@@ -77,7 +77,7 @@ def get_parser():
     parser.add_argument('-m', '--heteronym', help='enable heteronym',
                         action='store_true')
     # 要查询的汉字
-    parser.add_argument('hans', help='chinese string')
+    parser.add_argument('hans', nargs='+', help='chinese string')
     return parser
 
 
@@ -98,7 +98,9 @@ def main():
     parser = get_parser()
     options = parser.parse_args(args)
     if PY2:
-        hans = options.hans.decode(sys.stdin.encoding or 'utf-8')
+        hans = [
+            han.decode(sys.stdin.encoding or 'utf-8') for han in options.hans
+        ]
     else:
         hans = options.hans
     func = getattr(pypinyin, options.func)
@@ -121,20 +123,21 @@ def main():
     # 不输出任何字符，防止污染命令行命令的输出结果
     # 其实主要是为了干掉 jieba 内的 print 语句 ;)
     sys.stdout = sys.stderr = NullWriter()
-    result = func(hans, style=style, **kwargs)
+    results = [func(han, style=style, **kwargs) for han in hans]
     # 恢复默认
     sys.stdout = sys.__stdout__
     sys.stderr = sys.__stderr__
 
-    if not result:
-        print('')
-    elif result and isinstance(result, (list, tuple)):
-        if isinstance(result[0], (list, tuple)):
-            print(' '.join([','.join(s) for s in result]))
+    for result in results:
+        if not result:
+            print('')
+        elif result and isinstance(result, (list, tuple)):
+            if isinstance(result[0], (list, tuple)):
+                print(' '.join([','.join(s) for s in result]))
+            else:
+                print(result)
         else:
             print(result)
-    else:
-        print(result)
 
 
 if __name__ == '__main__':
