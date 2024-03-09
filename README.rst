@@ -80,7 +80,9 @@ Python 3(Python 2 下把 ``'中心'`` 替换为 ``u'中心'`` 即可):
 
     $ pypinyin 音乐
     yīn yuè
-    $ pypinyin -h
+
+    $ python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
+    zhòng xīn
 
 
 文档
