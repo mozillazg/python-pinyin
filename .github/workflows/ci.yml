@@ -34,5 +34,5 @@ jobs:
       run: |
         python setup.py sdist
         python -m pip install dist/*.gz
-        pypinyin test
+        python -m pypinyin test
         python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
