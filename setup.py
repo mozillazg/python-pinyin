@@ -17,6 +17,7 @@ packages = [
     'pypinyin.contrib',
     'pypinyin.seg',
     'pypinyin.style',
+    'pypinyin.tools',
 ]
 
 requirements = []

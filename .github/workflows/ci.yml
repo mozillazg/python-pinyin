@@ -29,3 +29,11 @@ jobs:
     - name: Run tests
       run: |
         py.test tests/ pypinyin/
+
+    - name: test cli
+      run: |
+        set -xe
+        python setup.py sdist
+        python -m pip install dist/*.gz
+        pypinyin test
+        python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
