@@ -32,7 +32,6 @@ jobs:
 
     - name: test cli
       run: |
-        set -xe
         python setup.py sdist
         python -m pip install dist/*.gz
         pypinyin test
