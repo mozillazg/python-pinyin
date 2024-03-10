@@ -1,6 +1,38 @@
 Changelog
 ---------
 
+`0.51.0`_ (2024-03-10)
++++++++++++++++++++++++++
+
+* **[New]** 新增一个用于转换拼音风格的命令行辅助工具::
+
+    $ python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
+    zhòng xīn
+
+    $ python -m pypinyin.tools.toneconvert to-tone2 'zhòng xīn'
+    zho4ng xi1n
+
+    $ python -m pypinyin.tools.toneconvert to-tone3 'zhòng xīn'
+    zhong4 xin1
+
+    $ python -m pypinyin.tools.toneconvert to-normal 'zhòng xīn'
+    zhong xin
+
+* **[New]** ``pypinyin`` 命令行工具支持接受空格间隔的多个汉字词语作为输入（无需引号包裹）(via `#318`_ Thanks `@Freed-Wu`_) ::
+
+      # 老版本
+      $ pypinyin 我 是 小明
+      pypinyin: error: unrecognized arguments: 是 小明
+
+      # 新版本
+      $ pypinyin 我 是 小明
+      wǒ
+      shì
+      xiǎo míng
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.17.0 的词语拼音数据。
+
+
 `0.50.0`_ (2023-12-11)
 +++++++++++++++++++++++++
 
@@ -980,8 +1012,10 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
+.. _#318: https://github.com/mozillazg/python-pinyin/pull/318
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
+.. _@Freed-Wu: https://github.com/Freed-Wu
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -1074,3 +1108,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.48.0: https://github.com/mozillazg/python-pinyin/compare/v0.47.1...v0.48.0
 .. _0.49.0: https://github.com/mozillazg/python-pinyin/compare/v0.48.0...v0.49.0
 .. _0.50.0: https://github.com/mozillazg/python-pinyin/compare/v0.49.0...v0.50.0
+.. _0.51.0: https://github.com/mozillazg/python-pinyin/compare/v0.50.0...v0.51.0

@@ -298,7 +298,7 @@ toneconvert
 
 **注意**: 当输入包含多个拼音时，必须使用空格或英文逗号分隔，该工具不支持多个拼音连在一起的输入。
 
-该工具支持的只命令如下::
+该工具支持的命令如下::
 
     $ python -m pypinyin.tools.toneconvert -h
 
