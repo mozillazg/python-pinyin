@@ -31,7 +31,9 @@ jobs:
         py.test tests/ pypinyin/
 
     - name: test cli
+      if: startsWith(matrix.os,'ubuntu')
       run: |
+        set -xe
         python setup.py sdist
         python -m pip install dist/*.gz
         python -m pypinyin test
