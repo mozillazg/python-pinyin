@@ -49,16 +49,21 @@ docs_serve: docs_html
 	cd docs/_build/html && python -m http.server
 
 .PHONY: gen_data
-gen_data: gen_pinyin_dict gen_phrases_dict
+gen_data: sync_submodule gen_pinyin_dict gen_phrases_dict
 
 .PHONY: gen_pinyin_dict
-gen_pinyin_dict:
+gen_pinyin_dict: sync_submodule
 	python gen_pinyin_dict.py pinyin-data/pinyin.txt pypinyin/pinyin_dict.py
 
 .PHONY: gen_phrases_dict
-gen_phrases_dict:
+gen_phrases_dict: sync_submodule
 	python gen_phrases_dict.py phrase-pinyin-data/pinyin.txt pypinyin/phrases_dict_large.py
 	python tidy_phrases_dict.py
+
+.PHONY: sync_submodule
+sync_submodule:
+	git submodule init
+	git submodule update
 
 .PHONY: lint
 lint:
