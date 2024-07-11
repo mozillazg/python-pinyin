@@ -49,6 +49,13 @@ def main():
     #     exec(fp.read(), env, env)
     # with open("./pypinyin/phrases_dict_large.py") as fp:
     #     exec(fp.read(), env, env)
+    output = "pypinyin/phrases_dict.py"
+    import os
+
+    if os.path.exists(output):
+        os.remove(output)
+    with open(output, "w") as f:
+        f.write('phrases_dict = {}')
     import pypinyin.pinyin_dict
 
     env["pinyin_dict"] = pypinyin.pinyin_dict.pinyin_dict
@@ -56,7 +63,6 @@ def main():
 
     env["phrases_dict"] = pypinyin.phrases_dict_large.phrases_dict
 
-    output = "pypinyin/phrases_dict.py"
     new_dict = tidy()
     # save(new_dict, output) # duplicated operation?
 

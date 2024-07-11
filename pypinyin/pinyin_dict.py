@@ -9,5 +9,5 @@ with open(db_path, "r", encoding="utf-8") as f:
     tmp_pinyin_dict = json.loads(f.read())
 pinyin_dict = {}
 for x in tmp_pinyin_dict:
-    pinyin_dict[int(x)] = tmp_pinyin_dict[x]
+    pinyin_dict[int(x)] = tmp_pinyin_dict[x] # convert string to number directly
 

@@ -7,7 +7,7 @@ def get_template(is_simple: bool = False):
         code = """tmp_{var_name} = json.loads(f.read())
 {var_name} = {{}}
 for x in tmp_{var_name}:
-    {var_name}[int(x)] = tmp_{var_name}[x]"""
+    {var_name}[int(x)] = tmp_{var_name}[x] # convert string to number directly"""
         return code
     code = """{var_name} = json.loads(f.read())"""
     return code
