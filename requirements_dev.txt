@@ -10,3 +10,4 @@ Sphinx>=3.0.4
 tox
 twine
 wheel>=0.21
+pathlib2
