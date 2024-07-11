@@ -2,24 +2,7 @@
 import sys
 import json
 import pathlib2
-
-
-def export_runner(code_file: str, cfg_file_name: str):
-    code = """# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-import pathlib2
-import json
-
-# Warning: Auto-generated file, don't edit.
-db_path = pathlib2.Path(__file__).parent / '{cfg_file_name}'
-with open(db_path, "r", encoding="utf-8") as f:
-    pinyin_dict = json.loads(f.read())
-
-""".format(
-        cfg_file_name=cfg_file_name,
-    )
-    with open(code_file, "w", encoding="utf-8") as f:
-        f.write(code)
+import gen_export_helper
 
 
 def main(in_file: str, out_file: str):
@@ -36,12 +19,9 @@ def main(in_file: str, out_file: str):
             new_line = raw_line.replace("U+", "0x")
             # '0x4E2D',' zhōng,zhòng'
             new_line = new_line.split(":")
-            items[new_line[0].strip()] = new_line[1].strip()
-    db_file = f"{out_file}.json"
-    with open(db_file, "w", encoding="utf-8") as f:
-        f.write(json.dumps(items, ensure_ascii=False))
-    cfg_file_name = pathlib2.Path(db_file).name
-    export_runner(out_file, cfg_file_name)
+            items[int(new_line[0].strip(), 16)] = new_line[1].strip()
+
+    gen_export_helper.export_runner(items, out_file, "pinyin_dict")
 
 
 if __name__ == "__main__":
