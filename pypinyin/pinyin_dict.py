@@ -11,7 +11,7 @@ pinyin_dict = {}
 
 def _load_pinyin_dict():
     global pinyin_dict
-    with open(_json_path) as fp:
+    with open(_json_path, encoding='utf8') as fp:
         pinyin_dict = json.loads(fp.read())
     for k, v in pinyin_dict.copy().items():
         del pinyin_dict[k]
