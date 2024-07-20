@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import pathlib2
+
 import json
+import os
 
-# Warning: Auto-generated file, don't edit.
-db_path = pathlib2.Path(__file__).parent / 'phrases_dict.py.json'
-with open(db_path, "r", encoding="utf-8") as f:
-    tmp_phrases_dict = json.loads(f.read())
+_current_dir = os.path.dirname(os.path.realpath(__file__))
+_json_path = os.path.join(_current_dir, 'phrases_dict.json')
+
 phrases_dict = {}
-for x in tmp_phrases_dict:
-    phrases_dict[int(x)] = tmp_phrases_dict[x] # convert string to number directly
 
+
+def _load_phrases_dict():
+    global phrases_dict
+    with open(_json_path) as fp:
+        phrases_dict = json.loads(fp.read())
+
+
+_load_phrases_dict()

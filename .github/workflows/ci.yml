@@ -38,3 +38,9 @@ jobs:
         python -m pip install dist/*.gz
         python -m pypinyin test
         python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
+
+    - name: test import time
+      if: startsWith(matrix.os,'ubuntu')
+      run: |
+        set -xe
+        time python -c 'from pypinyin import pinyin'
