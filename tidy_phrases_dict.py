@@ -32,6 +32,9 @@ phrases_dict = {
 
 def double_check():
     import pypinyin
+    from pypinyin.legacy import phrases_dict as large_dict
+    from pypinyin import load_phrases_dict
+    load_phrases_dict(large_dict.phrases_dict)
 
     missing_dict = {}
     for phrases, pinyins in env['phrases_dict'].items():
@@ -52,12 +55,12 @@ def tidy():
 
 
 def main():
-    with open('./pypinyin/pinyin_dict.py') as fp:
+    with open('./pypinyin/legacy/pinyin_dict.py') as fp:
         exec(fp.read(), env, env)
-    with open('./pypinyin/phrases_dict_large.py') as fp:
+    with open('./pypinyin/legacy/phrases_dict.py') as fp:
         exec(fp.read(), env, env)
 
-    output = 'pypinyin/phrases_dict.py'
+    output = 'pypinyin/legacy/phrases_dict_tidy.py'
     new_dict = tidy()
     save(new_dict, output)
 
