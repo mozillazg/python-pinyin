@@ -7,6 +7,10 @@ Changelog
 
 * **[Changed]** 改为运行时从内置的 json 文件中读取单字和词语拼音数据（之前是从内置的 dict 类型的变量中读取），
   缓解 Python 3.12 环境中存在的性能劣化问题 (via `#324`_ Thanks `@serfend`_ ) 详见 `#319`_ `#322`_  。
+  主要解决 Python 3.12 环境中存在的如下问题（非 pypinyin 自身 bug 导致。其他 Python 版本环境中无类似问题）：
+
+  * 在 VSCode 中使用 debugpy 调试时， ``import pypinyin`` 操作需要耗时 10 分钟左右。
+  * 运行 ``py.test --cov`` 命令时，pypinyin 相关代码会卡住很长一段时间。
 
 
 
