@@ -1,6 +1,15 @@
 Changelog
 ---------
 
+
+`0.52.0`_ (2024-08-04)
++++++++++++++++++++++++++
+
+* **[Changed]** 改为运行时从内置的 json 文件中读取单字和词语拼音数据（之前是从内置的 dict 类型的变量中读取），
+  缓解 Python 3.12 环境中存在的性能劣化问题 (via `#324`_ Thanks `@serfend`_ ) 详见 `#319`_ `#322`_  。
+
+
+
 `0.51.0`_ (2024-03-10)
 +++++++++++++++++++++++++
 
@@ -1009,13 +1018,17 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#284: https://github.com/mozillazg/python-pinyin/issues/284
 .. _#290: https://github.com/mozillazg/python-pinyin/issues/290
 .. _#291: https://github.com/mozillazg/python-pinyin/issues/291
+.. _#319: https://github.com/mozillazg/python-pinyin/issues/319
+.. _#322: https://github.com/mozillazg/python-pinyin/issues/322
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
 .. _#318: https://github.com/mozillazg/python-pinyin/pull/318
+.. _#324: https://github.com/mozillazg/python-pinyin/pull/324
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _@Freed-Wu: https://github.com/Freed-Wu
+.. _@serfend: https://github.com/serfend
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -1109,3 +1122,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.49.0: https://github.com/mozillazg/python-pinyin/compare/v0.48.0...v0.49.0
 .. _0.50.0: https://github.com/mozillazg/python-pinyin/compare/v0.49.0...v0.50.0
 .. _0.51.0: https://github.com/mozillazg/python-pinyin/compare/v0.50.0...v0.51.0
+.. _0.52.0: https://github.com/mozillazg/python-pinyin/compare/v0.51.0...v0.52.0
