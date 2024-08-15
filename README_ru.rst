@@ -91,10 +91,13 @@ Related Projects
 * `hotoo/pinyin`__: Утилита для пиньин конвертации китайских иероглифов  Node.js/JavaScript версия.
 * `mozillazg/go-pinyin`__: Утилита для пиньин конвертации китайских иероглифов Go версия.
 * `mozillazg/rust-pinyin`__: Утилита для пиньин конвертации китайских иероглифов Rust версия.
+* `wolfgitpr/cpp-pinyin`__: A tool for converting Chinese characters to pinyin, Cpp version.
+    Примечания. Интерфейс ссылается на py - версию, алгоритм отличается от предыдущих версий.
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
+__ https://github.com/wolfgitpr/cpp-pinyin
 
 
 .. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg
