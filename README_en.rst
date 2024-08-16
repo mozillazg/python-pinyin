@@ -166,7 +166,7 @@ Related Projects
 * `mozillazg/go-pinyin`__: A tool for converting Chinese characters to pinyin, Go version.
 * `mozillazg/rust-pinyin`__: A tool for converting Chinese characters to pinyin, Rust version.
 * `wolfgitpr/cpp-pinyin`__: A tool for converting Chinese characters to pinyin, Cpp version.
-    Ps. The interface refers to the py version, and the algorithm is different from the above versions.
+
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
