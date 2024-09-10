@@ -166,12 +166,14 @@ Related Projects
 * `mozillazg/go-pinyin`__: A tool for converting Chinese characters to pinyin, Go version.
 * `mozillazg/rust-pinyin`__: A tool for converting Chinese characters to pinyin, Rust version.
 * `wolfgitpr/cpp-pinyin`__: A tool for converting Chinese characters to pinyin, Cpp version.
+* `wolfgitpr/csharp-pinyin`__: A tool for converting Chinese characters to pinyin, C# version.
 
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 __ https://github.com/wolfgitpr/cpp-pinyin
+__ https://github.com/wolfgitpr/csharp-pinyin
 
 
 .. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg

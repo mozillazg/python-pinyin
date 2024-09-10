@@ -237,12 +237,14 @@ Related Projects
 * `mozillazg/go-pinyin`__: 汉字拼音转换工具 Go 版。
 * `mozillazg/rust-pinyin`__: 汉字拼音转换工具 Rust 版。
 * `wolfgitpr/cpp-pinyin`__: 汉字拼音转换工具 c++ 版。
+* `wolfgitpr/csharp-pinyin`__: 汉字拼音转换工具 c# 版。
 
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 __ https://github.com/wolfgitpr/cpp-pinyin
+__ https://github.com/wolfgitpr/csharp-pinyin
 
 
 .. |Build| image:: https://img.shields.io/circleci/project/github/mozillazg/python-pinyin/master.svg

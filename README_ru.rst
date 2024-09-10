@@ -92,12 +92,14 @@ Related Projects
 * `mozillazg/go-pinyin`__: Утилита для пиньин конвертации китайских иероглифов Go версия.
 * `mozillazg/rust-pinyin`__: Утилита для пиньин конвертации китайских иероглифов Rust версия.
 * `wolfgitpr/cpp-pinyin`__: Утилита для пиньин конвертации китайских иероглифов Cpp версия.
+* `wolfgitpr/csharp-pinyin`__: Утилита для пиньин конвертации китайских иероглифов C# версия.
 
 
 __ https://github.com/hotoo/pinyin
 __ https://github.com/mozillazg/go-pinyin
 __ https://github.com/mozillazg/rust-pinyin
 __ https://github.com/wolfgitpr/cpp-pinyin
+__ https://github.com/wolfgitpr/csharp-pinyin
 
 
 .. |Build| image:: https://img.shields.io/travis/mozillazg/python-pinyin/master.svg
