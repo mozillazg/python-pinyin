@@ -2,6 +2,17 @@ Changelog
 ---------
 
 
+`0.53.0`_ (2024-09-15)
++++++++++++++++++++++++++
+
+* **[New]** 内置对 pyinstaller 打包的支持，
+  避免使用 pyinstaller 打包时需要额外处理类似 `no such file or dictionary: pinyin_dict.json` 错误的问题。
+  （ **未增加新的依赖包** ，仅通过在源码中增加 __pyinstaller 目录，
+  支持使用 pyinstaller 打包依赖了 pypinyin 的项目时自动打包 v0.52.0 版本新引入的 json 文件）
+  via `#329`_ Thanks `@xushengj`_ , 详见 `#326`_ 。
+
+
+
 `0.52.0`_ (2024-08-04)
 +++++++++++++++++++++++++
 
@@ -1024,15 +1035,18 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#291: https://github.com/mozillazg/python-pinyin/issues/291
 .. _#319: https://github.com/mozillazg/python-pinyin/issues/319
 .. _#322: https://github.com/mozillazg/python-pinyin/issues/322
+.. _#326: https://github.com/mozillazg/python-pinyin/issues/326
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
 .. _#318: https://github.com/mozillazg/python-pinyin/pull/318
 .. _#324: https://github.com/mozillazg/python-pinyin/pull/324
+.. _#329: https://github.com/mozillazg/python-pinyin/pull/329
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _@Freed-Wu: https://github.com/Freed-Wu
 .. _@serfend: https://github.com/serfend
+.. _@xushengj: https://github.com/xushengj
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -1127,3 +1141,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.50.0: https://github.com/mozillazg/python-pinyin/compare/v0.49.0...v0.50.0
 .. _0.51.0: https://github.com/mozillazg/python-pinyin/compare/v0.50.0...v0.51.0
 .. _0.52.0: https://github.com/mozillazg/python-pinyin/compare/v0.51.0...v0.52.0
+.. _0.53.0: https://github.com/mozillazg/python-pinyin/compare/v0.52.0...v0.53.0
