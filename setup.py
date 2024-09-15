@@ -18,6 +18,7 @@ packages = [
     'pypinyin.seg',
     'pypinyin.style',
     'pypinyin.tools',
+    'pypinyin.__pyinstaller',
 ]
 
 requirements = []
@@ -76,6 +77,9 @@ setup(
     entry_points={
         'console_scripts': [
             'pypinyin = pypinyin.__main__:main',
+        ],
+        'pyinstaller40': [
+            'hook-dirs = pypinyin.__pyinstaller:get_hook_dirs'
         ],
     },
     classifiers=[

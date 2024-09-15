@@ -6,8 +6,8 @@ pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
 pytest
 pytest-cov
 pytest-random-order
+setuptools
 Sphinx>=3.0.4
 tox
 twine
 wheel>=0.21
-setuptools
