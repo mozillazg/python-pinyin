@@ -2,4 +2,9 @@ from typing import Any, Text, Tuple
 
 GWOYEU_REPLACE = ... # type: Tuple[Tuple[Any]]
 
-def to_wade_glides(pinyin: Text, **kwargs: Any) -> Text: ...
+class GwoyeuConverter(object):
+    def to_wade_glides(self, pinyin: Text, **kwargs: Any) -> Text: ...
+
+    def _pre_convert(self, pinyin: Text) -> Text: ...
+
+converter = ... # type: GwoyeuConverter
