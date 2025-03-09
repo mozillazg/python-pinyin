@@ -54,6 +54,7 @@ TONE_REPLACE = (
     (re.compile(r'4$'), 'h'),
 )
 
+
 class GwoyeuConverter(object):
     def _pre_convert(self, pinyin):
         # 用数字表示声调
@@ -69,6 +70,7 @@ class GwoyeuConverter(object):
             if find_re.search(pinyin):
                 return find_re.sub(replace, pinyin)
         return pinyin
+
 
 converter = GwoyeuConverter()
 
