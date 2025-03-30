@@ -5,7 +5,7 @@ Changelog
 `0.54.0`_ (2025-03-30)
 +++++++++++++++++++++++++
 
-* **[New]** 新增当 `errors` 参数被设置为 `exception` 时，将在未找到拼音时抛出异常 `PinyinNotFoundException` 。
+* **[New]** 新增当 ``errors`` 参数被设置为 ``exception`` 时，将在未找到拼音时抛出异常 ``PinyinNotFoundException`` 。
 
     .. code-block:: python
 
@@ -15,7 +15,7 @@ Changelog
             ...
         pypinyin.exceptions.PinyinNotFoundException: No pinyin found for character "☆☆"
 
-* **[New]** 新增 `Style.GWOYEU` 支持国语罗马字 (via `#343`_ Thanks `@0xis-cn`_ ) 。
+* **[New]** 新增 ``Style.GWOYEU`` 支持国语罗马字 (via `#343`_ Thanks `@0xis-cn`_ ) 。
 * **[Improved]** 使用 `phrase-pinyin-data`_ v0.18.0 的词语拼音数据。
 
 
@@ -23,7 +23,7 @@ Changelog
 +++++++++++++++++++++++++
 
 * **[New]** 内置对 pyinstaller 打包的支持，
-  避免使用 pyinstaller 打包时需要额外处理类似 `no such file or dictionary: pinyin_dict.json` 错误的问题。
+  避免使用 pyinstaller 打包时需要额外处理类似 ``no such file or dictionary: pinyin_dict.json`` 错误的问题。
   （ **未增加新的依赖包** ，仅通过在源码中增加 __pyinstaller 目录，
   支持使用 pyinstaller 打包依赖了 pypinyin 的项目时自动打包 v0.52.0 版本新引入的 json 文件）
   via `#329`_ Thanks `@xushengj`_ , 详见 `#326`_ 。
