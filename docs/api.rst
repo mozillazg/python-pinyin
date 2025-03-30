@@ -27,7 +27,6 @@ API
 
 .. autofunction:: pypinyin.slug
 
-
 .. _convert_style:
 
 
@@ -41,3 +40,15 @@ API
 
 
 .. _#27: https://github.com/mozillazg/python-pinyin/issues/27
+
+
+.. _exceptions:
+
+
+异常
+-----------------
+
+.. autoclass:: pypinyin.exceptions.PinyinNotFoundException
+   :members:
+   :undoc-members:
+   :member-order: bysource

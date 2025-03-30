@@ -13,6 +13,7 @@ from pypinyin import (
 )
 from pypinyin.compat import SUPPORT_UCS4
 from pypinyin.core import seg
+from pypinyin.exceptions import PinyinNotFoundException
 
 
 def test_pinyin_initials():
@@ -236,6 +237,11 @@ def test_errors_callable():
     n = 5
     assert pinyin('あ' * n, errors=foobar) == [['a' * n]]
     assert pinyin('あ' * n, errors=Foobar()) == [['a' * n]]
+
+
+def test_errors_exception():
+    with pytest.raises(PinyinNotFoundException):
+        pinyin('あ', errors='exception')
 
 
 def test_simple_seg():

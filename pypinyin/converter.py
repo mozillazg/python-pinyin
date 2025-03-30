@@ -12,6 +12,7 @@ from pypinyin.constants import (
 from pypinyin.contrib.uv import V2UMixin
 from pypinyin.contrib.neutral_tone import NeutralToneWith5Mixin
 from pypinyin.contrib.tone_sandhi import ToneSandhiMixin
+from pypinyin.exceptions import PinyinNotFoundException
 from pypinyin.utils import _remove_dup_and_empty
 from pypinyin.style import auto_discover
 from pypinyin.style import convert as convert_style
@@ -38,7 +39,7 @@ class DefaultConverter(Converter):
         :param style: 拼音风格
         :param heteronym: 是否启用多音字
         :type heteronym: bool
-        :param errors: 如果处理没有拼音的字符
+        :param errors: 如何处理没有拼音的字符
         :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
                        是否严格遵照《汉语拼音方案》来处理声母和韵母，
                        详见 :ref:`strict`
@@ -321,6 +322,8 @@ class DefaultConverter(Converter):
             return chars
         elif errors == 'ignore':
             return None
+        elif errors == 'exception':
+            raise PinyinNotFoundException(chars)
         elif errors == 'replace':
             if len(chars) > 1:
                 return ''.join(text_type('%x' % ord(x)) for x in chars)
