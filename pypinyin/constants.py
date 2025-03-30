@@ -99,6 +99,8 @@ class Style(IntEnum):
     CYRILLIC_FIRST = 13
     #: 威妥玛拼音/韦氏拼音/威式拼音风格，无声调
     WADEGILES = 14
+    #: 国语罗马字风格。如：中国 -> ``jong gwo``
+    GWOYEU = 15
 
 
 NORMAL = STYLE_NORMAL = Style.NORMAL

@@ -58,6 +58,10 @@
 
       pinyin('你好☆☆', errors='ignore')
       [['nǐ'], ['hǎo']]
+* ``exception`` : 抛出异常 :class:`~pypinyin.exceptions.PinyinNotFoundException` ::
+
+      pinyin('你好☆☆', errors='ignore')
+      [['nǐ'], ['hǎo']]
 * ``replace`` : 替换为去掉 ``\u`` 的 unicode 编码::
 
       pinyin('你好☆☆', errors='replace')

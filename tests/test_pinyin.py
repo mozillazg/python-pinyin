@@ -13,6 +13,7 @@ from pypinyin import (
 )
 from pypinyin.compat import SUPPORT_UCS4
 from pypinyin.core import seg
+from pypinyin.exceptions import PinyinNotFoundException
 
 
 def test_pinyin_initials():
@@ -236,6 +237,11 @@ def test_errors_callable():
     n = 5
     assert pinyin('あ' * n, errors=foobar) == [['a' * n]]
     assert pinyin('あ' * n, errors=Foobar()) == [['a' * n]]
+
+
+def test_errors_exception():
+    with pytest.raises(PinyinNotFoundException):
+        pinyin('あ', errors='exception')
 
 
 def test_simple_seg():
@@ -595,6 +601,14 @@ def test_wadegiles(han, expect):
 ])
 def test_wadegiles_v_u(han, v_to_u, expect):
     got = lazy_pinyin(han, v_to_u=v_to_u, style=Style.WADEGILES)
+    assert got == expect
+
+
+@pytest.mark.parametrize('han,expect', [
+    ['国语罗马字', [['gwo'], ['yeu'], ['luo'], ['maa'], ['tzyh']]],
+])
+def test_gwoyeu(han, expect):
+    got = pinyin(han, style=Style.GWOYEU)
     assert got == expect
 
 

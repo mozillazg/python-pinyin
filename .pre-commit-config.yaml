@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v5.0.0
     hooks:
       - id: check-merge-conflict
       - id: debug-statements
@@ -12,7 +12,7 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
   - repo: https://github.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 7.2.0
     hooks:
       - id: flake8
         exclude: 'tools|pypinyin/(legacy/|phonetic_symbol.py)|(docs/conf.py)'

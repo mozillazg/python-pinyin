@@ -70,4 +70,5 @@ def auto_discover():
         cyrillic,
         wadegiles,
         others,
+        gwoyeu,
     )

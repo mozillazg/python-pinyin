@@ -72,6 +72,8 @@ class Pinyin(object):
 
                        * ``'default'``: 保留原始字符
                        * ``'ignore'``: 忽略该字符
+                       * ``'exception'``: 抛出异常
+                         :class:`~pypinyin.exceptions.PinyinNotFoundException`
                        * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
                          (``'\\u90aa'`` => ``'90aa'``)
                        * callable 对象: 回调函数之类的可调用对象。

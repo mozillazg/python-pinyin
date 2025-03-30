@@ -43,6 +43,8 @@ class Style(IntEnum):
 
     WADEGILES = ...
 
+    GWOYEU = ...
+
 
 NORMAL = ...  # type: Style
 STYLE_NORMAL = ...  # type: Style
