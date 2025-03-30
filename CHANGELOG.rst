@@ -2,6 +2,22 @@ Changelog
 ---------
 
 
+`0.54.0`_ (2025-03-30)
++++++++++++++++++++++++++
+
+* **[New]** 新增当 `errors` 参数被设置为 `exception` 时，将在未找到拼音时抛出异常 `PinyinNotFoundException` 。
+
+    .. code-block:: python
+
+        >>> from pypinyin import pinyin
+        >>> pinyin('你好☆☆', errors='exception')
+        Traceback (most recent call last):
+            ...
+        pypinyin.exceptions.PinyinNotFoundException: No pinyin found for character "☆☆"
+
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.18.0 的词语拼音数据。
+
+
 `0.53.0`_ (2024-09-15)
 +++++++++++++++++++++++++
 
@@ -1142,3 +1158,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.51.0: https://github.com/mozillazg/python-pinyin/compare/v0.50.0...v0.51.0
 .. _0.52.0: https://github.com/mozillazg/python-pinyin/compare/v0.51.0...v0.52.0
 .. _0.53.0: https://github.com/mozillazg/python-pinyin/compare/v0.52.0...v0.53.0
+.. _0.54.0: https://github.com/mozillazg/python-pinyin/compare/v0.53.0...v0.54.0
