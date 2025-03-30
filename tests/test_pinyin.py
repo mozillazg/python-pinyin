@@ -598,6 +598,14 @@ def test_wadegiles_v_u(han, v_to_u, expect):
     assert got == expect
 
 
+@pytest.mark.parametrize('han,expect', [
+    ['国语罗马字', [['gwo'], ['yeu'], ['luo'], ['maa'], ['tzyh']]],
+])
+def test_gwoyeu(han, expect):
+    got = pinyin(han, style=Style.GWOYEU)
+    assert got == expect
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
