@@ -11,4 +11,4 @@ class PinyinNotFoundException(Exception):
     def __init__(self, chars):
         self.message = 'No pinyin found for character "{}"'.format(chars)
         self.chars = chars
-        super().__init__(self.message)
+        super(PinyinNotFoundException, self).__init__(self.message)

@@ -71,7 +71,7 @@ jobs:
             echo hello | pypinyin
             pypinyin < setup.cfg
 
-            coveralls
+            # coveralls
 
       - store_artifacts:
           path: test-reports
