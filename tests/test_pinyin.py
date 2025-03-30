@@ -243,6 +243,9 @@ def test_errors_exception():
     with pytest.raises(PinyinNotFoundException):
         pinyin('あ', errors='exception')
 
+    with pytest.raises(PinyinNotFoundException):
+        lazy_pinyin('あ', errors='exception')
+
 
 def test_simple_seg():
     data = {
