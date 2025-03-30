@@ -15,6 +15,7 @@ Changelog
             ...
         pypinyin.exceptions.PinyinNotFoundException: No pinyin found for character "☆☆"
 
+* **[New]** 新增 `Style.GWOYEU` 支持国语罗马字 (via `#343`_ Thanks `@0xis-cn`_ ) 。
 * **[Improved]** 使用 `phrase-pinyin-data`_ v0.18.0 的词语拼音数据。
 
 
@@ -1058,11 +1059,13 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#318: https://github.com/mozillazg/python-pinyin/pull/318
 .. _#324: https://github.com/mozillazg/python-pinyin/pull/324
 .. _#329: https://github.com/mozillazg/python-pinyin/pull/329
+.. _#343: https://github.com/mozillazg/python-pinyin/pull/343
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _@Freed-Wu: https://github.com/Freed-Wu
 .. _@serfend: https://github.com/serfend
 .. _@xushengj: https://github.com/xushengj
+.. _@0xis-cn: https://github.com/0xis-cn
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
