@@ -71,4 +71,5 @@ def auto_discover():
         wadegiles,
         others,
         gwoyeu,
+        braille_mainland,
     )
