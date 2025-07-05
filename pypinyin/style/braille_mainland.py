@@ -58,9 +58,6 @@ BRAILLE_MAINLAND_REPLACE = (
     (re.compile(r'ui'), '⠺'),
     (re.compile(r'in'), '⠣'),
     (re.compile(r'vn'), '⠸'),
-
-    #(re.compile(r'eh'), 'E'),
-    #(re.compile(r'([iv])e'), '\\1E'),
 )
 
 BRAILLE_MAINLAND_TABLE = dict(zip(
@@ -91,7 +88,3 @@ class BrailleMainlandConverter(object):
 converter = BrailleMainlandConverter()
 register(Style.BRAILLE_MAINLAND_TONE, func=converter.to_braille_mainland_tone)
 register(Style.BRAILLE_MAINLAND, func=converter.to_braille_mainland)
-
-if(__name__=="__main__"):
-    from pypinyin import pinyin, lazy_pinyin, Style
-    pinyin('人人生而自由', style=Style.BRAILLE_MAINLAND)
