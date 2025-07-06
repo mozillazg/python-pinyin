@@ -101,6 +101,10 @@ class Style(IntEnum):
     WADEGILES = 14
     #: 国语罗马字风格。如：中国 -> ``jong gwo``
     GWOYEU = 15
+    #: 中国内地盲文风格，无声调。如：中国 -> ``⠌⠲ ⠛⠕``
+    BRAILLE_MAINLAND = 16
+    #: 中国内地盲文风格，带声调。如：中国 -> ``⠌⠲⠁ ⠛⠕⠂``
+    BRAILLE_MAINLAND_TONE = 17
 
 
 NORMAL = STYLE_NORMAL = Style.NORMAL
