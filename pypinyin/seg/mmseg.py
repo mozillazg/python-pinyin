@@ -24,45 +24,54 @@ class Seg(object):
         remain = text
         while remain:
             matched = ''
+            last_valid_word = ''
+            last_valid_index = 0
+
             # 一次加一个字的匹配
             for index in range(len(remain)):
                 word = remain[:index + 1]
                 if word in self._prefix_set:
                     matched = word
+                    # 检查当前匹配的词是否为有效词语
+                    if (not self._no_non_phrases) or word in PHRASES_DICT:
+                        last_valid_word = word
+                        last_valid_index = index + 1
                 else:
-                    # 前面的字符串是个词语
-                    if (matched and (
-                        (not self._no_non_phrases) or
-                        matched in PHRASES_DICT
-                    )
-                    ):
-                        yield matched
-                        matched = ''
-                        remain = remain[index:]
-                    else:  # 前面为空或不是真正的词语
-                        # 严格按照词语分词的情况下，不是词语的词拆分为单个汉字
-                        # 先返回第一个字，后面的重新参与分词，
-                        # 处理前缀匹配导致无法识别输入尾部的词语，
-                        # 支持简单的逆向匹配分词:
-                        #   已有词语：金融寡头 行业
-                        #   输入：金融行业
-                        #   输出：金 融 行业
+                    # 前缀匹配失败，需要处理之前的匹配结果
+                    if last_valid_word:
+                        # 有有效词语，输出最后一个有效词语
+                        yield last_valid_word
+                        remain = remain[last_valid_index:]
+                    else:
+                        # 没有有效词语
                         if self._no_non_phrases:
-                            yield word[0]
-                            remain = remain[index + 2 - len(word):]
+                            # 严格模式：输出第一个字符
+                            yield remain[0]
+                            remain = remain[1:]
                         else:
-                            yield word
-                            remain = remain[index + 1:]
-                    # 有结果了，剩余的重新开始匹配
-                    matched = ''
+                            # 非严格模式：输出匹配到的前缀（如果有）或第一个字符
+                            if matched:
+                                yield matched
+                                remain = remain[len(matched):]
+                            else:
+                                yield remain[0]
+                                remain = remain[1:]
                     break
-            else:  # 整个文本就是一个词语，或者不包含任何词语
-                if self._no_non_phrases and remain not in PHRASES_DICT:
-                    for x in remain:
-                        yield x
+            else:  # 整个剩余文本都能匹配前缀
+                if last_valid_word:
+                    # 有有效词语，输出最后一个有效词语
+                    yield last_valid_word
+                    remain = remain[last_valid_index:]
                 else:
-                    yield remain
-                break
+                    # 没有有效词语，处理剩余文本
+                    if self._no_non_phrases and remain not in PHRASES_DICT:
+                        # 严格模式且不在词典中：拆分为单字符
+                        for x in remain:
+                            yield x
+                    else:
+                        # 非严格模式或在词典中：输出整个剩余文本
+                        yield remain
+                    break
 
     def train(self, words):
         """训练分词器
