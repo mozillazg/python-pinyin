@@ -3,6 +3,8 @@
 
 Style.BRAILLE_MAINLAND
 Style.BRAILLE_MAINLAND_TONE
+
+https://en.wikipedia.org/wiki/Mainland_Chinese_Braille
 """
 from __future__ import unicode_literals
 import re
@@ -10,7 +12,8 @@ import re
 from pypinyin.constants import Style
 from pypinyin.style import register
 from pypinyin.style._constants import RE_TONE3
-from pypinyin.style._utils import replace_symbol_to_number, replace_symbol_to_no_symbol
+from pypinyin.style._utils import (
+    replace_symbol_to_number, replace_symbol_to_no_symbol)
 
 BRAILLE_MAINLAND_REPLACE = (
     (re.compile(r'iu'), 'iou'),
@@ -65,6 +68,7 @@ BRAILLE_MAINLAND_TABLE = dict(zip(
     '⠃⠏⠍⠋⠙⠞⠝⠇⠛⠅⠓⠛⠅⠓⠌⠟⠱⠚⠵⠉⠎⠊⠥⠬⠔⠢⠢⠁⠂⠄⠆'
 ))
 
+
 class BrailleMainlandConverter(object):
     def to_braille_mainland_tone(self, pinyin, **kwargs):
         # 用数字表示声调
@@ -75,15 +79,14 @@ class BrailleMainlandConverter(object):
             pinyin = find_re.sub(replace, pinyin)
         pinyin = ''.join(BRAILLE_MAINLAND_TABLE.get(x, x) for x in pinyin)
         return pinyin
-    
-    
+
     def to_braille_mainland(self, pinyin, **kwargs):
         pinyin = replace_symbol_to_no_symbol(pinyin)
         for find_re, replace in BRAILLE_MAINLAND_REPLACE:
             pinyin = find_re.sub(replace, pinyin)
         pinyin = ''.join(BRAILLE_MAINLAND_TABLE.get(x, x) for x in pinyin)
         return pinyin
-    
+
 
 converter = BrailleMainlandConverter()
 register(Style.BRAILLE_MAINLAND_TONE, func=converter.to_braille_mainland_tone)

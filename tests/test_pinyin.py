@@ -615,6 +615,21 @@ def test_gwoyeu(han, expect):
     assert got == expect
 
 
+@pytest.mark.parametrize('han,style,expect', [
+    ['中国', Style.BRAILLE_MAINLAND,
+     [['⠌⠲'], ['⠛⠕']]],
+    ['中国', Style.BRAILLE_MAINLAND_TONE,
+     [['⠌⠲⠁'], ['⠛⠕⠂']]],
+    ['时间不早了', Style.BRAILLE_MAINLAND,
+     [['⠱'], ['⠛⠩'], ['⠃⠥'], ['⠵⠖'], ['⠇⠢']]],
+    ['时间不早了', Style.BRAILLE_MAINLAND_TONE,
+     [['⠱⠂'], ['⠛⠩⠁'], ['⠃⠥⠆'], ['⠵⠖⠄'], ['⠇⠢']]],
+])
+def test_braille(han, style, expect):
+    got = pinyin(han, style=style)
+    assert got == expect
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
