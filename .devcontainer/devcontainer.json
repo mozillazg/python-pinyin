@@ -2,12 +2,11 @@
 	"name": "python-pinyin",
 	"image": "mcr.microsoft.com/devcontainers/python:1-3.9-bookworm",
 	"features": {},
-	"postCreateCommand": "pip3 install --user -r requirements-dev.txt;pip3 install --user -e .",
+	"postCreateCommand": "pip3 install --user -r requirements_dev.txt;pip3 install --user -e .",
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"hbenl.vscode-test-explorer",
-				"littlefoxteam.vscode-python-test-adapter",
 				"ms-python.mypy-type-checker",
 				"ms-python.python"
 			]
