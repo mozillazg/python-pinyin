@@ -784,6 +784,35 @@ def test_seg_long():
                '。']
 
 
+@pytest.mark.parametrize(
+    'words,no_non_phrases,expected', [
+        ('银行行长', True, ['银行', '行长']),
+        ('银行行长', False, ['银行行', '长']),
+        ('银行', True, ['银行']),
+        ('银行', False, ['银行']),
+        ('银行行员', True, ['银行行员']),
+        ('银行行员', False, ['银行行员']),
+        ('金融资本', True, ['金', '融', '资', '本']),
+        ('金融资本', False, ['金融资本']),
+        ('金融行业', True, ['金', '融', '行业']),
+        ('金融行业', False, ['金融', '行业']),
+        ('军工', True, ['军', '工']),
+        ('军工', False, ['军', '工']),
+        ('浦发银行', True, ['浦', '发', '银行']),
+        ('浦发银行', False, ['浦', '发', '银行']),
+    ]
+)
+def test_issue_347(words, no_non_phrases, expected):
+    prefix_set = mmseg.PrefixSet()
+    prefix_set.train([
+        '银行', '行长', '银行行员',
+        '金融', '融资', '资本', '金融资本',
+        '行业',
+    ])
+    seg = mmseg.Seg(prefix_set, no_non_phrases=no_non_phrases)
+    assert list(seg.cut(words)) == expected
+
+
 if __name__ == '__main__':
     import pytest
 

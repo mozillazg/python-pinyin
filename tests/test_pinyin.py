@@ -131,7 +131,7 @@ def test_others():
     # 日文
     assert pinyin('の') == [['\u306e']]
     # 没有读音的汉字，还不存在的汉字
-    assert pinyin('\u9fff') == [['\u9fff']]
+    assert pinyin('\ufaff') == [['\ufaff']]
 
 
 def test_lazy_pinyin():
@@ -242,6 +242,9 @@ def test_errors_callable():
 def test_errors_exception():
     with pytest.raises(PinyinNotFoundException):
         pinyin('あ', errors='exception')
+
+    with pytest.raises(PinyinNotFoundException):
+        lazy_pinyin('あ', errors='exception')
 
 
 def test_simple_seg():
@@ -609,6 +612,21 @@ def test_wadegiles_v_u(han, v_to_u, expect):
 ])
 def test_gwoyeu(han, expect):
     got = pinyin(han, style=Style.GWOYEU)
+    assert got == expect
+
+
+@pytest.mark.parametrize('han,style,expect', [
+    ['中国', Style.BRAILLE_MAINLAND,
+     [['⠌⠲'], ['⠛⠕']]],
+    ['中国', Style.BRAILLE_MAINLAND_TONE,
+     [['⠌⠲⠁'], ['⠛⠕⠂']]],
+    ['时间不早了', Style.BRAILLE_MAINLAND,
+     [['⠱'], ['⠛⠩'], ['⠃⠥'], ['⠵⠖'], ['⠇⠢']]],
+    ['时间不早了', Style.BRAILLE_MAINLAND_TONE,
+     [['⠱⠂'], ['⠛⠩⠁'], ['⠃⠥⠆'], ['⠵⠖⠄'], ['⠇⠢']]],
+])
+def test_braille(han, style, expect):
+    got = pinyin(han, style=style)
     assert got == expect
 
 
