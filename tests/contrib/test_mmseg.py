@@ -786,7 +786,7 @@ def test_seg_long():
 
 @pytest.mark.parametrize(
     'words,no_non_phrases,expected', [
-        ('银行行长', True, ['银行', '行', '长']),
+        ('银行行长', True, ['银行', '行长']),
         ('银行行长', False, ['银行行', '长']),
         ('银行', True, ['银行']),
         ('银行', False, ['银行']),

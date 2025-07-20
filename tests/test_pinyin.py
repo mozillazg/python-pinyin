@@ -131,7 +131,7 @@ def test_others():
     # 日文
     assert pinyin('の') == [['\u306e']]
     # 没有读音的汉字，还不存在的汉字
-    assert pinyin('\u9fff') == [['\u9fff']]
+    assert pinyin('\ufaff') == [['\ufaff']]
 
 
 def test_lazy_pinyin():
