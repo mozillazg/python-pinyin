@@ -2,6 +2,17 @@ Changelog
 ---------
 
 
+`0.55.0`_ (2025-07-20)
++++++++++++++++++++++++++
+
+* **[New]** 新增 ``Style.BRAILLE_MAINLAND`` 和 ``Style.BRAILLE_MAINLAND_TONE`` 支持中国内地盲文风格
+  (via `#348`_ Thanks `@oxygen-dioxide`_ ) 。
+* **[Improved]** 使用 `phrase-pinyin-data`_ v0.19.0 的词语拼音数据。
+* **[Improved]** 使用 `pinyin-data`_ v0.15.0 的拼音数据。
+* **[Fixed]** 优化内置分词，解决词语切分有误导致的拼音有误问题。 Fixed `#347`_ 。
+
+
+
 `0.54.0`_ (2025-03-30)
 +++++++++++++++++++++++++
 
@@ -1053,6 +1064,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#319: https://github.com/mozillazg/python-pinyin/issues/319
 .. _#322: https://github.com/mozillazg/python-pinyin/issues/322
 .. _#326: https://github.com/mozillazg/python-pinyin/issues/326
+.. _#347: https://github.com/mozillazg/python-pinyin/issues/347
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279
@@ -1060,12 +1072,14 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#324: https://github.com/mozillazg/python-pinyin/pull/324
 .. _#329: https://github.com/mozillazg/python-pinyin/pull/329
 .. _#343: https://github.com/mozillazg/python-pinyin/pull/343
+.. _#348: https://github.com/mozillazg/python-pinyin/pull/348
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _@Freed-Wu: https://github.com/Freed-Wu
 .. _@serfend: https://github.com/serfend
 .. _@xushengj: https://github.com/xushengj
 .. _@0xis-cn: https://github.com/0xis-cn
+.. _@oxygen-dioxide: https://github.com/oxygen-dioxide
 .. _变调规则: https://en.wikipedia.org/wiki/Standard_Chinese_phonology#Tone_sandhi
 
 .. _0.2.0: https://github.com/mozillazg/python-pinyin/compare/v0.1.0...v0.2.0
@@ -1162,3 +1176,4 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _0.52.0: https://github.com/mozillazg/python-pinyin/compare/v0.51.0...v0.52.0
 .. _0.53.0: https://github.com/mozillazg/python-pinyin/compare/v0.52.0...v0.53.0
 .. _0.54.0: https://github.com/mozillazg/python-pinyin/compare/v0.53.0...v0.54.0
+.. _0.55.0: https://github.com/mozillazg/python-pinyin/compare/v0.54.0...v0.55.0
