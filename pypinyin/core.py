@@ -136,6 +136,145 @@ class Pinyin(object):
                     hans, style=style, heteronym=False,
                     errors=errors, strict=strict)))
 
+    def pinyin_group(self, hans, style=Style.TONE, heteronym=False,
+                     errors='default', strict=True, **kwargs):
+        """将汉字转换为拼音，按词组进行分组，返回分组后的结果列表。
+
+        每个分组包含原始汉字和对应的拼音。拼音会根据情况进行处理：
+        - 词语中的多个字的拼音会用空格连接
+        - 儿化音会合并处理（如：花儿 -> huar）
+        - 需要隔音符的拼音会自动添加（如：西安 -> xi'an）
+
+        :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                     可以使用自己喜爱的分词模块对字符串进行分词处理,
+                     只需将经过分词处理的字符串列表传进来就可以了。
+        :type hans: unicode 字符串或字符串列表
+        :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
+                      更多拼音风格详见 :class:`~pypinyin.Style`
+        :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
+
+                       * ``'default'``: 保留原始字符
+                       * ``'ignore'``: 忽略该字符
+                       * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                         (``'\\u90aa'`` => ``'90aa'``)
+                       * callable 对象: 回调函数之类的可调用对象。
+
+        :param heteronym: 是否启用多音字
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
+        :return: 分组后的拼音列表，每个元素是一个字典，包含 'hanzi' 和 'pinyin' 两个键
+        :rtype: list
+
+        """
+        # 对字符串进行分词处理
+        if isinstance(hans, text_type):
+            han_list = self.seg(hans)
+        else:
+            # 当输入是列表时，跳过分词操作
+            han_list = hans
+
+        result = []
+        i = 0
+        while i < len(han_list):
+            word = han_list[i]
+
+            # 检查是否需要与下一个字符合并（儿化音处理）
+            # 如果当前字是汉字且下一个字是"儿"，合并处理
+            if (i + 1 < len(han_list) and 
+                han_list[i + 1] == '儿' and 
+                RE_HANS.match(word)):
+                # 合并当前字和"儿"
+                word = word + '儿'
+                i += 1  # 跳过下一个字符
+                is_erhua = True
+            else:
+                is_erhua = False
+
+            # 获取该词的拼音
+            pys = self.pinyin(
+                word, style=style, heteronym=heteronym,
+                errors=errors, strict=strict
+            )
+
+            # 检查是否全是非汉字（如标点符号）
+            if not RE_HANS.match(word):
+                result.append({'hanzi': word, 'pinyin': []})
+                i += 1
+                continue
+
+            # 如果没有拼音，返回空列表
+            if not pys or all(not p for p in pys):
+                result.append({'hanzi': word, 'pinyin': []})
+                i += 1
+                continue
+
+            # 处理儿化音
+            if is_erhua and len(pys) >= 2:
+                # 获取倒数第二个拼音（花）和最后一个拼音（儿）
+                base_pinyin_list = pys[-2]
+                er_pinyin_list = pys[-1]
+
+                if heteronym:
+                    # 多音字模式：生成所有组合
+                    combined = []
+                    for base in base_pinyin_list:
+                        for er in er_pinyin_list:
+                            # 移除 er 的声母，只保留 r
+                            er_suffix = 'r' if er else ''
+                            combined.append(base + er_suffix)
+
+                    # 前面的拼音保持不变
+                    if len(pys) > 2:
+                        # 如果有多个字，前面的用空格连接
+                        prev_pinyins = []
+                        for j in range(len(pys) - 2):
+                            prev_pinyins.append(pys[j])
+                        # 为前面的拼音生成所有组合
+                        from itertools import product
+                        if prev_pinyins:
+                            prev_combinations = [' '.join(p) for p in product(*prev_pinyins)]
+                            final_pinyins = [prev + ' ' + comb for prev in prev_combinations for comb in combined]
+                        else:
+                            final_pinyins = combined
+                    else:
+                        final_pinyins = combined
+                else:
+                    # 非多音字模式：只取第一个
+                    base = base_pinyin_list[0] if base_pinyin_list else ''
+                    er = er_pinyin_list[0] if er_pinyin_list else ''
+                    er_suffix = 'r' if er else ''
+                    combined = base + er_suffix
+
+                    # 前面的拼音用空格连接
+                    if len(pys) > 2:
+                        prev_pinyins = [p[0] for p in pys[:-2]]
+                        final_pinyins = [' '.join(prev_pinyins + [combined])]
+                    else:
+                        final_pinyins = [combined]
+
+                result.append({'hanzi': word, 'pinyin': final_pinyins})
+            else:
+                # 非儿化音处理
+                if heteronym:
+                    # 多音字模式：生成所有组合
+                    from itertools import product
+                    # 检查是否需要添加隔音符
+                    combinations = []
+                    for combo in product(*pys):
+                        joined = _join_pinyin_with_separator(list(combo))
+                        combinations.append(joined)
+                    result.append({'hanzi': word, 'pinyin': combinations})
+                else:
+                    # 非多音字模式：只取第一个
+                    pinyin_list = [p[0] if p else '' for p in pys]
+                    joined = _join_pinyin_with_separator(pinyin_list)
+                    result.append({'hanzi': word, 'pinyin': [joined]})
+
+            i += 1
+
+        return result
+
     def pre_seg(self, hans, **kwargs):
         """对字符串进行分词前将调用 ``pre_seg`` 方法对未分词的字符串做预处理。
 
@@ -292,8 +431,10 @@ def pinyin_group(hans, style=Style.TONE, heteronym=False,
     - 儿化音会合并处理（如：花儿 -> huar）
     - 需要隔音符的拼音会自动添加（如：西安 -> xi'an）
 
-    :param hans: 汉字字符串( ``'你好吗'`` ).
-    :type hans: unicode 字符串
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
     :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
                   更多拼音风格详见 :class:`~pypinyin.Style`
     :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
@@ -333,113 +474,8 @@ def pinyin_group(hans, style=Style.TONE, heteronym=False,
     """
     _pinyin = Pinyin(UltimateConverter(
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
-
-    if not isinstance(hans, text_type):
-        raise ValueError('hans must be a unicode string')
-
-    # 对字符串进行分词处理
-    han_list = _pinyin.seg(hans)
-
-    result = []
-    i = 0
-    while i < len(han_list):
-        word = han_list[i]
-
-        # 检查是否需要与下一个字符合并（儿化音处理）
-        # 如果当前字是汉字且下一个字是"儿"，合并处理
-        if (i + 1 < len(han_list) and 
-            han_list[i + 1] == '儿' and 
-            RE_HANS.match(word)):
-            # 合并当前字和"儿"
-            word = word + '儿'
-            i += 1  # 跳过下一个字符
-            is_erhua = True
-        else:
-            is_erhua = False
-
-        # 获取该词的拼音
-        pys = _pinyin.pinyin(
-            word, style=style, heteronym=heteronym,
-            errors=errors, strict=strict
-        )
-
-        # 检查是否全是非汉字（如标点符号）
-        if not RE_HANS.match(word):
-            result.append({'hanzi': word, 'pinyin': []})
-            i += 1
-            continue
-
-        # 如果没有拼音，返回空列表
-        if not pys or all(not p for p in pys):
-            result.append({'hanzi': word, 'pinyin': []})
-            i += 1
-            continue
-
-        # 处理儿化音
-        if is_erhua and len(pys) >= 2:
-            # 获取倒数第二个拼音（花）和最后一个拼音（儿）
-            base_pinyin_list = pys[-2]
-            er_pinyin_list = pys[-1]
-
-            if heteronym:
-                # 多音字模式：生成所有组合
-                combined = []
-                for base in base_pinyin_list:
-                    for er in er_pinyin_list:
-                        # 移除 er 的声母，只保留 r
-                        er_suffix = 'r' if er else ''
-                        combined.append(base + er_suffix)
-
-                # 前面的拼音保持不变
-                if len(pys) > 2:
-                    # 如果有多个字，前面的用空格连接
-                    prev_pinyins = []
-                    for j in range(len(pys) - 2):
-                        prev_pinyins.append(pys[j])
-                    # 为前面的拼音生成所有组合
-                    from itertools import product
-                    if prev_pinyins:
-                        prev_combinations = [' '.join(p) for p in product(*prev_pinyins)]
-                        final_pinyins = [prev + ' ' + comb for prev in prev_combinations for comb in combined]
-                    else:
-                        final_pinyins = combined
-                else:
-                    final_pinyins = combined
-            else:
-                # 非多音字模式：只取第一个
-                base = base_pinyin_list[0] if base_pinyin_list else ''
-                er = er_pinyin_list[0] if er_pinyin_list else ''
-                er_suffix = 'r' if er else ''
-                combined = base + er_suffix
-
-                # 前面的拼音用空格连接
-                if len(pys) > 2:
-                    prev_pinyins = [p[0] for p in pys[:-2]]
-                    final_pinyins = [' '.join(prev_pinyins + [combined])]
-                else:
-                    final_pinyins = [combined]
-
-            result.append({'hanzi': word, 'pinyin': final_pinyins})
-        else:
-            # 非儿化音处理
-            if heteronym:
-                # 多音字模式：生成所有组合
-                from itertools import product
-                # 检查是否需要添加隔音符
-                combinations = []
-                for combo in product(*pys):
-                    joined = _join_pinyin_with_separator(list(combo))
-                    combinations.append(joined)
-                result.append({'hanzi': word, 'pinyin': combinations})
-            else:
-                # 非多音字模式：只取第一个
-                pinyin_list = [p[0] if p else '' for p in pys]
-                joined = _join_pinyin_with_separator(pinyin_list)
-                result.append({'hanzi': word, 'pinyin': [joined]})
-
-        i += 1
-
-    return result
+    return _pinyin.pinyin_group(
+        hans, style=style, heteronym=heteronym, errors=errors, strict=strict)
 
 
 def _join_pinyin_with_separator(pinyin_list):

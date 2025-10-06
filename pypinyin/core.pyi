@@ -69,7 +69,7 @@ def pinyin(hans: Union[List[Text], Text],
            ) -> List[List[Text]]: ...
 
 
-def pinyin_group(hans: Text,
+def pinyin_group(hans: Union[List[Text], Text],
                  style: TStyle = ...,
                  heteronym: bool = ...,
                  errors: TErrors = ...,
@@ -117,6 +117,14 @@ class Pinyin(object):
                     strict: bool = ...,
                     **kwargs: Any
                     ) -> List[Text]: ...
+
+    def pinyin_group(self, hans: Union[List[Text], Text],
+                     style: TStyle = ...,
+                     heteronym: bool = ...,
+                     errors: TErrors = ...,
+                     strict: bool = ...,
+                     **kwargs: Any
+                     ) -> TPinyinGroupResult: ...
 
     def pre_seg(self, hans: Text,
                 **kwargs: Any) -> Optional[List[Text]]: ...

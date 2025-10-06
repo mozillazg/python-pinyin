@@ -149,12 +149,6 @@ def test_pinyin_group_mixed():
     assert ' ' in pinyin_str  # 空格
 
 
-def test_pinyin_group_errors_invalid_input():
-    """测试无效输入"""
-    with pytest.raises(ValueError):
-        pinyin_group(['你好'])  # 应该传入字符串而不是列表
-
-
 def test_pinyin_group_with_english():
     """测试包含英文的情况"""
     result = pinyin_group('你好world')
@@ -165,3 +159,36 @@ def test_pinyin_group_with_english():
     assert len(world_group) == 1
     # 英文应该没有拼音
     assert world_group[0]['pinyin'] == []
+
+
+def test_pinyin_group_with_list_input():
+    """测试列表输入（跳过分词）"""
+    # 测试字符串列表输入
+    result = pinyin_group(['你好', '吗'], style=Style.NORMAL)
+    assert len(result) == 2
+    assert result[0]['hanzi'] == '你好'
+    assert result[1]['hanzi'] == '吗'
+
+
+def test_pinyin_group_with_list_erhua():
+    """测试列表输入的儿化音处理"""
+    result = pinyin_group(['玩', '儿'], style=Style.NORMAL)
+    # 儿化音应该被合并
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '玩儿'
+    assert 'r' in result[0]['pinyin'][0]
+
+
+def test_pinyin_group_method_exists():
+    """测试 Pinyin 类有 pinyin_group 方法"""
+    from pypinyin.core import Pinyin
+    from pypinyin.converter import DefaultConverter
+    
+    p = Pinyin(DefaultConverter())
+    assert hasattr(p, 'pinyin_group')
+    
+    # 测试方法可以调用
+    result = p.pinyin_group('你好', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '你好'
+
