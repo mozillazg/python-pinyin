@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import pytest
 
 from pypinyin import (
-    pinyin_group, load_phrases_dict, Style
+    pinyin_group, lazy_pinyin_group, load_phrases_dict, Style
 )
 
 
@@ -191,4 +191,106 @@ def test_pinyin_group_method_exists():
     result = p.pinyin_group('你好', style=Style.NORMAL)
     assert len(result) == 1
     assert result[0]['hanzi'] == '你好'
+
+
+def test_lazy_pinyin_group_basic():
+    """测试 lazy_pinyin_group 基本功能"""
+    result = lazy_pinyin_group('你好', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '你好'
+    # lazy_pinyin_group 的 pinyin 应该是字符串而不是列表
+    assert isinstance(result[0]['pinyin'], str)
+    assert result[0]['pinyin'] == 'ni hao'
+
+
+def test_lazy_pinyin_group_with_punctuation():
+    """测试 lazy_pinyin_group 标点符号处理"""
+    load_phrases_dict({
+        '你好': [['nǐ'], ['hǎo']],
+    })
+    
+    result = lazy_pinyin_group('你好吗？', style=Style.NORMAL)
+    assert len(result) == 3
+    
+    # 第一个分组：你好
+    assert result[0]['hanzi'] == '你好'
+    assert isinstance(result[0]['pinyin'], str)
+    
+    # 第二个分组：吗
+    assert result[1]['hanzi'] == '吗'
+    assert isinstance(result[1]['pinyin'], str)
+    
+    # 第三个分组：？（标点）
+    assert result[2]['hanzi'] == '？'
+    assert result[2]['pinyin'] == ''  # 空字符串而不是空列表
+
+
+def test_lazy_pinyin_group_with_erhua():
+    """测试 lazy_pinyin_group 儿化音处理"""
+    result = lazy_pinyin_group('花儿', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '花儿'
+    assert isinstance(result[0]['pinyin'], str)
+    assert result[0]['pinyin'] == 'huar'
+
+
+def test_lazy_pinyin_group_with_apostrophe():
+    """测试 lazy_pinyin_group 隔音符处理"""
+    load_phrases_dict({
+        '西安': [['xī'], ['ān']],
+    })
+    
+    result = lazy_pinyin_group('西安', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '西安'
+    assert isinstance(result[0]['pinyin'], str)
+    assert "'" in result[0]['pinyin']
+    assert result[0]['pinyin'] == "xi'an"
+
+
+def test_lazy_pinyin_group_with_list_input():
+    """测试 lazy_pinyin_group 列表输入"""
+    result = lazy_pinyin_group(['你好', '吗'], style=Style.NORMAL)
+    assert len(result) == 2
+    assert result[0]['hanzi'] == '你好'
+    assert isinstance(result[0]['pinyin'], str)
+    assert result[1]['hanzi'] == '吗'
+    assert isinstance(result[1]['pinyin'], str)
+
+
+def test_lazy_pinyin_group_method_exists():
+    """测试 Pinyin 类有 lazy_pinyin_group 方法"""
+    from pypinyin.core import Pinyin
+    from pypinyin.converter import DefaultConverter
+    
+    p = Pinyin(DefaultConverter())
+    assert hasattr(p, 'lazy_pinyin_group')
+    
+    # 测试方法可以调用
+    result = p.lazy_pinyin_group('你好', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '你好'
+    assert isinstance(result[0]['pinyin'], str)
+
+
+def test_lazy_pinyin_group_vs_pinyin_group():
+    """测试 lazy_pinyin_group 和 pinyin_group 的区别"""
+    from pypinyin import pinyin_group
+    
+    text = '你好'
+    result_lazy = lazy_pinyin_group(text, style=Style.NORMAL)
+    result_normal = pinyin_group(text, style=Style.NORMAL)
+    
+    # 两者的汉字部分应该相同
+    assert result_lazy[0]['hanzi'] == result_normal[0]['hanzi']
+    
+    # lazy_pinyin_group 返回字符串
+    assert isinstance(result_lazy[0]['pinyin'], str)
+    
+    # pinyin_group 返回列表
+    assert isinstance(result_normal[0]['pinyin'], list)
+    
+    # 内容应该相同（lazy 的字符串等于 normal 的第一个元素）
+    assert result_lazy[0]['pinyin'] == result_normal[0]['pinyin'][0]
+
 

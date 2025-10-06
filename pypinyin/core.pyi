@@ -79,6 +79,15 @@ def pinyin_group(hans: Union[List[Text], Text],
                  ) -> TPinyinGroupResult: ...
 
 
+def lazy_pinyin_group(hans: Union[List[Text], Text],
+                      style: TStyle = ...,
+                      errors: TErrors = ...,
+                      strict: bool = ...,
+                      v_to_u: bool = ...,
+                      neutral_tone_with_five: bool = ...
+                      ) -> TPinyinGroupResult: ...
+
+
 def slug(hans: Union[List[Text], Text],
          style: TStyle = ...,
          heteronym: bool = ...,
@@ -125,6 +134,13 @@ class Pinyin(object):
                      strict: bool = ...,
                      **kwargs: Any
                      ) -> TPinyinGroupResult: ...
+
+    def lazy_pinyin_group(self, hans: Union[List[Text], Text],
+                          style: TStyle = ...,
+                          errors: TErrors = ...,
+                          strict: bool = ...,
+                          **kwargs: Any
+                          ) -> TPinyinGroupResult: ...
 
     def pre_seg(self, hans: Text,
                 **kwargs: Any) -> Optional[List[Text]]: ...

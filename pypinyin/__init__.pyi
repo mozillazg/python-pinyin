@@ -47,5 +47,6 @@ pinyin = core.pinyin
 lazy_pinyin = core.lazy_pinyin
 slug = core.slug
 pinyin_group = core.pinyin_group
+lazy_pinyin_group = core.lazy_pinyin_group
 load_single_dict = core.load_single_dict
 load_phrases_dict = core.load_phrases_dict
