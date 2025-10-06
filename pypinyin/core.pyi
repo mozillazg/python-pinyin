@@ -13,6 +13,7 @@ from pypinyin.converter import Converter
 TStyle = Union[Style, Text]
 TErrors = Union[Callable[[Text], Text], Text]
 TPinyinResult = List[List[Text]]
+TPinyinGroupResult = List[Dict[str, Any]]
 
 
 def load_single_dict(pinyin_dict: Dict[int, Text],
@@ -66,6 +67,16 @@ def pinyin(hans: Union[List[Text], Text],
            v_to_u: bool = ...,
            neutral_tone_with_five: bool = ...
            ) -> List[List[Text]]: ...
+
+
+def pinyin_group(hans: Text,
+                 style: TStyle = ...,
+                 heteronym: bool = ...,
+                 errors: TErrors = ...,
+                 strict: bool = ...,
+                 v_to_u: bool = ...,
+                 neutral_tone_with_five: bool = ...
+                 ) -> TPinyinGroupResult: ...
 
 
 def slug(hans: Union[List[Text], Text],
