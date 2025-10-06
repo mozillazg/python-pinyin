@@ -24,7 +24,7 @@ from pypinyin.constants import (  # noqa
     STYLE_CYRILLIC_FIRST, CYRILLIC_FIRST
 )
 from pypinyin.core import (     # noqa
-    pinyin, lazy_pinyin, slug, load_single_dict, load_phrases_dict
+    pinyin, lazy_pinyin, slug, pinyin_group, load_single_dict, load_phrases_dict
 )
 
 __title__ = 'pypinyin'
@@ -33,7 +33,7 @@ __author__ = 'mozillazg, 闲耘'
 __license__ = 'MIT'
 __copyright__ = 'Copyright (c) 2016 mozillazg, 闲耘'
 __all__ = [
-    'pinyin', 'lazy_pinyin', 'slug',
+    'pinyin', 'lazy_pinyin', 'slug', 'pinyin_group',
     'load_single_dict', 'load_phrases_dict',
     'Style',
     'STYLE_NORMAL', 'NORMAL',
