@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from itertools import chain
+from itertools import chain, product
 
 from pypinyin.compat import text_type
 from pypinyin.constants import (
@@ -231,7 +231,6 @@ class Pinyin(object):
                         for j in range(len(pys) - 2):
                             prev_pinyins.append(pys[j])
                         # 为前面的拼音生成所有组合
-                        from itertools import product
                         if prev_pinyins:
                             prev_combinations = [
                                 ' '.join(p) for p in product(*prev_pinyins)]
@@ -262,7 +261,6 @@ class Pinyin(object):
                 # 非儿化音处理
                 if heteronym:
                     # 多音字模式：生成所有组合
-                    from itertools import product
                     # 检查是否需要添加隔音符
                     combinations = []
                     for combo in product(*pys):
