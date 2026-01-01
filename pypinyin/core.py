@@ -181,9 +181,9 @@ class Pinyin(object):
 
             # 检查是否需要与下一个字符合并（儿化音处理）
             # 如果当前字是汉字且下一个字是"儿"，合并处理
-            if (i + 1 < len(han_list) and 
-                han_list[i + 1] == '儿' and 
-                RE_HANS.match(word)):
+            if (i + 1 < len(han_list) and
+                    han_list[i + 1] == '儿' and
+                    RE_HANS.match(word)):
                 # 合并当前字和"儿"
                 word = word + '儿'
                 i += 1  # 跳过下一个字符
@@ -233,8 +233,12 @@ class Pinyin(object):
                         # 为前面的拼音生成所有组合
                         from itertools import product
                         if prev_pinyins:
-                            prev_combinations = [' '.join(p) for p in product(*prev_pinyins)]
-                            final_pinyins = [prev + ' ' + comb for prev in prev_combinations for comb in combined]
+                            prev_combinations = [
+                                ' '.join(p) for p in product(*prev_pinyins)]
+                            final_pinyins = [
+                                prev + ' ' + comb
+                                for prev in prev_combinations
+                                for comb in combined]
                         else:
                             final_pinyins = combined
                     else:
@@ -314,7 +318,7 @@ class Pinyin(object):
             hans, style=style, heteronym=False,
             errors=errors, strict=strict, **kwargs
         )
-        
+
         # 将每个词语的拼音列表转换为字符串（取第一个元素）
         lazy_result = []
         for item in result:
@@ -323,7 +327,7 @@ class Pinyin(object):
                 'pinyin': item['pinyin'][0] if item['pinyin'] else ''
             }
             lazy_result.append(lazy_item)
-        
+
         return lazy_result
 
     def pre_seg(self, hans, **kwargs):
@@ -513,7 +517,9 @@ def pinyin_group(hans, style=Style.TONE, heteronym=False,
 
       >>> from pypinyin import pinyin_group, Style
       >>> pinyin_group('你好吗？')  # doctest: +SKIP
-      [{'hanzi': '你好', 'pinyin': ['nǐ hǎo']}, {'hanzi': '吗', 'pinyin': ['ma']}, {'hanzi': '？', 'pinyin': []}]
+      [{'hanzi': '你好', 'pinyin': ['nǐ hǎo']},
+       {'hanzi': '吗', 'pinyin': ['ma']},
+       {'hanzi': '？', 'pinyin': []}]
       >>> # 如果西安在词库中，会输出 [{'hanzi': '西安', 'pinyin': ["xi'an"]}]
       >>> # 如果花儿在词库中，会输出 [{'hanzi': '花儿', 'pinyin': ['huar']}]
       >>> # 演示儿化音处理：如果词语以"儿"结尾，会自动合并
@@ -573,7 +579,9 @@ def lazy_pinyin_group(hans, style=Style.NORMAL,
 
       >>> from pypinyin import lazy_pinyin_group, Style
       >>> lazy_pinyin_group('你好吗？')  # doctest: +SKIP
-      [{'hanzi': '你好', 'pinyin': 'ni hao'}, {'hanzi': '吗', 'pinyin': 'ma'}, {'hanzi': '？', 'pinyin': ''}]
+      [{'hanzi': '你好', 'pinyin': 'ni hao'},
+       {'hanzi': '吗', 'pinyin': 'ma'},
+       {'hanzi': '？', 'pinyin': ''}]
       >>> # 演示儿化音处理：如果词语以"儿"结尾，会自动合并
       >>> result = lazy_pinyin_group('玩儿', style=Style.NORMAL)
       >>> result[0]['hanzi']
@@ -614,7 +622,8 @@ def _join_pinyin_with_separator(pinyin_list):
             # 需要处理带声调的字符，如 ā, á, ǎ, à, ō, ó, ǒ, ò, ē, é, ě, è
             first_char = py[0].lower()
             # 检查是否为 a, o, e 或带声调的版本
-            if first_char in ('a', 'o', 'e', 'ā', 'á', 'ǎ', 'à', 'ō', 'ó', 'ǒ', 'ò', 'ē', 'é', 'ě', 'è'):
+            if first_char in ('a', 'o', 'e', 'ā', 'á', 'ǎ', 'à',
+                              'ō', 'ó', 'ǒ', 'ò', 'ē', 'é', 'ě', 'è'):
                 # 需要添加隔音符，不加空格
                 result.append("'")
                 result.append(py)
