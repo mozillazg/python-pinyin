@@ -237,3 +237,36 @@ def test_lazy_pinyin_group_vs_pinyin_group():
 
     # 内容应该相同（lazy 的字符串等于 normal 的第一个元素）
     assert result_lazy[0]['pinyin'] == result_normal[0]['pinyin'][0]
+
+
+def test_pinyin_group_disable_apostrophe():
+    """测试禁用隔音符"""
+    # 加载西安词语
+    load_phrases_dict({
+        '西安': [['xī'], ['ān']],
+    })
+
+    result = pinyin_group(
+        '西安', style=Style.NORMAL, enable_apostrophe=False)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '西安'
+    assert len(result[0]['pinyin']) == 1
+    # 应该没有隔音符，而是用空格
+    assert "'" not in result[0]['pinyin'][0]
+    assert result[0]['pinyin'][0] == 'xi an'
+
+
+def test_lazy_pinyin_group_disable_apostrophe():
+    """测试 lazy_pinyin_group 禁用隔音符"""
+    load_phrases_dict({
+        '西安': [['xī'], ['ān']],
+    })
+
+    result = lazy_pinyin_group(
+        '西安', style=Style.NORMAL, enable_apostrophe=False)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '西安'
+    assert isinstance(result[0]['pinyin'], str)
+    # 应该没有隔音符
+    assert "'" not in result[0]['pinyin']
+    assert result[0]['pinyin'] == 'xi an'
