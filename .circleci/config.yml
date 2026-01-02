@@ -23,24 +23,25 @@ jobs:
 #          - v1-dependencies-{{ .Environment.TOX_ENV }}-{{ checksum "requirements_dev.txt" }}
 
       - run:
-          name: install uv
-          command: curl -LsSf https://astral.sh/uv/install.sh | sh
-
-      - run:
           name: install dependencies
           command: |
-            export PATH="$HOME/.local/bin:$PATH"
-            uv venv
-            . .venv/bin/activate
+            # pip install -U pip virtualenv --user
+            if ! which virtualenv; then
+              pip install 'virtualenv<=20.0.21' --user
+            fi
+            export PATH="~/.local/bin:$PATH"
 
-            uv pip install coveralls 'tox<4.0.0'
-            uv pip install setuptools
+            virtualenv venv
+            . venv/bin/activate
+
+            pip install coveralls
+            pip install 'tox<4.0.0'
 
             if [[ $RUN_CHECK == 1 ]]; then
-              uv pip install -r requirements_dev.txt
+              pip install -U -r requirements_dev.txt
             fi
             if [[ $(echo $TOX_ENV | grep pypy3) ]]; then
-              uv pip install setuptools==60.10.0
+              pip install setuptools==60.10.0
             fi
 
             if [[ $(python -c "import sys; print(sys.stdin.encoding)" |grep None) ]]; then
@@ -55,21 +56,20 @@ jobs:
       - run:
           name: run tests
           command: |
-            export PATH="$HOME/.local/bin:$PATH"
-            . .venv/bin/activate
+            . venv/bin/activate
 
             if [[ $RUN_CHECK == 1 ]]; then
-              uv run pre-commit run --all-files
-              uv run mypy pypinyin
+              pre-commit run --all-files
+              mypy pypinyin
             fi
 
 
             tox -e $TOX_ENV
 
-            uv tool install .
-            uv tool run pypinyin hello
-            echo hello | uv tool run pypinyin
-            uv tool run pypinyin < setup.cfg
+            python setup.py install
+            pypinyin hello
+            echo hello | pypinyin
+            pypinyin < setup.cfg
 
             # coveralls
 
@@ -163,4 +163,3 @@ workflows:
       - python3.5
       - python3.4
       - python2.7
-      - pypy2
