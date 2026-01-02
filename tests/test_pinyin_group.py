@@ -66,26 +66,6 @@ def test_pinyin_group_with_apostrophe():
     assert result[0]['pinyin'][0] == "xi'an"
 
 
-def test_pinyin_group_with_erhua():
-    """测试儿化音处理"""
-    result = pinyin_group('花儿', style=Style.NORMAL)
-    assert len(result) == 1
-    assert result[0]['hanzi'] == '花儿'
-    assert len(result[0]['pinyin']) == 1
-    # 儿化音应该合并为 huar
-    assert result[0]['pinyin'][0] == 'huar'
-
-
-def test_pinyin_group_with_erhua_tone():
-    """测试儿化音带声调"""
-    result = pinyin_group('花儿', style=Style.TONE)
-    assert len(result) == 1
-    assert result[0]['hanzi'] == '花儿'
-    assert len(result[0]['pinyin']) == 1
-    # 儿化音应该合并
-    assert 'r' in result[0]['pinyin'][0]
-
-
 def test_pinyin_group_heteronym():
     """测试多音字模式"""
     result = pinyin_group('中', heteronym=True)
@@ -114,21 +94,6 @@ def test_pinyin_group_style_tone():
     # 应该包含声调符号
     has_tone = any(c in pinyin_str for c in 'āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ')
     assert has_tone
-
-
-def test_pinyin_group_multiple_erhua():
-    """测试多个字带儿化音"""
-    # 测试 小孩儿
-    load_phrases_dict({
-        '小孩': [['xiǎo'], ['hái']],
-    })
-
-    result = pinyin_group('小孩儿', style=Style.NORMAL)
-    assert len(result) == 1
-    assert result[0]['hanzi'] == '小孩儿'
-    assert len(result[0]['pinyin']) == 1
-    # 应该是 xiao hair
-    assert 'hair' in result[0]['pinyin'][0]
 
 
 def test_pinyin_group_mixed():
@@ -166,15 +131,6 @@ def test_pinyin_group_with_list_input():
     assert len(result) == 2
     assert result[0]['hanzi'] == '你好'
     assert result[1]['hanzi'] == '吗'
-
-
-def test_pinyin_group_with_list_erhua():
-    """测试列表输入的儿化音处理"""
-    result = pinyin_group(['玩', '儿'], style=Style.NORMAL)
-    # 儿化音应该被合并
-    assert len(result) == 1
-    assert result[0]['hanzi'] == '玩儿'
-    assert 'r' in result[0]['pinyin'][0]
 
 
 def test_pinyin_group_method_exists():
@@ -221,15 +177,6 @@ def test_lazy_pinyin_group_with_punctuation():
     # 第三个分组：？（标点）
     assert result[2]['hanzi'] == '？'
     assert result[2]['pinyin'] == ''  # 空字符串而不是空列表
-
-
-def test_lazy_pinyin_group_with_erhua():
-    """测试 lazy_pinyin_group 儿化音处理"""
-    result = lazy_pinyin_group('花儿', style=Style.NORMAL)
-    assert len(result) == 1
-    assert result[0]['hanzi'] == '花儿'
-    assert isinstance(result[0]['pinyin'], str)
-    assert result[0]['pinyin'] == 'huar'
 
 
 def test_lazy_pinyin_group_with_apostrophe():

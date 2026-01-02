@@ -142,7 +142,6 @@ class Pinyin(object):
 
         每个分组包含原始汉字和对应的拼音。拼音会根据情况进行处理：
         - 词语中的多个字的拼音会用空格连接
-        - 儿化音会合并处理（如：花儿 -> huar）
         - 需要隔音符的拼音会自动添加（如：西安 -> xi'an）
 
         :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
@@ -179,18 +178,6 @@ class Pinyin(object):
         while i < len(han_list):
             word = han_list[i]
 
-            # 检查是否需要与下一个字符合并（儿化音处理）
-            # 如果当前字是汉字且下一个字是"儿"，合并处理
-            if (i + 1 < len(han_list) and
-                    han_list[i + 1] == '儿' and
-                    RE_HANS.match(word)):
-                # 合并当前字和"儿"
-                word = word + '儿'
-                i += 1  # 跳过下一个字符
-                is_erhua = True
-            else:
-                is_erhua = False
-
             # 获取该词的拼音
             pys = self.pinyin(
                 word, style=style, heteronym=heteronym,
@@ -209,69 +196,19 @@ class Pinyin(object):
                 i += 1
                 continue
 
-            # 处理儿化音
-            if is_erhua and len(pys) >= 2:
-                # 获取倒数第二个拼音（花）和最后一个拼音（儿）
-                base_pinyin_list = pys[-2]
-                er_pinyin_list = pys[-1]
-
-                if heteronym:
-                    # 多音字模式：生成所有组合
-                    combined = []
-                    for base in base_pinyin_list:
-                        for er in er_pinyin_list:
-                            # 移除 er 的声母，只保留 r
-                            er_suffix = 'r' if er else ''
-                            combined.append(base + er_suffix)
-
-                    # 前面的拼音保持不变
-                    if len(pys) > 2:
-                        # 如果有多个字，前面的用空格连接
-                        prev_pinyins = []
-                        for j in range(len(pys) - 2):
-                            prev_pinyins.append(pys[j])
-                        # 为前面的拼音生成所有组合
-                        if prev_pinyins:
-                            prev_combinations = [
-                                ' '.join(p) for p in product(*prev_pinyins)]
-                            final_pinyins = [
-                                prev + ' ' + comb
-                                for prev in prev_combinations
-                                for comb in combined]
-                        else:
-                            final_pinyins = combined
-                    else:
-                        final_pinyins = combined
-                else:
-                    # 非多音字模式：只取第一个
-                    base = base_pinyin_list[0] if base_pinyin_list else ''
-                    er = er_pinyin_list[0] if er_pinyin_list else ''
-                    er_suffix = 'r' if er else ''
-                    combined = base + er_suffix
-
-                    # 前面的拼音用空格连接
-                    if len(pys) > 2:
-                        prev_pinyins = [p[0] for p in pys[:-2]]
-                        final_pinyins = [' '.join(prev_pinyins + [combined])]
-                    else:
-                        final_pinyins = [combined]
-
-                result.append({'hanzi': word, 'pinyin': final_pinyins})
+            if heteronym:
+                # 多音字模式：生成所有组合
+                # 检查是否需要添加隔音符
+                combinations = []
+                for combo in product(*pys):
+                    joined = _join_pinyin_with_separator(list(combo))
+                    combinations.append(joined)
+                result.append({'hanzi': word, 'pinyin': combinations})
             else:
-                # 非儿化音处理
-                if heteronym:
-                    # 多音字模式：生成所有组合
-                    # 检查是否需要添加隔音符
-                    combinations = []
-                    for combo in product(*pys):
-                        joined = _join_pinyin_with_separator(list(combo))
-                        combinations.append(joined)
-                    result.append({'hanzi': word, 'pinyin': combinations})
-                else:
-                    # 非多音字模式：只取第一个
-                    pinyin_list = [p[0] if p else '' for p in pys]
-                    joined = _join_pinyin_with_separator(pinyin_list)
-                    result.append({'hanzi': word, 'pinyin': [joined]})
+                # 非多音字模式：只取第一个
+                pinyin_list = [p[0] if p else '' for p in pys]
+                joined = _join_pinyin_with_separator(pinyin_list)
+                result.append({'hanzi': word, 'pinyin': [joined]})
 
             i += 1
 
@@ -286,7 +223,6 @@ class Pinyin(object):
 
         每个分组包含原始汉字和对应的拼音字符串。拼音会根据情况进行处理：
         - 词语中的多个字的拼音会用空格连接
-        - 儿化音会合并处理（如：花儿 -> huar）
         - 需要隔音符的拼音会自动添加（如：西安 -> xi'an）
 
         :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
@@ -519,13 +455,6 @@ def pinyin_group(hans, style=Style.TONE, heteronym=False,
        {'hanzi': '吗', 'pinyin': ['ma']},
        {'hanzi': '？', 'pinyin': []}]
       >>> # 如果西安在词库中，会输出 [{'hanzi': '西安', 'pinyin': ["xi'an"]}]
-      >>> # 如果花儿在词库中，会输出 [{'hanzi': '花儿', 'pinyin': ['huar']}]
-      >>> # 演示儿化音处理：如果词语以"儿"结尾，会自动合并
-      >>> result = pinyin_group('玩儿', style=Style.NORMAL)
-      >>> result[0]['hanzi']
-      '玩儿'
-      >>> 'r' in result[0]['pinyin'][0]  # 儿化音包含 r
-      True
     """
     _pinyin = Pinyin(UltimateConverter(
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
@@ -580,12 +509,6 @@ def lazy_pinyin_group(hans, style=Style.NORMAL,
       [{'hanzi': '你好', 'pinyin': 'ni hao'},
        {'hanzi': '吗', 'pinyin': 'ma'},
        {'hanzi': '？', 'pinyin': ''}]
-      >>> # 演示儿化音处理：如果词语以"儿"结尾，会自动合并
-      >>> result = lazy_pinyin_group('玩儿', style=Style.NORMAL)
-      >>> result[0]['hanzi']
-      '玩儿'
-      >>> 'r' in result[0]['pinyin']  # 儿化音包含 r
-      True
     """
     _pinyin = Pinyin(UltimateConverter(
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
