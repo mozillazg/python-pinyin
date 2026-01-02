@@ -270,3 +270,18 @@ def test_lazy_pinyin_group_disable_apostrophe():
     # 应该没有隔音符
     assert "'" not in result[0]['pinyin']
     assert result[0]['pinyin'] == 'xi an'
+
+
+def test_pinyin_group_chaoyang():
+    """测试朝阳的分组拼音"""
+    # 朝阳是一个词，且第一个字是多音字
+    result = pinyin_group('朝阳', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '朝阳'
+    assert result[0]['pinyin'] == ['zhao yang']
+
+    # 测试 lazy_pinyin_group
+    result = lazy_pinyin_group('朝阳', style=Style.NORMAL)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '朝阳'
+    assert result[0]['pinyin'] == 'zhao yang'
