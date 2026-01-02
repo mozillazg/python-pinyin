@@ -285,3 +285,11 @@ def test_pinyin_group_chaoyang():
     assert len(result) == 1
     assert result[0]['hanzi'] == '朝阳'
     assert result[0]['pinyin'] == 'zhao yang'
+
+    # 测试多音字
+    result = pinyin_group('朝阳', style=Style.NORMAL, heteronym=True)
+    assert len(result) == 1
+    assert result[0]['hanzi'] == '朝阳'
+    # 应该是 zhao yang 和 chao yang
+    assert 'zhao yang' in result[0]['pinyin']
+    assert 'chao yang' in result[0]['pinyin']
