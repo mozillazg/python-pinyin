@@ -33,6 +33,12 @@
 
     pip install pypinyin
 
+使用 `uv` 安装：
+
+.. code-block:: bash
+
+    uv add pypinyin
+
 
 使用示例
 --------

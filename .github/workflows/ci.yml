@@ -17,6 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
+    - name: Set up uv
+      uses: astral-sh/setup-uv@v5
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v6
       with:
@@ -24,18 +27,19 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install -r requirements_dev.txt
+        uv pip install --system -r requirements_dev.txt
+        uv pip install --system .
 
     - name: Run tests
       run: |
-        py.test tests/ pypinyin/
+        python -m pytest tests/ pypinyin/
 
     - name: test cli
       if: startsWith(matrix.os,'ubuntu')
       run: |
         set -xe
-        python setup.py sdist
-        python -m pip install dist/*.gz
+        uv build
+        uv pip install --system dist/*.tar.gz
         python -m pypinyin test
         python -m pypinyin.tools.toneconvert to-tone 'zhong4 xin1'
 
