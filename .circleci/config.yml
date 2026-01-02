@@ -34,6 +34,7 @@ jobs:
             . .venv/bin/activate
 
             uv pip install coveralls 'tox<4.0.0'
+            uv pip install setuptools
 
             if [[ $RUN_CHECK == 1 ]]; then
               uv pip install -r requirements_dev.txt
@@ -58,17 +59,17 @@ jobs:
             . .venv/bin/activate
 
             if [[ $RUN_CHECK == 1 ]]; then
-              pre-commit run --all-files
-              mypy pypinyin
+              uv run pre-commit run --all-files
+              uv run mypy pypinyin
             fi
 
 
             tox -e $TOX_ENV
 
-            uv pip install .
-            pypinyin hello
-            echo hello | pypinyin
-            pypinyin < setup.cfg
+            uv tool install .
+            uv tool run pypinyin hello
+            echo hello | uv tool run pypinyin
+            uv tool run pypinyin < setup.cfg
 
             # coveralls
 

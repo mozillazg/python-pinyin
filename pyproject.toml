@@ -55,7 +55,6 @@ hook-dirs = "pypinyin.__pyinstaller:get_hook_dirs"
 [dependency-groups]
 dev = [
     "argparse",
-    "bumpversion",
     "mypy; python_version >= '3.5'",
     "pre-commit",
     "pygments>=2.7.4; python_version >= '3.5'",
@@ -64,7 +63,10 @@ dev = [
     "pytest-random-order",
     "setuptools",
     "sphinx>=3.0.4; python_version >= '3.5'",
-    "tox",
+    "tox"
+]
+release = [
+    "bumpversion",
     "twine",
     "wheel>=0.21"
 ]
