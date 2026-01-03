@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from itertools import chain
+from itertools import chain, product
 
 from pypinyin.compat import text_type
 from pypinyin.constants import (
@@ -135,6 +135,140 @@ class Pinyin(object):
                 *self.pinyin(
                     hans, style=style, heteronym=False,
                     errors=errors, strict=strict)))
+
+    def pinyin_group(self, hans, style=Style.TONE, heteronym=False,
+                     errors='default', strict=True, **kwargs):
+        """将汉字转换为拼音，按词组进行分组，返回分组后的结果列表。
+
+        每个分组包含原始汉字和对应的拼音。拼音会根据情况进行处理：
+        - 词语中的多个字的拼音会用空格连接
+        - 需要隔音符的拼音会自动添加（可以通过 ``enable_apostrophe`` 参数控制，如：西安 -> xi'an）
+
+        :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                     可以使用自己喜爱的分词模块对字符串进行分词处理,
+                     只需将经过分词处理的字符串列表传进来就可以了。
+        :type hans: unicode 字符串或字符串列表
+        :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
+                      更多拼音风格详见 :class:`~pypinyin.Style`
+        :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
+
+                       * ``'default'``: 保留原始字符
+                       * ``'ignore'``: 忽略该字符
+                       * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                         (``'\\u90aa'`` => ``'90aa'``)
+                       * callable 对象: 回调函数之类的可调用对象。
+
+        :param heteronym: 是否启用多音字
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
+        :return: 分组后的拼音列表，每个元素是一个字典，包含 'hanzi' 和 'pinyin' 两个键
+        :rtype: list
+
+        """
+        # 对字符串进行分词处理
+        if isinstance(hans, text_type):
+            han_list = self.seg(hans)
+        else:
+            # 当输入是列表时，跳过分词操作
+            han_list = hans
+
+        result = []
+        i = 0
+        while i < len(han_list):
+            word = han_list[i]
+
+            # 获取该词的拼音
+            pys = self.pinyin(
+                word, style=style, heteronym=heteronym,
+                errors=errors, strict=strict
+            )
+
+            # 检查是否全是非汉字（如标点符号）
+            if not RE_HANS.match(word):
+                result.append({'hanzi': word, 'pinyin': []})
+                i += 1
+                continue
+
+            # 如果没有拼音，返回空列表
+            if not pys or all(not p for p in pys):
+                result.append({'hanzi': word, 'pinyin': []})
+                i += 1
+                continue
+
+            if heteronym:
+                # 多音字模式：生成所有组合
+                # 检查是否需要添加隔音符
+                combinations = []
+                for combo in product(*pys):
+                    joined = _join_pinyin_with_separator(
+                        list(combo),
+                        enable_apostrophe=kwargs.get('enable_apostrophe', True)
+                    )
+                    combinations.append(joined)
+                result.append({'hanzi': word, 'pinyin': combinations})
+            else:
+                # 非多音字模式：只取第一个
+                pinyin_list = [p[0] if p else '' for p in pys]
+                joined = _join_pinyin_with_separator(
+                    pinyin_list,
+                    enable_apostrophe=kwargs.get('enable_apostrophe', True)
+                )
+                result.append({'hanzi': word, 'pinyin': [joined]})
+
+            i += 1
+
+        return result
+
+    def lazy_pinyin_group(self, hans, style=Style.NORMAL,
+                          errors='default', strict=True, **kwargs):
+        """将汉字转换为拼音，按词组进行分组，返回分组后的结果列表。
+
+        与 :py:func:`~pypinyin.Pinyin.pinyin_group` 的区别是每个词语的拼音结果是个字符串，
+        并且每个词语只包含一个读音。
+
+        每个分组包含原始汉字和对应的拼音字符串。拼音会根据情况进行处理：
+        - 词语中的多个字的拼音会用空格连接
+        - 需要隔音符的拼音会自动添加（可以通过 ``enable_apostrophe`` 参数控制，如：西安 -> xi'an）
+
+        :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                     可以使用自己喜爱的分词模块对字符串进行分词处理,
+                     只需将经过分词处理的字符串列表传进来就可以了。
+        :type hans: unicode 字符串或字符串列表
+        :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
+                      更多拼音风格详见 :class:`~pypinyin.Style`
+        :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
+
+                       * ``'default'``: 保留原始字符
+                       * ``'ignore'``: 忽略该字符
+                       * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                         (``'\\u90aa'`` => ``'90aa'``)
+                       * callable 对象: 回调函数之类的可调用对象。
+
+        :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                       是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                       详见 :ref:`strict`
+        :return: 分组后的拼音列表，每个元素是一个字典，包含 'hanzi' 和 'pinyin' 两个键，
+                 其中 'pinyin' 是字符串而不是列表
+        :rtype: list
+
+        """
+        # 调用 pinyin_group 获取完整结果
+        result = self.pinyin_group(
+            hans, style=style, heteronym=False,
+            errors=errors, strict=strict, **kwargs
+        )
+
+        # 将每个词语的拼音列表转换为字符串（取第一个元素）
+        lazy_result = []
+        for item in result:
+            lazy_item = {
+                'hanzi': item['hanzi'],
+                'pinyin': item['pinyin'][0] if item['pinyin'] else ''
+            }
+            lazy_result.append(lazy_item)
+
+        return lazy_result
 
     def pre_seg(self, hans, **kwargs):
         """对字符串进行分词前将调用 ``pre_seg`` 方法对未分词的字符串做预处理。
@@ -280,6 +414,163 @@ def pinyin(hans, style=Style.TONE, heteronym=False,
         v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
     return _pinyin.pinyin(
         hans, style=style, heteronym=heteronym, errors=errors, strict=strict)
+
+
+def pinyin_group(hans, style=Style.TONE, heteronym=False,
+                 errors='default', strict=True,
+                 v_to_u=False, neutral_tone_with_five=False,
+                 enable_apostrophe=True):
+    """将汉字转换为拼音，按词组进行分组，返回分组后的结果列表。
+
+    每个分组包含原始汉字和对应的拼音。拼音会根据情况进行处理：
+    - 词语中的多个字的拼音会用空格连接
+        - 需要隔音符的拼音会自动添加（可以通过 ``enable_apostrophe`` 参数控制，如：西安 -> xi'an）
+
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
+    :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.TONE` 风格。
+                  更多拼音风格详见 :class:`~pypinyin.Style`
+    :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
+
+                   * ``'default'``: 保留原始字符
+                   * ``'ignore'``: 忽略该字符
+                   * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                     (``'\\u90aa'`` => ``'90aa'``)
+                   * callable 对象: 回调函数之类的可调用对象。
+
+    :param heteronym: 是否启用多音字
+    :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                   是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
+    :type v_to_u: bool
+    :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
+                                   使用 5 标识轻声
+    :type neutral_tone_with_five: bool
+    :param enable_apostrophe: 是否启用隔音符
+    :type enable_apostrophe: bool
+    :return: 分组后的拼音列表，每个元素是一个字典，包含 'hanzi' 和 'pinyin' 两个键
+    :rtype: list
+
+    Usage::
+
+      >>> from pypinyin import pinyin_group, Style
+      >>> pinyin_group('你好吗？')  # doctest: +SKIP
+      [{'hanzi': '你好', 'pinyin': ['nǐ hǎo']},
+       {'hanzi': '吗', 'pinyin': ['ma']},
+       {'hanzi': '？', 'pinyin': []}]
+      >>> # 如果西安在词库中，会输出 [{'hanzi': '西安', 'pinyin': ["xi'an"]}]
+    """
+    _pinyin = Pinyin(UltimateConverter(
+        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
+    return _pinyin.pinyin_group(
+        hans, style=style, heteronym=heteronym, errors=errors,
+        strict=strict, enable_apostrophe=enable_apostrophe)
+
+
+def lazy_pinyin_group(hans, style=Style.NORMAL,
+                      errors='default', strict=True,
+                      v_to_u=False, neutral_tone_with_five=False,
+                      enable_apostrophe=True):
+    """将汉字转换为拼音，按词组进行分组，返回分组后的结果列表。
+
+    与 :py:func:`~pypinyin.pinyin_group` 的区别是每个词语的拼音结果是个字符串，
+    并且每个词语只包含一个读音。
+
+    每个分组包含原始汉字和对应的拼音字符串。拼音会根据情况进行处理：
+    - 词语中的多个字的拼音会用空格连接
+        - 需要隔音符的拼音会自动添加（可以通过 ``enable_apostrophe`` 参数控制，如：西安 -> xi'an）
+
+    :param hans: 汉字字符串( ``'你好吗'`` )或列表( ``['你好', '吗']`` ).
+                 可以使用自己喜爱的分词模块对字符串进行分词处理,
+                 只需将经过分词处理的字符串列表传进来就可以了。
+    :type hans: unicode 字符串或字符串列表
+    :param style: 指定拼音风格，默认是 :py:attr:`~pypinyin.Style.NORMAL` 风格。
+                  更多拼音风格详见 :class:`~pypinyin.Style`
+    :param errors: 指定如何处理没有拼音的字符。详见 :ref:`handle_no_pinyin`
+
+                   * ``'default'``: 保留原始字符
+                   * ``'ignore'``: 忽略该字符
+                   * ``'replace'``: 替换为去掉 ``\\u`` 的 unicode 编码字符串
+                     (``'\\u90aa'`` => ``'90aa'``)
+                   * callable 对象: 回调函数之类的可调用对象。
+
+    :param strict: 只获取声母或只获取韵母相关拼音风格的返回结果
+                   是否严格遵照《汉语拼音方案》来处理声母和韵母，
+                   详见 :ref:`strict`
+    :param v_to_u: 无声调相关拼音风格下的结果是否使用 ``ü`` 代替原来的 ``v``
+                   当为 False 时结果中将使用 ``v`` 表示 ``ü``
+    :type v_to_u: bool
+    :param neutral_tone_with_five: 声调使用数字表示的相关拼音风格下的结果是否
+                                   使用 5 标识轻声
+    :type neutral_tone_with_five: bool
+    :param enable_apostrophe: 是否启用隔音符
+    :type enable_apostrophe: bool
+    :return: 分组后的拼音列表，每个元素是一个字典，包含 'hanzi' 和 'pinyin' 两个键，
+             其中 'pinyin' 是字符串而不是列表
+    :rtype: list
+
+    Usage::
+
+      >>> from pypinyin import lazy_pinyin_group, Style
+      >>> lazy_pinyin_group('你好吗？')  # doctest: +SKIP
+      [{'hanzi': '你好', 'pinyin': 'ni hao'},
+       {'hanzi': '吗', 'pinyin': 'ma'},
+       {'hanzi': '？', 'pinyin': ''}]
+    """
+    _pinyin = Pinyin(UltimateConverter(
+        v_to_u=v_to_u, neutral_tone_with_five=neutral_tone_with_five))
+    return _pinyin.lazy_pinyin_group(
+        hans, style=style, errors=errors, strict=strict,
+        enable_apostrophe=enable_apostrophe)
+
+
+def _join_pinyin_with_separator(pinyin_list, enable_apostrophe=True):
+    """连接拼音列表，在需要的地方添加隔音符。
+
+    根据《汉语拼音方案》的规定，当一个音节的首字母是 a、o、e 时，
+    如果前面还有音节，需要在两个音节之间加上隔音符号（'）。
+
+    :param pinyin_list: 拼音列表
+    :type pinyin_list: list
+    :param enable_apostrophe: 是否启用隔音符
+    :type enable_apostrophe: bool
+    :return: 连接后的拼音字符串
+    :rtype: unicode
+    """
+    if not pinyin_list:
+        return ''
+
+    if len(pinyin_list) == 1:
+        return pinyin_list[0]
+
+    result = []
+    for i, py in enumerate(pinyin_list):
+        if not py:
+            continue
+
+        if i > 0 and result:
+            # 检查当前拼音是否以 a、o、e 开头（忽略声调符号）
+            # 需要处理带声调的字符，如 ā, á, ǎ, à, ō, ó, ǒ, ò, ē, é, ě, è
+            first_char = py[0].lower()
+            # 检查是否为 a, o, e 或带声调的版本
+            if enable_apostrophe and first_char in (
+                    'a', 'o', 'e', 'ā', 'á', 'ǎ', 'à',
+                    'ō', 'ó', 'ǒ', 'ò', 'ē', 'é', 'ě', 'è'):
+                # 需要添加隔音符，不加空格
+                result.append("'")
+                result.append(py)
+            else:
+                # 不需要隔音符，用空格分隔
+                result.append(' ')
+                result.append(py)
+        else:
+            result.append(py)
+
+    return ''.join(result)
 
 
 def slug(hans, style=Style.NORMAL, heteronym=False, separator='-',

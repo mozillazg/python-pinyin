@@ -13,6 +13,7 @@ from pypinyin.converter import Converter
 TStyle = Union[Style, Text]
 TErrors = Union[Callable[[Text], Text], Text]
 TPinyinResult = List[List[Text]]
+TPinyinGroupResult = List[Dict[str, Any]]
 
 
 def load_single_dict(pinyin_dict: Dict[int, Text],
@@ -68,6 +69,25 @@ def pinyin(hans: Union[List[Text], Text],
            ) -> List[List[Text]]: ...
 
 
+def pinyin_group(hans: Union[List[Text], Text],
+                 style: TStyle = ...,
+                 heteronym: bool = ...,
+                 errors: TErrors = ...,
+                 strict: bool = ...,
+                 v_to_u: bool = ...,
+                 neutral_tone_with_five: bool = ...
+                 ) -> TPinyinGroupResult: ...
+
+
+def lazy_pinyin_group(hans: Union[List[Text], Text],
+                      style: TStyle = ...,
+                      errors: TErrors = ...,
+                      strict: bool = ...,
+                      v_to_u: bool = ...,
+                      neutral_tone_with_five: bool = ...
+                      ) -> TPinyinGroupResult: ...
+
+
 def slug(hans: Union[List[Text], Text],
          style: TStyle = ...,
          heteronym: bool = ...,
@@ -106,6 +126,21 @@ class Pinyin(object):
                     strict: bool = ...,
                     **kwargs: Any
                     ) -> List[Text]: ...
+
+    def pinyin_group(self, hans: Union[List[Text], Text],
+                     style: TStyle = ...,
+                     heteronym: bool = ...,
+                     errors: TErrors = ...,
+                     strict: bool = ...,
+                     **kwargs: Any
+                     ) -> TPinyinGroupResult: ...
+
+    def lazy_pinyin_group(self, hans: Union[List[Text], Text],
+                          style: TStyle = ...,
+                          errors: TErrors = ...,
+                          strict: bool = ...,
+                          **kwargs: Any
+                          ) -> TPinyinGroupResult: ...
 
     def pre_seg(self, hans: Text,
                 **kwargs: Any) -> Optional[List[Text]]: ...

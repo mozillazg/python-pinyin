@@ -12,7 +12,7 @@
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.org/project/pypinyin
-* Python version: 2.7, pypy, pypy3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
+* Python version: 2.7, pypy3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13
 
 .. contents::
 
@@ -32,6 +32,12 @@
 .. code-block:: bash
 
     pip install pypinyin
+
+使用 `uv` 安装：
+
+.. code-block:: bash
+
+    uv add pypinyin
 
 
 使用示例
