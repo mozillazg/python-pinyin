@@ -29,15 +29,13 @@ doctest:
 .PHONY: publish
 publish: clean
 	@echo "publish to pypi"
-	python setup.py sdist
-	python setup.py bdist_wheel
+	uv build
 	twine upload dist/*
 
 .PHONY: publish_test
 publish_test: clean
 	@echo "publish to test pypi"
-	python setup.py sdist
-	python setup.py bdist_wheel
+	uv build
 	twine upload --repository test dist/*
 
 .PHONY: docs_html
