@@ -11,7 +11,7 @@ from pypinyin.converter import Converter
 
 
 TStyle = Union[Style, Text]
-TErrors = Union[Callable[[Text], Text], Text]
+TErrors = Union[Callable[[Text], Union[Text, List[Text], List[List[Text]], None]], Text]
 TPinyinResult = List[List[Text]]
 
 
