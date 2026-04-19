@@ -84,10 +84,13 @@ def replace_symbol_to_no_symbol(pinyin):
     return RE_NUMBER.sub('', value)
 
 
+# 鼻音: 'm̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ' 没有韵母
+_NO_FINALS_SYMBOLS = ('m̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ')
+
+
 def has_finals(pinyin):
     """判断是否有韵母"""
-    # 鼻音: 'm̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ ' 没有韵母
-    for symbol in ['m̄', 'ḿ', 'm̀', 'ń', 'ň', 'ǹ']:
+    for symbol in _NO_FINALS_SYMBOLS:
         if symbol in pinyin:
             return False
 
