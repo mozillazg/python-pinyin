@@ -325,7 +325,7 @@ class DefaultConverter(Converter):
         elif errors == 'exception':
             raise PinyinNotFoundException(chars)
         elif errors == 'replace':
-            if len(chars) > 1:
+            if len(chars) != 1:
                 return ''.join(text_type('%x' % ord(x)) for x in chars)
             else:
                 return text_type('%x' % ord(chars))

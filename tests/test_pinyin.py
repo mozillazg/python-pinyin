@@ -124,6 +124,8 @@ def test_zh_and_en():
 def test_others():
     # 空字符串
     assert pinyin('') == []
+    assert pinyin('', errors='replace') == []
+    assert pinyin('', errors='ignore') == []
     # 单个汉字
     assert pinyin('營') == [['y\xedng']]
     # 中国 人
