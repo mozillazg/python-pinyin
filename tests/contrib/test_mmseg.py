@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from pypinyin import pinyin, load_phrases_dict
+from pypinyin import pinyin, lazy_pinyin, load_phrases_dict, Style
 from pypinyin.contrib import mmseg
 
 seg_test = mmseg.Seg(mmseg.PrefixSet())
@@ -811,6 +811,36 @@ def test_issue_347(words, no_non_phrases, expected):
     ])
     seg = mmseg.Seg(prefix_set, no_non_phrases=no_non_phrases)
     assert list(seg.cut(words)) == expected
+
+
+@pytest.mark.parametrize('no_non_phrases', [True, False])
+@pytest.mark.parametrize('text,strict_parts,prefix_parts', [
+    ('甲银行', ['甲', '银行'], ['甲银行']),
+    ('甲乙银行', ['甲', '乙', '银行'], ['甲乙银行']),
+    ('甲银行乙', ['甲', '银行', '乙'], ['甲银行乙']),
+    ('甲银行行长', ['甲', '银行', '行长'], ['甲银行', '行长']),
+    ('甲乙银', ['甲', '乙', '银'], ['甲乙银']),
+    ('甲', ['甲'], ['甲']),
+])
+def test_mmseg_rescans_suffix_after_incomplete_phrase(
+        no_non_phrases, text, strict_parts, prefix_parts):
+    prefix_set = mmseg.PrefixSet()
+    prefix_set.train(['甲银行乙', '甲乙银行丙', '银行', '行长'])
+    seg = mmseg.Seg(prefix_set, no_non_phrases=no_non_phrases)
+    expected = strict_parts if no_non_phrases else prefix_parts
+    assert list(seg.cut(text)) == expected
+
+
+@pytest.mark.parametrize('style', [Style.NORMAL, Style.TONE, Style.TONE3])
+@pytest.mark.parametrize('text,parts', [
+    ('一块石头', ['一', '块', '石头']),
+    ('一文钱难倒', ['一', '文', '钱', '难倒']),
+    ('七返还', ['七', '返还']),
+])
+def test_mmseg_keeps_dictionary_pronunciation_in_suffix(text, parts, style):
+    assert list(mmseg.seg.cut(text)) == parts
+    assert pinyin(text, style=style) == pinyin(parts, style=style)
+    assert lazy_pinyin(text, style=style) == lazy_pinyin(parts, style=style)
 
 
 if __name__ == '__main__':
