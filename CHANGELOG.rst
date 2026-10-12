@@ -2,6 +2,14 @@ Changelog
 ---------
 
 
+Unreleased
+++++++++++
+
+* **[Fixed]** 修复 ``Style.WADEGILES`` 将 ``ai`` 韵母错误转换成 ``ei`` 的问题，
+  例如 ``上海`` 现在正确输出 ``shang hai`` 。
+  详见 `#365 <https://github.com/mozillazg/python-pinyin/issues/365>`__ 。
+
+
 `0.55.0`_ (2025-07-20)
 +++++++++++++++++++++++++
 
