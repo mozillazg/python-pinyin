@@ -60,6 +60,11 @@ def get_finals(pinyin, strict):
     if not finals and not strict:
         return pinyin
 
+    # ńg（嗯 等）会被切出声母 n，剩下的 'g' 不是有效韵母，
+    # 非严格模式下应将整个 ng 作为韵母返回。
+    if not strict and pinyin == 'ng':
+        return pinyin
+
     return finals
 
 
