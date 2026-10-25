@@ -288,6 +288,18 @@ def test_to_initials(pinyin, strict, result):
 
     ['gui', True, False, 'uei'],
     ['gui', False, False, 'ui'],
+
+    # 嗯/呣/唔 等鼻音节：非严格模式下整个 m/n/ng 作为韵母，
+    # 严格模式下没有韵母（保持原有设计）。
+    ['ńg', False, False, 'ng'],
+    ['ňg', False, False, 'ng'],
+    ['ǹg', False, False, 'ng'],
+    ['ng', False, False, 'ng'],
+    ['ńg', True, False, ''],
+    ['ng', True, False, ''],
+    # 控制项：单独的 m/n 行为保持不变。
+    ['ń', False, False, 'n'],
+    ['ḿ', False, False, 'm'],
 ])
 def test_to_finals(pinyin, strict, v_to_u, result):
     assert to_finals(pinyin, strict=strict, v_to_u=v_to_u) == result
@@ -301,6 +313,9 @@ def test_to_finals(pinyin, strict, v_to_u, result):
     ['yū', True, 'ǖ'],
     ['yu1', True, 'ǖ'],
     ['yū', False, 'ū'],
+
+    ['ńg', False, 'ńg'],
+    ['ńg', True, ''],
 ])
 def test_to_finals_tone(pinyin, strict, result):
     assert to_finals_tone(pinyin, strict=strict) == result
@@ -317,6 +332,9 @@ def test_to_finals_tone(pinyin, strict, result):
     ['yū', True, True, False, 'ü1'],
     ['yū', False, False, False, 'u1'],
     ['yū', False, True, False, 'u1'],
+
+    ['ńg', False, False, False, 'n2g'],
+    ['ńg', True, False, False, ''],
 ])
 def test_to_finals_tone2(pinyin, strict, v_to_u,
                          neutral_tone_with_five, result):
@@ -336,6 +354,11 @@ def test_to_finals_tone2(pinyin, strict, v_to_u,
     ['yū', True, True, False, 'ü1'],
     ['yū', False, False, False, 'u1'],
     ['yū', False, True, False, 'u1'],
+
+    ['ńg', False, False, False, 'ng2'],
+    ['ňg', False, False, False, 'ng3'],
+    ['ǹg', False, False, False, 'ng4'],
+    ['ńg', True, False, False, ''],
 ])
 def test_to_finals_tone3(pinyin, strict, v_to_u, neutral_tone_with_five,
                          result):
