@@ -75,6 +75,33 @@ def test_toneconvert_nme(args, output):
     assert buf._data == output
 
 
+import os
+import subprocess
+import sys
+
+
+def _src_dir():
+    import pypinyin
+    return os.path.dirname(os.path.dirname(
+        os.path.abspath(pypinyin.__file__)))
+
+
+def _run_cli(args):
+    env = dict(os.environ)
+    env['PYTHONPATH'] = _src_dir()
+    return subprocess.run(
+        [sys.executable, '-m', 'pypinyin'] + args,
+        stdin=subprocess.DEVNULL, capture_output=True, text=True,
+        env=env, timeout=60,
+    )
+
+
+def test_cli_invalid_style_exits_2():
+    result = _run_cli(['-s', 'bad', '你好'])
+    assert result.returncode == 2
+    assert 'invalid choice' in result.stderr
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()

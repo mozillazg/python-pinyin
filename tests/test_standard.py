@@ -610,6 +610,14 @@ def test_ensure_finails_in_strict_mode():
                 assert ret in _FINALS, (han, raw_pinyin[i], ret)
 
 
+from pypinyin import lazy_pinyin, Style
+
+
+def test_zero_initial_a_has_no_glide_even_non_strict():
+    assert lazy_pinyin('啊', style=Style.INITIALS,
+                       strict=False) == ['']
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
