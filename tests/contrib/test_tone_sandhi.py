@@ -68,3 +68,14 @@ def test_tone_sandhi(han, normal_output, sandhi_output):
     assert lazy_pinyin(han, style=Style.TONE2, v_to_u=True,
                        neutral_tone_with_five=True,
                        tone_sandhi=True) == sandhi_output
+
+
+from pypinyin import lazy_pinyin, Style
+
+
+def test_tone_sandhi_string_input_phrase_segment():
+    # docs/usage.rst: lazy_pinyin('你好', TONE2, tone_sandhi=True) -> ni2/ha3o.
+    # String input is segmented first; '你好' stays one segment, so sandhi
+    # applies. (List-input equivalents are already in test_tone_sandhi.)
+    assert lazy_pinyin('你好', style=Style.TONE2,
+                       tone_sandhi=True) == ['ni2', 'ha3o']
