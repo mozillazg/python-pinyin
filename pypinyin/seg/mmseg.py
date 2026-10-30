@@ -18,6 +18,8 @@ class Seg(object):
     def cut(self, text):
         """分词
 
+        严格模式下跳过非词语的首字后，会继续匹配剩余文本中的词语。
+
         :param text: 待分词的文本
         :yield: 单个词语
         """
@@ -65,13 +67,13 @@ class Seg(object):
                 else:
                     # 没有有效词语，处理剩余文本
                     if self._no_non_phrases and remain not in PHRASES_DICT:
-                        # 严格模式且不在词典中：拆分为单字符
-                        for x in remain:
-                            yield x
+                        # 跳过首字后重新匹配，避免遗漏后续词语
+                        yield remain[0]
+                        remain = remain[1:]
                     else:
                         # 非严格模式或在词典中：输出整个剩余文本
                         yield remain
-                    break
+                        break
 
     def train(self, words):
         """训练分词器
