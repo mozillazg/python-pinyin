@@ -843,6 +843,20 @@ def test_mmseg_keeps_dictionary_pronunciation_in_suffix(text, parts, style):
     assert lazy_pinyin(text, style=style) == lazy_pinyin(parts, style=style)
 
 
+@pytest.mark.parametrize('text,parts,expected', [
+    ('一块石头', ['一', '块', '石头'], ['yī', 'kuài', 'shí', 'tou']),
+    ('一文钱难倒', ['一', '文', '钱', '难倒'], ['yī', 'wén', 'qián', 'nán', 'dǎo']),
+    ('七返还', ['七', '返还'], ['qī', 'fǎn', 'huán']),
+])
+def test_mmseg_dictionary_pronunciation_values(text, parts, expected):
+    assert list(mmseg.seg.cut(text)) == parts
+    # 末尾追加一个不在词典中的字符，不应改变前面文本的切分结果
+    assert list(mmseg.seg.cut(text + 'X')) == parts + ['X']
+    # 直接断言具体读音，避免用 pinyin(text) 和 pinyin(parts) 互相“自证”
+    assert pinyin(text) == [[x] for x in expected]
+    assert lazy_pinyin(text, style=Style.TONE) == expected
+
+
 if __name__ == '__main__':
     import pytest
 
