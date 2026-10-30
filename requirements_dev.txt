@@ -9,5 +9,5 @@ pytest-random-order
 setuptools
 Sphinx>=3.0.4
 tox
-twine
+#twine
 wheel>=0.21

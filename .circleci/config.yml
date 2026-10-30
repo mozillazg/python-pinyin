@@ -163,4 +163,3 @@ workflows:
       - python3.5
       - python3.4
       - python2.7
-      - pypy2
