@@ -532,6 +532,10 @@ def tone3_to_tone2(tone3, v_to_u=False):
       'lve4'
       >>> tone3_to_tone2('lüe4', v_to_u=True)
       'lüe4'
+      >>> tone3_to_tone2('lüe')
+      'lve'
+      >>> tone3_to_tone2('lve', v_to_u=True)
+      'lüe'
     """
     no_number_tone3 = tone3_to_normal(tone3)
     mark_index = right_mark_index(no_number_tone3)
@@ -542,7 +546,7 @@ def tone3_to_tone2(tone3, v_to_u=False):
 
     number = _get_number_from_pinyin(tone3)
     if number is None:
-        return tone3
+        return _fix_v_u(tone3, tone3, v_to_u=v_to_u)
 
     s = '{}{}{}'.format(before, number, after)
     return _fix_v_u(tone3, s, v_to_u=v_to_u)

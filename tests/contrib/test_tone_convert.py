@@ -246,6 +246,25 @@ def test_tone3_to_tone2_with_v_to_u(pinyin, v_to_u, result):
     assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
 
 
+@mark.parametrize('pinyin,result', [
+    ['lv', 'lv'],
+    ['lü', 'lv'],
+    ['lve', 'lve'],
+    ['lüe', 'lve'],
+    ['nv', 'nv'],
+    ['nü', 'nv'],
+    ['nve', 'nve'],
+    ['nüe', 'nve'],
+    ['shang', 'shang'],
+    ['', ''],
+])
+@mark.parametrize('v_to_u', [False, True])
+def test_tone3_to_tone2_neutral_with_v_to_u(pinyin, result, v_to_u):
+    if v_to_u:
+        result = result.replace('v', 'ü')
+    assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
+
+
 @mark.parametrize('pinyin,strict,result', [
     ['zhōng', True, 'zh'],
     ['zhōng', False, 'zh'],
