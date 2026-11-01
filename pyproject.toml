@@ -29,6 +29,8 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Utilities",
@@ -55,7 +57,7 @@ hook-dirs = "pypinyin.__pyinstaller:get_hook_dirs"
 [dependency-groups]
 dev = [
     "argparse",
-    "mypy; python_version >= '3.5'",
+    "mypy; python_version >= '3.5' and platform_python_implementation == 'CPython'",
     "pre-commit",
     "pygments>=2.7.4; python_version >= '3.5'",
     "pytest",

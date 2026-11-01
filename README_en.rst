@@ -12,7 +12,7 @@ Based on `hotoo/pinyin <https://github.com/hotoo/pinyin>`__
 * GitHub: https://github.com/mozillazg/python-pinyin
 * License: MIT license
 * PyPI: https://pypi.org/project/pypinyin
-* Python version: 2.7, pypy, pypy3, 3.4, 3.5, 3.6, 3.7, 3.8
+* Python version: 2.7, pypy, pypy3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, 3.12, 3.13, 3.14, 3.15
 
 .. contents::
 

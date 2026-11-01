@@ -73,6 +73,22 @@ def test_issue_284(neutral_tone_with_five):
                        neutral_tone_with_five=neutral_tone_with_five) == ['']
 
 
+def test_finals_syllabic_ng_keeps_n():
+    # 嗯 等字的 ńg/ňg/ǹg 读音在非严格模式下，韵母应是完整的 ``ng``，
+    # 而不是把声母 n 切掉后剩下的无效韵母 ``g``。
+    finals = pinyin('嗯', style=Style.FINALS, heteronym=True, strict=False)[0]
+    assert 'ng' in finals
+    assert 'g' not in finals
+
+    tone3 = pinyin('嗯', style=Style.FINALS_TONE3, heteronym=True,
+                   strict=False)[0]
+    assert 'ng2' in tone3 and 'ng3' in tone3 and 'ng4' in tone3
+    assert 'g2' not in tone3
+
+    # 严格模式（默认）下没有韵母的设计保持不变。
+    assert pinyin('嗯', style=Style.FINALS, heteronym=True) == [['']]
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()

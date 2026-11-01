@@ -18,6 +18,9 @@ class Seg(object):
     def cut(self, text):
         """分词
 
+        严格模式下，如果剩余文本恰好是某个更长词语的前缀、但其本身不是词语，
+        会跳过一个字符后继续匹配，避免遗漏后续文本中的词语；非严格模式保持原有行为。
+
         :param text: 待分词的文本
         :yield: 单个词语
         """
@@ -65,13 +68,17 @@ class Seg(object):
                 else:
                     # 没有有效词语，处理剩余文本
                     if self._no_non_phrases and remain not in PHRASES_DICT:
-                        # 严格模式且不在词典中：拆分为单字符
-                        for x in remain:
-                            yield x
+                        # 严格模式且不在词典中：跳过一个字符后重新匹配，
+                        # 避免遗漏后续文本中的词语。
+                        # 注意：每轮只前进一个字符，若通过 load_phrases_dict()
+                        # 加入了超长词语且输入恰好是其真前缀，最坏复杂度会随文本
+                        # 长度增长较快（内置词典最大词长为 10，实际可忽略）。
+                        yield remain[0]
+                        remain = remain[1:]
                     else:
                         # 非严格模式或在词典中：输出整个剩余文本
                         yield remain
-                    break
+                        break
 
     def train(self, words):
         """训练分词器
