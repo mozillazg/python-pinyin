@@ -1,6 +1,7 @@
 argparse
 bumpversion
-mypy
+# mypy 2.x 依赖的 ast-serialize 不支持 PyPy (<3.11)
+mypy; platform_python_implementation == 'CPython'
 pre-commit
 pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
 pytest
