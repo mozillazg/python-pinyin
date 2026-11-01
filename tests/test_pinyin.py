@@ -630,6 +630,33 @@ def test_braille(han, style, expect):
     assert got == expect
 
 
+import pytest
+
+from pypinyin import pinyin, slug
+from pypinyin.exceptions import PinyinNotFoundException
+
+
+def test_heteronym_phrase_reading_wins_over_single_chars():
+    # '重' alone expands to three readings; in the phrase '重庆' the
+    # phrase reading wins even with heteronym=True.
+    assert pinyin('重庆', heteronym=True) == [['chóng'], ['qìng']]
+
+
+def test_errors_exception_attributes():
+    with pytest.raises(PinyinNotFoundException) as excinfo:
+        pinyin('あ', errors='exception')
+    assert excinfo.value.chars == 'あ'
+    assert excinfo.value.message == 'No pinyin found for character "あ"'
+    assert str(excinfo.value) == 'No pinyin found for character "あ"'
+
+
+def test_slug_heteronym_dedup_after_tone_stripping():
+    # TONE keeps five readings for '行'; NORMAL strips tones, so
+    # xing/xing and hang/hang merge and only three remain.
+    assert slug('行', heteronym=True) == 'xing-hang-heng'
+    assert slug('行', heteronym=False) == 'xing'
+
+
 if __name__ == '__main__':
     import pytest
     pytest.cmdline.main()
