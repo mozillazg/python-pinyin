@@ -19,7 +19,11 @@ API
 
 .. autofunction:: pypinyin.pinyin
 
+.. autofunction:: pypinyin.pinyin_group
+
 .. autofunction:: pypinyin.lazy_pinyin
+
+.. autofunction:: pypinyin.lazy_pinyin_group
 
 .. autofunction:: pypinyin.load_single_dict
 
