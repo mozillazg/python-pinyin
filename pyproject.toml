@@ -57,7 +57,7 @@ hook-dirs = "pypinyin.__pyinstaller:get_hook_dirs"
 [dependency-groups]
 dev = [
     "argparse",
-    "mypy; python_version >= '3.5'",
+    "mypy; python_version >= '3.5' and platform_python_implementation == 'CPython'",
     "pre-commit",
     "pygments>=2.7.4; python_version >= '3.5'",
     "pytest",
