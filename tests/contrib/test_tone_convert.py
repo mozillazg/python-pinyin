@@ -246,22 +246,29 @@ def test_tone3_to_tone2_with_v_to_u(pinyin, v_to_u, result):
     assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
 
 
-@mark.parametrize('pinyin,result', [
-    ['lv', 'lv'],
-    ['lü', 'lv'],
-    ['lve', 'lve'],
-    ['lüe', 'lve'],
-    ['nv', 'nv'],
-    ['nü', 'nv'],
-    ['nve', 'nve'],
-    ['nüe', 'nve'],
-    ['shang', 'shang'],
-    ['', ''],
+@mark.parametrize('pinyin,v_to_u,result', [
+    ['lv', False, 'lv'],
+    ['lv', True, 'lü'],
+    ['lü', False, 'lv'],
+    ['lü', True, 'lü'],
+    ['lve', False, 'lve'],
+    ['lve', True, 'lüe'],
+    ['lüe', False, 'lve'],
+    ['lüe', True, 'lüe'],
+    ['nv', False, 'nv'],
+    ['nv', True, 'nü'],
+    ['nü', False, 'nv'],
+    ['nü', True, 'nü'],
+    ['nve', False, 'nve'],
+    ['nve', True, 'nüe'],
+    ['nüe', False, 'nve'],
+    ['nüe', True, 'nüe'],
+    ['shang', False, 'shang'],
+    ['shang', True, 'shang'],
+    ['', False, ''],
+    ['', True, ''],
 ])
-@mark.parametrize('v_to_u', [False, True])
-def test_tone3_to_tone2_neutral_with_v_to_u(pinyin, result, v_to_u):
-    if v_to_u:
-        result = result.replace('v', 'ü')
+def test_tone3_to_tone2_neutral_with_v_to_u(pinyin, v_to_u, result):
     assert tone3_to_tone2(pinyin, v_to_u=v_to_u) == result
 
 

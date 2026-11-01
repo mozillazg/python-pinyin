@@ -546,6 +546,7 @@ def tone3_to_tone2(tone3, v_to_u=False):
 
     number = _get_number_from_pinyin(tone3)
     if number is None:
+        # 无数字（轻声/无调）时也要遵循 v_to_u 选项
         return _fix_v_u(tone3, tone3, v_to_u=v_to_u)
 
     s = '{}{}{}'.format(before, number, after)
