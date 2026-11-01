@@ -56,8 +56,10 @@ def get_finals(pinyin, strict):
             return finals
         return ''
 
-    # ń, ḿ
-    if not finals and not strict:
+    # ń, ḿ, ńg（嗯 等）：非严格模式下整个音节作为韵母。
+    # 其中 ńg 会被切出声母 n，剩下的 'g' 不是有效韵母，需要特殊处理；
+    # get_initials('ng', strict=False) 仍会返回 'n'，这里与 m/n 的现有行为一致。
+    if not strict and (not finals or pinyin == 'ng'):
         return pinyin
 
     return finals
