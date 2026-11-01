@@ -333,6 +333,7 @@ def test_to_finals_tone(pinyin, strict, result):
     ['yū', False, False, False, 'u1'],
     ['yū', False, True, False, 'u1'],
 
+    # 没有可标调的元音时，数字放在第一个字符后
     ['ńg', False, False, False, 'n2g'],
     ['ńg', True, False, False, ''],
 ])
