@@ -14,6 +14,7 @@ from pypinyin import (
 from pypinyin.compat import SUPPORT_UCS4
 from pypinyin.core import seg
 from pypinyin.exceptions import PinyinNotFoundException
+from pypinyin.style.wadegiles import to_wade_glides
 
 
 def test_pinyin_initials():
@@ -596,6 +597,26 @@ def test_m_e(han, style, expect):
 def test_wadegiles(han, expect):
     got = lazy_pinyin(han, style=Style.WADEGILES)
     assert got == expect
+
+
+@pytest.mark.parametrize('initial', ['', 'h', 'l', 'm', 'n', 's', 'sh', 'w'])
+@pytest.mark.parametrize('final', ['ai', 'āi', 'ái', 'ǎi', 'ài'])
+def test_wadegiles_ai_final(initial, final):
+    assert to_wade_glides(initial + final) == initial + 'ai'
+
+
+@pytest.mark.parametrize('han,expect', [
+    ['上海', ['shang', 'hai']],
+    ['莱芜', ['lai', 'wu']],
+    ['爱海来买奶赛晒外', ['ai', 'hai', 'lai', 'mai', 'nai', 'sai', 'shai', 'wai']],
+    ['黑梅雷', ['hei', 'mei', 'lei']],
+    ['白排带台改开宅柴在才', [
+        'pai', "p'ai", 'tai', "t'ai", 'kai', "k'ai", 'chai', "ch'ai",
+        'tsai', "ts'ai",
+    ]],
+])
+def test_wadegiles_standard_examples(han, expect):
+    assert lazy_pinyin(han, style=Style.WADEGILES) == expect
 
 
 @pytest.mark.parametrize('han,v_to_u,expect', [

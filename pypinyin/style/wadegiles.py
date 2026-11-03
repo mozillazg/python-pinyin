@@ -477,7 +477,7 @@ _tone_table = [
     ['ie', 'ieh'],
     ['üe', 'üeh'],
     ['ve', 'üeh'],
-    ['ai', 'ei'],
+    ['ai', 'ai'],
     ['uei', 'ui'],
     ['ao', 'ao'],
     ['iao', 'iao'],
