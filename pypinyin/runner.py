@@ -122,11 +122,12 @@ def main():
     # 重设标准输出流和标准错误流
     # 不输出任何字符，防止污染命令行命令的输出结果
     # 其实主要是为了干掉 jieba 内的 print 语句 ;)
-    sys.stdout = sys.stderr = NullWriter()
-    results = [func(han, style=style, **kwargs) for han in hans]
-    # 恢复默认
-    sys.stdout = sys.__stdout__
-    sys.stderr = sys.__stderr__
+    stdout, stderr = sys.stdout, sys.stderr
+    try:
+        sys.stdout = sys.stderr = NullWriter()
+        results = [func(han, style=style, **kwargs) for han in hans]
+    finally:
+        sys.stdout, sys.stderr = stdout, stderr
 
     for result in results:
         if not result:
