@@ -1,6 +1,11 @@
 Changelog
 ---------
 
+Unreleased
+++++++++++
+
+* **[Fixed]** Restore the caller's output streams after CLI conversion, including when conversion raises an exception.
+
 
 Unreleased
 ++++++++++
