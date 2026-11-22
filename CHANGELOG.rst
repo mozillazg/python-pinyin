@@ -1,11 +1,6 @@
 Changelog
 ---------
 
-Unreleased
-++++++++++
-
-* **[Fixed]** Restore the caller's output streams after CLI conversion, including when conversion raises an exception.
-
 
 Unreleased
 ++++++++++
@@ -16,6 +11,10 @@ Unreleased
 * **[Fixed]** 修复 ``Style.WADEGILES`` 转换表中恒等映射（源和目标相同）被跳过的问题，
   例如 ``火车`` 现在正确输出 ``huo ch'e`` 、 ``说`` 输出 ``shuo`` （之前输出
   ``ho`` 、 ``sho`` ）。
+* **[Fixed]** 修复命令行工具在转换过程中替换 ``sys.stdout``/``sys.stderr`` 后
+  不恢复调用者数据流的问题：成功时改为恢复调用者安装的流（之前恢复的是
+  ``sys.__stdout__``），转换抛出异常时也会恢复，避免 traceback 等后续输出被吞掉；
+  同时恢复调用者的 logging 级别。 via `#384`_
 
 
 `0.55.0`_ (2025-07-20)
@@ -1090,6 +1089,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#329: https://github.com/mozillazg/python-pinyin/pull/329
 .. _#343: https://github.com/mozillazg/python-pinyin/pull/343
 .. _#348: https://github.com/mozillazg/python-pinyin/pull/348
+.. _#384: https://github.com/mozillazg/python-pinyin/pull/384
 .. _@hanabi1224: https://github.com/hanabi1224
 .. _@yangwe1: https://github.com/yangwe1
 .. _@Freed-Wu: https://github.com/Freed-Wu

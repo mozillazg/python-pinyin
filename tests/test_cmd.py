@@ -3,13 +3,13 @@
 
 from __future__ import unicode_literals
 
-import sys
 import io
 import logging
+import sys
 from pypinyin.compat import SUPPORT_UCS4
 from pypinyin import runner
 from pypinyin.tools import toneconvert
-from pytest import mark, raises
+from pytest import fixture, mark, raises
 
 
 class Buffer(object):
@@ -42,34 +42,45 @@ def test_runner_custom():
     assert options.hans == ['你好啊']
 
 
-@mark.parametrize('func_name,expected', [
-    ('pinyin', 'nǐ hǎo\n'),
-    ('slug', 'nǐ-hǎo\n'),
-])
-def test_runner_restores_redirected_streams(monkeypatch, func_name, expected):
-    stdout, stderr = io.StringIO(), io.StringIO()
-    monkeypatch.setattr(sys, 'stdin', io.StringIO(''))
-    monkeypatch.setattr(sys, 'stdout', stdout)
-    monkeypatch.setattr(sys, 'stderr', stderr)
-    monkeypatch.setattr(sys, 'argv', ['pypinyin', '-f', func_name, '你好'])
-    previous_disable = logging.root.manager.disable
-    try:
-        runner.main()
-        assert sys.stdout is stdout
-        assert sys.stderr is stderr
-        assert stdout.getvalue() == expected
-        assert stderr.getvalue() == ''
-    finally:
-        logging.disable(previous_disable)
-
-
-@mark.parametrize('error_type', [ValueError, KeyboardInterrupt])
-def test_runner_restores_streams_on_conversion_error(monkeypatch, error_type):
+@fixture
+def redirected(monkeypatch):
+    """把标准输入输出重定向到调用者自己的流。"""
     stdout, stderr = io.StringIO(), io.StringIO()
     monkeypatch.setattr(sys, 'stdin', io.StringIO(''))
     monkeypatch.setattr(sys, 'stdout', stdout)
     monkeypatch.setattr(sys, 'stderr', stderr)
     monkeypatch.setattr(sys, 'argv', ['pypinyin', '你好'])
+    previous_disable = logging.root.manager.disable
+    try:
+        yield stdout, stderr
+    finally:
+        logging.disable(previous_disable)
+
+
+@mark.parametrize('func_name,expected', [
+    ('pinyin', 'nǐ hǎo\n'),
+    ('slug', 'nǐ-hǎo\n'),
+])
+def test_runner_restores_redirected_streams(redirected, monkeypatch,
+                                            func_name, expected):
+    stdout, stderr = redirected
+    previous_disable = logging.root.manager.disable
+    monkeypatch.setattr(sys, 'argv', ['pypinyin', '-f', func_name, '你好'])
+
+    runner.main()
+
+    assert sys.stdout is stdout
+    assert sys.stderr is stderr
+    assert stdout.getvalue() == expected
+    assert stderr.getvalue() == ''
+    assert logging.root.manager.disable == previous_disable
+
+
+@mark.parametrize('error_type', [ValueError, KeyboardInterrupt])
+def test_runner_restores_streams_on_error(redirected, monkeypatch,
+                                          error_type):
+    stdout, stderr = redirected
+    previous_disable = logging.root.manager.disable
     error = error_type('conversion failed')
 
     def pinyin(*args, **kwargs):
@@ -78,17 +89,16 @@ def test_runner_restores_streams_on_conversion_error(monkeypatch, error_type):
         raise error
 
     monkeypatch.setattr(runner.pypinyin, 'pinyin', pinyin)
-    previous_disable = logging.root.manager.disable
-    try:
-        with raises(error_type) as caught:
-            runner.main()
-        assert caught.value is error
-        assert sys.stdout is stdout
-        assert sys.stderr is stderr
-        assert stdout.getvalue() == ''
-        assert stderr.getvalue() == ''
-    finally:
-        logging.disable(previous_disable)
+
+    with raises(error_type) as caught:
+        runner.main()
+
+    assert caught.value is error
+    assert sys.stdout is stdout
+    assert sys.stderr is stderr
+    assert stdout.getvalue() == ''
+    assert stderr.getvalue() == ''
+    assert logging.root.manager.disable == previous_disable
 
 
 @mark.parametrize('args,output', [

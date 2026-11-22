@@ -47,6 +47,12 @@ class NullWriter(object):
     def write(self, string):
         pass
 
+    def flush(self):
+        pass
+
+    def isatty(self):
+        return False
+
 
 def get_parser():
     parser = ArgumentParser(description='convert chinese to pinyin.')
@@ -82,9 +88,16 @@ def get_parser():
 
 
 def main():
-    # 禁用除 CRITICAL 外的日志消息
+    # 禁用除 CRITICAL 外的日志消息，结束后恢复调用者原有的日志级别
+    previous_disable = logging.root.manager.disable
     logging.disable(logging.CRITICAL)
+    try:
+        _run()
+    finally:
+        logging.disable(previous_disable)
 
+
+def _run():
     # read hans from stdin
     if not sys.stdin.isatty():
         pipe_data = sys.stdin.read().strip()
@@ -122,6 +135,8 @@ def main():
     # 重设标准输出流和标准错误流
     # 不输出任何字符，防止污染命令行命令的输出结果
     # 其实主要是为了干掉 jieba 内的 print 语句 ;)
+    # 注意：结束后要恢复调用者安装的流，而不是 sys.__stdout__/sys.__stderr__，
+    # 否则调用者自己的输出重定向会失效，且异常时会把后续输出全部吞掉
     stdout, stderr = sys.stdout, sys.stderr
     try:
         sys.stdout = sys.stderr = NullWriter()
