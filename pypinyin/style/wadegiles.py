@@ -513,10 +513,8 @@ _except_table = [
     ['zi', 'tzu'],
     ['ci', 'tz\'u'],
     ['si', 'ssu'],
-    ['guo', 'guo'],
     ['kuo', 'k\'uo'],
     ['huo', 'huo'],
-    ['luo', 'luo'],
     ['jue', 'chüeh'],
     ['que', 'ch\'üeh'],
     ['xue', 'hsüeh'],
@@ -528,17 +526,21 @@ def to_wade_glides(pinyin, **kwargs):
     pinyin = replace_symbol_to_no_symbol(pinyin).replace('v', 'ü')
 
     whole_converted = _convert_whole(pinyin, _except_table)
-    if whole_converted != pinyin:
+    if whole_converted is not None:
         return _fixed_result(whole_converted)
     whole_converted = _convert_whole(pinyin, _convert_table)
-    if whole_converted != pinyin:
+    if whole_converted is not None:
         return _fixed_result(whole_converted)
 
     initials = get_initials(pinyin, strict=False)
     tones = pinyin[len(initials):]
 
-    initials = _convert_whole(initials, _initial_table)
-    tones = _convert_whole(tones, _tone_table)
+    converted_initials = _convert_whole(initials, _initial_table)
+    if converted_initials is not None:
+        initials = converted_initials
+    converted_tones = _convert_whole(tones, _tone_table)
+    if converted_tones is not None:
+        tones = converted_tones
 
     return _fixed_result('{}{}'.format(initials, tones))
 
@@ -548,12 +550,13 @@ def _fixed_result(pinyin):
 
 
 def _convert_whole(chars, table):
+    """返回 table 中 chars 对应的转换结果，没有匹配时返回 None。"""
     for pair in table:
         f, r = pair
         if f == chars:
             return r
 
-    return chars
+    return None
 
 
 register(Style.WADEGILES, func=to_wade_glides)
