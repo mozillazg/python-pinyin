@@ -6,8 +6,8 @@ Unreleased
 ++++++++++
 
 * **[Fixed]** 修复 ``Style.WADEGILES`` 将 ``ai`` 韵母错误转换成 ``ei`` 的问题，
-  例如 ``上海`` 现在正确输出 ``shang hai`` 。
-  详见 `#365 <https://github.com/mozillazg/python-pinyin/issues/365>`__ 。
+  影响 ``h/l/m/n/sh/s/w`` 及零声母的 ``ai`` 韵母，例如 ``上海`` 现在正确输出
+  ``shang hai`` 。 详见 `#365`_ 。
 
 
 `0.55.0`_ (2025-07-20)
@@ -1073,6 +1073,7 @@ __ https://github.com/mozillazg/python-pinyin/issues/8
 .. _#322: https://github.com/mozillazg/python-pinyin/issues/322
 .. _#326: https://github.com/mozillazg/python-pinyin/issues/326
 .. _#347: https://github.com/mozillazg/python-pinyin/issues/347
+.. _#365: https://github.com/mozillazg/python-pinyin/issues/365
 .. _#164: https://github.com/mozillazg/python-pinyin/pull/164
 .. _#176: https://github.com/mozillazg/python-pinyin/pull/176
 .. _#279: https://github.com/mozillazg/python-pinyin/pull/279

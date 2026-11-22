@@ -610,6 +610,7 @@ def test_wadegiles_ai_final(initial, final):
     ['莱芜', ['lai', 'wu']],
     ['爱海来买奶赛晒外', ['ai', 'hai', 'lai', 'mai', 'nai', 'sai', 'shai', 'wai']],
     ['黑梅雷', ['hei', 'mei', 'lei']],
+    ['快怪怀帅', ["k'uai", 'kuai', 'huai', 'shuai']],
     ['白排带台改开宅柴在才', [
         'pai', "p'ai", 'tai', "t'ai", 'kai', "k'ai", 'chai', "ch'ai",
         'tsai', "ts'ai",
