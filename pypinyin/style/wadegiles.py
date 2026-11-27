@@ -331,7 +331,7 @@ _convert_table = [
     ['diao', 'tiao'],
     ['tiao', 't\'iao'],
     ['die', 'tieh'],
-    ['tie', 't\'oeh'],
+    ['tie', 't\'ieh'],
     ['dian', 'tien'],
     ['tian', 't\'ien'],
     ['ding', 'ting'],

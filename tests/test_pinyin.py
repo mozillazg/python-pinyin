@@ -593,6 +593,8 @@ def test_m_e(han, style, expect):
     ['只', ['chih']],
     ['韦氏拼音', ['wei', 'shih', "p'in", 'yin']],
     ['威妥玛拼音', ['wei', "t'o", 'ma', "p'in", 'yin']],
+    ['铁', ["t'ieh"]],
+    ['贴', ["t'ieh"]],
 ])
 def test_wadegiles(han, expect):
     got = lazy_pinyin(han, style=Style.WADEGILES)
