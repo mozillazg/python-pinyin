@@ -66,7 +66,7 @@ class DefaultConverter(Converter):
             if py:
                 pys.extend(py)
 
-        return _remove_dup_and_empty(pys)
+        return _remove_dup_and_empty([item for item in pys if item])
 
     def pre_convert_style(self, han, orig_pinyin, style, strict, **kwargs):
         """在把原始带声调的拼音按拼音风格转换前会调用 ``pre_convert_style`` 方法。
@@ -257,7 +257,9 @@ class DefaultConverter(Converter):
         else:
             for han in phrase:
                 py = self._single_pinyin(han, style, heteronym, errors, strict)
-                pinyin_list.extend(py)
+                # Keep ignored characters aligned until sandhi and style
+                # conversion have finished.
+                pinyin_list.extend(py or [[]])
 
         return pinyin_list
 
@@ -265,6 +267,8 @@ class DefaultConverter(Converter):
                        strict, **kwargs):
         """转换多个汉字的拼音结果的风格"""
         for idx, item in enumerate(pinyin_list):
+            if not item:
+                continue
             han = phrase[idx]
             if heteronym:
                 pinyin_list[idx] = [
