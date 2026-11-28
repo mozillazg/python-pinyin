@@ -24,9 +24,15 @@ class ToneSandhiMixin(object):
         if ret is not None:
             pinyin_list = ret
 
-        pinyin_list = self._third_tone(han, pinyin_list)
-        pinyin_list = self._bu(han, pinyin_list)
-        pinyin_list = self._yi(han, pinyin_list)
+        start = 0
+        for end in range(len(pinyin_list) + 1):
+            if end == len(pinyin_list) or not pinyin_list[end]:
+                if start < end:
+                    word = han[start:end]
+                    segment = self._third_tone(word, pinyin_list[start:end])
+                    segment = self._bu(word, segment)
+                    pinyin_list[start:end] = self._yi(word, segment)
+                start = end + 1
 
         return pinyin_list
 

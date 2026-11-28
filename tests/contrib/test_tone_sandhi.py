@@ -68,3 +68,27 @@ def test_tone_sandhi(han, normal_output, sandhi_output):
     assert lazy_pinyin(han, style=Style.TONE2, v_to_u=True,
                        neutral_tone_with_five=True,
                        tone_sandhi=True) == sandhi_output
+
+
+@mark.parametrize('errors', ['ignore', lambda _: None, lambda _: []])
+@mark.parametrize('han,expected', [
+    ('鿅不对', ['bu2', 'dui4']),
+    ('不对鿅', ['bu2', 'dui4']),
+    ('不鿅对', ['bu4', 'dui4']),
+    ('鿅一天', ['yi4', 'tian1']),
+    ('一天鿅', ['yi4', 'tian1']),
+    ('一鿅定', ['yi1', 'ding4']),
+    ('你鿅好', ['ni3', 'hao3']),
+    ('鿅你好', ['ni2', 'hao3']),
+    ('老鿅你好', ['lao3', 'ni2', 'hao3']),
+    ('你鿅老鼠', ['ni3', 'lao2', 'shu3']),
+    ('不鿅', ['bu4']),
+    ('一鿅', ['yi1']),
+    ('鿅一', ['yi1']),
+    ('鿅鿅', []),
+])
+def test_ignored_characters_preserve_sandhi_positions(han, expected, errors):
+    assert my_pinyin.lazy_pinyin([han], style=Style.TONE3,
+                                 errors=errors) == expected
+    assert lazy_pinyin([han], style=Style.TONE3, errors=errors,
+                       tone_sandhi=True) == expected
